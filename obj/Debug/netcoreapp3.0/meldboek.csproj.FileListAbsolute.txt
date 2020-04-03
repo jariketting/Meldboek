@@ -1,0 +1,9 @@
+C:\Users\ses-9\Desktop\meldboek\meldboek\obj\Debug\netcoreapp3.0\meldboek.csprojAssemblyReference.cache
+C:\Users\ses-9\Desktop\meldboek\meldboek\obj\Debug\netcoreapp3.0\meldboek.csproj.CoreCompileInputs.cache
+C:\Users\ses-9\Desktop\meldboek\meldboek\obj\Debug\netcoreapp3.0\meldboek.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\ses-9\Desktop\meldboek\meldboek\obj\Debug\netcoreapp3.0\meldboek.AssemblyInfoInputs.cache
+C:\Users\ses-9\Desktop\meldboek\meldboek\obj\Debug\netcoreapp3.0\meldboek.AssemblyInfo.cs
+C:\Users\ses-9\Desktop\meldboek\meldboek\obj\Debug\netcoreapp3.0\meldboek.TagHelpers.input.cache
+C:\Users\ses-9\Desktop\meldboek\meldboek\obj\Debug\netcoreapp3.0\meldboek.TagHelpers.output.cache
+C:\Users\ses-9\Desktop\meldboek\meldboek\obj\Debug\netcoreapp3.0\meldboek.dll
+C:\Users\ses-9\Desktop\meldboek\meldboek\obj\Debug\netcoreapp3.0\meldboek.pdb
