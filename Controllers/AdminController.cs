@@ -16,15 +16,16 @@ namespace meldboek.Controllers
         {
             return View();
         }
+        
         public IActionResult LogIn(string email, string password)
         {
-           if (email != "")
+            if (email == null)
             {
-                return View();
+                return null;
             }
             email = "saadeddinsalila@gmail.com";
-            password = "1234567";
-            
+            password = "0000";
+         
             
             return View();
             
