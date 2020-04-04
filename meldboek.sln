@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29926.136
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "meldboek", "meldboek.csproj", "{5867DC6A-3995-47AB-B3C9-0CE725144447}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5867DC6A-3995-47AB-B3C9-0CE725144447}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5867DC6A-3995-47AB-B3C9-0CE725144447}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5867DC6A-3995-47AB-B3C9-0CE725144447}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5867DC6A-3995-47AB-B3C9-0CE725144447}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E3E1C9F6-0C12-482B-8A26-0CF3D61B40C5}
+	EndGlobalSection
+EndGlobal
