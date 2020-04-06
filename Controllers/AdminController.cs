@@ -19,12 +19,7 @@ namespace meldboek.Controllers
         
         public IActionResult LogIn(string email, string password)
         {
-            if (email == null)
-            {
-                return null;
-            }
-            email = "saadeddinsalila@gmail.com";
-            password = "0000";
+            
          
             
             return View();
