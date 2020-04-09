@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\amyno\\source\\repos\\meldboek\\meldboek.csproj": {}
+    "C:\\Users\\amyno\\Source\\Repos\\meldboek\\meldboek.csproj": {}
   },
   "projects": {
-    "C:\\Users\\amyno\\source\\repos\\meldboek\\meldboek.csproj": {
+    "C:\\Users\\amyno\\Source\\Repos\\meldboek\\meldboek.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\amyno\\source\\repos\\meldboek\\meldboek.csproj",
+        "projectUniqueName": "C:\\Users\\amyno\\Source\\Repos\\meldboek\\meldboek.csproj",
         "projectName": "meldboek",
-        "projectPath": "C:\\Users\\amyno\\source\\repos\\meldboek\\meldboek.csproj",
+        "projectPath": "C:\\Users\\amyno\\Source\\Repos\\meldboek\\meldboek.csproj",
         "packagesPath": "C:\\Users\\amyno\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\amyno\\source\\repos\\meldboek\\obj\\",
+        "outputPath": "C:\\Users\\amyno\\Source\\Repos\\meldboek\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -42,8 +42,7 @@
             "Microsoft.AspNetCore.App": {
               "suppressParent": "All",
               "target": "Package",
-              "version": "[2.2.0, )",
-              "autoReferenced": true
+              "version": "[2.2.0, )"
             },
             "Microsoft.AspNetCore.Mvc.Analyzers": {
               "target": "Package",
