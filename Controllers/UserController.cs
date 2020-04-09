@@ -13,7 +13,7 @@ namespace meldboek.Controllers
             return View();
         }
 
-        public IActionResult CreateAccount(string firstname, string lastname, string email, string password)
+        public IActionResult CreateAccount(string firstname, string lastname, string email, string password, string password2)
         {
             //account toevoegen aan database
             return View();
