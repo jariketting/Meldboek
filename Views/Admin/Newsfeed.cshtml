@@ -2,93 +2,416 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <title>Newsfeed</title>
     <style>
+        /* http://meyerweb.com/eric/tools/css/reset/
+        v2.0 | 20110126
+        License: none (public domain)
+        */
+
+        html, body, div, span, applet, object, iframe,
+        h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+        a, abbr, acronym, address, big, cite, code,
+        del, dfn, em, img, ins, kbd, q, s, samp,
+        small, strike, strong, sub, sup, tt, var,
+        b, u, i, center,
+        dl, dt, dd, ol, ul, li,
+        fieldset, form, label, legend,
+        table, caption, tbody, tfoot, thead, tr, th, td,
+        article, aside, canvas, details, embed,
+        figure, figcaption, footer, header, hgroup,
+        menu, nav, output, ruby, section, summary,
+        time, mark, audio, video {
+            margin: 0;
+            padding: 0;
+            border: 0;
+            font-size: 100%;
+            font: inherit;
+            vertical-align: baseline;
+        }
+        /* HTML5 display-role reset for older browsers */
+        article, aside, details, figcaption, figure,
+        footer, header, hgroup, menu, nav, section {
+            display: block;
+        }
+
         body {
-            font-family: 'Open Sans', sans-serif;
-            background: #ecf0f1; /*21323*/
-            margin: 0 auto 0 auto;
+            line-height: 1;
+        }
+
+        ol, ul {
+            list-style: none;
+        }
+
+        blockquote, q {
+            quotes: none;
+        }
+
+        blockquote:before, blockquote:after, q:before, q:after {
+            content: '';
+            content: none;
+        }
+
+        table {
+            border-collapse: collapse;
+            border-spacing: 0;
+        }
+
+        /*------------------------------------------------------------------------------*/
+
+        body {
+            font-family: 'Trebuchet MS', sans-serif;
+            background-color: #ffffff;
+        }
+
+        /* Colored bar on top of the page */
+        .topbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            background-color: #3bb546;
+            color: #ffffff;
+            font-size: 34px;
+            width: 100%;
+            text-align: right;
+            height: 74px;
+        }
+
+        .topbar h1 {
+            color: #ffffff;
+            font-size: 34px;
+            padding-top: 20px;
+            padding-bottom: 20px;
+            width: 55%;
+            float: left;
+        }
+
+        /* Account icon*/
+        #acc-icon {
+            padding: 7px 10px;
+            float: right;
+            width: 60px;
+        }
+
+        /* Sidemenu button */
+        .navbtn {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 1%;
+            padding-left: 25px;
+            padding-bottom: 20px;
+            padding-top: 20px;
+            background-color: #3bb546;
+            color: #ffffff;
+            font-size: 34px;
+            cursor: pointer;
+        }
+
+        /* Sidemenu overlay */
+        .overlay {
+            margin-top: 73px;
+            height: 100%;
+            width: 0;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            background-color: #3bb546;
+            overflow-x: hidden;
+            transition: 0.5s;
+        }
+
+        /* Sidemenu content */
+        .overlay-content {
+            position: relative;
+            top: 25%;
             width: 100%;
             text-align: center;
-            margin: 0px 0px 0px 0px;
+            margin-top: 30px;
         }
 
-        .box {
-            background: #3bb546;
-            width: 800px;
-            border-radius: 6px;
-            position: center;
-            margin: 0 auto 0 auto;
-            padding: 100px 100px 100px 50px;
-            border: #6f89c4 4px solid;
-        }
-
-        .username {
-            background: #ecf0f1;
-            border: #8593bc 1px solid;
-            border-bottom: #ccc 2px solid;
+        .overlay a, p {
             padding: 8px;
-            width: 350px;
-            color: #AAAAAA;
-            margin-top: 10px;
-            font-size: 1em;
-            border-radius: 4px;
+            text-decoration: none;
+            font-size: 30px;
+            color: #ffffff;
+            display: block;
+            transition: 0.3s;
         }
 
-        .button {
-            background: #6f89c4;
-            width: 200px;
-            padding-top: 5px;
-            padding-bottom: 5px;
-            padding-left: 75px;
-            color: white;
-            border-radius: 4px;
-            border: #27ae60 1px solid;
-            margin-top: 10px;
-            margin-bottom: 20px;
-            margin-left: 100px;
-            margin-right: auto;
-            float: left;
-            margin-left: 125px;
-            font-weight: 600;
-            font-size: 0.8em;
-        }
-
-            .button:hover {
-                background: Blue;
-            }
-
-        .fpwd {
-            color: #6f89c4;
-            text-decoration: underline;
-        }
-
-        #absoluteCenteredDiv {
+        .logout {
             position: absolute;
-            top: 0;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            margin: auto;
-            width: 800px;
-            height: 300px;
-            text-align: left;
+            bottom: 10%;
+            padding: 8px;
+            width: 100%;
+        }
+
+        .logout a {
+            text-align: center;
+            text-decoration: none;
+            font-size: 24px;
+            color: #ffffff;
+            display: block;
+            transition: 0.3s;
+        }
+
+        .overlay a:hover, .overlay a:focus, .logout a:hover, .logout a:focus {
+            color: #9ee0a4;
+        }
+
+        /* Actual content of the newsfeed */
+        .newsfeed-content {
+            width: 100%;
+            overflow: hidden;
+            padding-top: 100px;
+            padding-bottom: 50px;
+        }
+
+        /* Categories list */
+        .categories {
+            position: fixed;
+            float: left;
+            width: 200px;
+            height: 550px;
+            padding-top: 80px;
+            padding-left: 50px;
+            border-right: 2px solid #3bb546;
+        }
+
+        .categories a {
+            color: #000000;
+            font-size: 24px;
+            text-decoration: none;
+            display: block;
+            padding-bottom: 15px;
+            width: 105px;
+        }
+
+        .categories a:hover {
+            color: #9ee0a4;
+        }
+
+        /* Articles list */
+        .articles-list {
+            padding-top: 40px;
+            margin-left: 350px;
+        }
+
+        /* Single article */
+        .article {
+            width: 80%;
+            overflow: hidden;
+            padding-bottom: 5px;
+            border-bottom: 1px solid #3bb546;
+        }
+
+        /* Article content consists of title (h1), author + date (h3) and 'keep reading' button */
+        .article-content {
+            float: left;
+            width: 200px;
+        }
+
+        .article-content h1 {
+            font-size: 28px;
+            padding-bottom: 15px;
+            padding-top: 40px;
+        }
+
+        .article-content h3 {
+            font-size: 20px;
+            padding-bottom: 10px;
+        }
+
+        /* 'Keep reading' button */
+        .article a {
+            text-decoration: none;
+        }
+
+        .article-button {
+            display: block;
+            background-color: #3bb546;
+            padding: 10px;
+            margin-top: 70px;
+            margin-left: 790px;
+            border-radius: 20px;
+            width: 125px;
+            text-align: center;
+            color: #ffffff;
+            font-size: 20px;
+            text-decoration: none;
+        }
+
+        .article-button:hover {
+            background-color: #9ee0a4;
+        }
+
+        .article-button a {
+            color: #ffffff;
+            font-size: 20px;
+            text-decoration: none;
+        }
+
+        /* Add article ('+') button */
+        .add_article {
+            margin-left: 1040px;
+            margin-top: 475px;
+            position: fixed;
+            background-color: #3bb546;
+            border-radius: 40px;
+            display: inline-block;
+            cursor: pointer;
+            color: #ffffff;
+            font-size: 75px;
+            font-weight: bold;
+            padding: 0px 17px 3px;
+            text-decoration: none;
+        }
+
+        .add_article:hover {
+            background-color: #9ee0a4;
         }
     </style>
+    <script>
+        /*
+            nav() is triggered by the menubutton (class navbtn)
+            The function opens and closes the sidemenu by changing the width of the overlay
+            It first determines whether the sidemenu is open (20%) or closed (0%)
+            If the sidemenu is closed, it opens it up and the other way around
+        */
+        function nav() {
+            if (document.getElementById("nav").style.width == "0%") {
+                document.getElementById("nav").style.width = "20%";
+            }
+            else {
+                document.getElementById("nav").style.width = "0%";
+            }
+        }
+
+        /*
+            The functions hover and unhover change the account picture when the mouse is hovering on it
+            The difference between the two picture is the background color, so hovering makes it look like
+            the button is 'selected'
+        */
+        function hover(element) {
+            element.setAttribute('src', '/Content/Images/account_hover2.png');
+        }
+        function unhover(element) {
+            element.setAttribute('src', '/Content/Images/account.png');
+        }
+    </script>
 </head>
 <body>
-    <h1 id="login-header">Login</h1>
-    <div id="absoluteCenteredDiv">
-        <form asp-action="LogIn" method="post">
-            <div class="box">
+    <!-- Colored bar at the top of the page -->
+    <div class="topbar">
 
+        <!-- The button that opens the sidemenu -->
+        <span class="navbtn" onclick="nav()">&#9776; </span>
 
-                <p><font face="verdana" color="black">Emailadres</font></p>
-                <input type="text" required name=email id="email" size="50"><br><br>
-                <p><font face="verdana" color="black">Wachtwoord</font></p>
-                <input type="password" required name=password id="password" size="50"> <br><br>
-                <a href="#"><div class="button">Sign in</div></a>
-            </div>
-        </form>
+        <!-- Page title -->
+        <h1>Newsfeed</h1>
+
+        <!-- Account information button -->
+        <a href="#"><img id="acc-icon" src="/Content/Images/account.png" onmouseover="hover(this);" onmouseout="unhover(this);" /></a>
     </div>
+
+    <!-- Sidemenu overlay -->
+    <div id="nav" class="overlay">
+        <div class="overlay-content">
+            <p style="color: #9ee0a4;">Newsfeed</p>
+            <br>
+            <a onclick="nav()" href="#forums">Forums</a>
+            <br>
+            <a onclick="nav()" href="#chat">Chat</a>
+        </div>
+        <div class="logout"><a onclick="nav()" href="#logout">Log uit</a></div>
+    </div>
+
+    <!-- All the actual content of the page -->
+    <div class="newsfeed-content">
+
+        <!-- Newsfeed categories -->
+        <div class="categories">
+            <a href="#">Algemeen</a>
+            <a href="#">[Cat. 1]</a>
+            <a href="#">[Cat. 2]</a>
+            <a href="#">[Cat. 3]</a>
+            <a href="#">[Cat. 4]</a>
+            <a href="#">Overig</a>
+        </div>
+
+        <!-- List of articles -->
+        <div class="articles-list">
+
+            <!-- Add article ('+') button -->
+            <a class="add_article" href="#">+</a>
+
+            <!-- Single article attribute -->
+            <div class="article">
+                <div class="article-content">
+                    <h1>[Title]</h1>
+                    <h3>[Author], [Date]</h3>
+                </div>
+                <a href="#"><div class="article-button">Lees verder</div></a>
+            </div>
+
+            <div class="article">
+                <div class="article-content">
+                    <h1>[Title]</h1>
+                    <h3>[Author], [Date]</h3>
+                </div>
+                <a href="#"><div class="article-button">Lees verder</div></a>
+            </div>
+
+            <div class="article">
+                <div class="article-content">
+                    <h1>[Title]</h1>
+                    <h3>[Author], [Date]</h3>
+                </div>
+                <a href="#"><div class="article-button">Lees verder</div></a>
+            </div>
+
+            <div class="article">
+                <div class="article-content">
+                    <h1>[Title]</h1>
+                    <h3>[Author], [Date]</h3>
+                </div>
+                <a href="#"><div class="article-button">Lees verder</div></a>
+            </div>
+
+            <div class="article">
+                <div class="article-content">
+                    <h1>[Title]</h1>
+                    <h3>[Author], [Date]</h3>
+                </div>
+                <a href="#"><div class="article-button">Lees verder</div></a>
+            </div>
+
+            <div class="article">
+                <div class="article-content">
+                    <h1>[Title]</h1>
+                    <h3>[Author], [Date]</h3>
+                </div>
+                <a href="#"><div class="article-button">Lees verder</div></a>
+            </div>
+
+            <div class="article">
+                <div class="article-content">
+                    <h1>[Title]</h1>
+                    <h3>[Author], [Date]</h3>
+                </div>
+                <a href="#"><div class="article-button">Lees verder</div></a>
+            </div>
+
+            <div class="article">
+                <div class="article-content">
+                    <h1>[Title]</h1>
+                    <h3>[Author], [Date]</h3>
+                </div>
+                <a href="#"><div class="article-button">Lees verder</div></a>
+            </div>
+
+        </div>
+    </div>
+
 </body>
 </html>
