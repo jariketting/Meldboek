@@ -47,10 +47,10 @@
             quotes: none;
         }
 
-        blockquote:before, blockquote:after, q:before, q:after {
-            content: '';
-            content: none;
-        }
+            blockquote:before, blockquote:after, q:before, q:after {
+                content: '';
+                content: none;
+            }
 
         table {
             border-collapse: collapse;
@@ -77,14 +77,14 @@
             height: 74px;
         }
 
-        .topbar h1 {
-            color: #ffffff;
-            font-size: 34px;
-            padding-top: 20px;
-            padding-bottom: 20px;
-            width: 55%;
-            float: left;
-        }
+            .topbar h1 {
+                color: #ffffff;
+                font-size: 34px;
+                padding-top: 20px;
+                padding-bottom: 20px;
+                width: 55%;
+                float: left;
+            }
 
         /* Account icon*/
         #acc-icon {
@@ -146,18 +146,18 @@
             width: 100%;
         }
 
-        .logout a {
-            text-align: center;
-            text-decoration: none;
-            font-size: 24px;
-            color: #ffffff;
-            display: block;
-            transition: 0.3s;
-        }
+            .logout a {
+                text-align: center;
+                text-decoration: none;
+                font-size: 24px;
+                color: #ffffff;
+                display: block;
+                transition: 0.3s;
+            }
 
-        .overlay a:hover, .overlay a:focus, .logout a:hover, .logout a:focus {
-            color: #9ee0a4;
-        }
+                .overlay a:hover, .overlay a:focus, .logout a:hover, .logout a:focus {
+                    color: #9ee0a4;
+                }
 
         /* Actual content of the newsfeed */
         .newsfeed-content {
@@ -178,18 +178,18 @@
             border-right: 2px solid #3bb546;
         }
 
-        .categories a {
-            color: #000000;
-            font-size: 24px;
-            text-decoration: none;
-            display: block;
-            padding-bottom: 15px;
-            width: 105px;
-        }
+            .categories a {
+                color: #000000;
+                font-size: 24px;
+                text-decoration: none;
+                display: block;
+                padding-bottom: 15px;
+                width: 105px;
+            }
 
-        .categories a:hover {
-            color: #9ee0a4;
-        }
+                .categories a:hover {
+                    color: #9ee0a4;
+                }
 
         /* Articles list */
         .articles-list {
@@ -211,16 +211,16 @@
             width: 200px;
         }
 
-        .article-content h1 {
-            font-size: 28px;
-            padding-bottom: 15px;
-            padding-top: 40px;
-        }
+            .article-content h1 {
+                font-size: 28px;
+                padding-bottom: 15px;
+                padding-top: 40px;
+            }
 
-        .article-content h3 {
-            font-size: 20px;
-            padding-bottom: 10px;
-        }
+            .article-content h3 {
+                font-size: 20px;
+                padding-bottom: 10px;
+            }
 
         /* 'Keep reading' button */
         .article a {
@@ -241,15 +241,15 @@
             text-decoration: none;
         }
 
-        .article-button:hover {
-            background-color: #9ee0a4;
-        }
+            .article-button:hover {
+                background-color: #9ee0a4;
+            }
 
-        .article-button a {
-            color: #ffffff;
-            font-size: 20px;
-            text-decoration: none;
-        }
+            .article-button a {
+                color: #ffffff;
+                font-size: 20px;
+                text-decoration: none;
+            }
 
         /* Add article ('+') button */
         .add_article {
@@ -267,9 +267,9 @@
             text-decoration: none;
         }
 
-        .add_article:hover {
-            background-color: #9ee0a4;
-        }
+            .add_article:hover {
+                background-color: #9ee0a4;
+            }
     </style>
     <script>
         /*
@@ -293,10 +293,10 @@
             the button is 'selected'
         */
         function hover(element) {
-            element.setAttribute('src', 'account_hover2.png');
+            element.setAttribute('src', '@Url.Content("~/Content/account_hover2.png")');
         }
         function unhover(element) {
-            element.setAttribute('src', 'account.png');
+            element.setAttribute('src', '@Url.Content("~/Content/account.png")');
         }
     </script>
 </head>
@@ -311,7 +311,7 @@
         <h1>Newsfeed</h1>
 
         <!-- Account information button -->
-        <a href="#"><img id="acc-icon" src="account.png" onmouseover="hover(this);" onmouseout="unhover(this);" /></a>
+        <a href="#"><img id="acc-icon" src="@Url.Content("~/Content/account.png")" onmouseover="hover(this);" onmouseout="unhover(this);" /></a>
     </div>
 
     <!-- Sidemenu overlay -->

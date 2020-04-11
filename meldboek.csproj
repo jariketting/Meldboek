@@ -4,6 +4,11 @@
     <AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>
   </PropertyGroup>
   <ItemGroup>
+    <None Include="wwwroot\Content\account.png" />
+    <None Include="wwwroot\Content\account_hover.png" />
+    <None Include="wwwroot\Content\account_hover2.png" />
+  </ItemGroup>
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.App">
       <PrivateAssets Condition="'%(PackageReference.Version)' == ''">all</PrivateAssets>
       <Publish Condition="'%(PackageReference.Version)' == ''">true</Publish>
