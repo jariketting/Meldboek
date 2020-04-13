@@ -22,7 +22,7 @@ namespace meldboek.Controllers
        public IActionResult Index()
        {
 
-           ConnectDb("CREATE (n:Person { name: 'Anna', title: 'Developer' }) RETURN n");
+           //ConnectDb("CREATE (n:Person { name: 'Anna', title: 'Developer' }) RETURN n");
 
 
            return View();
@@ -48,7 +48,7 @@ namespace meldboek.Controllers
 
 
 
-        public async void ConnectDb(string query)
+        /*public async void ConnectDb(string query)
         {
                Driver = CreateDriverWithBasicAuth("bolt://localhost:7687", "neo4j", "1234");
 
@@ -68,7 +68,7 @@ namespace meldboek.Controllers
             }
 
             await Driver.CloseAsync();
-        }
+        }*/
 
 
         public IDriver CreateDriverWithBasicAuth(string uri, string user, string password)
