@@ -75,12 +75,13 @@
         <form asp-action="LogIn" method="post">
             <div class="box">
 
-               
+
                 <p><font face="verdana" color="black">Emailadres</font></p>
-                <input type="string" required name=email id="email" size="50" ><br><br>
+                <input type="string" required name=email id="email" size="50"><br><br>
                 <p><font face="verdana" color="black">Wachtwoord</font></p>
                 <input type="password" required name=password id="password" size="50"> <br><br>
-                <a href="#"><div class="button" >Sign in</div></a>
+                <input type="submit" value="button" id="submit">
+                @*<a href="#"><div class="button">Sign in</div></a>*@
             </div>
         </form>
         @*<p>Wachtwoord vergeten? <a class="fpwd" href="#">Click Hier!</a></p>*@
