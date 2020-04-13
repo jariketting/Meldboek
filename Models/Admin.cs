@@ -23,7 +23,7 @@ namespace meldboek.Models
             Password = password;
 
         }
-       
+
 
     }
 

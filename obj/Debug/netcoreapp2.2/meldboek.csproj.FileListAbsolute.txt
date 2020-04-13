@@ -99,6 +99,7 @@ C:\Users\ses-9\Desktop\meldboek\meldboek\bin\Debug\netcoreapp2.2\meldboek.dll
 C:\Users\ses-9\Desktop\meldboek\meldboek\bin\Debug\netcoreapp2.2\meldboek.pdb
 C:\Users\ses-9\Desktop\meldboek\meldboek\bin\Debug\netcoreapp2.2\meldboek.Views.dll
 C:\Users\ses-9\Desktop\meldboek\meldboek\bin\Debug\netcoreapp2.2\meldboek.Views.pdb
+C:\Users\ses-9\Desktop\meldboek\meldboek\obj\Debug\netcoreapp2.2\meldboek.csprojAssemblyReference.cache
 C:\Users\ses-9\Desktop\meldboek\meldboek\obj\Debug\netcoreapp2.2\meldboek.RazorAssemblyInfo.cache
 C:\Users\ses-9\Desktop\meldboek\meldboek\obj\Debug\netcoreapp2.2\meldboek.RazorAssemblyInfo.cs
 C:\Users\ses-9\Desktop\meldboek\meldboek\obj\Debug\netcoreapp2.2\meldboek.AssemblyInfoInputs.cache
@@ -123,5 +124,3 @@ C:\Users\ses-9\Desktop\meldboek\meldboek\obj\Debug\netcoreapp2.2\meldboek.genrun
 C:\Users\ses-9\Desktop\meldboek\meldboek\obj\Debug\netcoreapp2.2\meldboek.csproj.CopyComplete
 C:\Users\ses-9\Desktop\meldboek\meldboek\obj\Debug\netcoreapp2.2\meldboek.csproj.CoreCompileInputs.cache
 C:\Users\ses-9\Desktop\meldboek\meldboek\obj\Debug\netcoreapp2.2\Razor\Views\Admin\LogIn.cshtml.g.cs
-C:\Users\ses-9\Desktop\meldboek\meldboek\obj\Debug\netcoreapp2.2\meldboek.csprojAssemblyReference.cache
-C:\Users\ses-9\Desktop\meldboek\meldboek\obj\Debug\netcoreapp2.2\Razor\Views\Admin\Welkom.cshtml.g.cs

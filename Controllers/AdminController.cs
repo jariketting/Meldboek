@@ -16,21 +16,21 @@ namespace meldboek.Controllers
         {
             return View();
         }
-        
+
         public IActionResult LogIn(string email, string password)
         {
-          
+
             {
                 if (email == "admin" && password == "admin")
                 {
-                    Response.Redirect("Welkom.cshtml");
+                    Response.Redirect("LogIn");
                 }
             }
 
 
 
             return View();
-            
+
         }
 
     }
