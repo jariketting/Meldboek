@@ -12,5 +12,16 @@ namespace meldboek.Controllers
         {
             return View();
         }
+        public IActionResult CreateAccount(string firstname, string lastname, string email, string password)
+        {
+            //account toevoegen aan database
+            return View();
+
+        }
+
+        public IActionResult Newsfeed()
+        {
+            return View();
+        }
     }
 }
