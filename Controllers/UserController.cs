@@ -19,5 +19,10 @@ namespace meldboek.Controllers
             return View();
 
         }
+
+        public IActionResult Newsfeed()
+        {
+            return View();
+        }
     }
 }
