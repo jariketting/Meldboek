@@ -77,14 +77,14 @@
             height: 74px;
         }
 
-            .topbar h1 {
-                color: #ffffff;
-                font-size: 34px;
-                padding-top: 20px;
-                padding-bottom: 20px;
-                width: 55%;
-                float: left;
-            }
+        .topbar h1 {
+            color: #ffffff;
+            font-size: 34px;
+            padding-top: 20px;
+            padding-bottom: 20px;
+            width: 55%;
+            float: left;
+        }
 
         /* Account icon*/
         #acc-icon {
@@ -146,18 +146,18 @@
             width: 100%;
         }
 
-            .logout a {
-                text-align: center;
-                text-decoration: none;
-                font-size: 24px;
-                color: #ffffff;
-                display: block;
-                transition: 0.3s;
-            }
+        .logout a {
+            text-align: center;
+            text-decoration: none;
+            font-size: 24px;
+            color: #ffffff;
+            display: block;
+            transition: 0.3s;
+        }
 
-                .overlay a:hover, .overlay a:focus, .logout a:hover, .logout a:focus {
-                    color: #9ee0a4;
-                }
+        .overlay a:hover, .overlay a:focus, .logout a:hover, .logout a:focus {
+            color: #9ee0a4;
+        }
 
         /* Actual content of the newsfeed */
         .newsfeed-content {
@@ -178,18 +178,18 @@
             border-right: 2px solid #3bb546;
         }
 
-            .categories a {
-                color: #000000;
-                font-size: 24px;
-                text-decoration: none;
-                display: block;
-                padding-bottom: 15px;
-                width: 105px;
-            }
+        .categories a {
+            color: #000000;
+            font-size: 24px;
+            text-decoration: none;
+            display: block;
+            padding-bottom: 15px;
+            width: 105px;
+        }
 
-                .categories a:hover {
-                    color: #9ee0a4;
-                }
+        .categories a:hover {
+            color: #9ee0a4;
+        }
 
         /* Articles list */
         .articles-list {
@@ -199,7 +199,7 @@
 
         /* Single article */
         .article {
-            width: 80%;
+            width: 90%;
             overflow: hidden;
             padding-bottom: 5px;
             border-bottom: 1px solid #3bb546;
@@ -211,65 +211,57 @@
             width: 200px;
         }
 
-            .article-content h1 {
-                font-size: 28px;
-                padding-bottom: 15px;
-                padding-top: 40px;
-            }
-
-            .article-content h3 {
-                font-size: 20px;
-                padding-bottom: 10px;
-            }
-
-        /* 'Keep reading' button */
-        .article a {
-            text-decoration: none;
+        .article-content h1 {
+            font-size: 28px;
+            padding-bottom: 15px;
+            padding-top: 40px;
         }
 
-        .article-button {
-            display: block;
-            background-color: #3bb546;
-            padding: 10px;
-            margin-top: 70px;
-            margin-left: 790px;
-            border-radius: 20px;
-            width: 125px;
-            text-align: center;
-            color: #ffffff;
+        .article-content h3 {
             font-size: 20px;
-            text-decoration: none;
+            padding-bottom: 10px;
         }
 
-            .article-button:hover {
-                background-color: #9ee0a4;
-            }
+        .article-content p {
+            color: #000000;
+            font-size: 16px;
+            padding-bottom: 10px;
+        }
 
-            .article-button a {
-                color: #ffffff;
-                font-size: 20px;
-                text-decoration: none;
-            }
+        /* Form to add an article */
+        .add-article {
+            width: 90%;
+            font-size: 18px;
+            padding-bottom: 20px;
+        }
 
-        /* Add article ('+') button */
-        .add_article {
-            margin-left: 1040px;
-            margin-top: 475px;
-            position: fixed;
+        input[type=text], select, textarea {
+            font-family: 'Trebuchet MS', sans-serif;
+            font-size: 14px;
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            margin-top: 6px;
+            margin-bottom: 16px;
+            resize: vertical;
+        }
+
+        input[type=submit] {
+            font-family: 'Trebuchet MS', sans-serif;
             background-color: #3bb546;
-            border-radius: 40px;
-            display: inline-block;
+            color: white;
+            font-size: 20px;
+            border-radius: 25px;
+            padding: 10px 15px;
+            border: none;
             cursor: pointer;
-            color: #ffffff;
-            font-size: 75px;
-            font-weight: bold;
-            padding: 0px 17px 3px;
-            text-decoration: none;
         }
 
-            .add_article:hover {
+        input[type=submit]:hover {
                 background-color: #9ee0a4;
-            }
+        }
     </style>
     <script>
         /*
@@ -341,77 +333,46 @@
 
         <!-- List of articles -->
         <div class="articles-list">
+            <form class="add-article" action="">
+                <label for="title">Titel</label>
+                <input type="text" id="title" name="title" placeholder="Titel nieuwsbericht">
 
-            <!-- Add article ('+') button -->
-            <a class="add_article" href="#">+</a>
+                <label for="category">Categorie</label>
+                <select id="category" name="category">
+                    <option value="general">Algemeen</option>
+                </select>
+
+                <label for="description">Beschrijving</label>
+                <textarea id="description" name="description" placeholder="Beschrijving nieuwsbericht" style="height:200px"></textarea>
+
+                <input type="submit" value="Voeg toe">
+            </form>
 
             <!-- Single article attribute -->
             <div class="article">
                 <div class="article-content">
                     <h1>[Title]</h1>
                     <h3>[Author], [Date]</h3>
+                    <p>[Description]</p>
                 </div>
-                <a href="#"><div class="article-button">Lees verder</div></a>
             </div>
 
             <div class="article">
                 <div class="article-content">
                     <h1>[Title]</h1>
                     <h3>[Author], [Date]</h3>
+                    <p>[Description]</p>
                 </div>
-                <a href="#"><div class="article-button">Lees verder</div></a>
             </div>
 
             <div class="article">
                 <div class="article-content">
                     <h1>[Title]</h1>
                     <h3>[Author], [Date]</h3>
+                    <p>[Description]</p>
                 </div>
-                <a href="#"><div class="article-button">Lees verder</div></a>
             </div>
-
-            <div class="article">
-                <div class="article-content">
-                    <h1>[Title]</h1>
-                    <h3>[Author], [Date]</h3>
-                </div>
-                <a href="#"><div class="article-button">Lees verder</div></a>
-            </div>
-
-            <div class="article">
-                <div class="article-content">
-                    <h1>[Title]</h1>
-                    <h3>[Author], [Date]</h3>
-                </div>
-                <a href="#"><div class="article-button">Lees verder</div></a>
-            </div>
-
-            <div class="article">
-                <div class="article-content">
-                    <h1>[Title]</h1>
-                    <h3>[Author], [Date]</h3>
-                </div>
-                <a href="#"><div class="article-button">Lees verder</div></a>
-            </div>
-
-            <div class="article">
-                <div class="article-content">
-                    <h1>[Title]</h1>
-                    <h3>[Author], [Date]</h3>
-                </div>
-                <a href="#"><div class="article-button">Lees verder</div></a>
-            </div>
-
-            <div class="article">
-                <div class="article-content">
-                    <h1>[Title]</h1>
-                    <h3>[Author], [Date]</h3>
-                </div>
-                <a href="#"><div class="article-button">Lees verder</div></a>
-            </div>
-
         </div>
     </div>
-
 </body>
 </html>
