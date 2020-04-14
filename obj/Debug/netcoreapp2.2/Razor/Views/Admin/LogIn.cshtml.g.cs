@@ -13,12 +13,12 @@ namespace AspNetCore
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Rendering;
     using Microsoft.AspNetCore.Mvc.ViewFeatures;
-#line 1 "C:\Users\ses-9\Desktop\meldboek\meldboek\Views\_ViewImports.cshtml"
+#line 1 "C:\Users\amyno\source\repos\meldboek\Views\_ViewImports.cshtml"
 using meldboek;
 
 #line default
 #line hidden
-#line 2 "C:\Users\ses-9\Desktop\meldboek\meldboek\Views\_ViewImports.cshtml"
+#line 2 "C:\Users\amyno\source\repos\meldboek\Views\_ViewImports.cshtml"
 using meldboek.Models;
 
 #line default
@@ -64,7 +64,7 @@ using meldboek.Models;
     <style>
         body {
             font-family: 'Open Sans', sans-serif;
-            background: 21323;
+            background: #ecf0f1; /*21323*/
             margin: 0 auto 0 auto;
             width: 100%;
             text-align: center;
@@ -79,7 +79,6 @@ using meldboek.Models;
             padding: 100px 100px 100px 50px;
             border: #6f89c4 4px solid;
         }
-
         .username {
             background: #ecf0f1;
             border: #8593bc 1px solid;
@@ -91,7 +90,6 @@ using meldboek.Models;
             font-size: 1em;
             border-radius: 4px;
         }
-
         .button {
             background: #6f89c4;
             width: 200px;
@@ -111,11 +109,9 @@ using meldboek.Models;
             font-weight: 600;
             font-size: 0.8em;
         }
-
             .button:hover {
                 background: Blue;
             }
-
         .fpwd {
             color: #6f89c4;
             text-decoration: underline;

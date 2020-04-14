@@ -21,6 +21,11 @@ namespace meldboek.Models
             Password = password;
 
         }
+        //Lege Constructor
+        public User()
+        {
+     
+        }
     }
 
 }
