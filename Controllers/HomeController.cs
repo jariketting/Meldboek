@@ -16,59 +16,54 @@ namespace meldboek.Controllers
     public class HomeController : Controller
     {
         public IDriver Driver { get; set; }
-        public IGraphClient GraphClient {get;set;}
-
-
-       public IActionResult Index()
-       {
-
-           ConnectDb("CREATE (n:Person { name: 'Anna', title: 'Developer' }) RETURN n");
-
-
-           return View();
-       }
-
-        // public ActionResult  Index()
-        // {
-        //     var client = new GraphClient(new Uri("bolt://localhost:7687"),"neo4j", "1234");
-        //     client.Connect();
-        //     GraphClient = client;
-
-        //     var query = GraphClient.Cypher
-        //     .Match("(n:Person) where n.name = Andy")
-        //     .Return((n) => new{
-        //         smt = n.As<string>("collect(x.name)")
-        //     });
-        //     var result = query.Results.ToList();
-        //     Console.WriteLine(result);
-        //       Console.WriteLine("Done");
-
-        //       return View();
-        // }
+        public IGraphClient GraphClient { get; set; }
 
 
 
-        public async void ConnectDb(string query)
+        public IActionResult Index()
         {
-               Driver = CreateDriverWithBasicAuth("bolt://localhost:7687", "neo4j", "1234");
+            var results = ConnectDb("CREATE (n:Person { name: 'Yas', title: 'Developer' }) RETURN n");
+            // var results = ConnectDb("MATCH (a:Person) RETURN a");
+            Console.WriteLine(results.ToString());
+
+            return View();
+        }
 
 
+
+        public async Task<List<String>> ConnectDb(string query)
+        {
+            Driver = CreateDriverWithBasicAuth("bolt://localhost:7687", "neo4j", "1234");
+            List<string> res = new List<string>();
             IAsyncSession session = Driver.AsyncSession(o => o.WithDatabase("neo4j"));
+
             try
             {
-                IResultCursor cursor = await session.RunAsync(query);
-                //          Console.WriteLine(cursor.Current.Values.ToString());
-                Console.WriteLine("Done");
-                await cursor.ConsumeAsync();
+                res = await session.ReadTransactionAsync(async tx =>
+                {
+                    var results = new List<string>();
+                    var reader = await tx.RunAsync(query);
+
+                    while (await reader.FetchAsync())
+                    {
+                        results.Add(reader.Current[0].ToString());
+                    }
+
+                    return results;
+                });
+
             }
 
             finally
             {
                 await session.CloseAsync();
-            }
 
-            await Driver.CloseAsync();
+            }
+            return res;
+
         }
+
+
 
 
         public IDriver CreateDriverWithBasicAuth(string uri, string user, string password)
