@@ -12693,7 +12693,6 @@
       "Microsoft.AspNet.WebApi >= 5.2.7",
       "Microsoft.AspNet.WebApi.Client >= 5.2.7",
       "Microsoft.AspNetCore.App >= 2.2.0",
-      "Microsoft.AspNetCore.Mvc.Analyzers >= 2.2.0",
       "Microsoft.AspNetCore.Razor.Design >= 2.2.0",
       "Microsoft.Graph >= 3.0.1",
       "Microsoft.NETCore.App >= 2.2.0",
@@ -12754,10 +12753,6 @@
           },
           "Microsoft.AspNetCore.App": {
             "suppressParent": "All",
-            "target": "Package",
-            "version": "[2.2.0, )"
-          },
-          "Microsoft.AspNetCore.Mvc.Analyzers": {
             "target": "Package",
             "version": "[2.2.0, )"
           },

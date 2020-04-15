@@ -14,9 +14,16 @@ namespace meldboek.Controllers
         }
         public IActionResult CreateAccount(string firstname, string lastname, string email, string password)
         {
-            if (password == password2)
+            if (firstname != null & lastname != null & email != null & password != null)
             {
-                User u1 = new User(firstname, lastname, email, password);
+                User u1 = new User()
+                {
+                    FirstName = firstname,
+                    LastName = lastname,
+                    Email = email,
+                    Password = password
+                };
+
                 return View();
             }
             else
