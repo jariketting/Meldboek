@@ -22,35 +22,42 @@ namespace meldboek.Controllers
 
         public IActionResult Index()
         {
-            var results = ConnectDb("CREATE (n:Person { name: 'Yas', title: 'Developer' }) RETURN n");
-            // var results = ConnectDb("MATCH (a:Person) RETURN a");
-            Console.WriteLine(results.ToString());
+            // var results = ConnectDb("CREATE (n:Person { name: 'Yas2', title: 'Developer' }) RETURN n");
+            var results = ConnectDb("MATCH (a:Person) RETURN a");
+            var outcome = results.Result;
+            outcome.ForEach(Console.WriteLine);
+            var sm = outcome.FirstOrDefault();
+            Console.WriteLine(sm.Properties);
+            Console.WriteLine(sm.Labels);
+            var hello = sm.Properties;
+            Console.WriteLine(hello.Values);
 
             return View();
         }
 
-
-
-        public async Task<List<String>> ConnectDb(string query)
+        public async Task<List<INode>> ConnectDb(string query)
         {
             Driver = CreateDriverWithBasicAuth("bolt://localhost:7687", "neo4j", "1234");
-            List<string> res = new List<string>();
+            List<INode> res = new List<INode>();
             IAsyncSession session = Driver.AsyncSession(o => o.WithDatabase("neo4j"));
 
             try
             {
                 res = await session.ReadTransactionAsync(async tx =>
                 {
-                    var results = new List<string>();
+                    var results = new List<INode>();
                     var reader = await tx.RunAsync(query);
 
                     while (await reader.FetchAsync())
                     {
-                        results.Add(reader.Current[0].ToString());
+                        results.Add(reader.Current[0].As<INode>());
+
                     }
 
                     return results;
                 });
+                var node = res[0].As<INode>();
+                Console.WriteLine(node);
 
             }
 
@@ -62,6 +69,47 @@ namespace meldboek.Controllers
             return res;
 
         }
+
+
+        // public async Task<List<NodeResult>> ConnectDb(string query)
+        // {
+        //     Driver = CreateDriverWithBasicAuth("bolt://localhost:7687", "neo4j", "1234");
+        //     List<NodeResult> res = new List<NodeResult>();
+        //     IAsyncSession session = Driver.AsyncSession(o => o.WithDatabase("neo4j"));
+
+        //     try
+        //     {
+        //         res = await session.ReadTransactionAsync(async tx =>
+        //         {
+        //             var results = new List<NodeResult>();
+        //             var reader = await tx.RunAsync(query);
+
+        //             while (await reader.FetchAsync())
+        //             {
+        //                 var obj = new NodeResult()
+        //                 {
+        //                     Result = reader.Current[0],
+        //                     node = reader.Current[0].As<INode>()
+        //                 };
+
+        //                 results.Add(obj);
+        //             }
+
+        //             return results;
+        //         });
+        //         var node = res[0].As<INode>();
+        //         Console.WriteLine(node);
+
+        //     }
+
+        //     finally
+        //     {
+        //         await session.CloseAsync();
+
+        //     }
+        //     return res;
+
+        // }
 
 
 
