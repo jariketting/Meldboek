@@ -78,6 +78,10 @@
             "Neo4jClient": {
               "target": "Package",
               "version": "[3.1.0.6, )"
+            },
+            "Newtonsoft.Json": {
+              "target": "Package",
+              "version": "[12.0.3, )"
             }
           },
           "imports": [

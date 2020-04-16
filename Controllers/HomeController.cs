@@ -10,6 +10,7 @@ using Neo4jClient;
 using Neo4j.Driver;
 using Neo4jClient.Cypher;
 using Autofac;
+using Newtonsoft.Json;
 
 namespace meldboek.Controllers
 {
@@ -23,16 +24,32 @@ namespace meldboek.Controllers
         public IActionResult Index()
         {
             // var results = ConnectDb("CREATE (n:Person { name: 'Yas2', title: 'Developer' }) RETURN n");
-            var results = ConnectDb("MATCH (a:Person) RETURN a");
-            var outcome = results.Result;
-            outcome.ForEach(Console.WriteLine);
-            var sm = outcome.FirstOrDefault();
-            Console.WriteLine(sm.Properties);
-            Console.WriteLine(sm.Labels);
-            var hello = sm.Properties;
-            Console.WriteLine(hello.Values);
+            // var results = ConnectDb("MATCH (a:Person) RETURN a");
+
+
+            // DIT IS ALLEMAAL OM TE TESTEN
+            var user1 = GetUser(1);
+            var email = user1.Email;
+            var id = user1.UserId;
+            var name = user1.FirstName;
+            var namelast = user1.LastName;
+            Console.WriteLine(email + id + name + namelast);
 
             return View();
+        }
+        public User GetUser(int userId)
+        {
+            var results = ConnectDb("MATCH (a:Person) WHERE a.UserId = " + userId.ToString() + " RETURN a");
+            var nodes = results.Result;
+            var user = new User();
+            var node = nodes.FirstOrDefault();
+            foreach (var record in nodes)
+            {
+                var nodeprops = JsonConvert.SerializeObject(record.As<INode>().Properties);
+                user = (JsonConvert.DeserializeObject<User>(nodeprops));
+            }
+
+            return user;
         }
 
         public async Task<List<INode>> ConnectDb(string query)

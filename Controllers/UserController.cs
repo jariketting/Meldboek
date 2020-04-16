@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using meldboek.Models;
 using Neo4j.Driver;
+using Newtonsoft.Json;
 namespace meldboek.Controllers
 {
     public class UserController : Controller
@@ -52,15 +53,16 @@ namespace meldboek.Controllers
 
         public User GetUser(int userId)
         {
-            // still need to create a user out of the result
-            var results = ConnectDb("MATCH (a:Person) WHERE a.UserId = " + userId.ToString() + "RETURN a");
+            var results = ConnectDb("MATCH (a:Person) WHERE a.UserId = " + userId.ToString() + " RETURN a");
             var nodes = results.Result;
+            var user = new User();
             var node = nodes.FirstOrDefault();
-            User user = new User()
+            foreach (var record in nodes)
             {
+                var nodeprops = JsonConvert.SerializeObject(record.As<INode>().Properties);
+                user = (JsonConvert.DeserializeObject<User>(nodeprops));
+            }
 
-
-            };
             return user;
         }
         public async Task<List<INode>> ConnectDb(string query)
