@@ -44,28 +44,49 @@ namespace meldboek.Controllers
             return View();
 
         }
-        public IActionResult AddFriend(int userId, int friendId)
+        public Boolean AddFriend(int userId, int friendId)
         {
+            var user = GetUser(userId);
+            var userPending = GetUser(friendId);
+            var Success = new Boolean();
+            var userid = user.UserId;
+            var frienduserid = userPending.UserId;
+            Console.WriteLine(userid.ToString());
+            Console.WriteLine(frienduserid.ToString());
 
+            if (userid == userId & friendId == frienduserid)
+            {
+                var results = ConnectDb("MATCH (a:Person), (b:Person) WHERE a.UserId = " + userId.ToString() + " AND b.UserId = " + friendId.ToString() + " CREATE (a)-[r:FriendPending]->(b)" + " RETURN a");
+                Success = true;
+            }
+            else
+            {
+                Success = false;
+            }
 
-            return View();
+            return Success;
+
         }
 
         public User GetUser(int userId)
         {
+            List<INode> nodeList = new List<INode>();
             var results = ConnectDb("MATCH (a:Person) WHERE a.UserId = " + userId.ToString() + " RETURN a");
-            var nodes = results.Result;
             var user = new User();
-            var node = nodes.FirstOrDefault();
-            foreach (var record in nodes)
-            {
-                var nodeprops = JsonConvert.SerializeObject(record.As<INode>().Properties);
-                user = (JsonConvert.DeserializeObject<User>(nodeprops));
-            }
+
+                nodeList = results.Result;
+                foreach (var record in nodeList)
+                {
+                    var nodeprops = JsonConvert.SerializeObject(record.As<INode>().Properties);
+                    user = (JsonConvert.DeserializeObject<User>(nodeprops));
+                }
+            
+
 
             return user;
         }
-        public async Task<List<INode>> ConnectDb(string query)
+
+         public async Task<List<INode>> ConnectDb(string query)
         {
             Driver = CreateDriverWithBasicAuth("bolt://localhost:7687", "neo4j", "1234");
             List<INode> res = new List<INode>();
@@ -86,8 +107,7 @@ namespace meldboek.Controllers
 
                     return results;
                 });
-                var node = res[0].As<INode>();
-                Console.WriteLine(node);
+
 
             }
 
