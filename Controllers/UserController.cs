@@ -46,6 +46,8 @@ namespace meldboek.Controllers
         }
         public Boolean AddFriend(int userId, int friendId)
         {
+            // maybe add check for if they already are friends
+
             var user = GetUser(userId);
             var userPending = GetUser(friendId);
             var Success = new Boolean();
@@ -66,6 +68,11 @@ namespace meldboek.Controllers
 
             return Success;
 
+        }
+
+        public void AcceptFriend(User userRequested, User userAccepted)
+        {            
+           ConnectDb("MATCH (a:Person), (b:Person) WHERE a.UserId = " + userRequested.UserId.ToString() + " AND b.UserId = " + userAccepted.UserId.ToString() + " CREATE (a)-[r:IsFriendsWith]->(b)" + " RETURN a");
         }
 
         public User GetUser(int userId)

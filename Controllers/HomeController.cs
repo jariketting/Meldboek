@@ -40,31 +40,13 @@ namespace meldboek.Controllers
             // var result2 = AddFriend(2, 3);
             //  Console.WriteLine(result.ToString());
             // Console.WriteLine(result2.ToString());
+
+           // AcceptFriend(GetUser(1),GetUser(2));
+
             return View();
         }
-        public Boolean AddFriend(int userId, int friendId)
-        {
-            var user = GetUser(userId);
-            var userPending = GetUser(friendId);
-            var Success = new Boolean();
-            var userid = user.UserId;
-            var frienduserid = userPending.UserId;
-            Console.WriteLine(userid.ToString());
-            Console.WriteLine(frienduserid.ToString());
 
-            if (userid == userId & friendId == frienduserid)
-            {
-                var results = ConnectDb("MATCH (a:Person), (b:Person) WHERE a.UserId = " + userId.ToString() + " AND b.UserId = " + friendId.ToString() + " CREATE (a)-[r:FriendPending]->(b)" + " RETURN a");
-                Success = true;
-            }
-            else
-            {
-                Success = false;
-            }
 
-            return Success;
-
-        }
 
         public User GetUser(int userId)
         {
