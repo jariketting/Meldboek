@@ -2971,6 +2971,11 @@
       "FileKind": "mvc"
     },
     {
+      "FilePath": "/Users/yaseminsnoek/Documents/Inf jaar 2/Project D/meldboek/Views/User/CreateAccount.cshtml",
+      "TargetPath": "Views\\User\\CreateAccount.cshtml",
+      "FileKind": "mvc"
+    },
+    {
       "FilePath": "/Users/yaseminsnoek/Documents/Inf jaar 2/Project D/meldboek/Views/Home/Privacy.cshtml",
       "TargetPath": "Views\\Home\\Privacy.cshtml",
       "FileKind": "mvc"
@@ -2988,6 +2993,16 @@
     {
       "FilePath": "/Users/yaseminsnoek/Documents/Inf jaar 2/Project D/meldboek/Views/Shared/_CookieConsentPartial.cshtml",
       "TargetPath": "Views\\Shared\\_CookieConsentPartial.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "/Users/yaseminsnoek/Documents/Inf jaar 2/Project D/meldboek/Views/Admin/LogIn.cshtml",
+      "TargetPath": "Views\\Admin\\LogIn.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "/Users/yaseminsnoek/Documents/Inf jaar 2/Project D/meldboek/Views/User/Newsfeed.cshtml",
+      "TargetPath": "Views\\User\\Newsfeed.cshtml",
       "FileKind": "mvc"
     },
     {
