@@ -13,12 +13,12 @@ namespace AspNetCore
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Rendering;
     using Microsoft.AspNetCore.Mvc.ViewFeatures;
-#line 1 "/Users/yaseminsnoek/Documents/Inf jaar 2/Project D/meldboek/Views/_ViewImports.cshtml"
+#line 1 "C:\Users\amyno\source\repos\meldboek\Views\_ViewImports.cshtml"
 using meldboek;
 
 #line default
 #line hidden
-#line 2 "/Users/yaseminsnoek/Documents/Inf jaar 2/Project D/meldboek/Views/_ViewImports.cshtml"
+#line 2 "C:\Users\amyno\source\repos\meldboek\Views\_ViewImports.cshtml"
 using meldboek.Models;
 
 #line default
@@ -54,8 +54,8 @@ using meldboek.Models;
         #pragma warning disable 1998
         public async override global::System.Threading.Tasks.Task ExecuteAsync()
         {
-            BeginContext(29, 23, true);
-            WriteLiteral("<!DOCTYPE html>\n<html>\n");
+            BeginContext(30, 25, true);
+            WriteLiteral("<!DOCTYPE html>\r\n<html>\r\n");
             EndContext();
             BeginContext(55, 1906, false);
             __tagHelperExecutionContext = __tagHelperScopeManager.Begin("head", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "ac1c61624f1be586650fe6e70de48f73d58e44054185", async() => {

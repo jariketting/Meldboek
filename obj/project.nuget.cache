@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "sCKvcnI6P08lp/1lPHMLyCcDaJUfq6l23geEE83COIJiMDy+tPNsAczmvXohL1sz1UxHbWStg5u5alaI8IJhLA==",
+  "dgSpecHash": "TyOo8uUZA/9J/kKz31exPw2Hq3gg5kS9sFoNASW3/DWf/JCqW9BNsVr/DWVu0urLAQSnmGRBjNvdVYNhpe/uxg==",
   "success": true,
   "projectFilePath": "C:\\Users\\amyno\\source\\repos\\meldboek\\meldboek.csproj",
   "expectedPackageFiles": [
@@ -187,7 +187,7 @@
     "C:\\Users\\amyno\\.nuget\\packages\\neo4j.driver.signed\\1.7.0\\neo4j.driver.signed.1.7.0.nupkg.sha512",
     "C:\\Users\\amyno\\.nuget\\packages\\neo4jclient\\3.1.0.6\\neo4jclient.3.1.0.6.nupkg.sha512",
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\netstandard.library\\2.0.3\\netstandard.library.2.0.3.nupkg.sha512",
-    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\newtonsoft.json\\11.0.2\\newtonsoft.json.11.0.2.nupkg.sha512",
+    "C:\\Users\\amyno\\.nuget\\packages\\newtonsoft.json\\12.0.3\\newtonsoft.json.12.0.3.nupkg.sha512",
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\newtonsoft.json.bson\\1.0.1\\newtonsoft.json.bson.1.0.1.nupkg.sha512",
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\remotion.linq\\2.2.0\\remotion.linq.2.2.0.nupkg.sha512",
     "C:\\Users\\amyno\\.nuget\\packages\\runtime.debian.8-x64.runtime.native.system.security.cryptography.openssl\\4.3.2\\runtime.debian.8-x64.runtime.native.system.security.cryptography.openssl.4.3.2.nupkg.sha512",

@@ -1,4 +1,4 @@
-﻿@model meldboek.Models.User
+﻿@model meldboek.Models.Newspost
 <!DOCTYPE html>
 <html>
 <head>
@@ -331,19 +331,19 @@
             <a href="#">Overig</a>
         </div>
 
-        <!-- List of articles -->
+        <!-- List of articles | action="Url.Action("AddPost()","UserController")"-->
         <div class="articles-list">
-            <form class="add-article" action="">
+            <form action="AddPost" method="post" class="add-article">
                 <label for="title">Titel</label>
                 <input type="text" id="title" name="title" placeholder="Titel nieuwsbericht">
 
-                <label for="category">Categorie</label>
+                <!--<label for="category">Categorie</label>
                 <select id="category" name="category">
                     <option value="general">Algemeen</option>
-                </select>
+                </select>-->
 
                 <label for="description">Beschrijving</label>
-                <textarea id="description" name="description" placeholder="Beschrijving nieuwsbericht" style="height:200px"></textarea>
+                <textarea id="description" name="description" value="description" placeholder="Beschrijving nieuwsbericht" style="height:200px"></textarea>
 
                 <input type="submit" value="Voeg toe">
             </form>

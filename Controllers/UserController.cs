@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Mvc;
 using meldboek.Models;
 using Neo4j.Driver;
 using Newtonsoft.Json;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
+
 namespace meldboek.Controllers
 {
     public class UserController : Controller
@@ -32,7 +34,7 @@ namespace meldboek.Controllers
             }
             else
             {
-                //passwordt incorrect
+                //password incorrect
                 return View();
             }
 
@@ -41,9 +43,18 @@ namespace meldboek.Controllers
 
         public IActionResult Newsfeed()
         {
+            //ConnectDb("CREATE (n:Post {title: 'help', description: 'a'})");
             return View();
 
         }
+
+        [HttpPost]
+        public ActionResult AddPost(string title, string description)
+        {
+            ConnectDb("CREATE (n:Post {title: '" + title + "', description: '" + description + "'})");
+            return View("Newsfeed");
+        }
+
         public Boolean AddFriend(int userId, int friendId)
         {
             // maybe add check for if they already are friends
@@ -95,7 +106,7 @@ namespace meldboek.Controllers
 
          public async Task<List<INode>> ConnectDb(string query)
         {
-            Driver = CreateDriverWithBasicAuth("bolt://localhost:7687", "neo4j", "1234");
+            Driver = CreateDriverWithBasicAuth("bolt://localhost:11003", "neo4j", "1234");
             List<INode> res = new List<INode>();
             IAsyncSession session = Driver.AsyncSession(o => o.WithDatabase("neo4j"));
 
