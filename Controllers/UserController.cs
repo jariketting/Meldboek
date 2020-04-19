@@ -53,7 +53,7 @@ namespace meldboek.Controllers
         [HttpPost]
         public IActionResult AddPost(string title, string description, string postid)
         {
-            string Timestamp = System.DateTime.Now.ToString("dd-MM-yyyy HH:mm:ss");
+            string Timestamp = DateTime.Now.ToString("dd-MM-yyyy HH:mm:ss");
             ConnectDb("CREATE (n:Post {title: '" + title + "', description: '" + description + "', postid: '" + postid + "', dateadded: '" + Timestamp + "'})");
             return RedirectToAction("Newsfeed");
         }
