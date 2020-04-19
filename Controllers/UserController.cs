@@ -7,6 +7,9 @@ using meldboek.Models;
 using Neo4j.Driver;
 using Newtonsoft.Json;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using Neo4jClient;
+using System.Collections;
+using System.Reflection;
 
 namespace meldboek.Controllers
 {
@@ -43,16 +46,39 @@ namespace meldboek.Controllers
 
         public IActionResult Newsfeed()
         {
-            //ConnectDb("CREATE (n:Post {title: 'help', description: 'a'})");
+            GetPosts();
             return View();
-
         }
 
         [HttpPost]
-        public ActionResult AddPost(string title, string description)
+        public IActionResult AddPost(string title, string description, string postid)
         {
-            ConnectDb("CREATE (n:Post {title: '" + title + "', description: '" + description + "'})");
-            return View("Newsfeed");
+            ConnectDb("CREATE (n:Post {title: '" + title + "', description: '" + description + "', PostId: '" + postid + "'})");
+            return RedirectToAction("Newsfeed");
+        }
+
+        public IActionResult GetPosts() {
+            List<INode> nodeList = new List<INode>();
+            var results = ConnectDb("MATCH (p) RETURN (p)");
+            var post = new Newspost();
+            List<Newspost> obj = new List<Newspost>();
+
+            nodeList = results.Result;
+            foreach (var record in nodeList)
+            {
+                var nodeprops = JsonConvert.SerializeObject(record.As<INode>().Properties);
+                post = (JsonConvert.DeserializeObject<Newspost>(nodeprops));
+
+                obj.Add(new Newspost()
+                {
+                    PostId = post.PostId,
+                    Title = post.Title,
+                    Description = post.Description
+                });
+
+            }
+            List<Newspost> SortedList = obj.OrderByDescending(p => p.PostId).ToList();
+            return View(SortedList);
         }
 
         public Boolean AddFriend(int userId, int friendId)
