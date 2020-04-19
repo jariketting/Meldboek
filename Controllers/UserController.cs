@@ -77,9 +77,8 @@ namespace meldboek.Controllers
                     Description = post.Description,
                     DateTime = post.DateTime
                 });
-
             }
-            List<Newspost> SortedList = obj.OrderByDescending(p => p.PostId).ToList();
+            List<Newspost> SortedList = obj.OrderByDescending(p => p.DateTime).ToList();
             return View(SortedList);
         }
 
