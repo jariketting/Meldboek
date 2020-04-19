@@ -88,3 +88,6 @@
 /Users/yaseminsnoek/Documents/Inf jaar 2/Project D/meldboek/obj/Debug/netcoreapp2.2/meldboek.dll
 /Users/yaseminsnoek/Documents/Inf jaar 2/Project D/meldboek/obj/Debug/netcoreapp2.2/meldboek.pdb
 /Users/yaseminsnoek/Documents/Inf jaar 2/Project D/meldboek/obj/Debug/netcoreapp2.2/meldboek.csproj.CopyComplete
+/Users/yaseminsnoek/Documents/Inf jaar 2/Project D/meldboek/obj/Debug/netcoreapp2.2/Razor/Views/Admin/LogIn.g.cshtml.cs
+/Users/yaseminsnoek/Documents/Inf jaar 2/Project D/meldboek/obj/Debug/netcoreapp2.2/Razor/Views/User/CreateAccount.g.cshtml.cs
+/Users/yaseminsnoek/Documents/Inf jaar 2/Project D/meldboek/obj/Debug/netcoreapp2.2/Razor/Views/User/Newsfeed.g.cshtml.cs
