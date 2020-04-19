@@ -53,8 +53,8 @@ namespace meldboek.Controllers
         [HttpPost]
         public IActionResult AddPost(string title, string description, string postid)
         {
-            string DateTime = System.DateTime.Now.ToString("dd-MM-yyyy HH:mm:ss");
-            ConnectDb("CREATE (n:Post {title: '" + title + "', description: '" + description + "', postid: '" + postid + "', datetime: '" + DateTime + "'})");
+            string Timestamp = System.DateTime.Now.ToString("dd-MM-yyyy HH:mm:ss");
+            ConnectDb("CREATE (n:Post {title: '" + title + "', description: '" + description + "', postid: '" + postid + "', dateadded: '" + Timestamp + "'})");
             return RedirectToAction("Newsfeed");
         }
 
@@ -75,10 +75,10 @@ namespace meldboek.Controllers
                     PostId = post.PostId,
                     Title = post.Title,
                     Description = post.Description,
-                    DateTime = post.DateTime
+                    DateAdded = post.DateAdded
                 });
             }
-            List<Newspost> SortedList = obj.OrderByDescending(p => p.DateTime).ToList();
+            List<Newspost> SortedList = obj.OrderByDescending(p => p.DateAdded).ToList();
             return View(SortedList);
         }
 
