@@ -65,6 +65,23 @@ namespace meldboek.Controllers
 
             return user;
         }
+        public Admin GetAdmin(int adminId)
+        {
+            List<INode> nodeList = new List<INode>();
+            var results = ConnectDb("MATCH (a:Person) WHERE a.AdminId = " + adminId.ToString() + " RETURN a");
+            var admin = new Admin();
+
+            nodeList = results.Result;
+            foreach (var record in nodeList)
+            {
+                var nodeprops = JsonConvert.SerializeObject(record.As<INode>().Properties);
+                admin = (JsonConvert.DeserializeObject<Admin>(nodeprops));
+            }
+
+
+
+            return admin;
+        }
 
         public async Task<List<INode>> ConnectDb(string query)
         {
