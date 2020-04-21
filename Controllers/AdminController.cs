@@ -18,10 +18,10 @@ namespace meldboek.Controllers
         {
             return View();
         }
-        public IActionResult CreateAccount()
-        {
-            return View();
-        }
+        //public IActionResult CreateAccount()
+        //{
+        //    return View();
+        //}
         public Admin GetAdmin(int adminid)
         {
             List<INode> nodeList = new List<INode>();
@@ -40,34 +40,61 @@ namespace meldboek.Controllers
             return admin;
         }
 
-       
+        public IActionResult CreateAccount(string firstname, string lastname, string email, string password, string password2)
+        {
+            if (firstname != null & lastname != null & email != null & password != null & password == password2)
+            {
+                Admin u = new Admin()
+                {
+                    FirstName = firstname,
+                    LastName = lastname,
+                    Email = email,
+                    Password = password
+
+
+                };
+                var r = ConnectDb("CREATE (p:Person { FirstName: '" + u.FirstName + "', LastName: '" + u.LastName + "' ,Email: '" + u.Email + "', Password: '" + u.Password + "' }) RETURN p");
+                r.Wait();
+                return View();
+            }
+            else
+            {
+                //passwordt incorrect
+                return View();
+            }
+        }
+
 
         public IActionResult LogIn(string email, string password, int adminId)
         {
             var admin = GetAdmin(adminId);
-            var adminid = admin.AdminId;
             var Success = new Boolean();
-            var adminemail = new Admin().Email;
-            adminemail = "admin@admin.admin";
-            var adminpassword = new Admin().Password;
-            adminpassword = "adminadminadmin";
-
-            if (email == adminemail  & password ==adminpassword)
+            var adminid = admin.AdminId;
+            Admin b = new Admin()
             {
-                var results = ConnectDb("MATCH (a:Person) WHERE a.AdminId = " + adminid.ToString() +  " RETURN a");
-                Success = true;
+                Email = email,
+                Password = password,
+            };
+ 
+            if (email == b.Email & password == b.Password)
+            {
+                var results = ConnectDb("MATCH (a:Person) WHERE a.AdminId = " + adminid.ToString() + " RETURN a");
+
+                return View();
             }
             else
             {
-                Success = false;
+                RedirectToAction("NewsFeed", "User");
             }
 
             return View();
-
-
-
         }
-        public async Task<List<INode>> ConnectDb(string query)
+    
+
+
+
+
+    public async Task<List<INode>> ConnectDb(string query)
         {
             Driver = CreateDriverWithBasicAuth("bolt://localhost:7687", "neo4j", "1234");
             List<INode> res = new List<INode>();
