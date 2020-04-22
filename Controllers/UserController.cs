@@ -11,6 +11,7 @@ using Neo4jClient;
 using System.Collections;
 using System.Reflection;
 
+
 namespace meldboek.Controllers
 {
     public class UserController : Controller
@@ -60,14 +61,25 @@ namespace meldboek.Controllers
         }
 
         public IActionResult GetPosts() {
-            List<INode> nodeList = new List<INode>();
-            var results = ConnectDb("MATCH (p) RETURN (p)");
+            List<INode> postList = new List<INode>();
+            var getPosts = ConnectDb("MATCH (p:Post) RETURN (p)");
             var post = new Newspost();
             List<Newspost> obj = new List<Newspost>();
 
-            nodeList = results.Result;
-            foreach (var record in nodeList)
+            postList = getPosts.Result;
+            foreach (var record in postList)
             {
+                List<INode> userList = new List<INode>();
+                var getuser = ConnectDb("MATCH(p: Post)--(u: Person) WHERE p.title = '" + post.Title + "' RETURN u");
+                var user = new User();
+
+                userList = getuser.Result;
+                foreach (var person in userList)
+                {
+                    var userprops = JsonConvert.SerializeObject(person.As<INode>().Properties);
+                    user = (JsonConvert.DeserializeObject<User>(userprops));
+                }
+
                 var nodeprops = JsonConvert.SerializeObject(record.As<INode>().Properties);
                 post = (JsonConvert.DeserializeObject<Newspost>(nodeprops));
 
@@ -76,8 +88,11 @@ namespace meldboek.Controllers
                     PostId = post.PostId,
                     Title = post.Title,
                     Description = post.Description,
-                    DateAdded = post.DateAdded
+                    DateAdded = post.DateAdded,
+                    FirstName = user.FirstName,
+                    LastName = user.LastName
                 });
+
             }
             List<Newspost> SortedList = obj.OrderByDescending(p => p.DateAdded).ToList();
             return View(SortedList);

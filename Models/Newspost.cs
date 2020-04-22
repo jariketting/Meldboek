@@ -11,5 +11,7 @@ namespace meldboek.Models
         public string Title { get; set; }
         public string Description { get; set; }
         public string DateAdded { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
     }
 }
