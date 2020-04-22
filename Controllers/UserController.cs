@@ -55,8 +55,8 @@ namespace meldboek.Controllers
         public IActionResult AddPost(string title, string description, string postid)
         {
             string Timestamp = DateTime.Now.ToString("dd-MM-yyyy HH:mm:ss");
-            ConnectDb("CREATE (n:Post {title: '" + title + "', description: '" + description + "', postid: '" + postid + "', dateadded: '" + Timestamp + "'})");
-            ConnectDb("MATCH (a:Person),(b:Post) WHERE a.FirstName = 'Amy' AND b.title = '" + title + "' CREATE(a) -[r: Posted]->(b)");
+            ConnectDb("CREATE (p:Post {title: '" + title + "', description: '" + description + "', postid: '" + postid + "', dateadded: '" + Timestamp + "'})");
+            ConnectDb("MATCH (u:Person),(p:Post) WHERE u.FirstName = 'Amy' AND p.title = '" + title + "' CREATE(u)-[r:Posted]->(p)");
             return RedirectToAction("Newsfeed");
         }
 
@@ -69,6 +69,10 @@ namespace meldboek.Controllers
             postList = getPosts.Result;
             foreach (var record in postList)
             {
+                var nodeprops = JsonConvert.SerializeObject(record.As<INode>().Properties);
+                post = (JsonConvert.DeserializeObject<Newspost>(nodeprops));
+
+
                 List<INode> userList = new List<INode>();
                 var getuser = ConnectDb("MATCH(p: Post)--(u: Person) WHERE p.title = '" + post.Title + "' RETURN u");
                 var user = new User();
@@ -79,9 +83,7 @@ namespace meldboek.Controllers
                     var userprops = JsonConvert.SerializeObject(person.As<INode>().Properties);
                     user = (JsonConvert.DeserializeObject<User>(userprops));
                 }
-
-                var nodeprops = JsonConvert.SerializeObject(record.As<INode>().Properties);
-                post = (JsonConvert.DeserializeObject<Newspost>(nodeprops));
+                
 
                 obj.Add(new Newspost()
                 {
