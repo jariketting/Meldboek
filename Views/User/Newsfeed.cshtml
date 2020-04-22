@@ -330,8 +330,8 @@
             <a href="#">Overig</a>
         </div>
 
-        <!-- List of articles | action="Url.Action("AddPost()","UserController")"-->
         <div class="articles-list">
+            <!-- The form to add a newspost links to a function in the UserController called AddPost. -->
             <form action="AddPost" method="post" class="add-article">
                 <label for="title">Titel</label>
                 <input type="text" id="title" name="title" placeholder="Titel nieuwsbericht">
@@ -350,7 +350,7 @@
                 <input type="submit" value="Voeg toe">
             </form>
 
-            <!-- Single article attribute -->
+            <!-- Single post attribute; Here all the posts from GetPosts() are put on the page. -->
             @if (Model.Any())
             {
                 foreach (var p in Model)

@@ -47,32 +47,41 @@ namespace meldboek.Controllers
 
         public IActionResult Newsfeed()
         {
+            // Before returning the view of the newsfeed, all the newsposts need to be pulled from the database
             GetPosts();
+
             return View();
         }
 
         [HttpPost]
         public IActionResult AddPost(string title, string description, string postid)
         {
+            // AddPost adds a newspost the user creates to the database. It takes the given title + description and adds the current time itself.
+
             string Timestamp = DateTime.Now.ToString("dd-MM-yyyy HH:mm:ss");
             ConnectDb("CREATE (p:Post {title: '" + title + "', description: '" + description + "', postid: '" + postid + "', dateadded: '" + Timestamp + "'})");
+            
+            // After adding the post to the database, a relationship is created between the post and the user who made it | (Person-[Posted]->Post)
             ConnectDb("MATCH (u:Person),(p:Post) WHERE u.FirstName = 'Amy' AND p.title = '" + title + "' CREATE(u)-[r:Posted]->(p)");
             return RedirectToAction("Newsfeed");
         }
 
-        public IActionResult GetPosts() {
-            List<INode> postList = new List<INode>();
+        public IActionResult GetPosts()
+        {
+            // GetPosts() get all the posts and their creators from the database and puts them in a list of Newspost objects.
+
+            List<INode> postNodes = new List<INode>();
             var getPosts = ConnectDb("MATCH (p:Post) RETURN (p)");
             var post = new Newspost();
-            List<Newspost> obj = new List<Newspost>();
+            List<Newspost> postList = new List<Newspost>();
 
-            postList = getPosts.Result;
-            foreach (var record in postList)
+            postNodes = getPosts.Result;
+            foreach (var record in postNodes)
             {
                 var nodeprops = JsonConvert.SerializeObject(record.As<INode>().Properties);
                 post = (JsonConvert.DeserializeObject<Newspost>(nodeprops));
 
-
+                // Another query gets the related users to a post from the database thus finding its creator, the result is processed similarly.
                 List<INode> userList = new List<INode>();
                 var getuser = ConnectDb("MATCH(p: Post)--(u: Person) WHERE p.title = '" + post.Title + "' RETURN u");
                 var user = new User();
@@ -84,8 +93,8 @@ namespace meldboek.Controllers
                     user = (JsonConvert.DeserializeObject<User>(userprops));
                 }
                 
-
-                obj.Add(new Newspost()
+                // After getting al the required data, it is put in Newspost object and added to the list of newsposts.
+                postList.Add(new Newspost()
                 {
                     PostId = post.PostId,
                     Title = post.Title,
@@ -96,8 +105,10 @@ namespace meldboek.Controllers
                 });
 
             }
-            List<Newspost> SortedList = obj.OrderByDescending(p => p.DateAdded).ToList();
-            return View(SortedList);
+
+            // The final list is put into a ordered list called feed, so the results will be displayed in the right order (newest first).
+            List<Newspost> feed = postList.OrderByDescending(p => p.DateAdded).ToList();
+            return View(feed);
         }
 
         public Boolean AddFriend(int userId, int friendId)
