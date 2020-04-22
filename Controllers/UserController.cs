@@ -71,8 +71,9 @@ namespace meldboek.Controllers
         }
 
         public void AcceptFriend(User userRequested, User userAccepted)
-        {            
-           ConnectDb("MATCH (a:Person), (b:Person) WHERE a.UserId = " + userRequested.UserId.ToString() + " AND b.UserId = " + userAccepted.UserId.ToString() + " CREATE (a)-[r:IsFriendsWith]->(b)" + " RETURN a");
+        {
+            var res = ConnectDb("MATCH (a:Person), (b:Person) WHERE a.UserId = " + userRequested.UserId.ToString() + " AND b.UserId = " + userAccepted.UserId.ToString() + " CREATE (a)-[r:IsFriendsWith]->(b)" + " RETURN a");
+            res.Wait();
         }
 
         public User GetUser(int userId)
@@ -81,19 +82,30 @@ namespace meldboek.Controllers
             var results = ConnectDb("MATCH (a:Person) WHERE a.UserId = " + userId.ToString() + " RETURN a");
             var user = new User();
 
-                nodeList = results.Result;
-                foreach (var record in nodeList)
-                {
-                    var nodeprops = JsonConvert.SerializeObject(record.As<INode>().Properties);
-                    user = (JsonConvert.DeserializeObject<User>(nodeprops));
-                }
-            
+            nodeList = results.Result;
+            foreach (var record in nodeList)
+            {
+                var nodeprops = JsonConvert.SerializeObject(record.As<INode>().Properties);
+                user = (JsonConvert.DeserializeObject<User>(nodeprops));
+            }
+
 
 
             return user;
         }
 
-         public async Task<List<INode>> ConnectDb(string query)
+        public void AddUserToGroup(int userId, int groupId)
+        {
+            var res = ConnectDb("MATCH (a:Person), (b:Group) WHERE a.UserId = " + userId.ToString() + " AND b.GroupId = " + groupId.ToString() + " CREATE (a)-[r:IsInGroup]->(b)" + " RETURN a");
+            res.Wait();
+        }
+        public void DeleteUserFromGroup(int userId, int groupId)
+        {
+            var res = ConnectDb("MATCH (a:Person {UserId : " + userId.ToString() + "}) - [r:IsInGroup]->(b:Group{GroupId: " + groupId.ToString() + "}) DELETE r RETURN a");
+            res.Wait();
+        }
+
+        public async Task<List<INode>> ConnectDb(string query)
         {
             Driver = CreateDriverWithBasicAuth("bolt://localhost:7687", "neo4j", "1234");
             List<INode> res = new List<INode>();
