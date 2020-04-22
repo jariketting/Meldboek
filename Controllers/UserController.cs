@@ -55,6 +55,7 @@ namespace meldboek.Controllers
         {
             string Timestamp = DateTime.Now.ToString("dd-MM-yyyy HH:mm:ss");
             ConnectDb("CREATE (n:Post {title: '" + title + "', description: '" + description + "', postid: '" + postid + "', dateadded: '" + Timestamp + "'})");
+            ConnectDb("MATCH (a:Person),(b:Post) WHERE a.FirstName = 'Amy' AND b.title = '" + title + "' CREATE(a) -[r: Posted]->(b)");
             return RedirectToAction("Newsfeed");
         }
 
@@ -133,7 +134,7 @@ namespace meldboek.Controllers
 
          public async Task<List<INode>> ConnectDb(string query)
         {
-            Driver = CreateDriverWithBasicAuth("bolt://localhost:11003", "neo4j", "1234");
+            Driver = CreateDriverWithBasicAuth("bolt://localhost:11005", "neo4j", "1234");
             List<INode> res = new List<INode>();
             IAsyncSession session = Driver.AsyncSession(o => o.WithDatabase("neo4j"));
 
