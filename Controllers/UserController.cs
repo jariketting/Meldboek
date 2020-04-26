@@ -49,7 +49,10 @@ namespace meldboek.Controllers
         {
             // Before returning the view of the newsfeed, all the newsposts and groups need to be pulled from the database
             dynamic model = new ExpandoObject();
-            model.Post = GetGroupPosts();
+            model.Post = GetFeed();
+
+            // model.Post = GetGroupPosts(); TODO: Filter aanbrengen op aanvraag.
+
             model.Group = GetGroups();
 
             return View(model);
