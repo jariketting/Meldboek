@@ -47,26 +47,16 @@ namespace meldboek.Controllers
 
         public IActionResult Newsfeed()
         {
-            //Newsfeed news = new Newsfeed();
-            Newspost news = new Newspost();
-            Group groups = new Group();
-
+            // Before returning the view of the newsfeed, all the newsposts and groups need to be pulled from the database
             dynamic model = new ExpandoObject();
-            //model.Post = GetFeed();
             model.Post = GetGroupPosts();
             model.Group = GetGroups();
-
-            // GetGroups();
-
-
-            // Before returning the view of the newsfeed, all the newsposts need to be pulled from the database
-            //GetFeed();
 
             return View(model);
         }
 
         [HttpPost]
-        public IActionResult AddPost(string title, string description, string postid)
+        public IActionResult AddPost(string title, string description, string postid, string group)
         {
             // AddPost adds a newspost the user creates to the database. It takes the given title + description and adds the current time itself.
 
@@ -75,6 +65,12 @@ namespace meldboek.Controllers
             
             // After adding the post to the database, a relationship is created between the post and the user who made it | (Person-[Posted]->Post)
             ConnectDb("MATCH (u:Person),(p:Post) WHERE u.FirstName = 'Amy' AND p.title = '" + title + "' CREATE(u)-[r:Posted]->(p)");
+
+            if (group != "general")
+            {
+                ConnectDb("MATCH (g:Group), (p:Post) WHERE g.name = '" + group + "' AND p.title = '" + title + "' CREATE(g) -[r:HasPost]->(p)");
+            }
+
             return RedirectToAction("Newsfeed");
         }
 

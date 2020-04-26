@@ -342,10 +342,14 @@
                 <label for="postid">PostId</label>
                 <input type="text" id="postid" name="postid" placeholder="PostId" />
 
-                <!--<label for="category">Categorie</label>
-        <select id="category" name="category">
-            <option value="general">Algemeen</option>
-        </select>-->
+                <label for="category">Categorie</label>
+                <select id="group" name="group">
+                    <option id="general" name="general">Algemeen</option>
+                    @foreach (var group in Model.Group)
+                    {
+                    <option id="@group.Name" name="@group.Name">@group.Name</option>
+                    }
+                </select>
 
                 <label for="description">Beschrijving</label>
                 <textarea id="description" name="description" value="description" placeholder="Beschrijving nieuwsbericht" style="height:200px"></textarea>
