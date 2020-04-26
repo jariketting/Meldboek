@@ -1,4 +1,6 @@
-﻿@model IEnumerable<Newspost>
+﻿<!-- model IEnumerable<Newspost> -->
+@model dynamic
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -77,14 +79,14 @@
             height: 74px;
         }
 
-        .topbar h1 {
-            color: #ffffff;
-            font-size: 34px;
-            padding-top: 20px;
-            padding-bottom: 20px;
-            width: 55%;
-            float: left;
-        }
+            .topbar h1 {
+                color: #ffffff;
+                font-size: 34px;
+                padding-top: 20px;
+                padding-bottom: 20px;
+                width: 55%;
+                float: left;
+            }
 
         /* Account icon*/
         #acc-icon {
@@ -146,18 +148,18 @@
             width: 100%;
         }
 
-        .logout a {
-            text-align: center;
-            text-decoration: none;
-            font-size: 24px;
-            color: #ffffff;
-            display: block;
-            transition: 0.3s;
-        }
+            .logout a {
+                text-align: center;
+                text-decoration: none;
+                font-size: 24px;
+                color: #ffffff;
+                display: block;
+                transition: 0.3s;
+            }
 
-        .overlay a:hover, .overlay a:focus, .logout a:hover, .logout a:focus {
-            color: #9ee0a4;
-        }
+                .overlay a:hover, .overlay a:focus, .logout a:hover, .logout a:focus {
+                    color: #9ee0a4;
+                }
 
         /* Actual content of the newsfeed */
         .newsfeed-content {
@@ -178,18 +180,18 @@
             border-right: 2px solid #3bb546;
         }
 
-        .categories a {
-            color: #000000;
-            font-size: 24px;
-            text-decoration: none;
-            display: block;
-            padding-bottom: 15px;
-            width: 105px;
-        }
+            .categories a {
+                color: #000000;
+                font-size: 24px;
+                text-decoration: none;
+                display: block;
+                padding-bottom: 15px;
+                width: 105px;
+            }
 
-        .categories a:hover {
-            color: #9ee0a4;
-        }
+                .categories a:hover {
+                    color: #9ee0a4;
+                }
 
         /* Articles list */
         .articles-list {
@@ -210,22 +212,22 @@
             float: left;
         }
 
-        .article-content h1 {
-            font-size: 28px;
-            padding-bottom: 15px;
-            padding-top: 40px;
-        }
+            .article-content h1 {
+                font-size: 28px;
+                padding-bottom: 15px;
+                padding-top: 40px;
+            }
 
-        .article-content h3 {
-            font-size: 20px;
-            padding-bottom: 10px;
-        }
+            .article-content h3 {
+                font-size: 20px;
+                padding-bottom: 10px;
+            }
 
-        .article-content p {
-            color: #000000;
-            font-size: 18px;
-            padding-bottom: 10px;
-        }
+            .article-content p {
+                color: #000000;
+                font-size: 18px;
+                padding-bottom: 10px;
+            }
 
         /* Form to add an article */
         .add-article {
@@ -258,9 +260,9 @@
             cursor: pointer;
         }
 
-        input[type=submit]:hover {
+            input[type=submit]:hover {
                 background-color: #9ee0a4;
-        }
+            }
     </style>
     <script>
         /*
@@ -323,11 +325,12 @@
         <!-- Newsfeed categories -->
         <div class="categories">
             <a href="#">Algemeen</a>
-            <a href="#">[Cat. 1]</a>
-            <a href="#">[Cat. 2]</a>
-            <a href="#">[Cat. 3]</a>
-            <a href="#">[Cat. 4]</a>
-            <a href="#">Overig</a>
+    
+                @foreach (var group in Model.Group)
+                {
+                    <a href="#">@group.Name</a>
+                }
+            
         </div>
 
         <div class="articles-list">
@@ -340,9 +343,9 @@
                 <input type="text" id="postid" name="postid" placeholder="PostId" />
 
                 <!--<label for="category">Categorie</label>
-                <select id="category" name="category">
-                    <option value="general">Algemeen</option>
-                </select>-->
+        <select id="category" name="category">
+            <option value="general">Algemeen</option>
+        </select>-->
 
                 <label for="description">Beschrijving</label>
                 <textarea id="description" name="description" value="description" placeholder="Beschrijving nieuwsbericht" style="height:200px"></textarea>
@@ -351,19 +354,18 @@
             </form>
 
             <!-- Single post attribute; Here all the posts from GetPosts() are put on the page. -->
-            @if (Model.Any())
-            {
-                foreach (var p in Model)
+           
+                @foreach (var post in Model.Post)
                 {
                     <div class="article">
                         <div class="article-content">
-                            <h1>@Html.DisplayFor(x => p.Title)</h1>
-                            <h3>@Html.DisplayFor(x => p.FirstName) @Html.DisplayFor(x => p.LastName), @Html.DisplayFor(x => p.DateAdded)</h3>
-                            <p>@Html.DisplayFor(x => p.Description)</p>
+                            <h1>@post.Title</h1>
+                            <h3>@post.FirstName @post.LastName, @post.DateAdded</h3>
+                            <p>@post.Description</p>
                         </div>
                     </div>
                 }
-            }
+            
 
         </div>
     </div>

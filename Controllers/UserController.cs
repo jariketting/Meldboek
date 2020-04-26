@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Neo4jClient;
 using System.Collections;
 using System.Reflection;
-
+using System.Dynamic;
 
 namespace meldboek.Controllers
 {
@@ -47,10 +47,22 @@ namespace meldboek.Controllers
 
         public IActionResult Newsfeed()
         {
-            // Before returning the view of the newsfeed, all the newsposts need to be pulled from the database
-            GetPosts();
+            //Newsfeed news = new Newsfeed();
+            Newspost news = new Newspost();
+            Group groups = new Group();
 
-            return View();
+            dynamic model = new ExpandoObject();
+            //model.Post = GetFeed();
+            model.Post = GetGroupPosts();
+            model.Group = GetGroups();
+
+            // GetGroups();
+
+
+            // Before returning the view of the newsfeed, all the newsposts need to be pulled from the database
+            //GetFeed();
+
+            return View(model);
         }
 
         [HttpPost]
@@ -66,10 +78,10 @@ namespace meldboek.Controllers
             return RedirectToAction("Newsfeed");
         }
 
-        public IActionResult GetPosts()
+        public List<Newspost> GetFeed()
         {
             // GetPosts() get all the posts and their creators from the database and puts them in a list of Newspost objects.
-
+            
             List<INode> postNodes = new List<INode>();
             var getPosts = ConnectDb("MATCH (p:Post) RETURN (p)");
             var post = new Newspost();
@@ -108,7 +120,79 @@ namespace meldboek.Controllers
 
             // The final list is put into a ordered list called feed, so the results will be displayed in the right order (newest first).
             List<Newspost> feed = postList.OrderByDescending(p => p.DateAdded).ToList();
-            return View(feed);
+            //return View(feed);
+            return feed;
+        }
+
+        public List<Newspost> GetGroupPosts()
+        {
+            List<INode> postNodes = new List<INode>();
+            var getPosts = ConnectDb("MATCH(g: Group)--(p: Post) WHERE g.name = 'rdam' RETURN p");
+            var post = new Newspost();
+            List<Newspost> postList = new List<Newspost>();
+
+            postNodes = getPosts.Result;
+            foreach (var record in postNodes)
+            {
+                var nodeprops = JsonConvert.SerializeObject(record.As<INode>().Properties);
+                post = (JsonConvert.DeserializeObject<Newspost>(nodeprops));
+
+                // Another query gets the related users to a post from the database thus finding its creator, the result is processed similarly.
+                List<INode> userList = new List<INode>();
+                var getuser = ConnectDb("MATCH(p: Post)--(u: Person) WHERE p.title = '" + post.Title + "' RETURN u");
+                var user = new User();
+
+                userList = getuser.Result;
+                foreach (var person in userList)
+                {
+                    var userprops = JsonConvert.SerializeObject(person.As<INode>().Properties);
+                    user = (JsonConvert.DeserializeObject<User>(userprops));
+                }
+
+                // After getting al the required data, it is put in Newspost object and added to the list of newsposts.
+                postList.Add(new Newspost()
+                {
+                    PostId = post.PostId,
+                    Title = post.Title,
+                    Description = post.Description,
+                    DateAdded = post.DateAdded,
+                    FirstName = user.FirstName,
+                    LastName = user.LastName
+                });
+
+            }
+
+            // The final list is put into a ordered list called feed, so the results will be displayed in the right order (newest first).
+            List<Newspost> feed = postList.OrderByDescending(p => p.DateAdded).ToList();
+            //return View(feed);
+            return feed;
+        }
+
+        public List<Group> GetGroups()
+        {
+            List<INode> groupNodes = new List<INode>();
+            var getGroups = ConnectDb("MATCH(u:Person)--(g:Group) WHERE u.FirstName = 'Amy' RETURN g");
+            var group = new Group();
+            List<Group> groupList = new List<Group>();
+
+            groupNodes = getGroups.Result;
+            foreach (var record in groupNodes)
+            {
+                var nodeprops = JsonConvert.SerializeObject(record.As<INode>().Properties);
+                group = (JsonConvert.DeserializeObject<Group>(nodeprops));
+
+                // After getting al the required data, it is put in Newspost object and added to the list of newsposts.
+                groupList.Add(new Group()
+                {
+                    GroupId = group.GroupId,
+                    Name = group.Name
+                });
+
+            }
+
+            // The final list is put into a ordered list called feed, so the results will be displayed in the right order (newest first).
+            List<Group> final = groupList.ToList();
+            return final;
         }
 
         public Boolean AddFriend(int userId, int friendId)
