@@ -41,47 +41,16 @@ namespace meldboek.Controllers
             //  Console.WriteLine(result.ToString());
             // Console.WriteLine(result2.ToString());
 
-           // AcceptFriend(GetUser(1),GetUser(2));
+            // AcceptFriend(GetUser(1),GetUser(2));
+
+            //AddUserToGroup(1, 1);
+            // DeleteUserFromGroup(1, 1);
 
             return View();
         }
 
 
 
-        public User GetUser(int userId)
-        {
-            List<INode> nodeList = new List<INode>();
-            var results = ConnectDb("MATCH (a:Person) WHERE a.UserId = " + userId.ToString() + " RETURN a");
-            var user = new User();
-
-                nodeList = results.Result;
-                foreach (var record in nodeList)
-                {
-                    var nodeprops = JsonConvert.SerializeObject(record.As<INode>().Properties);
-                    user = (JsonConvert.DeserializeObject<User>(nodeprops));
-                }
-            
-
-
-            return user;
-        }
-        public Admin GetAdmin(int adminId)
-        {
-            List<INode> nodeList = new List<INode>();
-            var results = ConnectDb("MATCH (a:Person) WHERE a.AdminId = " + adminId.ToString() + " RETURN a");
-            var admin = new Admin();
-
-            nodeList = results.Result;
-            foreach (var record in nodeList)
-            {
-                var nodeprops = JsonConvert.SerializeObject(record.As<INode>().Properties);
-                admin = (JsonConvert.DeserializeObject<Admin>(nodeprops));
-            }
-
-
-
-            return admin;
-        }
 
         public async Task<List<INode>> ConnectDb(string query)
         {

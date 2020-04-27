@@ -1,4 +1,6 @@
-﻿@model meldboek.Models.User
+﻿<!-- model IEnumerable<Newspost> -->
+@model dynamic
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -77,14 +79,14 @@
             height: 74px;
         }
 
-        .topbar h1 {
-            color: #ffffff;
-            font-size: 34px;
-            padding-top: 20px;
-            padding-bottom: 20px;
-            width: 55%;
-            float: left;
-        }
+            .topbar h1 {
+                color: #ffffff;
+                font-size: 34px;
+                padding-top: 20px;
+                padding-bottom: 20px;
+                width: 55%;
+                float: left;
+            }
 
         /* Account icon*/
         #acc-icon {
@@ -146,18 +148,18 @@
             width: 100%;
         }
 
-        .logout a {
-            text-align: center;
-            text-decoration: none;
-            font-size: 24px;
-            color: #ffffff;
-            display: block;
-            transition: 0.3s;
-        }
+            .logout a {
+                text-align: center;
+                text-decoration: none;
+                font-size: 24px;
+                color: #ffffff;
+                display: block;
+                transition: 0.3s;
+            }
 
-        .overlay a:hover, .overlay a:focus, .logout a:hover, .logout a:focus {
-            color: #9ee0a4;
-        }
+                .overlay a:hover, .overlay a:focus, .logout a:hover, .logout a:focus {
+                    color: #9ee0a4;
+                }
 
         /* Actual content of the newsfeed */
         .newsfeed-content {
@@ -178,18 +180,18 @@
             border-right: 2px solid #3bb546;
         }
 
-        .categories a {
-            color: #000000;
-            font-size: 24px;
-            text-decoration: none;
-            display: block;
-            padding-bottom: 15px;
-            width: 105px;
-        }
+            .categories a {
+                color: #000000;
+                font-size: 24px;
+                text-decoration: none;
+                display: block;
+                padding-bottom: 15px;
+                width: 105px;
+            }
 
-        .categories a:hover {
-            color: #9ee0a4;
-        }
+                .categories a:hover {
+                    color: #9ee0a4;
+                }
 
         /* Articles list */
         .articles-list {
@@ -208,25 +210,24 @@
         /* Article content consists of title (h1), author + date (h3) and 'keep reading' button */
         .article-content {
             float: left;
-            width: 200px;
         }
 
-        .article-content h1 {
-            font-size: 28px;
-            padding-bottom: 15px;
-            padding-top: 40px;
-        }
+            .article-content h1 {
+                font-size: 28px;
+                padding-bottom: 15px;
+                padding-top: 40px;
+            }
 
-        .article-content h3 {
-            font-size: 20px;
-            padding-bottom: 10px;
-        }
+            .article-content h3 {
+                font-size: 20px;
+                padding-bottom: 10px;
+            }
 
-        .article-content p {
-            color: #000000;
-            font-size: 16px;
-            padding-bottom: 10px;
-        }
+            .article-content p {
+                color: #000000;
+                font-size: 18px;
+                padding-bottom: 10px;
+            }
 
         /* Form to add an article */
         .add-article {
@@ -237,7 +238,7 @@
 
         input[type=text], select, textarea {
             font-family: 'Trebuchet MS', sans-serif;
-            font-size: 14px;
+            font-size: 16px;
             width: 100%;
             padding: 12px;
             border: 1px solid #ccc;
@@ -252,16 +253,16 @@
             font-family: 'Trebuchet MS', sans-serif;
             background-color: #3bb546;
             color: white;
-            font-size: 20px;
+            font-size: 18px;
             border-radius: 25px;
             padding: 10px 15px;
             border: none;
             cursor: pointer;
         }
 
-        input[type=submit]:hover {
+            input[type=submit]:hover {
                 background-color: #9ee0a4;
-        }
+            }
     </style>
     <script>
         /*
@@ -324,54 +325,52 @@
         <!-- Newsfeed categories -->
         <div class="categories">
             <a href="#">Algemeen</a>
-            <a href="#">[Cat. 1]</a>
-            <a href="#">[Cat. 2]</a>
-            <a href="#">[Cat. 3]</a>
-            <a href="#">[Cat. 4]</a>
-            <a href="#">Overig</a>
+    
+                @foreach (var group in Model.Group)
+                {
+                    <a href="#">@group.Name</a>
+                }
+            
         </div>
 
-        <!-- List of articles -->
         <div class="articles-list">
-            <form class="add-article" action="">
+            <!-- The form to add a newspost links to a function in the UserController called AddPost. -->
+            <form action="AddPost" method="post" class="add-article">
                 <label for="title">Titel</label>
                 <input type="text" id="title" name="title" placeholder="Titel nieuwsbericht">
 
+                <label for="postid">PostId</label>
+                <input type="text" id="postid" name="postid" placeholder="PostId" />
+
                 <label for="category">Categorie</label>
-                <select id="category" name="category">
-                    <option value="general">Algemeen</option>
+                <select id="group" name="group">
+                    <option id="general" name="general">Algemeen</option>
+                    @foreach (var group in Model.Group)
+                    {
+                    <option id="@group.Name" name="@group.Name">@group.Name</option>
+                    }
                 </select>
 
                 <label for="description">Beschrijving</label>
-                <textarea id="description" name="description" placeholder="Beschrijving nieuwsbericht" style="height:200px"></textarea>
+                <textarea id="description" name="description" value="description" placeholder="Beschrijving nieuwsbericht" style="height:200px"></textarea>
 
                 <input type="submit" value="Voeg toe">
             </form>
 
-            <!-- Single article attribute -->
-            <div class="article">
-                <div class="article-content">
-                    <h1>[Title]</h1>
-                    <h3>[Author], [Date]</h3>
-                    <p>[Description]</p>
-                </div>
-            </div>
+            <!-- Single post attribute; Here all the posts from GetPosts() are put on the page. -->
+           
+                @foreach (var post in Model.Post)
+                {
+                    <div class="article">
+                        <div class="article-content">
+                            <h1>@post.Title</h1>
+                            <h3>@post.FirstName @post.LastName, @post.DateAdded</h3>
+                            <p>@post.Description</p>
+                        </div>
+                    </div>
+                }
+            
 
-            <div class="article">
-                <div class="article-content">
-                    <h1>[Title]</h1>
-                    <h3>[Author], [Date]</h3>
-                    <p>[Description]</p>
-                </div>
-            </div>
-
-            <div class="article">
-                <div class="article-content">
-                    <h1>[Title]</h1>
-                    <h3>[Author], [Date]</h3>
-                    <p>[Description]</p>
-                </div>
-            </div>
         </div>
     </div>
 </body>
