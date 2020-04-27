@@ -32,9 +32,9 @@ namespace meldboek.Controllers
                     LastName = lastname,
                     Email = email,
                     Password = password
-  
+
                 };
-                var r = ConnectDb("CREATE (p:Person { FirstName: '"+u.FirstName+ "', LastName: '" + u.LastName + "' ,Email: '" + u.Email + "', Password: '" + u.Password + "' }) RETURN p");
+                var r = ConnectDb("CREATE (p:Person { FirstName: '" + u.FirstName + "', LastName: '" + u.LastName + "' ,Email: '" + u.Email + "', Password: '" + u.Password + "' }) RETURN p");
                 r.Wait();
                 return View();
             }
@@ -259,7 +259,7 @@ namespace meldboek.Controllers
 
         public async Task<List<INode>> ConnectDb(string query)
         {
-            Driver = CreateDriverWithBasicAuth("bolt://localhost:11005", "neo4j", "1234");
+            Driver = CreateDriverWithBasicAuth("bolt://localhost:7687", "neo4j", "1234");
             List<INode> res = new List<INode>();
             IAsyncSession session = Driver.AsyncSession(o => o.WithDatabase("neo4j"));
 
