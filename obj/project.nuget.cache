@@ -1,10 +1,14 @@
 {
   "version": 2,
-  "dgSpecHash": "aAczvyTYo6IEGIuniyBGvzz55XoD2WQJxJv1+crfZoy+6WGyj/dOdf97Le/vHREgvIv/ljxl5Ccsl8JpMMRgsw==",
+  "dgSpecHash": "TyOo8uUZA/9J/kKz31exPw2Hq3gg5kS9sFoNASW3/DWf/JCqW9BNsVr/DWVu0urLAQSnmGRBjNvdVYNhpe/uxg==",
   "success": true,
   "projectFilePath": "C:\\Users\\amyno\\source\\repos\\meldboek\\meldboek.csproj",
   "expectedPackageFiles": [
-    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\microsoft.aspnet.webapi.client\\5.2.6\\microsoft.aspnet.webapi.client.5.2.6.nupkg.sha512",
+    "C:\\Users\\amyno\\.nuget\\packages\\autofac\\5.1.2\\autofac.5.1.2.nupkg.sha512",
+    "C:\\Users\\amyno\\.nuget\\packages\\microsoft.aspnet.webapi\\5.2.7\\microsoft.aspnet.webapi.5.2.7.nupkg.sha512",
+    "C:\\Users\\amyno\\.nuget\\packages\\microsoft.aspnet.webapi.client\\5.2.7\\microsoft.aspnet.webapi.client.5.2.7.nupkg.sha512",
+    "C:\\Users\\amyno\\.nuget\\packages\\microsoft.aspnet.webapi.core\\5.2.7\\microsoft.aspnet.webapi.core.5.2.7.nupkg.sha512",
+    "C:\\Users\\amyno\\.nuget\\packages\\microsoft.aspnet.webapi.webhost\\5.2.7\\microsoft.aspnet.webapi.webhost.5.2.7.nupkg.sha512",
     "C:\\Users\\amyno\\.nuget\\packages\\microsoft.aspnetcore\\2.2.0\\microsoft.aspnetcore.2.2.0.nupkg.sha512",
     "C:\\Users\\amyno\\.nuget\\packages\\microsoft.aspnetcore.antiforgery\\2.2.0\\microsoft.aspnetcore.antiforgery.2.2.0.nupkg.sha512",
     "C:\\Users\\amyno\\.nuget\\packages\\microsoft.aspnetcore.app\\2.2.0\\microsoft.aspnetcore.app.2.2.0.nupkg.sha512",
@@ -100,12 +104,11 @@
     "C:\\Users\\amyno\\.nuget\\packages\\microsoft.aspnetcore.staticfiles\\2.2.0\\microsoft.aspnetcore.staticfiles.2.2.0.nupkg.sha512",
     "C:\\Users\\amyno\\.nuget\\packages\\microsoft.aspnetcore.websockets\\2.2.0\\microsoft.aspnetcore.websockets.2.2.0.nupkg.sha512",
     "C:\\Users\\amyno\\.nuget\\packages\\microsoft.aspnetcore.webutilities\\2.2.0\\microsoft.aspnetcore.webutilities.2.2.0.nupkg.sha512",
+    "C:\\Users\\amyno\\.nuget\\packages\\microsoft.bcl.asyncinterfaces\\1.1.0\\microsoft.bcl.asyncinterfaces.1.1.0.nupkg.sha512",
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\microsoft.codeanalysis.analyzers\\1.1.0\\microsoft.codeanalysis.analyzers.1.1.0.nupkg.sha512",
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\microsoft.codeanalysis.common\\2.8.0\\microsoft.codeanalysis.common.2.8.0.nupkg.sha512",
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\microsoft.codeanalysis.csharp\\2.8.0\\microsoft.codeanalysis.csharp.2.8.0.nupkg.sha512",
-    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\microsoft.codeanalysis.csharp.workspaces\\2.8.0\\microsoft.codeanalysis.csharp.workspaces.2.8.0.nupkg.sha512",
     "C:\\Users\\amyno\\.nuget\\packages\\microsoft.codeanalysis.razor\\2.2.0\\microsoft.codeanalysis.razor.2.2.0.nupkg.sha512",
-    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\microsoft.codeanalysis.workspaces.common\\2.8.0\\microsoft.codeanalysis.workspaces.common.2.8.0.nupkg.sha512",
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\microsoft.csharp\\4.5.0\\microsoft.csharp.4.5.0.nupkg.sha512",
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\microsoft.dotnet.platformabstractions\\2.1.0\\microsoft.dotnet.platformabstractions.2.1.0.nupkg.sha512",
     "C:\\Users\\amyno\\.nuget\\packages\\microsoft.entityframeworkcore\\2.2.0\\microsoft.entityframeworkcore.2.2.0.nupkg.sha512",
@@ -178,23 +181,14 @@
     "C:\\Users\\amyno\\.nuget\\packages\\microsoft.netcore.dotnethostresolver\\2.2.0\\microsoft.netcore.dotnethostresolver.2.2.0.nupkg.sha512",
     "C:\\Users\\amyno\\.nuget\\packages\\microsoft.netcore.platforms\\2.2.0\\microsoft.netcore.platforms.2.2.0.nupkg.sha512",
     "C:\\Users\\amyno\\.nuget\\packages\\microsoft.netcore.targets\\2.0.0\\microsoft.netcore.targets.2.0.0.nupkg.sha512",
-    "C:\\Users\\amyno\\.nuget\\packages\\microsoft.visualstudio.web.codegeneration\\2.2.4\\microsoft.visualstudio.web.codegeneration.2.2.4.nupkg.sha512",
-    "C:\\Users\\amyno\\.nuget\\packages\\microsoft.visualstudio.web.codegeneration.contracts\\2.2.4\\microsoft.visualstudio.web.codegeneration.contracts.2.2.4.nupkg.sha512",
-    "C:\\Users\\amyno\\.nuget\\packages\\microsoft.visualstudio.web.codegeneration.core\\2.2.4\\microsoft.visualstudio.web.codegeneration.core.2.2.4.nupkg.sha512",
-    "C:\\Users\\amyno\\.nuget\\packages\\microsoft.visualstudio.web.codegeneration.design\\2.2.4\\microsoft.visualstudio.web.codegeneration.design.2.2.4.nupkg.sha512",
-    "C:\\Users\\amyno\\.nuget\\packages\\microsoft.visualstudio.web.codegeneration.entityframeworkcore\\2.2.4\\microsoft.visualstudio.web.codegeneration.entityframeworkcore.2.2.4.nupkg.sha512",
-    "C:\\Users\\amyno\\.nuget\\packages\\microsoft.visualstudio.web.codegeneration.templating\\2.2.4\\microsoft.visualstudio.web.codegeneration.templating.2.2.4.nupkg.sha512",
-    "C:\\Users\\amyno\\.nuget\\packages\\microsoft.visualstudio.web.codegeneration.utils\\2.2.4\\microsoft.visualstudio.web.codegeneration.utils.2.2.4.nupkg.sha512",
-    "C:\\Users\\amyno\\.nuget\\packages\\microsoft.visualstudio.web.codegenerators.mvc\\2.2.4\\microsoft.visualstudio.web.codegenerators.mvc.2.2.4.nupkg.sha512",
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\microsoft.win32.primitives\\4.3.0\\microsoft.win32.primitives.4.3.0.nupkg.sha512",
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\microsoft.win32.registry\\4.5.0\\microsoft.win32.registry.4.5.0.nupkg.sha512",
     "C:\\Users\\amyno\\.nuget\\packages\\neo4j.driver\\4.0.1\\neo4j.driver.4.0.1.nupkg.sha512",
     "C:\\Users\\amyno\\.nuget\\packages\\neo4j.driver.signed\\1.7.0\\neo4j.driver.signed.1.7.0.nupkg.sha512",
     "C:\\Users\\amyno\\.nuget\\packages\\neo4jclient\\3.1.0.6\\neo4jclient.3.1.0.6.nupkg.sha512",
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\netstandard.library\\2.0.3\\netstandard.library.2.0.3.nupkg.sha512",
-    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\newtonsoft.json\\11.0.2\\newtonsoft.json.11.0.2.nupkg.sha512",
+    "C:\\Users\\amyno\\.nuget\\packages\\newtonsoft.json\\12.0.3\\newtonsoft.json.12.0.3.nupkg.sha512",
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\newtonsoft.json.bson\\1.0.1\\newtonsoft.json.bson.1.0.1.nupkg.sha512",
-    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\nuget.frameworks\\4.7.0\\nuget.frameworks.4.7.0.nupkg.sha512",
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\remotion.linq\\2.2.0\\remotion.linq.2.2.0.nupkg.sha512",
     "C:\\Users\\amyno\\.nuget\\packages\\runtime.debian.8-x64.runtime.native.system.security.cryptography.openssl\\4.3.2\\runtime.debian.8-x64.runtime.native.system.security.cryptography.openssl.4.3.2.nupkg.sha512",
     "C:\\Users\\amyno\\.nuget\\packages\\runtime.fedora.23-x64.runtime.native.system.security.cryptography.openssl\\4.3.2\\runtime.fedora.23-x64.runtime.native.system.security.cryptography.openssl.4.3.2.nupkg.sha512",
@@ -225,12 +219,6 @@
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\system.collections.nongeneric\\4.3.0\\system.collections.nongeneric.4.3.0.nupkg.sha512",
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\system.collections.specialized\\4.3.0\\system.collections.specialized.4.3.0.nupkg.sha512",
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\system.componentmodel.annotations\\4.5.0\\system.componentmodel.annotations.4.5.0.nupkg.sha512",
-    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\system.composition\\1.0.31\\system.composition.1.0.31.nupkg.sha512",
-    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\system.composition.attributedmodel\\1.0.31\\system.composition.attributedmodel.1.0.31.nupkg.sha512",
-    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\system.composition.convention\\1.0.31\\system.composition.convention.1.0.31.nupkg.sha512",
-    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\system.composition.hosting\\1.0.31\\system.composition.hosting.1.0.31.nupkg.sha512",
-    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\system.composition.runtime\\1.0.31\\system.composition.runtime.1.0.31.nupkg.sha512",
-    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\system.composition.typedparts\\1.0.31\\system.composition.typedparts.1.0.31.nupkg.sha512",
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\system.console\\4.3.0\\system.console.4.3.0.nupkg.sha512",
     "C:\\Users\\amyno\\.nuget\\packages\\system.data.sqlclient\\4.6.0\\system.data.sqlclient.4.6.0.nupkg.sha512",
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\system.diagnostics.contracts\\4.3.0\\system.diagnostics.contracts.4.3.0.nupkg.sha512",
@@ -253,7 +241,6 @@
     "C:\\Users\\amyno\\.nuget\\packages\\system.io.pipelines\\4.5.2\\system.io.pipelines.4.5.2.nupkg.sha512",
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\system.linq\\4.3.0\\system.linq.4.3.0.nupkg.sha512",
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\system.linq.expressions\\4.3.0\\system.linq.expressions.4.3.0.nupkg.sha512",
-    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\system.linq.parallel\\4.3.0\\system.linq.parallel.4.3.0.nupkg.sha512",
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\system.linq.queryable\\4.0.1\\system.linq.queryable.4.0.1.nupkg.sha512",
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\system.memory\\4.5.1\\system.memory.4.5.1.nupkg.sha512",
     "C:\\Users\\amyno\\.nuget\\packages\\system.net.http\\4.3.3\\system.net.http.4.3.3.nupkg.sha512",
@@ -317,5 +304,26 @@
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\system.xml.xpath\\4.3.0\\system.xml.xpath.4.3.0.nupkg.sha512",
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\system.xml.xpath.xdocument\\4.3.0\\system.xml.xpath.xdocument.4.3.0.nupkg.sha512"
   ],
-  "logs": []
+  "logs": [
+    {
+      "code": "NU1701",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Package 'Microsoft.AspNet.WebApi.Core 5.2.7' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8' instead of the project target framework '.NETCoreApp,Version=v2.2'. This package may not be fully compatible with your project.",
+      "libraryId": "Microsoft.AspNet.WebApi.Core",
+      "targetGraphs": [
+        ".NETCoreApp,Version=v2.2"
+      ]
+    },
+    {
+      "code": "NU1701",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Package 'Microsoft.AspNet.WebApi.WebHost 5.2.7' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8' instead of the project target framework '.NETCoreApp,Version=v2.2'. This package may not be fully compatible with your project.",
+      "libraryId": "Microsoft.AspNet.WebApi.WebHost",
+      "targetGraphs": [
+        ".NETCoreApp,Version=v2.2"
+      ]
+    }
+  ]
 }

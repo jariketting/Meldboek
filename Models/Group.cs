@@ -8,7 +8,7 @@ namespace meldboek.Models
     public class Group
     {
         public int GroupId { get; set; }
-        public String GroupName { get; set; }
+        public string GroupName { get; set; }
 
     }
 }

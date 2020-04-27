@@ -6,6 +6,12 @@ using Microsoft.AspNetCore.Mvc;
 using meldboek.Models;
 using Neo4j.Driver;
 using Newtonsoft.Json;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using Neo4jClient;
+using System.Collections;
+using System.Reflection;
+using System.Dynamic;
+
 namespace meldboek.Controllers
 {
     public class UserController : Controller
@@ -32,7 +38,7 @@ namespace meldboek.Controllers
             }
             else
             {
-                //passwordt incorrect
+                //password incorrect
                 return View();
             }
 
@@ -41,9 +47,153 @@ namespace meldboek.Controllers
 
         public IActionResult Newsfeed()
         {
-            return View();
+            // Before returning the view of the newsfeed, all the newsposts and groups need to be pulled from the database
+            dynamic model = new ExpandoObject();
+            model.Post = GetFeed();
 
+            // model.Post = GetGroupPosts(); TODO: Filter aanbrengen op aanvraag.
+
+            model.Group = GetGroups();
+
+            return View(model);
         }
+
+        [HttpPost]
+        public IActionResult AddPost(string title, string description, string postid, string group)
+        {
+            // AddPost adds a newspost the user creates to the database. It takes the given title + description and adds the current time itself.
+
+            string Timestamp = DateTime.Now.ToString("dd-MM-yyyy HH:mm:ss");
+            ConnectDb("CREATE (p:Post {title: '" + title + "', description: '" + description + "', postid: '" + postid + "', dateadded: '" + Timestamp + "'})");
+            
+            // After adding the post to the database, a relationship is created between the post and the user who made it | (Person-[Posted]->Post)
+            ConnectDb("MATCH (u:Person),(p:Post) WHERE u.FirstName = 'Amy' AND p.title = '" + title + "' CREATE(u)-[r:Posted]->(p)");
+
+            if (group != "general")
+            {
+                ConnectDb("MATCH (g:Group), (p:Post) WHERE g.name = '" + group + "' AND p.title = '" + title + "' CREATE(g) -[r:HasPost]->(p)");
+            }
+
+            return RedirectToAction("Newsfeed");
+        }
+
+        public List<Newspost> GetFeed()
+        {
+            // GetPosts() get all the posts and their creators from the database and puts them in a list of Newspost objects.
+            
+            List<INode> postNodes = new List<INode>();
+            var getPosts = ConnectDb("MATCH (p:Post) RETURN (p)");
+            var post = new Newspost();
+            List<Newspost> postList = new List<Newspost>();
+
+            postNodes = getPosts.Result;
+            foreach (var record in postNodes)
+            {
+                var nodeprops = JsonConvert.SerializeObject(record.As<INode>().Properties);
+                post = (JsonConvert.DeserializeObject<Newspost>(nodeprops));
+
+                // Another query gets the related users to a post from the database thus finding its creator, the result is processed similarly.
+                List<INode> userList = new List<INode>();
+                var getuser = ConnectDb("MATCH(p: Post)--(u: Person) WHERE p.title = '" + post.Title + "' RETURN u");
+                var user = new User();
+
+                userList = getuser.Result;
+                foreach (var person in userList)
+                {
+                    var userprops = JsonConvert.SerializeObject(person.As<INode>().Properties);
+                    user = (JsonConvert.DeserializeObject<User>(userprops));
+                }
+                
+                // After getting al the required data, it is put in Newspost object and added to the list of newsposts.
+                postList.Add(new Newspost()
+                {
+                    PostId = post.PostId,
+                    Title = post.Title,
+                    Description = post.Description,
+                    DateAdded = post.DateAdded,
+                    FirstName = user.FirstName,
+                    LastName = user.LastName
+                });
+
+            }
+
+            // The final list is put into a ordered list called feed, so the results will be displayed in the right order (newest first).
+            List<Newspost> feed = postList.OrderByDescending(p => p.DateAdded).ToList();
+            //return View(feed);
+            return feed;
+        }
+
+        public List<Newspost> GetGroupPosts()
+        {
+            List<INode> postNodes = new List<INode>();
+            var getPosts = ConnectDb("MATCH(g: Group)--(p: Post) WHERE g.name = 'rdam' RETURN p");
+            var post = new Newspost();
+            List<Newspost> postList = new List<Newspost>();
+
+            postNodes = getPosts.Result;
+            foreach (var record in postNodes)
+            {
+                var nodeprops = JsonConvert.SerializeObject(record.As<INode>().Properties);
+                post = (JsonConvert.DeserializeObject<Newspost>(nodeprops));
+
+                // Another query gets the related users to a post from the database thus finding its creator, the result is processed similarly.
+                List<INode> userList = new List<INode>();
+                var getuser = ConnectDb("MATCH(p: Post)--(u: Person) WHERE p.title = '" + post.Title + "' RETURN u");
+                var user = new User();
+
+                userList = getuser.Result;
+                foreach (var person in userList)
+                {
+                    var userprops = JsonConvert.SerializeObject(person.As<INode>().Properties);
+                    user = (JsonConvert.DeserializeObject<User>(userprops));
+                }
+
+                // After getting al the required data, it is put in Newspost object and added to the list of newsposts.
+                postList.Add(new Newspost()
+                {
+                    PostId = post.PostId,
+                    Title = post.Title,
+                    Description = post.Description,
+                    DateAdded = post.DateAdded,
+                    FirstName = user.FirstName,
+                    LastName = user.LastName
+                });
+
+            }
+
+            // The final list is put into a ordered list called feed, so the results will be displayed in the right order (newest first).
+            List<Newspost> feed = postList.OrderByDescending(p => p.DateAdded).ToList();
+            //return View(feed);
+            return feed;
+        }
+
+        public List<Group> GetGroups()
+        {
+            List<INode> groupNodes = new List<INode>();
+            var getGroups = ConnectDb("MATCH(u:Person)--(g:Group) WHERE u.FirstName = 'Amy' RETURN g");
+            var group = new Group();
+            List<Group> groupList = new List<Group>();
+
+            groupNodes = getGroups.Result;
+            foreach (var record in groupNodes)
+            {
+                var nodeprops = JsonConvert.SerializeObject(record.As<INode>().Properties);
+                group = (JsonConvert.DeserializeObject<Group>(nodeprops));
+
+                // After getting al the required data, it is put in Newspost object and added to the list of newsposts.
+                groupList.Add(new Group()
+                {
+                    GroupId = group.GroupId,
+                    Name = group.Name
+                });
+
+            }
+
+            // The final list is put into a ordered list called feed, so the results will be displayed in the right order (newest first).
+            List<Group> final = groupList.ToList();
+            return final;
+        }
+
         public Boolean AddFriend(int userId, int friendId)
         {
             // maybe add check for if they already are friends
@@ -107,7 +257,7 @@ namespace meldboek.Controllers
 
         public async Task<List<INode>> ConnectDb(string query)
         {
-            Driver = CreateDriverWithBasicAuth("bolt://localhost:7687", "neo4j", "1234");
+            Driver = CreateDriverWithBasicAuth("bolt://localhost:11005", "neo4j", "1234");
             List<INode> res = new List<INode>();
             IAsyncSession session = Driver.AsyncSession(o => o.WithDatabase("neo4j"));
 
