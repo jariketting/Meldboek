@@ -53,7 +53,7 @@ namespace meldboek.Controllers
 
 
                 };
-                var r = ConnectDb("CREATE (p:Person { FirstName: '" + u.FirstName + "', LastName: '" + u.LastName + "' ,Email: '" + u.Email + "', Password: '" + u.Password + "' }) RETURN p");
+                var r = ConnectDb("CREATE (p:Person:Admin { FirstName: '" + u.FirstName + "', LastName: '" + u.LastName + "' ,Email: '" + u.Email + "', Password: '" + u.Password + "' }) RETURN p");
                 r.Wait();
                 return View();
             }
@@ -64,31 +64,39 @@ namespace meldboek.Controllers
             }
         }
 
-
+        public IActionResult Profile(string username)
+        {
+            return View();
+        }
         public IActionResult LogIn(string email, string password, int adminId)
         {
             var admin = GetAdmin(adminId);
-            var Success = new Boolean();
             var adminid = admin.AdminId;
-            Admin b = new Admin()
-            {
-                Email = email,
-                Password = password,
-            };
- 
-            if (email == b.Email & password == b.Password)
-            {
-                var results = ConnectDb("MATCH (a:Person) WHERE a.AdminId = " + adminid.ToString() + " RETURN a");
+            var Email = email;
+            var Password = password;
+
+
+                if (Email != null & Password != null)
+                {
+                    var account = ConnectDb("MATCH (a:Person:Admin) WHERE a.AdminId = " + adminid.ToString() + " RETURN a");
+                    if(account != null)
+                    {
+                         return RedirectToAction("Profile", "Admin");
+                    }
+                    else
+                    {
+                    RedirectToAction ("CreateAccount", "Admin");
+                    }
+                            
+                }
+                else
+                {
+                     RedirectToAction("CreateAccount", "Admin");
+                }
 
                 return View();
             }
-            else
-            {
-                RedirectToAction("NewsFeed", "User");
-            }
-
-            return View();
-        }
+        
     
 
 

@@ -129,4 +129,4 @@ C:\Users\ses-9\Desktop\meldboek\meldboek\obj\Debug\netcoreapp2.2\meldboek.genrun
 C:\Users\ses-9\Desktop\meldboek\meldboek\obj\Debug\netcoreapp2.2\meldboek.csproj.CopyComplete
 C:\Users\ses-9\Desktop\meldboek\meldboek\obj\Debug\netcoreapp2.2\meldboek.csproj.CoreCompileInputs.cache
 C:\Users\ses-9\Desktop\meldboek\meldboek\obj\Debug\netcoreapp2.2\Razor\Views\Admin\CreateAccount.cshtml.g.cs
-C:\Users\ses-9\Desktop\meldboek\meldboek\obj\Debug\netcoreapp2.2\meldboek.csprojAssemblyReference.cache
+C:\Users\ses-9\Desktop\meldboek\meldboek\obj\Debug\netcoreapp2.2\Razor\Views\Admin\Profile.cshtml.g.cs
