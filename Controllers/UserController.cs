@@ -65,7 +65,7 @@ namespace meldboek.Controllers
 
             string Timestamp = DateTime.Now.ToString("dd-MM-yyyy HH:mm:ss");
             ConnectDb("CREATE (p:Post {title: '" + title + "', description: '" + description + "', postid: '" + postid + "', dateadded: '" + Timestamp + "'})");
-            
+
             // After adding the post to the database, a relationship is created between the post and the user who made it | (Person-[Posted]->Post)
             ConnectDb("MATCH (u:Person),(p:Post) WHERE u.FirstName = 'Amy' AND p.title = '" + title + "' CREATE(u)-[r:Posted]->(p)");
 
@@ -80,7 +80,7 @@ namespace meldboek.Controllers
         public List<Newspost> GetFeed()
         {
             // GetPosts() get all the posts and their creators from the database and puts them in a list of Newspost objects.
-            
+
             List<INode> postNodes = new List<INode>();
             var getPosts = ConnectDb("MATCH (p:Post) RETURN (p)");
             var post = new Newspost();
@@ -103,7 +103,7 @@ namespace meldboek.Controllers
                     var userprops = JsonConvert.SerializeObject(person.As<INode>().Properties);
                     user = (JsonConvert.DeserializeObject<User>(userprops));
                 }
-                
+
                 // After getting al the required data, it is put in Newspost object and added to the list of newsposts.
                 postList.Add(new Newspost()
                 {
@@ -184,7 +184,7 @@ namespace meldboek.Controllers
                 groupList.Add(new Group()
                 {
                     GroupId = group.GroupId,
-                    Name = group.Name
+                    GroupName = group.GroupName
                 });
 
             }
