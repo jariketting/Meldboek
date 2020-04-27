@@ -22,18 +22,20 @@ namespace meldboek.Controllers
         {
             return View();
         }
-        public IActionResult CreateAccount(string firstname, string lastname, string email, string password)
+        public IActionResult CreateAccount(string firstname, string lastname, string email, string password, string password2)
         {
-            if (firstname != null & lastname != null & email != null & password != null)
+            if (firstname != null & lastname != null & email != null & password != null & password == password2)
             {
-                User u1 = new User()
+                User u = new User()
                 {
                     FirstName = firstname,
                     LastName = lastname,
                     Email = email,
                     Password = password
+  
                 };
-
+                var r = ConnectDb("CREATE (p:Person { FirstName: '"+u.FirstName+ "', LastName: '" + u.LastName + "' ,Email: '" + u.Email + "', Password: '" + u.Password + "' }) RETURN p");
+                r.Wait();
                 return View();
             }
             else
