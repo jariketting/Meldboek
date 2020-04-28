@@ -53,14 +53,14 @@ namespace meldboek.Controllers
         {
             return View();
         }
-        public IActionResult LogInPage(string email, string password)
-        {
-            if (email != null & password != null)
-            {
-                RedirectToAction("LogIn", "User");
-            }
-            return View();
-        }
+        //public IActionResult LogInPage(string email, string password)
+        //{
+        //    if (email != null & password != null)
+        //    {
+        //        RedirectToAction("LogIn", "User");
+        //    }
+        //    return View();
+        //}
         public ActionResult Login(string email, string password)
         {
             List<INode> nodeList = new List<INode>();
@@ -100,14 +100,18 @@ namespace meldboek.Controllers
 
                         return RedirectToAction("Profile", "User");
                     }
+                    else if(user == null )
+                    {
+                        RedirectToAction("Newsfeed", "User");
+                    }
                     else
                     {
-                        ViewBag.emptyfield = "email or Password is incorrect";
+                        RedirectToAction("Newsfeed", "User");
                     }
                 }
                 else if (email != null)
                 {
-                    ViewBag.emptyfield = "email or Password is incorrect";
+                    RedirectToAction("Newsfeed", "User");
                 }
 
             }
