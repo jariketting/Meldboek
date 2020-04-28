@@ -11,6 +11,9 @@ using Neo4jClient;
 using System.Collections;
 using System.Reflection;
 using System.Dynamic;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 namespace meldboek.Controllers
 {
@@ -50,44 +53,106 @@ namespace meldboek.Controllers
         {
             return View();
         }
-        public  IActionResult LogInPage(string email, string password)
+        public IActionResult LogInPage(string email, string password)
         {
-            return View();
-        }
-        public IActionResult LogIn(string email, string password)
-        {
-            List<INode> nodeList = new List<INode>();
-            var results = ConnectDb("MATCH (a:User) WHERE a.Email = '" + email + "' AND a.Password =  '" + password + "' RETURN a");
-            var user = new User();
-
-            nodeList = results.Result;
-            foreach (var record in nodeList)
-            {
-                var nodeprops = JsonConvert.SerializeObject(record.As<INode>().Properties);
-                user = (JsonConvert.DeserializeObject<User>(nodeprops));
-            }
-            Console.WriteLine(user.Email.ToString());
             if (email != null & password != null)
             {
-                if (email == user.Email & password == user.Password)
-                {
-                      RedirectToAction("Profile", "User");
-                }
-                else
-                {
-                      RedirectToAction("Newsfeed", "User");
-                }
-            }
-            else
-            {
-                      RedirectToAction("CreateAccount", "User");
+                RedirectToAction("LogIn", "User");
             }
             return View();
         }
+        public ActionResult Login(string email, string password)
+        {
+            List<INode> nodeList = new List<INode>();
+            var results = ConnectDb("MATCH (a:Person) WHERE a.Email = '" + email + "' AND a.Password =  '" + password + "' RETURN a");
+            var user = new User();
+            if (email != null & password != null)
+            {
+                nodeList = results.Result;
+                foreach (var record in nodeList)
+                {
+                    var nodeprops = JsonConvert.SerializeObject(record.As<INode>().Properties);
+                    user = (JsonConvert.DeserializeObject<User>(nodeprops));
+                }
+                Console.WriteLine(user.Email.ToString());
+                if (user != null)
+                {
+                    if (user.Password == password)
+                    {
+                        //Creates a new Identity of the user
+                        var claims = new List<Claim>
+                    {
+                        new Claim(ClaimTypes.Name, "User", ClaimValueTypes.String),
+                        new Claim(ClaimTypes.NameIdentifier, user.Password.ToString(), ClaimValueTypes.String),
+                        new Claim(ClaimTypes.Role, "User", ClaimValueTypes.String)
+                    };
+                        var userIdentity = new ClaimsIdentity(claims, "SecureLogin");
+                        var userPrincipal = new ClaimsPrincipal(userIdentity);
 
-          
+                        HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,
+                            userPrincipal,
+                            new AuthenticationProperties
+                            {
+                                ExpiresUtc = DateTime.UtcNow.AddMinutes(30),
+                                IsPersistent = true,
+                                AllowRefresh = false
+                            });
 
-        
+                        return RedirectToAction("Profile", "User");
+                    }
+                    else
+                    {
+                        ViewBag.emptyfield = "email or Password is incorrect";
+                    }
+                }
+                else if (email != null)
+                {
+                    ViewBag.emptyfield = "email or Password is incorrect";
+                }
+
+            }
+            return View();
+        }
+       
+
+        //public  IActionResult LogInPage(string email, string password)
+        //{
+        //    return View();
+        //}
+        //public IActionResult LogIn(string email, string password)
+        //{
+        //    List<INode> nodeList = new List<INode>();
+        //    var results = ConnectDb("MATCH (a:User) WHERE a.Email = '" + email + "' AND a.Password =  '" + password + "' RETURN a");
+        //    var user = new User();
+
+        //    nodeList = results.Result;
+        //    foreach (var record in nodeList)
+        //    {
+        //        var nodeprops = JsonConvert.SerializeObject(record.As<INode>().Properties);
+        //        user = (JsonConvert.DeserializeObject<User>(nodeprops));
+        //    }
+        //    Console.WriteLine(user.Email.ToString());
+        //    if (email != null & password != null)
+        //    {
+        //        if (email == user.Email & password == user.Password)
+        //        {
+        //              RedirectToAction("Profile", "User");
+        //        }
+        //        else
+        //        {
+        //              RedirectToAction("Newsfeed", "User");
+        //        }
+        //    }
+        //    else
+        //    {
+        //              RedirectToAction("CreateAccount", "User");
+        //    }
+        //    return View();
+        //}
+
+
+
+
 
         public IActionResult Newsfeed()
         {
@@ -115,7 +180,7 @@ namespace meldboek.Controllers
 
             if (group != "general")
             {
-                ConnectDb("MATCH (g:Group), (p:Post) WHERE g.name = '" + group + "' AND p.title = '" + title + "' CREATE(g) -[r:HasPost]->(p)");
+               ConnectDb("MATCH (g:Group), (p:Post) WHERE g.name = '" + group + "' AND p.title = '" + title + "' CREATE(g) -[r:HasPost]->(p)");
             }
 
             return RedirectToAction("Newsfeed");
