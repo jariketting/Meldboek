@@ -46,7 +46,23 @@ namespace meldboek.Controllers
 
 
         }
+        public IActionResult LogIn(string email, string password)
+        {
+            List<INode> nodeList = new List<INode>();
+            var results = ConnectDb("MATCH (a:Person) WHERE a.Email = '" + email + "' AND a.Password =  '" + password + "' RETURN a");
+            var user = new User();
 
+            nodeList = results.Result;
+            foreach (var record in nodeList)
+            {
+                var nodeprops = JsonConvert.SerializeObject(record.As<INode>().Properties);
+                user = (JsonConvert.DeserializeObject<User>(nodeprops));
+            }
+            Console.WriteLine(user.Email.ToString());
+
+            return View();
+
+        }
         public IActionResult Newsfeed()
         {
             // Before returning the view of the newsfeed, all the newsposts and groups need to be pulled from the database
