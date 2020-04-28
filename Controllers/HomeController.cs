@@ -45,11 +45,12 @@ namespace meldboek.Controllers
 
             //AddUserToGroup(1, 1);
             // DeleteUserFromGroup(1, 1);
+          
 
             return View();
         }
 
-
+        
 
 
         public async Task<List<INode>> ConnectDb(string query)

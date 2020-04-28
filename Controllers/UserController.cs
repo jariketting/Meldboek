@@ -34,7 +34,7 @@ namespace meldboek.Controllers
                     Password = password
 
                 };
-                var r = ConnectDb("CREATE (p:Person { FirstName: '" + u.FirstName + "', LastName: '" + u.LastName + "' ,Email: '" + u.Email + "', Password: '" + u.Password + "' }) RETURN p");
+                var r = ConnectDb("CREATE (p:User { FirstName: '" + u.FirstName + "', LastName: '" + u.LastName + "' ,Email: '" + u.Email + "', Password: '" + u.Password + "' }) RETURN p");
                 r.Wait();
                 return View();
             }
@@ -43,9 +43,51 @@ namespace meldboek.Controllers
                 //password incorrect
                 return View();
             }
-
+        
 
         }
+        public IActionResult Profile ()
+        {
+            return View();
+        }
+        public  IActionResult LogInPage(string email, string password)
+        {
+            return View();
+        }
+        public IActionResult LogIn(string email, string password)
+        {
+            List<INode> nodeList = new List<INode>();
+            var results = ConnectDb("MATCH (a:User) WHERE a.Email = '" + email + "' AND a.Password =  '" + password + "' RETURN a");
+            var user = new User();
+
+            nodeList = results.Result;
+            foreach (var record in nodeList)
+            {
+                var nodeprops = JsonConvert.SerializeObject(record.As<INode>().Properties);
+                user = (JsonConvert.DeserializeObject<User>(nodeprops));
+            }
+            Console.WriteLine(user.Email.ToString());
+            if (email != null & password != null)
+            {
+                if (email == user.Email & password == user.Password)
+                {
+                      RedirectToAction("Profile", "User");
+                }
+                else
+                {
+                      RedirectToAction("Newsfeed", "User");
+                }
+            }
+            else
+            {
+                      RedirectToAction("CreateAccount", "User");
+            }
+            return View();
+        }
+
+          
+
+        
 
         public IActionResult Newsfeed()
         {
