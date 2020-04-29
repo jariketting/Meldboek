@@ -120,7 +120,7 @@ namespace meldboek.Controllers
             }
         }
 
-        public int GetMaxId()
+        public int GetMaxPostId()
         {
             // GetMaxId gets the newspost with the highest id from the database and returns the id.
 
@@ -144,7 +144,7 @@ namespace meldboek.Controllers
             // AddPost adds a newspost the user creates to the database. It takes the given title + description and adds the current time itself.
 
             // Getting the most recent post node, so a new id can be automatically added
-            int newid = GetMaxId() + 1;
+            int newid = GetMaxPostId() + 1;
 
             string Timestamp = DateTime.Now.ToString("dd-MM-yyyy HH:mm:ss");
             await ConnectDb("CREATE(p:Post {title: '" + title + "', description: '" + description + "', postid: '" + newid + "', dateadded: '" + Timestamp + "'})");
