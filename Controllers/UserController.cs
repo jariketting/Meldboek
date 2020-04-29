@@ -109,7 +109,7 @@ namespace meldboek.Controllers
 
             if (group != "general")
             {
-                ConnectDb("MATCH (g:Group), (p:Post) WHERE g.name = '" + group + "' AND p.title = '" + title + "' CREATE(g) -[r:HasPost]->(p)");
+                ConnectDb("MATCH (g:Group), (p:Post) WHERE g.GroupName = '" + group + "' AND p.title = '" + title + "' CREATE(g) -[r:HasPost]->(p)");
             }
 
             return RedirectToAction("Newsfeed");
