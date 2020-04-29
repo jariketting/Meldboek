@@ -328,7 +328,7 @@
     
                 @foreach (var group in Model.Group)
                 {
-                    <a href="#">@group.Name</a>
+                    <a href="#">@group.GroupName</a>
                 }
             
         </div>
@@ -347,7 +347,7 @@
                     <option id="general" name="general">Algemeen</option>
                     @foreach (var group in Model.Group)
                     {
-                    <option id="@group.Name" name="@group.Name">@group.Name</option>
+                    <option id="@group.GroupName" name="@group.GroupName">@group.GroupName</option>
                     }
                 </select>
 
