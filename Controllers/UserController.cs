@@ -11,6 +11,7 @@ using Neo4jClient;
 using System.Collections;
 using System.Reflection;
 using System.Dynamic;
+using System.Xml;
 
 namespace meldboek.Controllers
 {
@@ -83,6 +84,7 @@ namespace meldboek.Controllers
 
             return View();
         }
+
         public IActionResult Newsfeed()
         {
             TempData["Page"] = "Algemeen";
@@ -118,20 +120,41 @@ namespace meldboek.Controllers
             }
         }
 
+        public int GetMaxId()
+        {
+            // GetMaxId gets the newspost with the highest id from the database and returns the id.
+
+            List<INode> postNodes = new List<INode>();
+            var getPosts = ConnectDb("MATCH(p:Post) RETURN p ORDER BY toInteger(p.postid) DESC LIMIT 1");
+            var post = new Newspost();
+
+            postNodes = getPosts.Result;
+            foreach (var record in postNodes)
+            {
+                var nodeprops = JsonConvert.SerializeObject(record.As<INode>().Properties);
+                post = (JsonConvert.DeserializeObject<Newspost>(nodeprops));
+            }
+
+            return post.PostId;
+        }
+
         [HttpPost]
-        public async Task<IActionResult> AddPost(string title, string description, string postid, string group)
+        public async Task<IActionResult> AddPost(string title, string description, string group)
         {
             // AddPost adds a newspost the user creates to the database. It takes the given title + description and adds the current time itself.
 
+            // Getting the most recent post node, so a new id can be automatically added
+            int newid = GetMaxId() + 1;
+
             string Timestamp = DateTime.Now.ToString("dd-MM-yyyy HH:mm:ss");
-            await ConnectDb("CREATE (p:Post {title: '" + title + "', description: '" + description + "', postid: '" + postid + "', dateadded: '" + Timestamp + "'})");
+            await ConnectDb("CREATE(p:Post {title: '" + title + "', description: '" + description + "', postid: '" + newid + "', dateadded: '" + Timestamp + "'})");
 
             // After adding the post to the database, a relationship is created between the post and the user who made it | (Person-[Posted]->Post)
-            await ConnectDb("MATCH (u:Person),(p:Post) WHERE u.FirstName = 'Amy' AND p.title = '" + title + "' CREATE(u)-[r:Posted]->(p)");
+            await ConnectDb("MATCH(u:Person), (p:Post) WHERE u.FirstName = 'Amy' AND p.title = '" + title + "' CREATE(u)-[r:Posted]->(p)");
 
             if (group != "general")
             {
-                await ConnectDb("MATCH (g:Group), (p:Post) WHERE g.GroupName = '" + group + "' AND p.title = '" + title + "' CREATE(g) -[r:HasPost]->(p)");
+                await ConnectDb("MATCH(g:Group), (p:Post) WHERE g.GroupName = '" + group + "' AND p.title = '" + title + "' CREATE(g) -[r:HasPost]->(p)");
 
                 return RedirectToAction("FilteredNewsfeed", new { group });
             }
@@ -144,7 +167,7 @@ namespace meldboek.Controllers
             // GetPosts() get all the posts and their creators from the database and puts them in a list of Newspost objects.
 
             List<INode> postNodes = new List<INode>();
-            var getPosts = ConnectDb("MATCH (p:Post) RETURN (p)");
+            var getPosts = ConnectDb("MATCH(p:Post) RETURN (p)");
             var post = new Newspost();
             List<Newspost> postList = new List<Newspost>();
 
@@ -181,7 +204,7 @@ namespace meldboek.Controllers
 
             // The final list is put into a ordered list called feed, so the results will be displayed in the right order (newest first).
             List<Newspost> feed = postList.OrderByDescending(p => p.DateAdded).ToList();
-            //return View(feed);
+
             return feed;
         }
 
