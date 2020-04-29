@@ -22,6 +22,11 @@ namespace meldboek.Controllers
         {
             return View();
         }
+        [Route("User/GroepenManagen")]
+        public IActionResult GroepenManagen()
+        {
+            return View();
+        }
         public IActionResult CreateAccount(string firstname, string lastname, string email, string password, string password2)
         {
             if (firstname != null & lastname != null & email != null & password != null & password == password2)
@@ -49,19 +54,34 @@ namespace meldboek.Controllers
         public IActionResult LogIn(string email, string password)
         {
             List<INode> nodeList = new List<INode>();
-            var results = ConnectDb("MATCH (a:Person) WHERE a.Email = '" + email + "' AND a.Password =  '" + password + "' RETURN a");
-            var user = new User();
-
-            nodeList = results.Result;
-            foreach (var record in nodeList)
+            if (email != null & password != null)
             {
-                var nodeprops = JsonConvert.SerializeObject(record.As<INode>().Properties);
-                user = (JsonConvert.DeserializeObject<User>(nodeprops));
+                var results = ConnectDb("MATCH (a:Person) WHERE a.Email = '" + email + "' AND a.Password =  '" + password + "' RETURN a");
+                var user = new User();
+
+                nodeList = results.Result;
+                foreach (var record in nodeList)
+                {
+                    var nodeprops = JsonConvert.SerializeObject(record.As<INode>().Properties);
+                    user = (JsonConvert.DeserializeObject<User>(nodeprops));
+                }
+                //   Console.WriteLine(user.Email.ToString());
+
+
+                if (email == user.Email & password == user.Password)
+                {
+                    RedirectToAction("Profile", "UserController");
+                    Console.WriteLine("Redirect to profile");
+                }
+                else
+                {
+                    RedirectToAction("CreateAccount", "UserController");
+                    Console.WriteLine("Redirect to CreateAccount");
+
+                }
             }
-            Console.WriteLine(user.Email.ToString());
 
             return View();
-
         }
         public IActionResult Newsfeed()
         {
@@ -262,15 +282,19 @@ namespace meldboek.Controllers
             return user;
         }
 
-        public void AddUserToGroup(int userId, int groupId)
+        public IActionResult AddUserToGroup(int userId, int groupId)
         {
             var res = ConnectDb("MATCH (a:Person), (b:Group) WHERE a.UserId = " + userId.ToString() + " AND b.GroupId = " + groupId.ToString() + " CREATE (a)-[r:IsInGroup]->(b)" + " RETURN a");
             res.Wait();
+            return RedirectToAction("GroepenManagen", "User");
+
         }
-        public void DeleteUserFromGroup(int userId, int groupId)
+        public IActionResult DeleteUserFromGroup(int userId, int groupId)
         {
             var res = ConnectDb("MATCH (a:Person {UserId : " + userId.ToString() + "}) - [r:IsInGroup]->(b:Group{GroupId: " + groupId.ToString() + "}) DELETE r RETURN a");
             res.Wait();
+            return RedirectToAction("GroepenManagen", "User");
+
         }
 
         public async Task<List<INode>> ConnectDb(string query)

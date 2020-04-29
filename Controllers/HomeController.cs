@@ -45,10 +45,11 @@ namespace meldboek.Controllers
 
             //AddUserToGroup(1, 1);
             // DeleteUserFromGroup(1, 1);
-            //LogIn("y@s.nl", "wachtwoord");
+            //   LogIn("Test@s.nl", "wachtwoord");
 
             return View();
         }
+
 
 
 
