@@ -22,18 +22,25 @@ namespace meldboek.Controllers
         {
             return View();
         }
-        public IActionResult CreateAccount(string firstname, string lastname, string email, string password)
+        [Route("User/GroepenManagen")]
+        public IActionResult GroepenManagen()
         {
-            if (firstname != null & lastname != null & email != null & password != null)
+            return View();
+        }
+        public IActionResult CreateAccount(string firstname, string lastname, string email, string password, string password2)
+        {
+            if (firstname != null & lastname != null & email != null & password != null & password == password2)
             {
-                User u1 = new User()
+                User u = new User()
                 {
                     FirstName = firstname,
                     LastName = lastname,
                     Email = email,
                     Password = password
-                };
 
+                };
+                var r = ConnectDb("CREATE (p:Person { FirstName: '" + u.FirstName + "', LastName: '" + u.LastName + "' ,Email: '" + u.Email + "', Password: '" + u.Password + "' }) RETURN p");
+                r.Wait();
                 return View();
             }
             else
@@ -44,7 +51,38 @@ namespace meldboek.Controllers
 
 
         }
+        public IActionResult LogIn(string email, string password)
+        {
+            List<INode> nodeList = new List<INode>();
+            if (email != null & password != null)
+            {
+                var results = ConnectDb("MATCH (a:Person) WHERE a.Email = '" + email + "' AND a.Password =  '" + password + "' RETURN a");
+                var user = new User();
 
+                nodeList = results.Result;
+                foreach (var record in nodeList)
+                {
+                    var nodeprops = JsonConvert.SerializeObject(record.As<INode>().Properties);
+                    user = (JsonConvert.DeserializeObject<User>(nodeprops));
+                }
+                //   Console.WriteLine(user.Email.ToString());
+
+
+                if (email == user.Email & password == user.Password)
+                {
+                    RedirectToAction("Profile", "UserController");
+                    Console.WriteLine("Redirect to profile");
+                }
+                else
+                {
+                    RedirectToAction("CreateAccount", "UserController");
+                    Console.WriteLine("Redirect to CreateAccount");
+
+                }
+            }
+
+            return View();
+        }
         public IActionResult Newsfeed()
         {
             // Before returning the view of the newsfeed, all the newsposts and groups need to be pulled from the database
@@ -65,7 +103,7 @@ namespace meldboek.Controllers
 
             string Timestamp = DateTime.Now.ToString("dd-MM-yyyy HH:mm:ss");
             ConnectDb("CREATE (p:Post {title: '" + title + "', description: '" + description + "', postid: '" + postid + "', dateadded: '" + Timestamp + "'})");
-            
+
             // After adding the post to the database, a relationship is created between the post and the user who made it | (Person-[Posted]->Post)
             ConnectDb("MATCH (u:Person),(p:Post) WHERE u.FirstName = 'Amy' AND p.title = '" + title + "' CREATE(u)-[r:Posted]->(p)");
 
@@ -80,7 +118,7 @@ namespace meldboek.Controllers
         public List<Newspost> GetFeed()
         {
             // GetPosts() get all the posts and their creators from the database and puts them in a list of Newspost objects.
-            
+
             List<INode> postNodes = new List<INode>();
             var getPosts = ConnectDb("MATCH (p:Post) RETURN (p)");
             var post = new Newspost();
@@ -103,7 +141,7 @@ namespace meldboek.Controllers
                     var userprops = JsonConvert.SerializeObject(person.As<INode>().Properties);
                     user = (JsonConvert.DeserializeObject<User>(userprops));
                 }
-                
+
                 // After getting al the required data, it is put in Newspost object and added to the list of newsposts.
                 postList.Add(new Newspost()
                 {
@@ -184,7 +222,7 @@ namespace meldboek.Controllers
                 groupList.Add(new Group()
                 {
                     GroupId = group.GroupId,
-                    Name = group.Name
+                    GroupName = group.GroupName
                 });
 
             }
@@ -221,8 +259,9 @@ namespace meldboek.Controllers
         }
 
         public void AcceptFriend(User userRequested, User userAccepted)
-        {            
-           ConnectDb("MATCH (a:Person), (b:Person) WHERE a.UserId = " + userRequested.UserId.ToString() + " AND b.UserId = " + userAccepted.UserId.ToString() + " CREATE (a)-[r:IsFriendsWith]->(b)" + " RETURN a");
+        {
+            var res = ConnectDb("MATCH (a:Person), (b:Person) WHERE a.UserId = " + userRequested.UserId.ToString() + " AND b.UserId = " + userAccepted.UserId.ToString() + " CREATE (a)-[r:IsFriendsWith]->(b)" + " RETURN a");
+            res.Wait();
         }
 
         public User GetUser(int userId)
@@ -231,21 +270,36 @@ namespace meldboek.Controllers
             var results = ConnectDb("MATCH (a:Person) WHERE a.UserId = " + userId.ToString() + " RETURN a");
             var user = new User();
 
-                nodeList = results.Result;
-                foreach (var record in nodeList)
-                {
-                    var nodeprops = JsonConvert.SerializeObject(record.As<INode>().Properties);
-                    user = (JsonConvert.DeserializeObject<User>(nodeprops));
-                }
-            
+            nodeList = results.Result;
+            foreach (var record in nodeList)
+            {
+                var nodeprops = JsonConvert.SerializeObject(record.As<INode>().Properties);
+                user = (JsonConvert.DeserializeObject<User>(nodeprops));
+            }
+
 
 
             return user;
         }
 
-         public async Task<List<INode>> ConnectDb(string query)
+        public IActionResult AddUserToGroup(int userId, int groupId)
         {
-            Driver = CreateDriverWithBasicAuth("bolt://localhost:11005", "neo4j", "1234");
+            var res = ConnectDb("MATCH (a:Person), (b:Group) WHERE a.UserId = " + userId.ToString() + " AND b.GroupId = " + groupId.ToString() + " CREATE (a)-[r:IsInGroup]->(b)" + " RETURN a");
+            res.Wait();
+            return RedirectToAction("GroepenManagen", "User");
+
+        }
+        public IActionResult DeleteUserFromGroup(int userId, int groupId)
+        {
+            var res = ConnectDb("MATCH (a:Person {UserId : " + userId.ToString() + "}) - [r:IsInGroup]->(b:Group{GroupId: " + groupId.ToString() + "}) DELETE r RETURN a");
+            res.Wait();
+            return RedirectToAction("GroepenManagen", "User");
+
+        }
+
+        public async Task<List<INode>> ConnectDb(string query)
+        {
+            Driver = CreateDriverWithBasicAuth("bolt://localhost:7687", "neo4j", "1234");
             List<INode> res = new List<INode>();
             IAsyncSession session = Driver.AsyncSession(o => o.WithDatabase("neo4j"));
 

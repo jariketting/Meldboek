@@ -2996,6 +2996,11 @@
       "FileKind": "mvc"
     },
     {
+      "FilePath": "/Users/yaseminsnoek/Documents/Inf jaar 2/Project D/meldboek/Views/User/GroepenManagen.cshtml",
+      "TargetPath": "Views\\User\\GroepenManagen.cshtml",
+      "FileKind": "mvc"
+    },
+    {
       "FilePath": "/Users/yaseminsnoek/Documents/Inf jaar 2/Project D/meldboek/Views/Admin/LogIn.cshtml",
       "TargetPath": "Views\\Admin\\LogIn.cshtml",
       "FileKind": "mvc"
