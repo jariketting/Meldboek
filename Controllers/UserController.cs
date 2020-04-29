@@ -96,20 +96,40 @@ namespace meldboek.Controllers
             return View(model);
         }
 
+        public IActionResult FilteredNewsfeed(string group)
+        {
+            if (group == "Algemeen")
+            {
+                return RedirectToAction("Newsfeed");
+            }
+            else
+            {
+                dynamic model = new ExpandoObject();
+
+                model.Post = GetGroupPosts(group);
+
+                model.Group = GetGroups();
+
+                return View("Newsfeed", model);
+            }
+        }
+
         [HttpPost]
-        public IActionResult AddPost(string title, string description, string postid, string group)
+        public async Task<IActionResult> AddPost(string title, string description, string postid, string group)
         {
             // AddPost adds a newspost the user creates to the database. It takes the given title + description and adds the current time itself.
 
             string Timestamp = DateTime.Now.ToString("dd-MM-yyyy HH:mm:ss");
-            ConnectDb("CREATE (p:Post {title: '" + title + "', description: '" + description + "', postid: '" + postid + "', dateadded: '" + Timestamp + "'})");
+            await ConnectDb("CREATE (p:Post {title: '" + title + "', description: '" + description + "', postid: '" + postid + "', dateadded: '" + Timestamp + "'})");
 
             // After adding the post to the database, a relationship is created between the post and the user who made it | (Person-[Posted]->Post)
-            ConnectDb("MATCH (u:Person),(p:Post) WHERE u.FirstName = 'Amy' AND p.title = '" + title + "' CREATE(u)-[r:Posted]->(p)");
+            await ConnectDb("MATCH (u:Person),(p:Post) WHERE u.FirstName = 'Amy' AND p.title = '" + title + "' CREATE(u)-[r:Posted]->(p)");
 
             if (group != "general")
             {
-                ConnectDb("MATCH (g:Group), (p:Post) WHERE g.GroupName = '" + group + "' AND p.title = '" + title + "' CREATE(g) -[r:HasPost]->(p)");
+                await ConnectDb("MATCH (g:Group), (p:Post) WHERE g.GroupName = '" + group + "' AND p.title = '" + title + "' CREATE(g) -[r:HasPost]->(p)");
+
+                return RedirectToAction("FilteredNewsfeed", new { group });
             }
 
             return RedirectToAction("Newsfeed");
@@ -161,10 +181,10 @@ namespace meldboek.Controllers
             return feed;
         }
 
-        public List<Newspost> GetGroupPosts()
+        public List<Newspost> GetGroupPosts(string group)
         {
             List<INode> postNodes = new List<INode>();
-            var getPosts = ConnectDb("MATCH(g: Group)--(p: Post) WHERE g.name = 'rdam' RETURN p");
+            var getPosts = ConnectDb("MATCH(g:Group)--(p:Post) WHERE g.GroupName = '" + group + "' RETURN p");
             var post = new Newspost();
             List<Newspost> postList = new List<Newspost>();
 
@@ -176,7 +196,7 @@ namespace meldboek.Controllers
 
                 // Another query gets the related users to a post from the database thus finding its creator, the result is processed similarly.
                 List<INode> userList = new List<INode>();
-                var getuser = ConnectDb("MATCH(p: Post)--(u: Person) WHERE p.title = '" + post.Title + "' RETURN u");
+                var getuser = ConnectDb("MATCH(p:Post)--(u:Person) WHERE p.title = '" + post.Title + "' RETURN u");
                 var user = new User();
 
                 userList = getuser.Result;

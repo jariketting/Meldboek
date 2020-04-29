@@ -324,11 +324,11 @@
 
         <!-- Newsfeed categories -->
         <div class="categories">
-            <a href="#">Algemeen</a>
+            <a href="@Url.Action("FilteredNewsfeed", new { group = "Algemeen" })">Algemeen</a>
     
                 @foreach (var group in Model.Group)
                 {
-                    <a href="#">@group.GroupName</a>
+                    <a href="@Url.Action("FilteredNewsfeed", new { group = group.GroupName })">@group.GroupName</a>
                 }
             
         </div>
