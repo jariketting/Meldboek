@@ -49,10 +49,10 @@
             quotes: none;
         }
 
-            blockquote:before, blockquote:after, q:before, q:after {
-                content: '';
-                content: none;
-            }
+        blockquote:before, blockquote:after, q:before, q:after {
+            content: '';
+            content: none;
+        }
 
         table {
             border-collapse: collapse;
@@ -79,14 +79,14 @@
             height: 74px;
         }
 
-            .topbar h1 {
-                color: #ffffff;
-                font-size: 34px;
-                padding-top: 20px;
-                padding-bottom: 20px;
-                width: 55%;
-                float: left;
-            }
+        .topbar h1 {
+            color: #ffffff;
+            font-size: 34px;
+            padding-top: 20px;
+            padding-bottom: 20px;
+            width: 55%;
+            float: left;
+        }
 
         /* Account icon*/
         #acc-icon {
@@ -148,18 +148,18 @@
             width: 100%;
         }
 
-            .logout a {
-                text-align: center;
-                text-decoration: none;
-                font-size: 24px;
-                color: #ffffff;
-                display: block;
-                transition: 0.3s;
-            }
+        .logout a {
+            text-align: center;
+            text-decoration: none;
+            font-size: 24px;
+            color: #ffffff;
+            display: block;
+            transition: 0.3s;
+        }
 
-                .overlay a:hover, .overlay a:focus, .logout a:hover, .logout a:focus {
-                    color: #9ee0a4;
-                }
+        .overlay a:hover, .overlay a:focus, .logout a:hover, .logout a:focus {
+            color: #9ee0a4;
+        }
 
         /* Actual content of the newsfeed */
         .newsfeed-content {
@@ -180,18 +180,23 @@
             border-right: 2px solid #3bb546;
         }
 
-            .categories a {
-                color: #000000;
-                font-size: 24px;
-                text-decoration: none;
-                display: block;
-                padding-bottom: 15px;
-                width: 105px;
-            }
+        .categories a {
+            color: #000000;
+            font-size: 24px;
+            text-decoration: none;
+            display: block;
+            padding-bottom: 15px;
+            width: 105px;
+        }
 
-                .categories a:hover {
-                    color: #9ee0a4;
-                }
+        .categories a:hover {
+            color: #9ee0a4;
+        }
+
+        .page-title {
+            font-size: 28px;
+            padding-bottom: 20px;
+        }
 
         /* Articles list */
         .articles-list {
@@ -212,22 +217,22 @@
             float: left;
         }
 
-            .article-content h1 {
-                font-size: 28px;
-                padding-bottom: 15px;
-                padding-top: 40px;
-            }
+        .article-content h1 {
+            font-size: 28px;
+            padding-bottom: 15px;
+            padding-top: 40px;
+        }
 
-            .article-content h3 {
-                font-size: 20px;
-                padding-bottom: 10px;
-            }
+        .article-content h3 {
+            font-size: 20px;
+            padding-bottom: 10px;
+        }
 
-            .article-content p {
-                color: #000000;
-                font-size: 18px;
-                padding-bottom: 10px;
-            }
+        .article-content p {
+            color: #000000;
+            font-size: 18px;
+            padding-bottom: 10px;
+        }
 
         /* Form to add an article */
         .add-article {
@@ -260,9 +265,9 @@
             cursor: pointer;
         }
 
-            input[type=submit]:hover {
-                background-color: #9ee0a4;
-            }
+        input[type=submit]:hover {
+            background-color: #9ee0a4;
+        }
     </style>
     <script>
         /*
@@ -334,6 +339,15 @@
         </div>
 
         <div class="articles-list">
+            @if(TempData["Page"] == "Algemeen")
+            {
+                <h1 class="page-title">Nieuws - Algemeen</h1>
+            }
+            else
+            {
+                <h1 class="page-title">Nieuws - @TempData["Page"]</h1>
+            }
+
             <!-- The form to add a newspost links to a function in the UserController called AddPost. -->
             <form action="AddPost" method="post" class="add-article">
                 <label for="title">Titel</label>

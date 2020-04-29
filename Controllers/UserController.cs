@@ -85,6 +85,8 @@ namespace meldboek.Controllers
         }
         public IActionResult Newsfeed()
         {
+            TempData["Page"] = "Algemeen";
+
             // Before returning the view of the newsfeed, all the newsposts and groups need to be pulled from the database
             dynamic model = new ExpandoObject();
             model.Post = GetFeed();
@@ -100,6 +102,7 @@ namespace meldboek.Controllers
         {
             if (group == "Algemeen")
             {
+                TempData["Page"] = "Algemeen";
                 return RedirectToAction("Newsfeed");
             }
             else
@@ -110,6 +113,7 @@ namespace meldboek.Controllers
 
                 model.Group = GetGroups();
 
+                TempData["Page"] = group;
                 return View("Newsfeed", model);
             }
         }
