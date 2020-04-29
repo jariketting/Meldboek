@@ -89,7 +89,6 @@
 /Users/yaseminsnoek/Documents/Inf jaar 2/Project D/meldboek/obj/Debug/netcoreapp2.2/meldboek.pdb
 /Users/yaseminsnoek/Documents/Inf jaar 2/Project D/meldboek/obj/Debug/netcoreapp2.2/meldboek.csproj.CopyComplete
 C:\Users\amyno\source\repos\meldboek\obj\Debug\netcoreapp2.2\meldboek.csprojAssemblyReference.cache
-C:\Users\amyno\source\repos\meldboek\obj\Debug\netcoreapp2.2\meldboek.csproj.CoreCompileInputs.cache
 C:\Users\amyno\source\repos\meldboek\obj\Debug\netcoreapp2.2\meldboek.RazorAssemblyInfo.cache
 C:\Users\amyno\source\repos\meldboek\obj\Debug\netcoreapp2.2\meldboek.RazorAssemblyInfo.cs
 C:\Users\amyno\source\repos\meldboek\obj\Debug\netcoreapp2.2\meldboek.AssemblyInfoInputs.cache

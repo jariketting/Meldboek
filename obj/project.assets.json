@@ -1745,7 +1745,7 @@
           "lib/netstandard2.0/Microsoft.EntityFrameworkCore.dll": {}
         }
       },
-      "Microsoft.EntityFrameworkCore.Abstractions/2.2.0": {
+      "Microsoft.EntityFrameworkCore.Abstractions/3.1.3": {
         "type": "package",
         "compile": {
           "lib/netstandard2.0/Microsoft.EntityFrameworkCore.Abstractions.dll": {}
@@ -6233,16 +6233,17 @@
         "microsoft.entityframeworkcore.nuspec"
       ]
     },
-    "Microsoft.EntityFrameworkCore.Abstractions/2.2.0": {
-      "sha512": "/js/H09B8MQGoPDFzJoaAealyL66g4vKf7DVcdBYcxgKztkttjZbRzSWKF9PZZFyfBl9Ia/BiStM70t7kjgMpg==",
+    "Microsoft.EntityFrameworkCore.Abstractions/3.1.3": {
+      "sha512": "Lw85zK0KR3Qh9/PddsUAPWxRVhhmRxpx07vH3r8ievnPWF47u2gANwvtxI8GYNYYIapYd0/wq5e6vSGcEIJryw==",
       "type": "package",
-      "path": "microsoft.entityframeworkcore.abstractions/2.2.0",
+      "path": "microsoft.entityframeworkcore.abstractions/3.1.3",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
+        "Icon.png",
         "lib/netstandard2.0/Microsoft.EntityFrameworkCore.Abstractions.dll",
         "lib/netstandard2.0/Microsoft.EntityFrameworkCore.Abstractions.xml",
-        "microsoft.entityframeworkcore.abstractions.2.2.0.nupkg.sha512",
+        "microsoft.entityframeworkcore.abstractions.3.1.3.nupkg.sha512",
         "microsoft.entityframeworkcore.abstractions.nuspec"
       ]
     },
@@ -12695,6 +12696,7 @@
       "Microsoft.AspNet.WebApi.Client >= 5.2.7",
       "Microsoft.AspNetCore.App >= 2.2.0",
       "Microsoft.AspNetCore.Razor.Design >= 2.2.0",
+      "Microsoft.EntityFrameworkCore.Abstractions >= 3.1.3",
       "Microsoft.Graph >= 3.0.1",
       "Microsoft.NETCore.App >= 2.2.0",
       "Neo4j.Driver >= 4.0.1",
@@ -12765,6 +12767,10 @@
             "target": "Package",
             "version": "[2.2.0, )"
           },
+          "Microsoft.EntityFrameworkCore.Abstractions": {
+            "target": "Package",
+            "version": "[3.1.3, )"
+          },
           "Microsoft.Graph": {
             "target": "Package",
             "version": "[3.0.1, )"
@@ -12803,6 +12809,16 @@
     }
   },
   "logs": [
+    {
+      "code": "NU1608",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Detected package version outside of dependency constraint: Microsoft.AspNetCore.App 2.2.0 requires Microsoft.EntityFrameworkCore.Abstractions (>= 2.2.0 && < 2.3.0) but version Microsoft.EntityFrameworkCore.Abstractions 3.1.3 was resolved.",
+      "libraryId": "Microsoft.EntityFrameworkCore.Abstractions",
+      "targetGraphs": [
+        ".NETCoreApp,Version=v2.2"
+      ]
+    },
     {
       "code": "NU1701",
       "level": "Warning",
