@@ -1,4 +1,35 @@
-﻿<!-- Colored bar at the top of the page -->
+﻿<style>
+    .topbar {
+        background-color: #000000; /* Verander deze naar de kleur uit de mockups van je view. */
+    }
+
+    .navbtn {
+        background-color: #000000; /* Verander deze naar de kleur uit de mockups van je view. */
+    }
+
+    .overlay {
+        background-color: #000000; /* Verander deze naar de kleur uit de mockups van je view. */
+    }
+
+    .overlay a:hover, .overlay a:focus, .logout a:hover, .logout a:focus {
+        color: #000000; /* Deze is anders van de vorige 3, dit is de kleur die tekst krijg bij hover (is ook in de mockups te vinden). */
+    }
+</style>
+<script>
+    /*
+        The functions hover and unhover change the account picture when the mouse is hovering on it
+        The difference between the two picture is the background color, so hovering makes it look like
+        the button is 'selected'
+    */
+    function hover(element) {
+        element.setAttribute('src', '@Url.Content("~/Content/account_hover2.png")');
+    }
+    function unhover(element) {
+        element.setAttribute('src', '@Url.Content("~/Content/account.png")');
+    }
+</script>
+
+<!-- Colored bar at the top of the page -->
 <div class="topbar">
 
     <!-- The button that opens the sidemenu -->
@@ -14,9 +45,9 @@
 <!-- Sidemenu overlay -->
 <div id="nav" class="overlay">
     <div class="overlay-content">
-        <p style="color: #9ee0a4;">Newsfeed</p>
-        <br>
-        <a onclick="nav()" href="#forums">Forums</a>
+        <p style="color: #ffffff;">Newsfeed</p> <!-- Dit is hoe een optie eruit ziet als het de huidige pagina is, dit moet je dus ook veranderen. -->
+        <br>                                    <!-- Zorg dat de kleur hetzelfde is als de kleur van hover (laatste element in de <style>).-->
+        <a onclick="nav()" href="#forums">Forums</a> <!-- Dit is hoe je opties neerzet die niet je huidige pagina zijn. -->
         <br>
         <a onclick="nav()" href="#chat">Chat</a>
     </div>

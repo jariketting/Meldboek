@@ -13,6 +13,22 @@
             background-color: #ffffff;
         }
 
+        .topbar {
+            background-color: #3bb546;
+        }
+
+        .navbtn {
+            background-color: #3bb546;
+        }
+
+        .overlay {
+            background-color: #3bb546;
+        }
+
+        .overlay a:hover, .overlay a:focus, .logout a:hover, .logout a:focus {
+            color: #9ee0a4;
+        }
+
         .newsfeed-content {
             width: 100%;
             overflow: hidden;
@@ -120,6 +136,14 @@
             background-color: #9ee0a4;
         }
     </style>
+    <script>
+        function hover(element) {
+            element.setAttribute('src', '@Url.Content("~/Content/account_hover2.png")');
+        }
+        function unhover(element) {
+            element.setAttribute('src', '@Url.Content("~/Content/account.png")');
+        }
+    </script>
 </head>
 <body>
     <!-- Colored bar at the top of the page -->

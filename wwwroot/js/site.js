@@ -15,15 +15,3 @@ function nav() {
         document.getElementById("nav").style.width = "0%";
     }
 }
-
-/*
-    The functions hover and unhover change the account picture when the mouse is hovering on it
-    The difference between the two picture is the background color, so hovering makes it look like
-    the button is 'selected'
-*/
-function hover(element) {
-    element.setAttribute('src', '@Url.Content("~/Content/account_hover2.png")');
-}
-function unhover(element) {
-    element.setAttribute('src', '@Url.Content("~/Content/account.png")');
-}

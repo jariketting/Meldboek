@@ -62,7 +62,6 @@ table {
     position: fixed;
     top: 0;
     left: 0;
-    background-color: #3bb546;
     color: #ffffff;
     font-size: 34px;
     width: 100%;
@@ -95,7 +94,6 @@ table {
     padding-left: 25px;
     padding-bottom: 20px;
     padding-top: 20px;
-    background-color: #3bb546;
     color: #ffffff;
     font-size: 34px;
     cursor: pointer;
@@ -109,7 +107,6 @@ table {
     position: fixed;
     z-index: 1;
     left: 0;
-    background-color: #3bb546;
     overflow-x: hidden;
     transition: 0.5s;
 }
@@ -146,8 +143,4 @@ table {
     color: #ffffff;
     display: block;
     transition: 0.3s;
-}
-
-.overlay a:hover, .overlay a:focus, .logout a:hover, .logout a:focus {
-    color: #9ee0a4;
 }
