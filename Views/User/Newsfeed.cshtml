@@ -335,6 +335,7 @@
             {
                 <a href="@Url.Action("FilteredNewsfeed", new { filter = group.GroupName })">@group.GroupName</a>
             }
+
             <a href="@Url.Action("FilteredNewsfeed", new { filter = "Vrienden"})">Vrienden</a> 
         </div>
 
@@ -346,16 +347,15 @@
                 <label for="title">Titel</label>
                 <input type="text" id="title" name="title" placeholder="Titel nieuwsbericht">
 
-                <!-- <label for="postid">PostId</label>
-                <input type="text" id="postid" name="postid" placeholder="PostId" /> -->
-
                 <label for="category">Categorie</label>
                 <select id="group" name="group">
                     <option id="general" name="general">Algemeen</option>
+
                     @foreach (var group in Model.Group)
                     {
-                    <option id="@group.GroupName" name="@group.GroupName">@group.GroupName</option>
+                        <option id="@group.GroupName" name="@group.GroupName">@group.GroupName</option>
                     }
+
                 </select>
 
                 <label for="description">Beschrijving</label>
@@ -364,8 +364,7 @@
                 <input type="submit" value="Voeg toe">
             </form>
 
-            <!-- Single post attribute; Here all the posts from GetPosts() are put on the page. -->
-           
+            <!-- Single post attribute; Here all the posts from GetFeed() or FilteredNewsfeed() are put on the page. -->
                 @foreach (var post in Model.Post)
                 {
                     <div class="article">
@@ -376,7 +375,6 @@
                         </div>
                     </div>
                 }
-            
 
         </div>
     </div>
