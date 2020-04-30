@@ -329,24 +329,17 @@
 
         <!-- Newsfeed categories -->
         <div class="categories">
-            <a href="@Url.Action("FilteredNewsfeed", new { group = "Algemeen" })">Algemeen</a>
+            <a href="@Url.Action("FilteredNewsfeed", new { filter = "Algemeen" })">Algemeen</a>
     
-                @foreach (var group in Model.Group)
-                {
-                    <a href="@Url.Action("FilteredNewsfeed", new { group = group.GroupName })">@group.GroupName</a>
-                }
-            
+            @foreach (var group in Model.Group)
+            {
+                <a href="@Url.Action("FilteredNewsfeed", new { filter = group.GroupName })">@group.GroupName</a>
+            }
+            <a href="@Url.Action("FilteredNewsfeed", new { filter = "Vrienden"})">Vrienden</a> 
         </div>
 
         <div class="articles-list">
-            @if(TempData["Page"] == "Algemeen")
-            {
-                <h1 class="page-title">Nieuws - Algemeen</h1>
-            }
-            else
-            {
-                <h1 class="page-title">Nieuws - @TempData["Page"]</h1>
-            }
+           <h1 class="page-title">Nieuws - @TempData["Page"]</h1>
 
             <!-- The form to add a newspost links to a function in the UserController called AddPost. -->
             <form action="AddPost" method="post" class="add-article">

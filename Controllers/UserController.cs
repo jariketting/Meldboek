@@ -93,29 +93,41 @@ namespace meldboek.Controllers
             dynamic model = new ExpandoObject();
             model.Post = GetFeed();
 
-            // model.Post = GetGroupPosts(); TODO: Filter aanbrengen op aanvraag.
-
             model.Group = GetGroups();
+            model.Friend = GetFriends();
 
             return View(model);
         }
 
-        public IActionResult FilteredNewsfeed(string group)
+        public IActionResult FilteredNewsfeed(string filter)
         {
-            if (group == "Algemeen")
+            if (filter == "Algemeen")
             {
-                TempData["Page"] = "Algemeen";
+                TempData["Page"] = filter;
                 return RedirectToAction("Newsfeed");
+            }
+            else if (filter == "Vrienden")
+            {
+                dynamic model = new ExpandoObject();
+
+                model.Post = GetFriendPosts();
+
+                model.Group = GetGroups();
+                model.Friend = GetFriends();
+
+                TempData["Page"] = filter;
+                return View("Newsfeed", model);
             }
             else
             {
                 dynamic model = new ExpandoObject();
 
-                model.Post = GetGroupPosts(group);
+                model.Post = GetGroupPosts(filter);
 
                 model.Group = GetGroups();
+                model.Friend = GetFriends();
 
-                TempData["Page"] = group;
+                TempData["Page"] = filter;
                 return View("Newsfeed", model);
             }
         }
@@ -125,7 +137,7 @@ namespace meldboek.Controllers
             // GetMaxId gets the newspost with the highest id from the database and returns the id.
 
             List<INode> postNodes = new List<INode>();
-            var getPosts = ConnectDb("MATCH(p:Post) RETURN p ORDER BY toInteger(p.postid) DESC LIMIT 1");
+            var getPosts = ConnectDb("MATCH(p:Post) RETURN p ORDER BY toInteger(p.PostId) DESC LIMIT 1");
             var post = new Newspost();
 
             postNodes = getPosts.Result;
@@ -147,14 +159,14 @@ namespace meldboek.Controllers
             int newid = GetMaxPostId() + 1;
 
             string Timestamp = DateTime.Now.ToString("dd-MM-yyyy HH:mm:ss");
-            await ConnectDb("CREATE(p:Post {title: '" + title + "', description: '" + description + "', postid: '" + newid + "', dateadded: '" + Timestamp + "'})");
+            await ConnectDb("CREATE(p:Post {Title: '" + title + "', Description: '" + description + "', PostId: '" + newid + "', DateAdded: '" + Timestamp + "'})");
 
             // After adding the post to the database, a relationship is created between the post and the user who made it | (Person-[Posted]->Post)
-            await ConnectDb("MATCH(u:Person), (p:Post) WHERE u.FirstName = 'Amy' AND p.title = '" + title + "' CREATE(u)-[r:Posted]->(p)");
+            await ConnectDb("MATCH(u:Person), (p:Post) WHERE u.FirstName = 'Amy' AND p.Title = '" + title + "' CREATE(u)-[r:Posted]->(p)");
 
             if (group != "general")
             {
-                await ConnectDb("MATCH(g:Group), (p:Post) WHERE g.GroupName = '" + group + "' AND p.title = '" + title + "' CREATE(g) -[r:HasPost]->(p)");
+                await ConnectDb("MATCH(g:Group), (p:Post) WHERE g.GroupName = '" + group + "' AND p.Title = '" + title + "' CREATE(g) -[r:HasPost]->(p)");
 
                 return RedirectToAction("FilteredNewsfeed", new { group });
             }
@@ -179,7 +191,7 @@ namespace meldboek.Controllers
 
                 // Another query gets the related users to a post from the database thus finding its creator, the result is processed similarly.
                 List<INode> userList = new List<INode>();
-                var getuser = ConnectDb("MATCH(p: Post)--(u: Person) WHERE p.title = '" + post.Title + "' RETURN u");
+                var getuser = ConnectDb("MATCH(p: Post)--(u: Person) WHERE p.Title = '" + post.Title + "' RETURN u");
                 var user = new User();
 
                 userList = getuser.Result;
@@ -223,7 +235,7 @@ namespace meldboek.Controllers
 
                 // Another query gets the related users to a post from the database thus finding its creator, the result is processed similarly.
                 List<INode> userList = new List<INode>();
-                var getuser = ConnectDb("MATCH(p:Post)--(u:Person) WHERE p.title = '" + post.Title + "' RETURN u");
+                var getuser = ConnectDb("MATCH(p:Post)--(u:Person) WHERE p.Title = '" + post.Title + "' RETURN u");
                 var user = new User();
 
                 userList = getuser.Result;
@@ -252,6 +264,49 @@ namespace meldboek.Controllers
             return feed;
         }
 
+        public List<Newspost> GetFriendPosts()
+        {           
+            List<INode> postNodes = new List<INode>();
+            var getPosts = ConnectDb("MATCH(a:Person {FirstName:'Amy'})--(b:Person)--(p:Post) WHERE NOT ()-[:HasPost]-(p) RETURN p");
+            var post = new Newspost();
+            List<Newspost> postList = new List<Newspost>();
+
+            postNodes = getPosts.Result;
+            foreach (var record in postNodes)
+            {
+                var nodeprops = JsonConvert.SerializeObject(record.As<INode>().Properties);
+                post = (JsonConvert.DeserializeObject<Newspost>(nodeprops));
+
+                // Another query gets the related users to a post from the database thus finding its creator, the result is processed similarly.
+                List<INode> userList = new List<INode>();
+                var getuser = ConnectDb("MATCH(p:Post)--(u:Person) WHERE p.Title = '" + post.Title + "' RETURN u");
+                var user = new User();
+
+                userList = getuser.Result;
+                foreach (var person in userList)
+                {
+                    var userprops = JsonConvert.SerializeObject(person.As<INode>().Properties);
+                    user = (JsonConvert.DeserializeObject<User>(userprops));
+                }
+
+                // After getting al the required data, it is put in Newspost object and added to the list of newsposts.
+                postList.Add(new Newspost()
+                {
+                    PostId = post.PostId,
+                    Title = post.Title,
+                    Description = post.Description,
+                    DateAdded = post.DateAdded,
+                    FirstName = user.FirstName,
+                    LastName = user.LastName
+                });
+
+            }
+
+            // The final list is put into a ordered list called feed, so the results will be displayed in the right order (newest first).
+            List<Newspost> feed = postList.OrderByDescending(p => p.DateAdded).ToList();
+            return feed;
+        }
+
         public List<Group> GetGroups()
         {
             List<INode> groupNodes = new List<INode>();
@@ -276,6 +331,35 @@ namespace meldboek.Controllers
 
             // The final list is put into a ordered list called feed, so the results will be displayed in the right order (newest first).
             List<Group> final = groupList.ToList();
+            return final;
+        }
+
+        public List<User> GetFriends()
+        {
+            List<INode> friendNodes = new List<INode>();
+            var getFriends = ConnectDb("MATCH(a:Person)--(b:Person) WHERE a.FirstName = 'Amy' RETURN b");
+            var friend = new User();
+            List<User> friendList = new List<User>();
+
+            friendNodes = getFriends.Result;
+            foreach (var record in friendNodes)
+            {
+                var nodeprops = JsonConvert.SerializeObject(record.As<INode>().Properties);
+                friend = (JsonConvert.DeserializeObject<User>(nodeprops));
+
+                // After getting al the required data, it is put in Newspost object and added to the list of newsposts.
+                friendList.Add(new User()
+                {
+                    UserId = friend.UserId,
+                    FirstName = friend.FirstName,
+                    LastName = friend.LastName,
+                    Email = friend.Email
+                });
+
+            }
+
+            // The final list is put into a ordered list called feed, so the results will be displayed in the right order (newest first).
+            List<User> final = friendList.ToList();
             return final;
         }
 
