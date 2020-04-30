@@ -60,7 +60,7 @@ namespace meldboek.Controllers
             {
 
                 List<INode> nodeList = new List<INode>();
-                var results = ConnectDb("MATCH (a:User) WHERE a.Email = '" + email + "' AND a.Password =  '" + password + "' RETURN a");
+                var results = ConnectDb("MATCH (a:Person) WHERE a.Email = '" + email + "' AND a.Password =  '" + password + "' RETURN a");
                 var user = new User();
                 
                     nodeList = results.Result;
