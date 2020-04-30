@@ -53,70 +53,49 @@ namespace meldboek.Controllers
         {
             return View();
         }
-        //public IActionResult LogInPage(string email, string password)
-        //{
-        //    if (email != null & password != null)
-        //    {
-        //        RedirectToAction("LogIn", "User");
-        //    }
-        //    return View();
-        //}
+
         public ActionResult Login(string email, string password)
         {
-            List<INode> nodeList = new List<INode>();
-            var results = ConnectDb("MATCH (a:User) WHERE a.Email = '" + email + "' AND a.Password =  '" + password + "' RETURN a");
-            var user = new User();
-            if (email != null && password != null)
+            if (email != null & password != null)
             {
-                nodeList = results.Result;
-                foreach (var record in nodeList)
-                {
-                    var nodeprops = JsonConvert.SerializeObject(record.As<INode>().Properties);
-                    user = (JsonConvert.DeserializeObject<User>(nodeprops));
-                }
 
-                // check if user is found, if password is wrong no user would be found in database, therfore the user email would equal null
+                List<INode> nodeList = new List<INode>();
+                var results = ConnectDb("MATCH (a:User) WHERE a.Email = '" + email + "' AND a.Password =  '" + password + "' RETURN a");
+                var user = new User();
+                
+                    nodeList = results.Result;
+                    foreach (var record in nodeList)
+                    {
+                        var nodeprops = JsonConvert.SerializeObject(record.As<INode>().Properties);
+                        user = (JsonConvert.DeserializeObject<User>(nodeprops));
+                    }
                 if (user.Email != null)
                 {
-                    Console.WriteLine(user.Email.ToString());
 
-                    if (user.Password == password)
-                    {
-                        //Creates a new Identity of the user
-                        var claims = new List<Claim>
+                    var claims = new List<Claim>
                     {
                         new Claim(ClaimTypes.Name, "User", ClaimValueTypes.String),
-                        new Claim(ClaimTypes.NameIdentifier, user.Password.ToString(), ClaimValueTypes.String),
+                        new Claim(ClaimTypes.NameIdentifier, user.Email.ToString(), ClaimValueTypes.String),
                         new Claim(ClaimTypes.Role, "User", ClaimValueTypes.String)
                     };
-                        var userIdentity = new ClaimsIdentity(claims, "SecureLogin");
-                        var userPrincipal = new ClaimsPrincipal(userIdentity);
+                    var userIdentity = new ClaimsIdentity(claims, "SecureLogin");
+                    var userPrincipal = new ClaimsPrincipal(userIdentity);
 
-                        HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,
-                            userPrincipal,
-                            new AuthenticationProperties
-                            {
-                                ExpiresUtc = DateTime.UtcNow.AddMinutes(30),
-                                IsPersistent = true,
-                                AllowRefresh = false
-                            });
+                    HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,
+                        userPrincipal,
+                        new AuthenticationProperties
+                        {
+                            ExpiresUtc = DateTime.UtcNow.AddMinutes(30),
+                            IsPersistent = true,
+                            AllowRefresh = false
+                        });
 
-                        return RedirectToAction("Profile", "User");
-                    }
-                    else if(user == null )
-                    {
-                        RedirectToAction("Newsfeed", "User");
-                    }
-                    else
-                    {
-                        RedirectToAction("Newsfeed", "User");
-                    }
+                    return RedirectToAction("Profile", "User");
                 }
-                else if (email != null)
+                else
                 {
-                    RedirectToAction("Newsfeed", "User");
+                    return RedirectToAction("CreateAccount", "User");
                 }
-
             }
             return View();
         }

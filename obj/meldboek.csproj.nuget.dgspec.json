@@ -1,26 +1,24 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Jari\\Dropbox\\Development\\Asp.net\\Meldboek\\meldboek\\meldboek.csproj": {}
+    "C:\\Users\\ses-9\\Desktop\\meldboek\\meldboek\\meldboek.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Jari\\Dropbox\\Development\\Asp.net\\Meldboek\\meldboek\\meldboek.csproj": {
+    "C:\\Users\\ses-9\\Desktop\\meldboek\\meldboek\\meldboek.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Jari\\Dropbox\\Development\\Asp.net\\Meldboek\\meldboek\\meldboek.csproj",
+        "projectUniqueName": "C:\\Users\\ses-9\\Desktop\\meldboek\\meldboek\\meldboek.csproj",
         "projectName": "meldboek",
-        "projectPath": "C:\\Users\\Jari\\Dropbox\\Development\\Asp.net\\Meldboek\\meldboek\\meldboek.csproj",
-        "packagesPath": "C:\\Users\\Jari\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Jari\\Dropbox\\Development\\Asp.net\\Meldboek\\meldboek\\obj\\",
+        "projectPath": "C:\\Users\\ses-9\\Desktop\\meldboek\\meldboek\\meldboek.csproj",
+        "packagesPath": "C:\\Users\\ses-9\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\ses-9\\Desktop\\meldboek\\meldboek\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
-          "C:\\Microsoft\\Xamarin\\NuGet\\",
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
-          "C:\\Users\\Jari\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
+          "C:\\Users\\ses-9\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "netcoreapp2.2"
