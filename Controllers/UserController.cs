@@ -179,7 +179,7 @@ namespace meldboek.Controllers
             // GetPosts() get all the posts and their creators from the database and puts them in a list of Newspost objects.
 
             List<INode> postNodes = new List<INode>();
-            var getPosts = ConnectDb("MATCH(p:Post) RETURN (p)");
+            var getPosts = ConnectDb("MATCH(p:Post) WHERE NOT ()-[:HasPost]-(p) RETURN (p)");
             var post = new Newspost();
             List<Newspost> postList = new List<Newspost>();
 
