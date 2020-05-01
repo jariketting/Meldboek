@@ -131,3 +131,5 @@ C:\Users\amyno\source\repos\meldboek\obj\Debug\netcoreapp2.2\meldboek.pdb
 C:\Users\amyno\source\repos\meldboek\obj\Debug\netcoreapp2.2\meldboek.genruntimeconfig.cache
 C:\Users\amyno\source\repos\meldboek\obj\Debug\netcoreapp2.2\meldboek.csproj.CopyComplete
 C:\Users\amyno\source\repos\meldboek\obj\Debug\netcoreapp2.2\meldboek.csprojAssemblyReference.cache
+C:\Users\amyno\source\repos\meldboek\obj\Debug\netcoreapp2.2\Razor\Views\Shared\Topbar_Sidenav.cshtml.g.cs
+C:\Users\amyno\source\repos\meldboek\obj\Debug\netcoreapp2.2\Razor\Views\User\Home.cshtml.g.cs

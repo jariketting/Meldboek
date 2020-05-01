@@ -136,14 +136,6 @@
             background-color: #9ee0a4;
         }
     </style>
-    <script>
-        function hover(element) {
-            element.setAttribute('src', '@Url.Content("~/Content/account_hover2.png")');
-        }
-        function unhover(element) {
-            element.setAttribute('src', '@Url.Content("~/Content/account.png")');
-        }
-    </script>
 </head>
 <body>
     <!-- Colored bar at the top of the page -->
@@ -156,7 +148,7 @@
         <h1>Newsfeed</h1>
 
         <!-- Account information button -->
-        <a href="#"><img id="acc-icon" src="@Url.Content("~/Content/account.png")" onmouseover="hover(this);" onmouseout="unhover(this);" /></a>
+        <a href="#accountinfo"><img id="acc-icon" src="@Url.Content("~/Content/account.png")"/></a>
     </div>
 
     <!-- Sidemenu overlay -->
@@ -167,6 +159,8 @@
             <a onclick="nav()" href="#forums">Forums</a>
             <br>
             <a onclick="nav()" href="#chat">Chat</a>
+            <br>
+            <a onclick="nav()" href="#groups">Groepen</a>
         </div>
         <div class="logout"><a onclick="nav()" href="#logout">Log uit</a></div>
     </div>

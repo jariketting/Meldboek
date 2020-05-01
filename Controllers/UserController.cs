@@ -85,6 +85,11 @@ namespace meldboek.Controllers
             return View();
         }
 
+        public IActionResult Home()
+        {
+            return View();
+        }
+
         public IActionResult Newsfeed()
         {
             // Default page is page with filter "Algemeen", which displays all the posts that are not posted in a group.
