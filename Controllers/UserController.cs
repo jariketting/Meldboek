@@ -169,21 +169,23 @@ namespace meldboek.Controllers
             // Getting the id of most recent post node, so a new id can be automatically added to the newly created newspost.
             int newid = GetMaxPostId() + 1;
 
-            string Timestamp = DateTime.Now.ToString("dd-MM-yyyy HH:mm:ss");
-            await ConnectDb("CREATE(p:Post {Title: '" + title + "', Description: '" + description + "', PostId: '" + newid + "', DateAdded: '" + Timestamp + "'})");
+            string date = DateTime.Now.ToString("dd-MM-yyyy");
+            string time = DateTime.Now.ToString("HH:mm:ss");
+
+            await ConnectDb("CREATE(p:Post {Title: '" + title + "', Description: '" + description + "', PostId: '" + newid + "', DateAdded: '" + date + "', TimeAdded: '" + time + "'})");
 
             // After adding the post to the database, a relationship is created between the post and the user who made it. | (Person-[Posted]->Post)
-            await ConnectDb("MATCH(u:Person), (p:Post) WHERE u.FirstName = 'Yasemin' AND p.Title = '" + title + "' CREATE(u)-[r:Posted]->(p)");
+            await ConnectDb("MATCH(u:Person), (p:Post) WHERE u.FirstName = 'Amy' AND p.Title = '" + title + "' CREATE(u)-[r:Posted]->(p)");
 
             // If the chosen category is not "general", the user has chosen to post in a group they are part of.
-            if (group != "general")
+            if (group != "Algemeen")
             {
                 // Because the post is meant to be for a specific group, a relationship type "HasPost" is created between the group and the newspost.
                 await ConnectDb("MATCH(g:Group), (p:Post) WHERE g.GroupName = '" + group + "' AND p.Title = '" + title + "' CREATE(g) -[r:HasPost]->(p)");
-                return RedirectToAction("FilteredNewsfeed", new { group });
+                return RedirectToAction("FilteredNewsfeed", new { filter = group });
             }
 
-            return RedirectToAction("Newsfeed");
+            return RedirectToAction("FilteredNewsfeed", new { filter = "Algemeen" });
         }
 
         public List<Newspost> GetFeed()
@@ -220,6 +222,7 @@ namespace meldboek.Controllers
                     Title = post.Title,
                     Description = post.Description,
                     DateAdded = post.DateAdded,
+                    TimeAdded = post.TimeAdded,
                     FirstName = user.FirstName,
                     LastName = user.LastName
                 });
@@ -227,7 +230,7 @@ namespace meldboek.Controllers
             }
 
             // The final list is put into a ordered list called feed, so the results will be displayed in the right order (newest first).
-            List<Newspost> feed = postList.OrderByDescending(p => p.DateAdded).ToList();
+            List<Newspost> feed = postList.OrderBy(p => p.DateAdded).ThenByDescending(p => p.TimeAdded).ToList();
             return feed;
         }
 
@@ -265,6 +268,7 @@ namespace meldboek.Controllers
                     Title = post.Title,
                     Description = post.Description,
                     DateAdded = post.DateAdded,
+                    TimeAdded = post.TimeAdded,
                     FirstName = user.FirstName,
                     LastName = user.LastName
                 });
@@ -272,7 +276,7 @@ namespace meldboek.Controllers
             }
 
             // The final list is put into a ordered list called feed, so the results will be displayed in the right order (newest first).
-            List<Newspost> feed = postList.OrderByDescending(p => p.DateAdded).ToList();
+            List<Newspost> feed = postList.OrderBy(p => p.DateAdded).ThenByDescending(p => p.TimeAdded).ToList();
 
             return feed;
         }
@@ -312,6 +316,7 @@ namespace meldboek.Controllers
                     Title = post.Title,
                     Description = post.Description,
                     DateAdded = post.DateAdded,
+                    TimeAdded = post.TimeAdded,
                     FirstName = user.FirstName,
                     LastName = user.LastName
                 });
@@ -319,7 +324,7 @@ namespace meldboek.Controllers
             }
 
             // The final list is put into a ordered list called feed, so the results will be displayed in the right order (newest first).
-            List<Newspost> feed = postList.OrderByDescending(p => p.DateAdded).ToList();
+            List<Newspost> feed = postList.OrderBy(p => p.DateAdded).ThenByDescending(p => p.TimeAdded).ToList();
             return feed;
         }
 

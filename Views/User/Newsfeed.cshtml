@@ -213,7 +213,7 @@
 
                 <label for="category">Categorie</label>
                 <select id="group" name="group">
-                    <option id="general" name="general">Algemeen</option>
+                    <option id="Algemeen" name="Algemeen">Algemeen</option>
 
                     @foreach (var group in Model.Group)
                     {
@@ -234,7 +234,7 @@
                     <div class="article">
                         <div class="article-content">
                             <h1>@post.Title</h1>
-                            <h3>@post.FirstName @post.LastName, @post.DateAdded</h3>
+                            <h3>@post.FirstName @post.LastName, @post.DateAdded @post.TimeAdded</h3>
                             <p>@post.Description</p>
                         </div>
                         <a href="#"><div class="delete-button">&#10005;</div></a>
