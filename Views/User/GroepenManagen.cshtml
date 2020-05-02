@@ -1,0 +1,35 @@
+@model meldboek.Models.User
+
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="~/css/Groepen.css">
+</head>
+<body>
+        <div class="topbar">    
+            <h1>Manage groepen</h1>
+</div>
+       
+
+    <div id="AddUserToGroup">
+        <a>Add user to group</a> <br><br>
+        <form asp-action="AddUserToGroup" method="post">
+   <a> User id:</a><br>
+  <input type="string" required name = userId id="userId"><br>
+    <a>Group id:</a><br>
+  <input type="string" required name = groupId id="groupId"><br>
+  <input type="submit" value = "Submit" id="submit">
+        </form>
+    </div>
+        <div id="AddUserToGroup">
+        <a>Delete user from group</a> <br><br>
+        <form asp-action="DeleteUserFromGroup" method="post">
+   <a> User id:</a><br>
+  <input type="string" required name = userId id="userId"><br>
+    <a>Group id:</a><br>
+  <input type="string" required name = groupId id="groupId"><br>
+  <input type="submit" value = "Submit" id="submit">
+        </form>
+    </div>
+</body>
+</html>
