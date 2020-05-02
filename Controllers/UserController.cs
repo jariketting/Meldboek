@@ -161,7 +161,6 @@ namespace meldboek.Controllers
             return post.PostId;
         }
 
-        [HttpPost]
         public async Task<IActionResult> AddPost(string title, string description, string group)
         {
             // AddPost adds a newspost the user creates to the database. It takes the given title + description and adds the current time itself.
@@ -186,6 +185,13 @@ namespace meldboek.Controllers
             }
 
             return RedirectToAction("FilteredNewsfeed", new { filter = "Algemeen" });
+        }
+
+        public async Task<IActionResult> DeletePost(string postid, string page)
+        {
+            await ConnectDb("MATCH(p:Post) WHERE p.PostId= '" + postid + "' DETACH DELETE p");
+
+            return RedirectToAction("FilteredNewsfeed", new { filter = page });
         }
 
         public List<Newspost> GetFeed()

@@ -237,7 +237,10 @@
                             <h3>@post.FirstName @post.LastName, @post.DateAdded @post.TimeAdded</h3>
                             <p>@post.Description</p>
                         </div>
-                        <a href="#"><div class="delete-button">&#10005;</div></a>
+                        @if (post.FirstName == "Amy" && post.LastName == "Nowé")
+                        {
+                            <a href="@Url.Action("DeletePost", new { postid = post.PostId, page = TempData["Page"] })"><div class="delete-button">&#10005;</div></a>
+                        }
                     </div>
                 }
 
