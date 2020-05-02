@@ -73,7 +73,7 @@
 
         /* Single article */
         .article {
-            width: 80%;
+            width: 90%;
             overflow: hidden;
             padding-bottom: 5px;
             border-bottom: 1px solid #3bb546;
@@ -82,7 +82,7 @@
         /* Article content consists of title (h1) and author + date (h3). */
         .article-content {
             float: left;
-            width: 850px;
+            width: 90%;
         }
 
         .article-content h1 {
@@ -107,7 +107,7 @@
             background-color: #ff5252;
             padding: 10px;
             margin-top: 90px;
-            margin-left: 870px;
+            margin-left: 90%;
             border-radius: 20px;
             width: 20px;
             height: 20px;
@@ -125,10 +125,35 @@
         }
 
         /* Form to add an article'. */
+        .collapsible {
+            font-family: 'Trebuchet MS', sans-serif;
+            background-color: #3bb546;
+            color: #ffffff;
+            cursor: pointer;
+            width: 90%;
+            border: none;
+            border-radius: 20px;
+            text-align: left;
+            margin-top: 10px;
+            padding: 10px 0px 10px 20px;
+            outline: none;
+            font-size: 18px;
+        }
+
+        .collapsible:hover {
+            background-color: #9ee0a4;
+        }
+
+        .collapsible-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.2s ease-out;
+        }
+
         .add-article {
             width: 90%;
             font-size: 18px;
-            padding-bottom: 20px;
+            padding-top: 20px;
         }
 
         input[type=text], select, textarea {
@@ -159,6 +184,18 @@
             background-color: #9ee0a4;
         }
     </style>
+    <script>
+        function toggleCollapsible() {
+            var buttonId = this.id;
+            var sectionId = buttonId.replace("button", "section");
+            var content = document.getElementById(sectionId);
+            if (content.style.maxHeight) {
+                content.style.maxHeight = null;
+            } else {
+                content.style.maxHeight = content.scrollHeight + "px";
+            }
+        }
+    </script>
 </head>
 <body>
     <!-- Colored bar at the top of the page -->
@@ -207,26 +244,29 @@
            <h1 class="page-title">Nieuws - @TempData["Page"]</h1>
 
             <!-- The form to add a newspost links to a function in the UserController called AddPost. -->
-            <form action="AddPost" method="post" class="add-article">
-                <label for="title">Titel</label>
-                <input type="text" id="title" name="title" placeholder="Titel nieuwsbericht">
+           <button class="collapsible" id="collapsible-button" onclick="toggleCollapsible.call(this)">&#x2BC6; Nieuwsbericht maken</button>
+            <div class="collapsible-content" id="collapsible-section">
+                <form action="AddPost" method="post" class="add-article">
+                    <label for="title">Titel</label>
+                    <input type="text" id="title" name="title" placeholder="Titel nieuwsbericht">
 
-                <label for="category">Categorie</label>
-                <select id="group" name="group">
-                    <option id="Algemeen" name="Algemeen">Algemeen</option>
+                    <label for="category">Categorie</label>
+                    <select id="group" name="group">
+                        <option id="Algemeen" name="Algemeen">Algemeen</option>
 
-                    @foreach (var group in Model.Group)
-                    {
-                        <option id="@group.GroupName" name="@group.GroupName">@group.GroupName</option>
-                    }
+                        @foreach (var group in Model.Group)
+                        {
+                            <option id="@group.GroupName" name="@group.GroupName">@group.GroupName</option>
+                        }
 
-                </select>
+                    </select>
 
-                <label for="description">Beschrijving</label>
-                <textarea id="description" name="description" value="description" placeholder="Beschrijving nieuwsbericht" style="height:200px"></textarea>
+                    <label for="description">Beschrijving</label>
+                    <textarea id="description" name="description" value="description" placeholder="Beschrijving nieuwsbericht" style="height:200px"></textarea>
 
-                <input type="submit" value="Voeg toe">
-            </form>
+                    <input type="submit" value="Voeg toe">
+                </form>
+            </div>
 
             <!-- Single post attribute; Here all the posts from GetFeed() or FilteredNewsfeed() are put on the page. -->
                 @foreach (var post in Model.Post)
