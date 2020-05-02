@@ -173,7 +173,7 @@ namespace meldboek.Controllers
             await ConnectDb("CREATE(p:Post {Title: '" + title + "', Description: '" + description + "', PostId: '" + newid + "', DateAdded: '" + Timestamp + "'})");
 
             // After adding the post to the database, a relationship is created between the post and the user who made it. | (Person-[Posted]->Post)
-            await ConnectDb("MATCH(u:Person), (p:Post) WHERE u.FirstName = 'Amy' AND p.Title = '" + title + "' CREATE(u)-[r:Posted]->(p)");
+            await ConnectDb("MATCH(u:Person), (p:Post) WHERE u.FirstName = 'Yasemin' AND p.Title = '" + title + "' CREATE(u)-[r:Posted]->(p)");
 
             // If the chosen category is not "general", the user has chosen to post in a group they are part of.
             if (group != "general")
@@ -228,7 +228,6 @@ namespace meldboek.Controllers
 
             // The final list is put into a ordered list called feed, so the results will be displayed in the right order (newest first).
             List<Newspost> feed = postList.OrderByDescending(p => p.DateAdded).ToList();
-
             return feed;
         }
 
