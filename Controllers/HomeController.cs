@@ -45,13 +45,28 @@ namespace meldboek.Controllers
 
             //AddUserToGroup(1, 1);
             // DeleteUserFromGroup(1, 1);
+<<<<<<< HEAD
             //   LogIn("Test@s.nl", "wachtwoord");
+=======
+          
+>>>>>>> origin/chat
 
             return View();
         }
 
+<<<<<<< HEAD
+=======
+        
 
+>>>>>>> origin/chat
 
+        public async Task<List<INode>> ConnectDb(string query)
+        {
+            Driver = CreateDriverWithBasicAuth("bolt://localhost:7687", "neo4j", "1234");
+            List<INode> res = new List<INode>();
+            IAsyncSession session = Driver.AsyncSession(o => o.WithDatabase("neo4j"));
+
+<<<<<<< HEAD
 
 
 
@@ -61,6 +76,8 @@ namespace meldboek.Controllers
             List<INode> res = new List<INode>();
             IAsyncSession session = Driver.AsyncSession(o => o.WithDatabase("neo4j"));
 
+=======
+>>>>>>> origin/chat
             try
             {
                 res = await session.ReadTransactionAsync(async tx =>
