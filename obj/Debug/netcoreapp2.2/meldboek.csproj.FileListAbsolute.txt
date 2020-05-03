@@ -210,3 +210,4 @@ C:\Users\Jari\Dropbox\Development\Asp.net\Meldboek\meldboek\obj\Debug\netcoreapp
 C:\Users\Jari\Dropbox\Development\Asp.net\Meldboek\meldboek\obj\Debug\netcoreapp2.2\meldboek.genruntimeconfig.cache
 C:\Users\Jari\Dropbox\Development\Asp.net\Meldboek\meldboek\obj\Debug\netcoreapp2.2\meldboek.csproj.CopyComplete
 C:\Users\Jari\Dropbox\Development\Asp.net\Meldboek\meldboek\obj\Debug\netcoreapp2.2\Razor\Views\Chat\Index.cshtml.g.cs
+C:\Users\Jari\Dropbox\Development\Asp.net\Meldboek\meldboek\obj\Debug\netcoreapp2.2\Razor\Views\Chat\room.cshtml.g.cs
