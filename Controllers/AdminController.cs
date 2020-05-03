@@ -6,9 +6,7 @@ using System.Threading.Tasks;
 using meldboek.Models;
 using Microsoft.AspNetCore.Mvc;
 using Neo4j.Driver;
-
-
-
+using Newtonsoft.Json;
 
 namespace meldboek.Controllers
 {
@@ -42,21 +40,23 @@ namespace meldboek.Controllers
         }
         public IActionResult CreateGroups(string Groepnaam, string ManagerID)
         {
+            if (Groepnaam != null)
+            {
+                int groupId = GetMaxGroupId();
+                Group g = new Group(groupId, Groepnaam);
 
-            Group g = new Group(Groepnaam);
+                var r = ConnectDb("CREATE (g:Group {GroupId: " + g.GroupId + ", GroupName: '" + g.GroupName + "' }) RETURN g");
 
-            var r = ConnectDb("CREATE (g:Group { Groupname: '" + g.GroupName + "' }) RETURN g");
-
-            r.Wait();
-
-            var GroupLong = r.Result[0].Id;
-
-
-           int GroupId = unchecked((int)GroupLong);
+                r.Wait();
+                //dit is om het de Neo4J ID te pakken
+                // var GroupLong = r.Result[0].Id; 
+                // int GroupId = unchecked((int)GroupLong);
 
 
-            var r2 = ConnectDb("MATCH (p:Person),(g:Group) WHERE ID(p) = "+ManagerID+" AND ID(g) = "+GroupId+" CREATE(p) -[r: IsOwner]->(g) RETURN p, g");
+                var r2 = ConnectDb("MATCH (p:Person),(g:Group) WHERE p.PersonId = " + ManagerID + " AND g.GroupId = " + groupId + " CREATE(p) -[r: IsOwner]->(g) RETURN p, g");
+                r2.Wait();
 
+            }
 
 
             return View();
@@ -65,6 +65,25 @@ namespace meldboek.Controllers
          
 
         }
+
+        public int GetMaxGroupId()
+        {
+            // GetMaxPostId gets the Person with the highest id from the database and returns the id.
+
+            List<INode> postNodes = new List<INode>();
+            var getPosts = ConnectDb("MATCH(p:Group) RETURN p ORDER BY toInteger(p.GroupId) DESC LIMIT 1");
+            var Group = new Group();
+
+            postNodes = getPosts.Result;
+            foreach (var record in postNodes)
+            {
+                var nodeprops = JsonConvert.SerializeObject(record.As<INode>().Properties);
+                Group = (JsonConvert.DeserializeObject<Group>(nodeprops));
+            }
+
+            return Group.GroupId + 1;
+        }
+
         public async Task<List<INode>> ConnectDb(string query)
         {
             Driver = CreateDriverWithBasicAuth("bolt://localhost:7687", "neo4j", "1234");
@@ -98,9 +117,9 @@ namespace meldboek.Controllers
             return res;
 
         }
-        public IDriver CreateDriverWithBasicAuth(string uri, string user, string password)
+        public IDriver CreateDriverWithBasicAuth(string uri, string Person, string password)
         {
-            return GraphDatabase.Driver(new Uri(uri), AuthTokens.Basic(user, password));
+            return GraphDatabase.Driver(new Uri(uri), AuthTokens.Basic(Person, password));
         }
 
     }

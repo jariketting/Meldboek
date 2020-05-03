@@ -2,18 +2,6 @@
   "version": 3,
   "targets": {
     ".NETCoreApp,Version=v2.2": {
-      "Autofac/5.1.2": {
-        "type": "package",
-        "dependencies": {
-          "Microsoft.Bcl.AsyncInterfaces": "1.1.0"
-        },
-        "compile": {
-          "lib/netstandard2.0/Autofac.dll": {}
-        },
-        "runtime": {
-          "lib/netstandard2.0/Autofac.dll": {}
-        }
-      },
       "Microsoft.AspNet.WebApi/5.2.7": {
         "type": "package",
         "dependencies": {
@@ -1606,15 +1594,6 @@
         },
         "runtime": {
           "lib/netstandard2.0/Microsoft.AspNetCore.WebUtilities.dll": {}
-        }
-      },
-      "Microsoft.Bcl.AsyncInterfaces/1.1.0": {
-        "type": "package",
-        "compile": {
-          "ref/netstandard2.0/Microsoft.Bcl.AsyncInterfaces.dll": {}
-        },
-        "runtime": {
-          "lib/netstandard2.0/Microsoft.Bcl.AsyncInterfaces.dll": {}
         }
       },
       "Microsoft.CodeAnalysis.Analyzers/1.1.0": {
@@ -4977,27 +4956,6 @@
     }
   },
   "libraries": {
-    "Autofac/5.1.2": {
-      "sha512": "iGEx5Cm6Uor6/bZkgCHHjJO8cEQvDSOxgzNmHGJgGOnLDCe0b8NpOlhotsqx8dFvBDCsEX/V3YGRR30sRQLsxw==",
-      "type": "package",
-      "path": "autofac/5.1.2",
-      "files": [
-        ".nupkg.metadata",
-        ".signature.p7s",
-        "autofac.5.1.2.nupkg.sha512",
-        "autofac.nuspec",
-        "icon.png",
-        "lib/net461/Autofac.dll",
-        "lib/net461/Autofac.pdb",
-        "lib/net461/Autofac.xml",
-        "lib/netstandard2.0/Autofac.dll",
-        "lib/netstandard2.0/Autofac.pdb",
-        "lib/netstandard2.0/Autofac.xml",
-        "lib/netstandard2.1/Autofac.dll",
-        "lib/netstandard2.1/Autofac.pdb",
-        "lib/netstandard2.1/Autofac.xml"
-      ]
-    },
     "Microsoft.AspNet.WebApi/5.2.7": {
       "sha512": "r+nQLBQ857hw8Mfb5hrlMwr0nb7BE1Fp12LsSIZ9g6NT/hTZj8CYUi2UREfywIsGPQ4EIx14oWp8QPRps/i5CA==",
       "type": "package",
@@ -6332,30 +6290,6 @@
         "lib/netstandard2.0/Microsoft.AspNetCore.WebUtilities.xml",
         "microsoft.aspnetcore.webutilities.2.2.0.nupkg.sha512",
         "microsoft.aspnetcore.webutilities.nuspec"
-      ]
-    },
-    "Microsoft.Bcl.AsyncInterfaces/1.1.0": {
-      "sha512": "1Am6l4Vpn3/K32daEqZI+FFr96OlZkgwK2LcT3pZ2zWubR5zTPW3/FkO1Rat9kb7oQOa4rxgl9LJHc5tspCWfg==",
-      "type": "package",
-      "path": "microsoft.bcl.asyncinterfaces/1.1.0",
-      "files": [
-        ".nupkg.metadata",
-        ".signature.p7s",
-        "LICENSE.TXT",
-        "THIRD-PARTY-NOTICES.TXT",
-        "lib/net461/Microsoft.Bcl.AsyncInterfaces.dll",
-        "lib/net461/Microsoft.Bcl.AsyncInterfaces.xml",
-        "lib/netstandard2.0/Microsoft.Bcl.AsyncInterfaces.dll",
-        "lib/netstandard2.0/Microsoft.Bcl.AsyncInterfaces.xml",
-        "lib/netstandard2.1/Microsoft.Bcl.AsyncInterfaces.dll",
-        "lib/netstandard2.1/Microsoft.Bcl.AsyncInterfaces.xml",
-        "microsoft.bcl.asyncinterfaces.1.1.0.nupkg.sha512",
-        "microsoft.bcl.asyncinterfaces.nuspec",
-        "ref/net461/Microsoft.Bcl.AsyncInterfaces.dll",
-        "ref/netstandard2.0/Microsoft.Bcl.AsyncInterfaces.dll",
-        "ref/netstandard2.1/Microsoft.Bcl.AsyncInterfaces.dll",
-        "useSharedDesignerContext.txt",
-        "version.txt"
       ]
     },
     "Microsoft.CodeAnalysis.Analyzers/1.1.0": {
@@ -13138,7 +13072,7 @@
       ]
     },
     "System.Threading.ThreadPool/4.3.0": {
-      "sha512": "k/+g4b7vjdd4aix83sTgC9VG6oXYKAktSfNIJUNGxPEj7ryEOfzHHhfnmsZvjxawwcD9HyWXKCXmPjX8U4zeSw==",
+      "sha512": "SrCOmTvvOOCmJT4BBxdZcwhz6XEMsjBGZvGSVorOxdCznaUNeVotEjDfXGIZ8gcGo00qgPbTV6puHDgcFYl6Iw==",
       "type": "package",
       "path": "system.threading.threadpool/4.3.0",
       "files": [
@@ -13548,7 +13482,6 @@
   },
   "projectFileDependencyGroups": {
     ".NETCoreApp,Version=v2.2": [
-      "Autofac >= 5.1.2",
       "Microsoft.AspNet.WebApi >= 5.2.7",
       "Microsoft.AspNet.WebApi.Client >= 5.2.7",
       "Microsoft.AspNetCore.App >= 2.2.0",
@@ -13562,23 +13495,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\amyno\\.nuget\\packages\\": {},
+    "C:\\Users\\jurri\\.nuget\\packages\\": {},
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\amyno\\source\\repos\\meldboek\\meldboek.csproj",
+      "projectUniqueName": "C:\\Users\\jurri\\Desktop\\webdev\\meldboek\\meldboek.csproj",
       "projectName": "meldboek",
-      "projectPath": "C:\\Users\\amyno\\source\\repos\\meldboek\\meldboek.csproj",
-      "packagesPath": "C:\\Users\\amyno\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\amyno\\source\\repos\\meldboek\\obj\\",
+      "projectPath": "C:\\Users\\jurri\\Desktop\\webdev\\meldboek\\meldboek.csproj",
+      "packagesPath": "C:\\Users\\jurri\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\jurri\\Desktop\\webdev\\meldboek\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
       ],
       "configFilePaths": [
-        "C:\\Users\\amyno\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\jurri\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -13602,10 +13535,6 @@
     "frameworks": {
       "netcoreapp2.2": {
         "dependencies": {
-          "Autofac": {
-            "target": "Package",
-            "version": "[5.1.2, )"
-          },
           "Microsoft.AspNet.WebApi": {
             "target": "Package",
             "version": "[5.2.7, )"
@@ -13661,7 +13590,7 @@
         ],
         "assetTargetFallback": true,
         "warn": true,
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.201\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.0.100\\RuntimeIdentifierGraph.json"
       }
     }
   },

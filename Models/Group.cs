@@ -12,13 +12,13 @@ namespace meldboek.Models
         //Primarykey
         public string GroupName { get; set; }
 
-        //controller
-        public Group(string groupName)
+        //constructor
+        public Group(int groupId, string groupName)
         {
-
+            GroupId = groupId;
             GroupName = groupName;
         }
-        //lege controller
+        //lege constructor
         public Group()
         {
 

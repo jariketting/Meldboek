@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\amyno\\source\\repos\\meldboek\\meldboek.csproj": {}
+    "C:\\Users\\jurri\\Desktop\\webdev\\meldboek\\meldboek.csproj": {}
   },
   "projects": {
-    "C:\\Users\\amyno\\source\\repos\\meldboek\\meldboek.csproj": {
+    "C:\\Users\\jurri\\Desktop\\webdev\\meldboek\\meldboek.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\amyno\\source\\repos\\meldboek\\meldboek.csproj",
+        "projectUniqueName": "C:\\Users\\jurri\\Desktop\\webdev\\meldboek\\meldboek.csproj",
         "projectName": "meldboek",
-        "projectPath": "C:\\Users\\amyno\\source\\repos\\meldboek\\meldboek.csproj",
-        "packagesPath": "C:\\Users\\amyno\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\amyno\\source\\repos\\meldboek\\obj\\",
+        "projectPath": "C:\\Users\\jurri\\Desktop\\webdev\\meldboek\\meldboek.csproj",
+        "packagesPath": "C:\\Users\\jurri\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\jurri\\Desktop\\webdev\\meldboek\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
-          "C:\\Users\\amyno\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\jurri\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -41,10 +41,6 @@
       "frameworks": {
         "netcoreapp2.2": {
           "dependencies": {
-            "Autofac": {
-              "target": "Package",
-              "version": "[5.1.2, )"
-            },
             "Microsoft.AspNet.WebApi": {
               "target": "Package",
               "version": "[5.2.7, )"
@@ -100,7 +96,7 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.201\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.0.100\\RuntimeIdentifierGraph.json"
         }
       }
     }
