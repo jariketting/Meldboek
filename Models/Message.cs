@@ -7,9 +7,9 @@ namespace meldboek.Models
 {
     public class Message
     {
-        public int MessageId { get; set; }
-        public String Content { get; set; }
-        public DateTime DatetimeSend { get; set; }
-        public DateTime DatetimeRead { get; set; }
+        public int MessageId { get; set; } // Id of message 
+        public String Content { get; set; } // content in text format
+        public DateTime DatetimeSend { get; set; } // datetime message was send
+        public DateTime DatetimeRead { get; set; } // datetime message was read (only used in person to person comminucation)
     }
 }
