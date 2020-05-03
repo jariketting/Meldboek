@@ -90,10 +90,10 @@ namespace meldboek.Controllers
         /// Join chat by id
         /// </summary>
         /// <param name="chat">id of chat to join</param>
-        public void JoinChat(string chat)
+        public async void JoinChat(string chat)
         {
             // TODO replace by current logged in user
-            _ = Db.ConnectDb("MATCH (u:User),(c:Chat) WHERE u.Email = 'jariketting@hotmail.com' AND c.ChatId = '" + chat + "' CREATE(u)-[r:InChat]->(c)");
+            _ = await Db.ConnectDb("MATCH (u:User),(c:Chat) WHERE u.Email = 'jariketting@hotmail.com' AND c.ChatId = '" + chat + "' CREATE(u)-[r:InChat]->(c)");
         }
 
         /// <summary>
