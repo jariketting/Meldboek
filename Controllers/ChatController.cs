@@ -36,7 +36,8 @@ namespace meldboek.Controllers
                 if (type == "join")
                 {
                     JoinChat(chat); // join chat
-                    ViewBag.success = "Je bent toegevoegd aan chat " + chat; // TODO add chat name
+                    Chat room = GetChat(chat);
+                    ViewBag.success = "Je bent toegevoegd aan " + room.Name; // TODO add chat name
                 }
                 else if (type == "open")
                 {
