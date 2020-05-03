@@ -1,8 +1,45 @@
 ﻿@{
-    ViewData["Title"] = "Chat";
+    ViewData["Title"] = "Chats";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Chat test</h1>
-</div>
+    <div class="container">
+        @if(ViewBag.success != null) {
+        <div class="alert alert-success" role="alert">
+            @ViewBag.success
+        </div>
+        }
+
+        <form method="post">
+            <input type="hidden" name="type" value="join" />
+
+            <div class="form-group">
+                <label for="join">Join chatroom</label>
+                <select name="chat" class="form-control" id="join">
+                    @foreach (var chat in ViewBag.chatsJoinable)
+                    {
+                        <option value="@chat.ChatId">@chat.Name</option>
+                    }
+                </select>
+            </div>
+
+            <button class="btn btn-primary" type="submit" disabled="@(ViewBag.chatsJoinable.Count == 0 ? "disabled" : null)">Join</button>
+        </form>
+
+        <hr />
+
+        <form method="post">
+            <input type="hidden" name="type" value="open" />
+
+            <div class="form-group">
+                <label for="open">My chatrooms</label>
+                <select name="chat" class="form-control" id="open">
+                    @foreach (var chat in ViewBag.chatsJoined)
+                    {
+                        <option value="@chat.ChatId">@chat.Name</option>
+                    }
+                </select>
+            </div>
+            <button class="btn btn-primary" type="submit" disabled="@(ViewBag.chatsJoined.Count == 0 ? "disabled" : null)">Open</button>
+        </form>
+    </div>
