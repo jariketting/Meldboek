@@ -161,6 +161,7 @@ namespace meldboek.Controllers
             return post.PostId;
         }
 
+        [HttpPost]
         public async Task<IActionResult> AddPost(string title, string description, string group)
         {
             // AddPost adds a newspost the user creates to the database. It takes the given title + description and adds the current time itself.
@@ -352,7 +353,7 @@ namespace meldboek.Controllers
                 // After getting al the required data, it is put into a Group object and added to the list of groups.
                 groupList.Add(new Group()
                 {
-
+                    GroupId = group.GroupId,
                     GroupName = group.GroupName
                 });
 
