@@ -352,7 +352,7 @@ namespace meldboek.Controllers
                 // After getting al the required data, it is put into a Group object and added to the list of groups.
                 groupList.Add(new Group()
                 {
-                    GroupId = group.GroupId,
+
                     GroupName = group.GroupName
                 });
 
@@ -462,7 +462,7 @@ namespace meldboek.Controllers
 
         public async Task<List<INode>> ConnectDb(string query)
         {
-            Driver = CreateDriverWithBasicAuth("bolt://localhost:11005", "neo4j", "1234");
+            Driver = CreateDriverWithBasicAuth("bolt://localhost:7687", "neo4j", "1234");
             List<INode> res = new List<INode>();
             IAsyncSession session = Driver.AsyncSession(o => o.WithDatabase("neo4j"));
 

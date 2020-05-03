@@ -7,8 +7,17 @@ namespace meldboek.Models
 {
     public class Group
     {
-        public int GroupId { get; set; }
+        //Primarykey
         public string GroupName { get; set; }
 
+        public Group(string groupName)
+        {
+
+            GroupName = groupName;
+        }
+        public Group()
+        {
+
+        }
     }
 }
