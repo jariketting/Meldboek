@@ -7,7 +7,6 @@ namespace meldboek.Models
 {
     public class Group
     {
-<<<<<<< HEAD
         //Primarykey
         public string GroupName { get; set; }
 
@@ -20,10 +19,5 @@ namespace meldboek.Models
         {
 
         }
-=======
-        public int GroupId { get; set; }
-        public string GroupName { get; set; }
-
->>>>>>> origin/chat
     }
 }

@@ -9,9 +9,6 @@ namespace meldboek.Models
     {
         public IEnumerable<Newspost> Post { get; set; }
         public IEnumerable<Group> Group { get; set; }
-<<<<<<< HEAD
         public IEnumerable<User> Friend { get; set; }
-=======
->>>>>>> origin/chat
     }
 }
