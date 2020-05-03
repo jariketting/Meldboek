@@ -13,13 +13,13 @@
         }
 
         .box {
-            background: #3bb546;
+            background: #808080;
             width: 800px;
             border-radius: 6px;
             position: center;
             margin: 0 auto 0 auto;
             padding: 100px 100px 100px 50px;
-            border: #6f89c4 4px solid;
+            border: #000000 4px solid;
         }
 
         .Personname {
@@ -76,21 +76,22 @@
     </style>
 </head>
 <body>
-    <h1 id="login-header">Login</h1>
+    <h1 id="login-header">Create groups</h1>
     <div id="absoluteCenteredDiv">
-        <form asp-action="LogIn" method="post">
+        <form asp-action="CreateGroups" method="post">
             <div class="box">
+                <p><font face="verdana" color="black">Groepnaam</font></p>
+                <input type="text" required name=Groepnaam id="Groepnaam" size="50"><br><br>
+
+                <p><font face="verdana" color="black">ManagerID</font></p>
+                <input type="text" required name=ManagerID id="ManagerID" size="50"><br><br>
+
+                <input type="submit" value="Submit" id="submit">
 
 
-                <p><font face="verdana" color="black">Emailadres</font></p>
-                <input type="text" required name=email id="email" size="50" ><br><br>
-                <p><font face="verdana" color="black">Wachtwoord</font></p>
-                <input type="password" required name=password id="password" size="50"> <br><br>
-                <input type="submit" value="button" id="submit">
-                @*<a href="#"><div class="button">Sign in</div></a>*@
             </div>
         </form>
-        @*<p>Wachtwoord vergeten? <a class="fpwd" href="#">Click Hier!</a></p>*@
+
     </div>
 </body>
 </html>
