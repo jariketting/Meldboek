@@ -94,7 +94,7 @@ namespace meldboek.Controllers
         public async void JoinChat(string chat)
         {
             // TODO replace by current logged in user
-            _ = await Db.ConnectDb("MATCH (u:User),(c:Chat) WHERE u.Email = 'jariketting@hotmail.com' AND c.ChatId = '" + chat + "' CREATE(u)-[r:InChat]->(c)");
+            _ = await Db.ConnectDb("MATCH (u:Person),(c:Chat) WHERE u.Email = 'jariketting@hotmail.com' AND c.ChatId = '" + chat + "' CREATE(u)-[r:InChat]->(c)");
         }
 
         /// <summary>
@@ -137,7 +137,7 @@ namespace meldboek.Controllers
             string Date = DateTime.Now.ToString("dd-MM-yyyy HH:mm:ss");
 
             _ = await Db.ConnectDb("CREATE (p:Message { MessageId: '" + id + "', Content: '" + message + "', DatetimeSend: '" + Date + "', DatetimeRead: ''}) RETURN p");
-            _ = await Db.ConnectDb("MATCH (u:User),(p:Message) WHERE u.Email = 'jariketting@hotmail.com' AND p.MessageId = '" + id + "' CREATE(u)-[r:Sends]->(p)");
+            _ = await Db.ConnectDb("MATCH (u:Person),(p:Message) WHERE u.Email = 'jariketting@hotmail.com' AND p.MessageId = '" + id + "' CREATE(u)-[r:Sends]->(p)");
             _ = await Db.ConnectDb("MATCH (u:Message),(p:Chat) WHERE u.MessageId = '" + id + "' AND p.ChatId = '" + chat + "' CREATE(p)-[r:Contains]->(u)");
         }
 
@@ -162,7 +162,7 @@ namespace meldboek.Controllers
 
                 // Another query gets the related users to a post from the database thus finding its creator, the result is processed similarly.
                 List<INode> userList = new List<INode>();
-                var getuser = Db.ConnectDb("MATCH(u:User)-[:Sends]-(c:Message) WHERE c.MessageId = '" + message.MessageId + "' RETURN u LIMIT 1");
+                var getuser = Db.ConnectDb("MATCH(u:Person)-[:Sends]-(c:Message) WHERE c.MessageId = '" + message.MessageId + "' RETURN u LIMIT 1");
                 var user = new User();
 
                 userList = getuser.Result;
@@ -196,7 +196,7 @@ namespace meldboek.Controllers
         public List<Chat> GetChatsJoinable()
         {
             List<INode> chatNodes = new List<INode>(); // will store chat nodes
-            var getChats = Db.ConnectDb("MATCH (p:Chat) WHERE NOT(p) -[:InChat]-(: User{ Email: 'jariketting@hotmail.com'}) RETURN p"); // run query
+            var getChats = Db.ConnectDb("MATCH (p:Chat) WHERE NOT(p) -[:InChat]-(: Person{ Email: 'jariketting@hotmail.com'}) RETURN p"); // run query
             var chat = new Chat(); // store chat
             List<Chat> chatList = new List<Chat>(); // store list of al chats
 
@@ -227,7 +227,7 @@ namespace meldboek.Controllers
         public List<Chat> GetChatsJoined()
         {
             List<INode> chatNodes = new List<INode>(); // will store chat nodes
-            var getChats = Db.ConnectDb("MATCH (p:Chat) WHERE(p) -[:InChat]-(: User{ Email: 'jariketting@hotmail.com'}) RETURN p"); // run query
+            var getChats = Db.ConnectDb("MATCH (p:Chat) WHERE(p) -[:InChat]-(: Person{ Email: 'jariketting@hotmail.com'}) RETURN p"); // run query
             var chat = new Chat(); // store chat
             List<Chat> chatList = new List<Chat>(); // store list of al chats
 
