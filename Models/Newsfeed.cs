@@ -9,5 +9,6 @@ namespace meldboek.Models
     {
         public IEnumerable<Newspost> Post { get; set; }
         public IEnumerable<Group> Group { get; set; }
+        public IEnumerable<Person> Friend { get; set; }
     }
 }
