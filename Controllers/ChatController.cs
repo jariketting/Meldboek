@@ -63,7 +63,7 @@ namespace meldboek.Controllers
         /// <returns>Chatroom view</returns>
         public IActionResult Room(string chat, string message)
         {
-            // TODO validate user in room
+            // TODO validate Person in room
 
             // check if chat id given
             if (chat == null)
@@ -93,7 +93,7 @@ namespace meldboek.Controllers
         /// <param name="chat">id of chat to join</param>
         public async void JoinChat(string chat)
         {
-            // TODO replace by current logged in user
+            // TODO replace by current logged in Person
             _ = await Db.ConnectDb("MATCH (u:Person),(c:Chat) WHERE u.Email = 'jariketting@hotmail.com' AND c.ChatId = '" + chat + "' CREATE(u)-[r:InChat]->(c)");
         }
 
@@ -142,7 +142,7 @@ namespace meldboek.Controllers
         }
 
         /// <summary>
-        /// Get chat user van join
+        /// Get chat Person van join
         /// </summary>
         /// <returns></returns>
         public List<Message> GetChatMessages(string chat)
@@ -160,16 +160,16 @@ namespace meldboek.Controllers
                 var nodeprops = JsonConvert.SerializeObject(item.As<INode>().Properties);
                 message = (JsonConvert.DeserializeObject<Message>(nodeprops));
 
-                // Another query gets the related users to a post from the database thus finding its creator, the result is processed similarly.
-                List<INode> userList = new List<INode>();
-                var getuser = Db.ConnectDb("MATCH(u:Person)-[:Sends]-(c:Message) WHERE c.MessageId = '" + message.MessageId + "' RETURN u LIMIT 1");
-                var user = new User();
+                // Another query gets the related Persons to a post from the database thus finding its creator, the result is processed similarly.
+                List<INode> PersonList = new List<INode>();
+                var getPerson = Db.ConnectDb("MATCH(u:Person)-[:Sends]-(c:Message) WHERE c.MessageId = '" + message.MessageId + "' RETURN u LIMIT 1");
+                var Person = new Person();
 
-                userList = getuser.Result;
-                var userItem = userList.First();
+                PersonList = getPerson.Result;
+                var PersonItem = PersonList.First();
 
-                var userprops = JsonConvert.SerializeObject(userItem.As<INode>().Properties);
-                user = (JsonConvert.DeserializeObject<User>(userprops));
+                var Personprops = JsonConvert.SerializeObject(PersonItem.As<INode>().Properties);
+                Person = (JsonConvert.DeserializeObject<Person>(Personprops));
 
                 // TODO as all these params should match, this could be automated...
                 // fill list with chats
@@ -179,7 +179,7 @@ namespace meldboek.Controllers
                     Content = message.Content,
                     DatetimeSend = message.DatetimeSend,
                     DatetimeRead = message.DatetimeRead,
-                    Username = user.Email
+                    Personname = Person.Email
                 });
             }
 
@@ -190,7 +190,7 @@ namespace meldboek.Controllers
         }
 
         /// <summary>
-        /// Get chat user van join
+        /// Get chat Person van join
         /// </summary>
         /// <returns></returns>
         public List<Chat> GetChatsJoinable()
@@ -221,7 +221,7 @@ namespace meldboek.Controllers
         }
 
         /// <summary>
-        /// Get chat user has joined
+        /// Get chat Person has joined
         /// </summary>
         /// <returns></returns>
         public List<Chat> GetChatsJoined()
