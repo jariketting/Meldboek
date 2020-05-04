@@ -9,6 +9,7 @@ using meldboek.Models;
 using Neo4jClient;
 using Neo4j.Driver;
 using Neo4jClient.Cypher;
+using Autofac;
 using Newtonsoft.Json;
 
 namespace meldboek.Controllers
@@ -28,11 +29,11 @@ namespace meldboek.Controllers
 
             // DIT IS ALLEMAAL OM TE TESTEN
 
-            // var Person1 = GetPerson(1);
-            // var email = Person1.Email;
-            // var id = Person1.PersonId;
-            // var name = Person1.FirstName;
-            // var namelast = Person1.LastName;
+            // var user1 = GetUser(1);
+            // var email = user1.Email;
+            // var id = user1.UserId;
+            // var name = user1.FirstName;
+            // var namelast = user1.LastName;
             // Console.WriteLine(email + id + name + namelast);
 
             //   var result = AddFriend(1, 5);
@@ -40,18 +41,16 @@ namespace meldboek.Controllers
             //  Console.WriteLine(result.ToString());
             // Console.WriteLine(result2.ToString());
 
-            // AcceptFriend(GetPerson(1),GetPerson(2));
+            // AcceptFriend(GetUser(1),GetUser(2));
 
-            //AddPersonToGroup(1, 1);
-            // DeletePersonFromGroup(1, 1);
-            //   LogIn("Test@s.nl", "wachtwoord");
+            //AddUserToGroup(1, 1);
+            // DeleteUserFromGroup(1, 1);
+          
 
             return View();
         }
 
-
-
-
+        
 
 
         public async Task<List<INode>> ConnectDb(string query)
@@ -132,9 +131,9 @@ namespace meldboek.Controllers
 
 
 
-        public IDriver CreateDriverWithBasicAuth(string uri, string Person, string password)
+        public IDriver CreateDriverWithBasicAuth(string uri, string user, string password)
         {
-            return GraphDatabase.Driver(new Uri(uri), AuthTokens.Basic(Person, password));
+            return GraphDatabase.Driver(new Uri(uri), AuthTokens.Basic(user, password));
         }
 
         public IActionResult Privacy()
