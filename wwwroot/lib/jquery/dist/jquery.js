@@ -1611,7 +1611,7 @@ getText = Sizzle.getText = function( elem ) {
 
 Expr = Sizzle.selectors = {
 
-	// Can be adjusted by the Person
+	// Can be adjusted by the user
 	cacheLength: 50,
 
 	createPseudo: markFunction,
@@ -1887,7 +1887,7 @@ Expr = Sizzle.selectors = {
 				fn = Expr.pseudos[ pseudo ] || Expr.setFilters[ pseudo.toLowerCase() ] ||
 					Sizzle.error( "unsupported pseudo: " + pseudo );
 
-			// The Person may use createPseudo to indicate that
+			// The user may use createPseudo to indicate that
 			// arguments are needed to create the filter function
 			// just as Sizzle does
 			if ( fn[ expando ] ) {
@@ -4153,7 +4153,7 @@ Data.prototype = {
 };
 var dataPriv = new Data();
 
-var dataPerson = new Data();
+var dataUser = new Data();
 
 
 
@@ -4162,9 +4162,9 @@ var dataPerson = new Data();
 //	1. Enforce API surface and semantic compatibility with 1.9.x branch
 //	2. Improve the module's maintainability by reducing the storage
 //		paths to a single mechanism.
-//	3. Use the same single mechanism to support "private" and "Person" data.
-//	4. _Never_ expose "private" data to Person code (TODO: Drop _data, _removeData)
-//	5. Avoid exposing implementation details on Person objects (eg. expando properties)
+//	3. Use the same single mechanism to support "private" and "user" data.
+//	4. _Never_ expose "private" data to user code (TODO: Drop _data, _removeData)
+//	5. Avoid exposing implementation details on user objects (eg. expando properties)
 //	6. Provide a clear path for implementation upgrade to WeakMap in 2014
 
 var rbrace = /^(?:\{[\w\W]*\}|\[[\w\W]*\])$/,
@@ -4210,7 +4210,7 @@ function dataAttr( elem, key, data ) {
 			} catch ( e ) {}
 
 			// Make sure we set the data so it isn't changed later
-			dataPerson.set( elem, key, data );
+			dataUser.set( elem, key, data );
 		} else {
 			data = undefined;
 		}
@@ -4220,15 +4220,15 @@ function dataAttr( elem, key, data ) {
 
 jQuery.extend( {
 	hasData: function( elem ) {
-		return dataPerson.hasData( elem ) || dataPriv.hasData( elem );
+		return dataUser.hasData( elem ) || dataPriv.hasData( elem );
 	},
 
 	data: function( elem, name, data ) {
-		return dataPerson.access( elem, name, data );
+		return dataUser.access( elem, name, data );
 	},
 
 	removeData: function( elem, name ) {
-		dataPerson.remove( elem, name );
+		dataUser.remove( elem, name );
 	},
 
 	// TODO: Now that all calls to _data and _removeData have been replaced
@@ -4251,7 +4251,7 @@ jQuery.fn.extend( {
 		// Gets all values
 		if ( key === undefined ) {
 			if ( this.length ) {
-				data = dataPerson.get( elem );
+				data = dataUser.get( elem );
 
 				if ( elem.nodeType === 1 && !dataPriv.get( elem, "hasDataAttrs" ) ) {
 					i = attrs.length;
@@ -4277,7 +4277,7 @@ jQuery.fn.extend( {
 		// Sets multiple values
 		if ( typeof key === "object" ) {
 			return this.each( function() {
-				dataPerson.set( this, key );
+				dataUser.set( this, key );
 			} );
 		}
 
@@ -4293,7 +4293,7 @@ jQuery.fn.extend( {
 
 				// Attempt to get data from the cache
 				// The key will always be camelCased in Data
-				data = dataPerson.get( elem, key );
+				data = dataUser.get( elem, key );
 				if ( data !== undefined ) {
 					return data;
 				}
@@ -4313,14 +4313,14 @@ jQuery.fn.extend( {
 			this.each( function() {
 
 				// We always store the camelCased key
-				dataPerson.set( this, key, value );
+				dataUser.set( this, key, value );
 			} );
 		}, null, value, arguments.length > 1, null, true );
 	},
 
 	removeData: function( key ) {
 		return this.each( function() {
-			dataPerson.remove( this, key );
+			dataUser.remove( this, key );
 		} );
 	}
 } );
@@ -5657,12 +5657,12 @@ function cloneCopyEvent( src, dest ) {
 		}
 	}
 
-	// 2. Copy Person data
-	if ( dataPerson.hasData( src ) ) {
-		udataOld = dataPerson.access( src );
+	// 2. Copy user data
+	if ( dataUser.hasData( src ) ) {
+		udataOld = dataUser.access( src );
 		udataCur = jQuery.extend( {}, udataOld );
 
-		dataPerson.set( dest, udataCur );
+		dataUser.set( dest, udataCur );
 	}
 }
 
@@ -5862,11 +5862,11 @@ jQuery.extend( {
 					// Assign undefined instead of using delete, see Data#remove
 					elem[ dataPriv.expando ] = undefined;
 				}
-				if ( elem[ dataPerson.expando ] ) {
+				if ( elem[ dataUser.expando ] ) {
 
 					// Support: Chrome <=35 - 45+
 					// Assign undefined instead of using delete, see Data#remove
-					elem[ dataPerson.expando ] = undefined;
+					elem[ dataUser.expando ] = undefined;
 				}
 			}
 		}
@@ -6453,7 +6453,7 @@ jQuery.extend( {
 
 		// Make sure that we're working with the right name. We don't
 		// want to query the value if it is a CSS custom property
-		// since they are Person-defined.
+		// since they are user-defined.
 		if ( !isCustomProp ) {
 			name = finalPropName( origName );
 		}
@@ -6520,7 +6520,7 @@ jQuery.extend( {
 
 		// Make sure that we're working with the right name. We don't
 		// want to modify the value if it is a CSS custom property
-		// since they are Person-defined.
+		// since they are user-defined.
 		if ( !isCustomProp ) {
 			name = finalPropName( origName );
 		}
@@ -8822,7 +8822,7 @@ jQuery.extend( {
 		timeout: 0,
 		data: null,
 		dataType: null,
-		Personname: null,
+		username: null,
 		password: null,
 		cache: null,
 		throws: false,
@@ -9367,7 +9367,7 @@ jQuery._evalUrl = function( url ) {
 	return jQuery.ajax( {
 		url: url,
 
-		// Make this explicit, since Person can override this through ajaxSetup (#11264)
+		// Make this explicit, since user can override this through ajaxSetup (#11264)
 		type: "GET",
 		dataType: "script",
 		cache: true,
@@ -9489,7 +9489,7 @@ jQuery.ajaxTransport( function( options ) {
 					options.type,
 					options.url,
 					options.async,
-					options.Personname,
+					options.username,
 					options.password
 				);
 
@@ -9880,7 +9880,7 @@ jQuery.fn.load = function( url, params, callback ) {
 
 			// If "type" variable is undefined, then "GET" method will be used.
 			// Make value of this field explicit since
-			// Person can override it through ajaxSetup method
+			// user can override it through ajaxSetup method
 			type: type || "GET",
 			dataType: "html",
 			data: params

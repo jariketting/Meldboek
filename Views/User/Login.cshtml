@@ -1,11 +1,11 @@
-﻿@model meldboek.Models.Person
+﻿@model meldboek.Models.User
 <!DOCTYPE html>
 <html>
 <head>
     <style>
         body {
             font-family: 'Open Sans', sans-serif;
-            background: 21323;
+            background: #ecf0f1; /*21323*/
             margin: 0 auto 0 auto;
             width: 100%;
             text-align: center;
@@ -13,15 +13,16 @@
         }
 
         .box {
-            background: #ffabf3;
+            background: #3bb546;
             width: 800px;
             border-radius: 6px;
-            position: center margin: 0 auto 0 auto;
+            position: center;
+            margin: 0 auto 0 auto;
             padding: 100px 100px 100px 50px;
-            border: #e67cd7 4px solid;
+            border: #6f89c4 4px solid;
         }
 
-        .Personname {
+        .username {
             background: #ecf0f1;
             border: #8593bc 1px solid;
             border-bottom: #ccc 2px solid;
@@ -75,24 +76,21 @@
     </style>
 </head>
 <body>
-    <h1 id="login-header">CreateAccount</h1>
+    <h1 id="login-header">Login</h1>
     <div id="absoluteCenteredDiv">
-        <form asp-action="CreateAccount" method="post">
+        <form asp-action="LogIn" method="post">
             <div class="box">
 
-                <p><font face="verdana" color="black">Firstname</font></p>
-                <input type="string" required name=firstname id="firstname" size="50"><br><br>
-                <p><font face="verdana" color="black">Lastname</font></p>
-                <input type="string" required name=lastname id="lastname" size="50"><br><br>
+
                 <p><font face="verdana" color="black">Emailadres</font></p>
-                <input type="string" required name=email id="email" size="50"><br><br>
+                <input type="text" required name=Email id="Email" size="50"><br><br>
                 <p><font face="verdana" color="black">Wachtwoord</font></p>
-                <input type="password" required name=password id="password" size="50"> <br><br>
-                <p><font face="verdana" color="black">Wachtwoord Herhalen</font></p>
-                <input type="password" required name=password2 id="password2" size="50"> <br><br>
-                <input type="submit" class="button" value="Accout Toevoegen" id="submit">
+                <input type="password" required name=Password id="Password" size="50"> <br><br>
+                <input type="submit" value="button" id="submit">
+                @*<a href="#"><div class="button">Sign in</div></a>*@
             </div>
         </form>
+        @*<p>Wachtwoord vergeten? <a class="fpwd" href="#">Click Hier!</a></p>*@
     </div>
 </body>
 </html>
