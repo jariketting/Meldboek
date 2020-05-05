@@ -12,6 +12,7 @@ using System.Collections;
 using System.Reflection;
 using System.Dynamic;
 using System.Xml;
+using meldboek.ViewModels;
 
 namespace meldboek.Controllers
 {
@@ -28,22 +29,37 @@ namespace meldboek.Controllers
         {
             return View();
         }
+
+        public IActionResult Profile()
+        {
+            //grab a random person out of the DB untill be have the claims
+            int personid = 0;
+            AddFriend(0, 1);
+            AcceptFriend(0, 1);
+            Person person = GetPerson(personid);
+            Console.WriteLine(person.FirstName.ToString());
+
+            Profile profile = new Profile();
+            profile.Name = person.FirstName + " " + person.LastName;
+            profile.Email = person.Email;
+            profile.Friends = GetFriendsById(personid);
+            Console.WriteLine(profile.Name.ToString());
+            Console.WriteLine(profile.Friends.ToString());
+
+
+
+            return View(profile);
+        }
         public IActionResult CreateAccount(string firstname, string lastname, string email, string password, string password2)
         {
             //maakt Person als alles ingevoerd is en wachtwoord klopt
             if (firstname != null & lastname != null & email != null & password != null & password == password2)
             {
-                Person u = new Person(
 
-                    GetMaxPersonId(),
-                    firstname,
-                    lastname,
-                    email,
-                    password
-                    );
-
-               //stuurt Person naar database
-                var r = ConnectDb("CREATE (p:Person { PersonId: " + u.PersonId + ", FirstName: '" + u.FirstName + "', LastName: '" + u.LastName + "' ,Email: '" + u.Email + "', Password: '" + u.Password + "' }) RETURN p");
+                int persId = GetMaxPersonId() + 1;
+                Console.WriteLine(persId.ToString());
+                //stuurt Person naar database
+                var r = ConnectDb("CREATE (p:Person { PersonId: " + persId + ", FirstName: '" + firstname + "', LastName: '" + lastname + "' ,Email: '" + email + "', Password: '" + password + "' }) RETURN p");
                 r.Wait();
                 return View();
             }
@@ -169,16 +185,17 @@ namespace meldboek.Controllers
 
             List<INode> postNodes = new List<INode>();
             var getPosts = ConnectDb("MATCH(p:Person) RETURN p ORDER BY toInteger(p.PersonId) DESC LIMIT 1");
-            var Person = new Person();
+            var person = new Person();
 
             postNodes = getPosts.Result;
             foreach (var record in postNodes)
             {
                 var nodeprops = JsonConvert.SerializeObject(record.As<INode>().Properties);
-                Person = (JsonConvert.DeserializeObject<Person>(nodeprops));
+                person = (JsonConvert.DeserializeObject<Person>(nodeprops));
             }
+            Console.WriteLine(person.PersonId);
 
-            return Person.PersonId+1;
+            return person.PersonId;
         }
 
         [HttpPost]
@@ -264,7 +281,7 @@ namespace meldboek.Controllers
         public List<Newspost> GetGroupPosts(string group)
         {
             // GetGroupPosts() gets all the posts that are posted in the chosen group (relationship type "HasPost") and their creators from the database and puts them in a list of Newspost objects.
-            
+
             List<INode> postNodes = new List<INode>();
             var getPosts = ConnectDb("MATCH(g:Group)--(p:Post) WHERE g.GroupName = '" + group + "' RETURN p");
             var post = new Newspost();
@@ -383,6 +400,29 @@ namespace meldboek.Controllers
             List<Group> final = groupList.OrderBy(g => g.GroupName).ToList();
             return final;
         }
+        public List<Person> GetFriendsById(int id)
+        {
+
+            List<INode> friendNodes = new List<INode>();
+            var getFriends = ConnectDb("MATCH (a:Person {PersonId : " + id.ToString() + "}) - [r:IsFriendsWith]->(b:Person{}) RETURN b");
+            var friend = new Person();
+            List<Person> friendList = new List<Person>();
+
+            friendNodes = getFriends.Result;
+            foreach (var record in friendNodes)
+            {
+                var nodeprops = JsonConvert.SerializeObject(record.As<INode>().Properties);
+                friend = (JsonConvert.DeserializeObject<Person>(nodeprops));
+
+                // After getting al the required data, it is put into a Person object and added to the list of friends.
+                friendList.Add(friend);
+
+            }
+
+            // The final list is ordered by FirstName and put into a list called "final".
+            List<Person> final = friendList.OrderBy(f => f.FirstName).ToList();
+            return final;
+        }
 
         public List<Person> GetFriends()
         {
@@ -442,9 +482,9 @@ namespace meldboek.Controllers
 
         }
 
-        public void AcceptFriend(Person PersonRequested, Person PersonAccepted)
+        public void AcceptFriend(int PersonRequestedId, int PersonAcceptedId)
         {
-            var res = ConnectDb("MATCH (a:Person), (b:Person) WHERE a.PersonId = " + PersonRequested.PersonId.ToString() + " AND b.PersonId = " + PersonAccepted.PersonId.ToString() + " CREATE (a)-[r:IsFriendsWith]->(b)" + " RETURN a");
+            var res = ConnectDb("MATCH (a:Person), (b:Person) WHERE a.PersonId = " + PersonRequestedId.ToString() + " AND b.PersonId = " + PersonAcceptedId.ToString() + " CREATE (a)-[r:IsFriendsWith]->(b)" + " RETURN a");
             res.Wait();
         }
 
