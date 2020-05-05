@@ -33,19 +33,12 @@ namespace meldboek.Controllers
         public IActionResult Profile()
         {
             //grab a random person out of the DB untill be have the claims
-            int personid = 0;
-            AddFriend(0, 1);
-            AcceptFriend(0, 1);
+            int personid = 1;
             Person person = GetPerson(personid);
-            Console.WriteLine(person.FirstName.ToString());
-
             Profile profile = new Profile();
             profile.Name = person.FirstName + " " + person.LastName;
             profile.Email = person.Email;
             profile.Friends = GetFriendsById(personid);
-            Console.WriteLine(profile.Name.ToString());
-            Console.WriteLine(profile.Friends.ToString());
-
 
 
             return View(profile);
@@ -57,7 +50,6 @@ namespace meldboek.Controllers
             {
 
                 int persId = GetMaxPersonId() + 1;
-                Console.WriteLine(persId.ToString());
                 //stuurt Person naar database
                 var r = ConnectDb("CREATE (p:Person { PersonId: " + persId + ", FirstName: '" + firstname + "', LastName: '" + lastname + "' ,Email: '" + email + "', Password: '" + password + "' }) RETURN p");
                 r.Wait();
@@ -91,12 +83,10 @@ namespace meldboek.Controllers
                 if (email == Person.Email & password == Person.Password)
                 {
                     RedirectToAction("Profile", "PersonController");
-                    Console.WriteLine("Redirect to profile");
                 }
                 else
                 {
                     RedirectToAction("CreateAccount", "PersonController");
-                    Console.WriteLine("Redirect to CreateAccount");
 
                 }
             }
@@ -193,7 +183,6 @@ namespace meldboek.Controllers
                 var nodeprops = JsonConvert.SerializeObject(record.As<INode>().Properties);
                 person = (JsonConvert.DeserializeObject<Person>(nodeprops));
             }
-            Console.WriteLine(person.PersonId);
 
             return person.PersonId;
         }
@@ -465,8 +454,7 @@ namespace meldboek.Controllers
             var Success = new Boolean();
             var Personid = Person.PersonId;
             var friendPersonid = PersonPending.PersonId;
-            Console.WriteLine(Personid.ToString());
-            Console.WriteLine(friendPersonid.ToString());
+
 
             if (Personid == PersonId & friendId == friendPersonid)
             {
@@ -484,6 +472,9 @@ namespace meldboek.Controllers
 
         public void AcceptFriend(int PersonRequestedId, int PersonAcceptedId)
         {
+            //delete relationship pending and add relation friendswith 
+            var ret = ConnectDb("MATCH (a:Person {PersonId : " + PersonRequestedId.ToString() + "}) - [r:FriendPending]->(b:Person{PersonId: " + PersonAcceptedId.ToString() + "}) DELETE r RETURN a");
+            ret.Wait();
             var res = ConnectDb("MATCH (a:Person), (b:Person) WHERE a.PersonId = " + PersonRequestedId.ToString() + " AND b.PersonId = " + PersonAcceptedId.ToString() + " CREATE (a)-[r:IsFriendsWith]->(b)" + " RETURN a");
             res.Wait();
         }
