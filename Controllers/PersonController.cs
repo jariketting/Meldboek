@@ -12,6 +12,9 @@ using System.Collections;
 using System.Reflection;
 using System.Dynamic;
 using System.Xml;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 namespace meldboek.Controllers
 {
@@ -55,36 +58,53 @@ namespace meldboek.Controllers
 
 
         }
-        public IActionResult LogIn(string email, string password)
+        public ActionResult Profile()
         {
-            List<INode> nodeList = new List<INode>();
+            return View();
+        }
+        public ActionResult Login(string email, string password)
+        {
             if (email != null & password != null)
             {
+
+                List<INode> nodeList = new List<INode>();
                 var results = ConnectDb("MATCH (a:Person) WHERE a.Email = '" + email + "' AND a.Password =  '" + password + "' RETURN a");
-                var Person = new Person();
+                var user = new Person();
 
                 nodeList = results.Result;
                 foreach (var record in nodeList)
                 {
                     var nodeprops = JsonConvert.SerializeObject(record.As<INode>().Properties);
-                    Person = (JsonConvert.DeserializeObject<Person>(nodeprops));
+                    user = (JsonConvert.DeserializeObject<Person>(nodeprops));
                 }
-                //   Console.WriteLine(Person.Email.ToString());
-
-
-                if (email == Person.Email & password == Person.Password)
+                if (user.Email != null)
                 {
-                    RedirectToAction("Profile", "PersonController");
-                    Console.WriteLine("Redirect to profile");
+
+                    var claims = new List<Claim>
+                    {
+                        new Claim(ClaimTypes.Name, "User", ClaimValueTypes.String),
+                        new Claim(ClaimTypes.NameIdentifier, user.Email.ToString(), ClaimValueTypes.String),
+                        new Claim(ClaimTypes.Role, "User", ClaimValueTypes.String)
+                    };
+                    var userIdentity = new ClaimsIdentity(claims, "SecureLogin");
+                    var userPrincipal = new ClaimsPrincipal(userIdentity);
+
+                    HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,
+                        userPrincipal,
+                        new AuthenticationProperties
+                        {
+                            ExpiresUtc = DateTime.UtcNow.AddMinutes(30),
+                            IsPersistent = true,
+                            AllowRefresh = false
+                        });
+
+                    return RedirectToAction("Profile", "Person");
                 }
                 else
                 {
-                    RedirectToAction("CreateAccount", "PersonController");
-                    Console.WriteLine("Redirect to CreateAccount");
-
+                    return RedirectToAction("CreateAccount", "Person");
                 }
             }
-
             return View();
         }
 

@@ -13072,11 +13072,12 @@
       ]
     },
     "System.Threading.ThreadPool/4.3.0": {
-      "sha512": "SrCOmTvvOOCmJT4BBxdZcwhz6XEMsjBGZvGSVorOxdCznaUNeVotEjDfXGIZ8gcGo00qgPbTV6puHDgcFYl6Iw==",
+      "sha512": "k/+g4b7vjdd4aix83sTgC9VG6oXYKAktSfNIJUNGxPEj7ryEOfzHHhfnmsZvjxawwcD9HyWXKCXmPjX8U4zeSw==",
       "type": "package",
       "path": "system.threading.threadpool/4.3.0",
       "files": [
         ".nupkg.metadata",
+        ".signature.p7s",
         "ThirdPartyNotices.txt",
         "dotnet_library_license.txt",
         "lib/MonoAndroid10/_._",
@@ -13495,23 +13496,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\jurri\\.nuget\\packages\\": {},
+    "C:\\Users\\ses-9\\.nuget\\packages\\": {},
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\jurri\\Desktop\\webdev\\meldboek\\meldboek.csproj",
+      "projectUniqueName": "C:\\Users\\ses-9\\Desktop\\meldboek\\meldboek\\meldboek.csproj",
       "projectName": "meldboek",
-      "projectPath": "C:\\Users\\jurri\\Desktop\\webdev\\meldboek\\meldboek.csproj",
-      "packagesPath": "C:\\Users\\jurri\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\jurri\\Desktop\\webdev\\meldboek\\obj\\",
+      "projectPath": "C:\\Users\\ses-9\\Desktop\\meldboek\\meldboek\\meldboek.csproj",
+      "packagesPath": "C:\\Users\\ses-9\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\ses-9\\Desktop\\meldboek\\meldboek\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
       ],
       "configFilePaths": [
-        "C:\\Users\\jurri\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\ses-9\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -13590,7 +13591,7 @@
         ],
         "assetTargetFallback": true,
         "warn": true,
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.0.100\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.201\\RuntimeIdentifierGraph.json"
       }
     }
   },
