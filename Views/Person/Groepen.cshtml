@@ -179,7 +179,7 @@
                         <h1>@group.GroupName</h1>
                         <h3>@group.Creator.FirstName @group.Creator.LastName</h3>
                     </div>
-                    <div class="leave-button" onclick="window.location='#';">&#10005;</div>
+                    <div class="leave-button" onclick="window.location='@Url.Action("LeaveGroup", new { GroupId = group.GroupId })';">&#10005;</div>
                     <button class="collapsible" id="collapsible-button-@group.GroupId" onclick="toggleCollapsible.call(this)">Deelnemers</button>
                     <div class="collapsible-content" id="collapsible-section-@group.GroupId">
                         @foreach (var member in group.Members)

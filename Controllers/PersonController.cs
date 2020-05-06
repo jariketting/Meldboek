@@ -436,7 +436,7 @@ namespace meldboek.Controllers
 
                     personList.Add(person);
                 }
-                List<Person> members = personList.OrderBy(p => p.FirstName).ToList();
+                List<Person> members = personList.OrderBy(p => p.FirstName).ThenBy(p => p.LastName).ToList();
 
                 groupsInfo.Add(new GroupInfo()
                 {
@@ -448,6 +448,13 @@ namespace meldboek.Controllers
             }
             List<GroupInfo> final = groupsInfo.OrderBy(g => g.GroupName).ToList();
             return final;
+        }
+
+        public async Task<IActionResult> LeaveGroup(int GroupId)
+        {
+            await ConnectDb("MATCH (p:Person)-[r:IsInGroup]->(g:Group) WHERE p.FirstName = 'Amy' AND g.GroupId = " + GroupId + " DELETE r");
+
+            return RedirectToAction("Groepen");
         }
 
         public List<Person> GetFriendsById(int id)
