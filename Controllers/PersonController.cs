@@ -152,6 +152,11 @@ namespace meldboek.Controllers
             }
         }
 
+        public IActionResult Groepen()
+        {
+            return View(GetGroupsInfo());
+        }
+
         public int GetMaxPostId()
         {
             // GetMaxPostId gets the newspost with the highest id from the database and returns the id.
@@ -366,7 +371,7 @@ namespace meldboek.Controllers
             // GetGroups() gets all the groups the Person is part of (relationship type "IsInGroup") from the database and puts them in a list of Group objects.
 
             List<INode> groupNodes = new List<INode>();
-            var getGroups = ConnectDb("MATCH(u:Person)--(g:Group) WHERE u.FirstName = 'Amy' RETURN g");
+            var getGroups = ConnectDb("MATCH(u:Person)-[r:IsInGroup]->(g:Group) WHERE u.FirstName = 'Amy' RETURN g");
             var group = new Group();
             List<Group> groupList = new List<Group>();
 
@@ -389,6 +394,62 @@ namespace meldboek.Controllers
             List<Group> final = groupList.OrderBy(g => g.GroupName).ToList();
             return final;
         }
+
+        public List<GroupInfo> GetGroupsInfo()
+        {
+            // GetGroupMembers() gets all the members of a group (relationship type "IsInGroup") from the database and puts them in a list of Person objects.
+            List<INode> groupNodes = new List<INode>();
+            var getGroups = ConnectDb("MATCH(u:Person)-[r:IsInGroup]->(g:Group) WHERE u.FirstName = 'Amy' RETURN g");
+            var group = new Group();
+            List<Group> groupList = new List<Group>();
+
+            List<GroupInfo> groupsInfo = new List<GroupInfo>();
+
+            groupNodes = getGroups.Result;
+            foreach (var record1 in groupNodes)
+            {
+                var nodeprops1 = JsonConvert.SerializeObject(record1.As<INode>().Properties);
+                group = (JsonConvert.DeserializeObject<Group>(nodeprops1));
+
+                List<INode> creatorNode = new List<INode>();
+                var getCreator = ConnectDb("MATCH (a:Person) -[r:IsOwner]->(b:Group {GroupId: " + group.GroupId + "}) RETURN a");
+                var creator = new Person();
+                List<Person> creatorList = new List<Person>();
+
+                creatorNode = getCreator.Result;
+                foreach (var record2 in creatorNode)
+                {
+                    var nodeprops2 = JsonConvert.SerializeObject(record2.As<INode>().Properties);
+                    creator = (JsonConvert.DeserializeObject<Person>(nodeprops2));
+                }
+
+                List<INode> personNodes = new List<INode>();
+                var getPersons = ConnectDb("MATCH (a:Person) -[r:IsInGroup]->(b:Group {GroupId: " + group.GroupId + "}) RETURN a");
+                var person = new Person();
+                List<Person> personList = new List<Person>();
+
+                personNodes = getPersons.Result;
+                foreach (var record3 in personNodes)
+                {
+                    var nodeprops3 = JsonConvert.SerializeObject(record3.As<INode>().Properties);
+                    person = (JsonConvert.DeserializeObject<Person>(nodeprops3));
+
+                    personList.Add(person);
+                }
+                List<Person> members = personList.OrderBy(p => p.FirstName).ToList();
+
+                groupsInfo.Add(new GroupInfo()
+                {
+                    GroupId = group.GroupId,
+                    GroupName = group.GroupName,
+                    Creator = creator,
+                    Members = members
+                });
+            }
+            List<GroupInfo> final = groupsInfo.OrderBy(g => g.GroupName).ToList();
+            return final;
+        }
+
         public List<Person> GetFriendsById(int id)
         {
 
