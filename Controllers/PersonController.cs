@@ -13,6 +13,7 @@ using System.Reflection;
 using System.Dynamic;
 using System.Xml;
 using meldboek.ViewModels;
+using System.Globalization;
 
 namespace meldboek.Controllers
 {
@@ -200,10 +201,9 @@ namespace meldboek.Controllers
             // Getting the id of most recent post node, so a new id can be automatically added to the newly created newspost.
             int newid = GetMaxPostId() + 1;
 
-            string date = DateTime.Now.ToString("dd-MM-yyyy");
-            string time = DateTime.Now.ToString("HH:mm:ss");
+            string datetime = DateTime.Now.ToString("d-M-yyyy HH:mm:ss");
 
-            await ConnectDb("CREATE(p:Post {Title: '" + title + "', Description: '" + description + "', PostId: '" + newid + "', DateAdded: '" + date + "', TimeAdded: '" + time + "'})");
+            await ConnectDb("CREATE(p:Post {Title: '" + title + "', Description: '" + description + "', PostId: " + newid + ", DateAdded: '" + datetime + "'})");
 
             // After adding the post to the database, a relationship is created between the post and the Person who made it. | (Person-[Posted]->Post)
             await ConnectDb("MATCH(u:Person), (p:Post) WHERE u.FirstName = 'Amy' AND p.Title = '" + title + "' CREATE(u)-[r:Posted]->(p)");
@@ -219,9 +219,9 @@ namespace meldboek.Controllers
             return RedirectToAction("FilteredNewsfeed", new { filter = "Algemeen" });
         }
 
-        public async Task<IActionResult> DeletePost(string postid, string page)
+        public async Task<IActionResult> DeletePost(int postid, string page)
         {
-            await ConnectDb("MATCH(p:Post) WHERE p.PostId= '" + postid + "' DETACH DELETE p");
+            await ConnectDb("MATCH(p:Post) WHERE p.PostId= " + postid + " DETACH DELETE p");
 
             return RedirectToAction("FilteredNewsfeed", new { filter = page });
         }
@@ -241,9 +241,11 @@ namespace meldboek.Controllers
                 var nodeprops = JsonConvert.SerializeObject(record.As<INode>().Properties);
                 post = (JsonConvert.DeserializeObject<Newspost>(nodeprops));
 
+                DateTime datetime = DateTime.ParseExact(post.DateAdded.ToString(), "d-M-yyyy HH:mm:ss", new CultureInfo("nl-NL"));
+
                 // Another query gets the related Persons to a post from the database thus finding its creator, the result is processed similarly.
                 List<INode> creatorNode = new List<INode>();
-                var getCreator = ConnectDb("MATCH(p:Post)--(u:Person) WHERE p.PostId = '" + post.PostId + "' RETURN u");
+                var getCreator = ConnectDb("MATCH(u:Person)-[:Posted]->(p:Post) WHERE p.PostId = " + post.PostId + " RETURN u");
                 var creator = new Person();
 
                 creatorNode = getCreator.Result;
@@ -259,15 +261,14 @@ namespace meldboek.Controllers
                     PostId = post.PostId,
                     Title = post.Title,
                     Description = post.Description,
+                    Creator = creator,
                     DateAdded = post.DateAdded,
-                    TimeAdded = post.TimeAdded,
-                    Creator = creator
-                });
-
+                    TimeStamp = datetime
+                });;
             }
 
             // The final list is put into a ordered list called feed, so the results will be displayed in the right order (newest first).
-            List<Newspost> feed = postList.OrderBy(p => p.DateAdded).ThenByDescending(p => p.TimeAdded).ToList();
+            List<Newspost> feed = postList.OrderByDescending(p => p.TimeStamp).ToList();
             return feed;
         }
 
@@ -286,9 +287,11 @@ namespace meldboek.Controllers
                 var nodeprops = JsonConvert.SerializeObject(record.As<INode>().Properties);
                 post = (JsonConvert.DeserializeObject<Newspost>(nodeprops));
 
+                DateTime datetime = DateTime.ParseExact(post.DateAdded.ToString(), "d-M-yyyy HH:mm:ss", new CultureInfo("nl-NL"));
+
                 // Another query gets the related Persons to a post from the database thus finding its creator, the result is processed similarly.
                 List<INode> creatorNode = new List<INode>();
-                var getCreator = ConnectDb("MATCH(p:Post)--(u:Person) WHERE p.PostId = '" + post.PostId + "' RETURN u");
+                var getCreator = ConnectDb("MATCH(u:Person)-[:Posted]->(p:Post) WHERE p.PostId = " + post.PostId + " RETURN u");
                 var creator = new Person();
 
                 creatorNode = getCreator.Result;
@@ -304,16 +307,15 @@ namespace meldboek.Controllers
                     PostId = post.PostId,
                     Title = post.Title,
                     Description = post.Description,
+                    Creator = creator,
                     DateAdded = post.DateAdded,
-                    TimeAdded = post.TimeAdded,
-                    Creator = creator
+                    TimeStamp = datetime
                 });
 
             }
 
             // The final list is put into a ordered list called feed, so the results will be displayed in the right order (newest first).
-            List<Newspost> feed = postList.OrderBy(p => p.DateAdded).ThenByDescending(p => p.TimeAdded).ToList();
-
+            List<Newspost> feed = postList.OrderByDescending(p => p.TimeStamp).ToList();
             return feed;
         }
 
@@ -323,7 +325,7 @@ namespace meldboek.Controllers
             // NOTE: Posts that a friends of the Person have posted in a group will NOT be fetched.
 
             List<INode> postNodes = new List<INode>();
-            var getPosts = ConnectDb("MATCH(a:Person {FirstName:'Amy'})--(b:Person)--(p:Post) WHERE NOT ()-[:HasPost]-(p) RETURN p");
+            var getPosts = ConnectDb("MATCH(a:Person {FirstName:'Amy'})-[:IsFriendsWith]->(b:Person)-[:Posted]->(p:Post) WHERE NOT (:Group)-[:HasPost]->(p) RETURN p");
             var post = new Newspost();
             List<Newspost> postList = new List<Newspost>();
 
@@ -333,9 +335,11 @@ namespace meldboek.Controllers
                 var nodeprops = JsonConvert.SerializeObject(record.As<INode>().Properties);
                 post = (JsonConvert.DeserializeObject<Newspost>(nodeprops));
 
+                DateTime datetime = DateTime.ParseExact(post.DateAdded.ToString(), "d-M-yyyy HH:mm:ss", new CultureInfo("nl-NL"));
+
                 /// Another query gets the related Persons to a post from the database thus finding its creator, the result is processed similarly.
                 List<INode> creatorNode = new List<INode>();
-                var getCreator = ConnectDb("MATCH(p:Post)--(u:Person) WHERE p.PostId = '" + post.PostId + "' RETURN u");
+                var getCreator = ConnectDb("MATCH(u:Person)-[:Posted]->(p:Post) WHERE p.PostId = " + post.PostId + " RETURN u");
                 var creator = new Person();
 
                 creatorNode = getCreator.Result;
@@ -351,15 +355,15 @@ namespace meldboek.Controllers
                     PostId = post.PostId,
                     Title = post.Title,
                     Description = post.Description,
+                    Creator = creator,
                     DateAdded = post.DateAdded,
-                    TimeAdded = post.TimeAdded,
-                    Creator = creator
+                    TimeStamp = datetime
                 });
 
             }
 
             // The final list is put into a ordered list called feed, so the results will be displayed in the right order (newest first).
-            List<Newspost> feed = postList.OrderBy(p => p.DateAdded).ThenByDescending(p => p.TimeAdded).ToList();
+            List<Newspost> feed = postList.OrderByDescending(p => p.TimeStamp).ToList();
             return feed;
         }
 
@@ -368,7 +372,7 @@ namespace meldboek.Controllers
             // GetGroups() gets all the groups the Person is part of (relationship type "IsInGroup") from the database and puts them in a list of Group objects.
 
             List<INode> groupNodes = new List<INode>();
-            var getGroups = ConnectDb("MATCH(u:Person)-[r:IsInGroup]->(g:Group) WHERE u.FirstName = 'Amy' RETURN g");
+            var getGroups = ConnectDb("MATCH(p:Person)-[r:IsInGroup]->(g:Group) WHERE p.FirstName = 'Amy' RETURN g");
             var group = new Group();
             List<Group> groupList = new List<Group>();
 
@@ -405,7 +409,7 @@ namespace meldboek.Controllers
 
             // First, all the groups the user is part of are fetched.
             List<INode> groupNodes = new List<INode>();
-            var getGroups = ConnectDb("MATCH(u:Person)-[r:IsInGroup]->(g:Group) WHERE u.FirstName = 'Amy' RETURN g");
+            var getGroups = ConnectDb("MATCH(p:Person)-[r:IsInGroup]->(g:Group) WHERE p.FirstName = 'Amy' RETURN g");
             var group = new Group();
             List<Group> groupList = new List<Group>();            
 
@@ -417,7 +421,7 @@ namespace meldboek.Controllers
 
                 // Second, the creator of the group is fetched and put into a Person object.
                 List<INode> creatorNode = new List<INode>();
-                var getCreator = ConnectDb("MATCH (a:Person) -[r:IsOwner]->(b:Group {GroupId: " + group.GroupId + "}) RETURN a");
+                var getCreator = ConnectDb("MATCH (p:Person) -[r:IsOwner]->(g:Group {GroupId: " + group.GroupId + "}) RETURN p");
                 var creator = new Person();
                 List<Person> creatorList = new List<Person>();
 
@@ -430,7 +434,7 @@ namespace meldboek.Controllers
 
                 // Third, all the members of the group are fetched and put into a list of Person objects.
                 List<INode> personNodes = new List<INode>();
-                var getPersons = ConnectDb("MATCH (a:Person) -[r:IsInGroup]->(b:Group {GroupId: " + group.GroupId + "}) RETURN a");
+                var getPersons = ConnectDb("MATCH (p:Person)-[r:IsInGroup]->(g:Group {GroupId: " + group.GroupId + "}) RETURN p");
                 var person = new Person();
                 List<Person> personList = new List<Person>();
 

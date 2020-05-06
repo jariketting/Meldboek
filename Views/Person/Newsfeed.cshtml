@@ -248,7 +248,7 @@
             <div class="collapsible-content" id="collapsible-section">
                 <form action="AddPost" method="post" class="add-article">
                     <label for="title">Titel</label>
-                    <input type="text" id="title" name="title" placeholder="Titel nieuwsbericht">
+                    <input type="text" id="title" name="title" placeholder="Titel nieuwsbericht" required>
 
                     <label for="category">Categorie</label>
                     <select id="group" name="group">
@@ -262,7 +262,7 @@
                     </select>
 
                     <label for="description">Beschrijving</label>
-                    <textarea id="description" name="description" value="description" placeholder="Beschrijving nieuwsbericht" style="height:200px"></textarea>
+                    <textarea id="description" name="description" value="description" placeholder="Beschrijving nieuwsbericht" style="height:200px" required></textarea>
 
                     <input type="submit" value="Voeg toe">
                 </form>
@@ -274,7 +274,7 @@
                     <div class="article">
                         <div class="article-content">
                             <h1>@post.Title</h1>
-                            <h3>@post.Creator.FirstName @post.Creator.LastName, @post.DateAdded @post.TimeAdded</h3>
+                            <h3>@post.Creator.FirstName @post.Creator.LastName, @post.DateAdded</h3>
                             <p>@post.Description</p>
                         </div>
 
