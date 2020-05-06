@@ -1,5 +1,4 @@
-﻿<!-- model IEnumerable<Newspost> -->
-@model dynamic
+﻿@model dynamic
 
 <!DOCTYPE html>
 <html>
@@ -45,6 +44,7 @@
             padding-top: 80px;
             padding-left: 50px;
             border-right: 2px solid #3bb546;
+            overflow-y: auto;
         }
 
         .categories a {
@@ -112,17 +112,15 @@
             width: 20px;
             height: 20px;
             text-align: center;
+            cursor: pointer;
+            color: #ffffff;
+            font-size: 20px;
+            text-decoration: none;
             transition: 0.2s;
         }
 
         .delete-button:hover {
             background-color: #ffa6a6;
-        }
-
-        .article a {
-            color: #ffffff;
-            font-size: 20px;
-            text-decoration: none;
         }
 
         /* Form to add an article'. */
@@ -233,13 +231,13 @@
         <!-- Newsfeed categories -->
         <div class="categories">
             <a href="@Url.Action("FilteredNewsfeed", new { filter = "Algemeen" })">Algemeen</a>
-    
+
             @foreach (var group in Model.Group)
             {
                 <a href="@Url.Action("FilteredNewsfeed", new { filter = group.GroupName })">@group.GroupName</a>
             }
 
-            <a href="@Url.Action("FilteredNewsfeed", new { filter = "Vrienden"})">Vrienden</a> 
+            <a href="@Url.Action("FilteredNewsfeed", new { filter = "Vrienden"})">Vrienden</a>
         </div>
 
         <div class="articles-list">
@@ -276,12 +274,14 @@
                     <div class="article">
                         <div class="article-content">
                             <h1>@post.Title</h1>
-                            <h3>@post.FirstName @post.LastName, @post.DateAdded @post.TimeAdded</h3>
+                            <h3>@post.Creator.FirstName @post.Creator.LastName, @post.DateAdded @post.TimeAdded</h3>
                             <p>@post.Description</p>
                         </div>
-                        @if (post.FirstName == "Amy" && post.LastName == "Nowé")
+
+                        <!-- If the current user is the creator of a newspost (relationship Posted) they can delete it. -->
+                        @if (post.Creator.PersonId == 1)
                         {
-                            <a href="@Url.Action("DeletePost", new { postid = post.PostId, page = TempData["Page"] })"><div class="delete-button">&#10005;</div></a>
+                            <div class="delete-button" onclick="window.location='@Url.Action("DeletePost", new { postid = post.PostId, page = TempData["Page"] })'">&#10005;</div>
                         }
                     </div>
                 }

@@ -12,7 +12,8 @@ namespace meldboek.Models
         public string Description { get; set; }
         public string DateAdded { get; set; }
         public string TimeAdded { get; set; }
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
+        public Person Creator { get; set; }
+        //public string FirstName { get; set; }
+        //public string LastName { get; set; }
     }
 }

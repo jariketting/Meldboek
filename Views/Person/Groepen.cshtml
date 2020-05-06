@@ -1,4 +1,4 @@
-﻿@model IEnumerable<GroupInfo> 
+﻿@model IEnumerable<GroupData> 
 
 <!DOCTYPE html>
 <html>
@@ -172,7 +172,7 @@
         <!-- The list of groups -->
         <div class="group-list">
 
-            <!-- Single group attribute; Here all the groups from GetGroupsInfo() are put on the page. -->
+            <!-- Single group attribute; Here all the data from GetGroupsInfo() is put on the page. -->
             @foreach (var group in Model) {
                 <div class="group">
                     <div class="group-info">
@@ -182,6 +182,7 @@
                     <div class="leave-button" onclick="window.location='@Url.Action("LeaveGroup", new { GroupId = group.GroupId })';">&#10005;</div>
                     <button class="collapsible" id="collapsible-button-@group.GroupId" onclick="toggleCollapsible.call(this)">Deelnemers</button>
                     <div class="collapsible-content" id="collapsible-section-@group.GroupId">
+                        <!-- Here all the members from List<Person> are put into the collapsible. -->
                         @foreach (var member in group.Members)
                         {
                             <p>@member.FirstName @member.LastName</p>

@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace meldboek.Models
 {
-    public class GroupInfo
+    public class GroupData
     {
         public int GroupId { get; set; }
         public string GroupName { get; set; }
