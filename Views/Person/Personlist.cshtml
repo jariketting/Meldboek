@@ -152,17 +152,17 @@
 
                     @if (person.Status == "")
                     {
-                        <div class="person-options"><a href="#toevoegen" style="color: #00ff00;">Vriend toevoegen</a></div>
+                        <div class="person-options"><a href="@Url.Action("AddFriend", new { PersonId = 1, friendId = person.Person.PersonId })" style="color: #00ff00;">Vriend toevoegen</a></div>
                     }
 
                     @if (person.Status == "FriendPending")
                     {
-                        <div class="person-options"><a href="#toevoegen" style="color: #0000ff;">In behandeling</a></div>
+                        <div class="person-options"><a style="color: #0000ff;">In behandeling</a></div>
                     }
 
                     @if (person.Status == "IsFriendsWith")
                     {
-                        <div class="person-options"><a href="#toevoegen" style="color: #ff0000;">Vriend verwijderen</a></div>
+                        <div class="person-options"><a href="@Url.Action("DeleteFriend", new { FriendId = person.Person.PersonId, Page = @TempData["Page"] })" style="color: #ff0000;">Vriend verwijderen</a></div>
                     }
 
                 </div>

@@ -613,6 +613,13 @@ namespace meldboek.Controllers
 
         }
 
+        public async Task<IActionResult> DeleteFriend(int FriendId, string page)
+        {
+            await ConnectDb("MATCH (a:Person {PersonId: 1})-[r:IsFriendsWith]->(b:Person {PersonId: " + FriendId + "}) DELETE r");
+
+            return RedirectToAction("FilteredPersonlist", new { filter = page });
+        }
+
         public void AcceptFriend(int PersonRequestedId, int PersonAcceptedId)
         {
             //delete relationship pending and add relation friendswith 
