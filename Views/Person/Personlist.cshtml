@@ -135,38 +135,29 @@
 
         <!-- Personlist options -->
         <div class="options">
-            <a href="@Url.Action("FilteredPersonlist", new { filter = "Algemeen" })">Alle gebruikers</a>
+            <a href="@Url.Action("FilteredPersonlist", new { filter = "Alle gebruikers" })">Alle gebruikers</a>
             <a href="@Url.Action("FilteredPersonlist", new { filter = "Vrienden"})">Vrienden</a>
         </div>
 
         <div class="person-list">
-            <h1 class="page-title">ATempData["(Alle gebruikers/vrienden)"]</h1>
+            <h1 class="page-title">@TempData["Page"]</h1>
 
             <!-- Single person attribute; Here all the posts from GetPersonlist() or FilteredPersonlist() are put on the page. -->
-            <!-- foreach (var person in Model.Person) -->
-            <div class="person">
-                <div class="person-content">
-                    <h1>[persoon voornaam + achternaam]</h1>
+            @foreach (var person in Model)
+            {
+                <div class="person">
+                    <div class="person-content">
+                        <h1>@person.FirstName @person.LastName</h1>
+                    </div>
+                    <!-- if (reltype != "friends)" -->
+                    <div class="person-options"><a href="#toevoegen" style="color: #00ff00;">Vriend toevoegen</a></div>
                 </div>
-                <!-- if (reltype != "friends)" -->
-                <div class="person-options"><a href="#toevoegen" style="color: #00ff00;">Vriend toevoegen</a></div>
-            </div>
+            }
+                <!-- if (reltype == "pending")
+                <div class="person-options"><a style="color: #0000ff;">In behandeling</a></div> -->
 
-            <div class="person">
-                <div class="person-content">
-                    <h1>[persoon voornaam + achternaam]</h1>
-                </div>
-                <!-- if (reltype == "pending") -->
-                <div class="person-options"><a style="color: #0000ff;">In behandeling</a></div>
-            </div>
-
-            <div class="person">
-                <div class="person-content">
-                    <h1>[persoon voornaam + achternaam]</h1>
-                </div>
-                <!-- if (reltype == "friends") -->
-                <div class="person-options"><a href="#verwijderen" style="color: #ff0000;">Vriend verwijderen</a></div>
-            </div>
+                <!-- if (reltype == "friends") 
+                <div class="person-options"><a href="#verwijderen" style="color: #ff0000;">Vriend verwijderen</a></div> -->
         </div>
     </div>
 </body>

@@ -117,7 +117,7 @@ namespace meldboek.Controllers
 
         public IActionResult FilteredNewsfeed(string filter)
         {
-            // FilteredNewsfeed returns a newsfeed with a filter depending on what the Person chose.
+            // FilteredNewsfeed returns a newsfeed with a filter depending on what the user chose.
 
             if (filter == "Algemeen")
             {
@@ -127,7 +127,7 @@ namespace meldboek.Controllers
             }
             else if (filter == "Vrienden")
             {
-                // If the Person chose the filter "Vrienden", GetFriendPosts() is used to get the correct posts.
+                // If the user chose the filter "Vrienden", GetFriendPosts() is used to get the correct posts.
                 dynamic model = new ExpandoObject();
 
                 model.Post = GetFriendPosts();
@@ -140,7 +140,7 @@ namespace meldboek.Controllers
             }
             else
             {
-                // If the chosen filter is neither "Algemeen" or "Vrienden" the Person has chosen a filter for group [groupname].
+                // If the chosen filter is neither "Algemeen" or "Vrienden" the user has chosen a filter for group [groupname].
                 dynamic model = new ExpandoObject();
 
                 model.Post = GetGroupPosts(filter);
@@ -160,7 +160,32 @@ namespace meldboek.Controllers
 
         public IActionResult Personlist()
         {
-            return View();
+            // Default page is page with filter "Alle gebruikers", which displays all the Persons from the database.
+            TempData["Page"] = "Alle gebruikers";
+            return View(GetPersonlist());
+        }
+
+        public IActionResult FilteredPersonlist(string filter)
+        {
+            // FilteredPersonlist returns a personlist with a filter depending on what the user chose.
+
+            if (filter == "Alle gebruikers")
+            {
+                // Filter "Alle gebruikers" is the default value, so this redirects to the original state of the personlist.
+                TempData["Page"] = filter;
+                return RedirectToAction("Personlist");
+            }
+            else if (filter == "Vrienden")
+            {
+                // If the user chose the filter "Vrienden", GetFriends() is used to get the correct Persons.
+
+                TempData["Page"] = filter;
+                return View("Personlist", GetFriends());
+            }
+            else
+            {
+                return RedirectToAction("Personlist");
+            }
         }
 
         public int GetMaxPostId()
@@ -501,13 +526,40 @@ namespace meldboek.Controllers
             return final;
         }
 
+        public List<Person> GetPersonlist()
+        {
+            List<INode> personNodes = new List<INode>();
+            var getPersons = ConnectDb("MATCH(p:Person) RETURN p");
+            var person = new Person();
+            List<Person> personList = new List<Person>();
+
+            personNodes = getPersons.Result;
+            foreach (var record in personNodes)
+            {
+                var nodeprops = JsonConvert.SerializeObject(record.As<INode>().Properties);
+                person = (JsonConvert.DeserializeObject<Person>(nodeprops));
+
+                // After getting al the required data, it is put into a Person object and added to the list of persons.
+                personList.Add(new Person()
+                {
+                    PersonId = person.PersonId,
+                    FirstName = person.FirstName,
+                    LastName = person.LastName,
+                    Email = person.Email
+                });
+            }
+
+            // The final list is ordered by FirstName and put into a list called "final".
+            List<Person> final = personList.OrderBy(p => p.FirstName).ToList();
+            return final;
+        }
+
         public List<Person> GetFriends()
         {
             // GetFriends() gets all the Persons the Person is friends with (relationship type "IsFriendsWith") from the database and puts them in a list of Person objects.
-            // NOTE: This function is currently unused, but might come in handy for future functionalities.
 
             List<INode> friendNodes = new List<INode>();
-            var getFriends = ConnectDb("MATCH(a:Person)--(b:Person) WHERE a.FirstName = 'Amy' RETURN b");
+            var getFriends = ConnectDb("MATCH(a:Person)-[:IsFriendsWith]->(b:Person) WHERE a.FirstName = 'Amy' RETURN b");
             var friend = new Person();
             List<Person> friendList = new List<Person>();
 
@@ -525,7 +577,6 @@ namespace meldboek.Controllers
                     LastName = friend.LastName,
                     Email = friend.Email
                 });
-
             }
 
             // The final list is ordered by FirstName and put into a list called "final".
