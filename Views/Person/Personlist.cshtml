@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Person>
+﻿@model IEnumerable<PersonInfo>
 
 <!DOCTYPE html>
 <html>
@@ -147,17 +147,27 @@
             {
                 <div class="person">
                     <div class="person-content">
-                        <h1>@person.FirstName @person.LastName</h1>
+                        <h1>@person.Person.FirstName @person.Person.LastName</h1>
                     </div>
-                    <!-- if (reltype != "friends)" -->
-                    <div class="person-options"><a href="#toevoegen" style="color: #00ff00;">Vriend toevoegen</a></div>
+
+                    @if (person.Status == "")
+                    {
+                        <div class="person-options"><a href="#toevoegen" style="color: #00ff00;">Vriend toevoegen</a></div>
+                    }
+
+                    @if (person.Status == "FriendPending")
+                    {
+                        <div class="person-options"><a href="#toevoegen" style="color: #0000ff;">In behandeling</a></div>
+                    }
+
+                    @if (person.Status == "IsFriendsWith")
+                    {
+                        <div class="person-options"><a href="#toevoegen" style="color: #ff0000;">Vriend verwijderen</a></div>
+                    }
+
                 </div>
             }
-                <!-- if (reltype == "pending")
-                <div class="person-options"><a style="color: #0000ff;">In behandeling</a></div> -->
 
-                <!-- if (reltype == "friends") 
-                <div class="person-options"><a href="#verwijderen" style="color: #ff0000;">Vriend verwijderen</a></div> -->
         </div>
     </div>
 </body>

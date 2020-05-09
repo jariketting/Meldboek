@@ -526,12 +526,12 @@ namespace meldboek.Controllers
             return final;
         }
 
-        public List<Person> GetPersonlist()
+        public List<PersonInfo> GetPersonlist()
         {
             List<INode> personNodes = new List<INode>();
-            var getPersons = ConnectDb("MATCH(p:Person) RETURN p");
+            var getPersons = ConnectDb("MATCH(p:Person) WHERE NOT p.FirstName = 'Amy' RETURN p");
             var person = new Person();
-            List<Person> personList = new List<Person>();
+            List<PersonInfo> personList = new List<PersonInfo>();
 
             personNodes = getPersons.Result;
             foreach (var record in personNodes)
@@ -539,29 +539,27 @@ namespace meldboek.Controllers
                 var nodeprops = JsonConvert.SerializeObject(record.As<INode>().Properties);
                 person = (JsonConvert.DeserializeObject<Person>(nodeprops));
 
-                // After getting al the required data, it is put into a Person object and added to the list of persons.
-                personList.Add(new Person()
+                // After getting al the required data, it is put into a PersonInfo object and added to the list of persons.
+                personList.Add(new PersonInfo()
                 {
-                    PersonId = person.PersonId,
-                    FirstName = person.FirstName,
-                    LastName = person.LastName,
-                    Email = person.Email
+                    Person = person,
+                    Status = CheckFriendStatus(person.PersonId)
                 });
             }
 
             // The final list is ordered by FirstName and put into a list called "final".
-            List<Person> final = personList.OrderBy(p => p.FirstName).ToList();
+            List<PersonInfo> final = personList.OrderBy(p => p.Person.FirstName).ToList();
             return final;
         }
 
-        public List<Person> GetFriends()
+        public List<PersonInfo> GetFriends()
         {
             // GetFriends() gets all the Persons the Person is friends with (relationship type "IsFriendsWith") from the database and puts them in a list of Person objects.
 
             List<INode> friendNodes = new List<INode>();
             var getFriends = ConnectDb("MATCH(a:Person)-[:IsFriendsWith]->(b:Person) WHERE a.FirstName = 'Amy' RETURN b");
             var friend = new Person();
-            List<Person> friendList = new List<Person>();
+            List<PersonInfo> friendList = new List<PersonInfo>();
 
             friendNodes = getFriends.Result;
             foreach (var record in friendNodes)
@@ -569,19 +567,25 @@ namespace meldboek.Controllers
                 var nodeprops = JsonConvert.SerializeObject(record.As<INode>().Properties);
                 friend = (JsonConvert.DeserializeObject<Person>(nodeprops));
 
-                // After getting al the required data, it is put into a Person object and added to the list of friends.
-                friendList.Add(new Person()
+                // After getting al the required data, it is put into a PersonInfo object and added to the list of friends.
+                friendList.Add(new PersonInfo()
                 {
-                    PersonId = friend.PersonId,
-                    FirstName = friend.FirstName,
-                    LastName = friend.LastName,
-                    Email = friend.Email
+                    Person = friend,
+                    Status = CheckFriendStatus(friend.PersonId)
                 });
             }
 
             // The final list is ordered by FirstName and put into a list called "final".
-            List<Person> final = friendList.OrderBy(f => f.FirstName).ToList();
+            List<PersonInfo> final = friendList.OrderBy(f => f.Person.FirstName).ToList();
             return final;
+        }
+
+        public string CheckFriendStatus(int PersonId)
+        {
+            var getStatus = ConnectDb2("MATCH(a:Person)-[r]->(b:Person) WHERE a.FirstName = 'Amy' AND b.PersonId = " + PersonId + " RETURN type(r)");
+            string status = getStatus.Result;
+
+            return status;
         }
 
         public Boolean AddFriend(int PersonId, int friendId)
@@ -649,6 +653,35 @@ namespace meldboek.Controllers
             res.Wait();
             return RedirectToAction("GroepenManagen", "Person");
 
+        }
+
+        public async Task<string> ConnectDb2(string query)
+        {
+            Driver = CreateDriverWithBasicAuth("bolt://localhost:11005", "neo4j", "1234");
+            string res = "";
+            IAsyncSession session = Driver.AsyncSession(o => o.WithDatabase("neo4j"));
+
+            try
+            {
+                res = await session.ReadTransactionAsync(async tx =>
+                {
+                    string results = "";
+                    var reader = await tx.RunAsync(query);
+
+                    while (await reader.FetchAsync())
+                    {
+                        results = reader.Current[0].As<string>();
+                    }
+
+                    return results;
+                });
+            }
+            finally
+            {
+                await session.CloseAsync();
+            }
+
+            return res;
         }
 
         public async Task<List<INode>> ConnectDb(string query)
