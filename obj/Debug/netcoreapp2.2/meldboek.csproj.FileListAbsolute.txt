@@ -185,3 +185,4 @@ C:\Users\amyno\source\repos\meldboek\obj\Debug\netcoreapp2.2\meldboek.genruntime
 C:\Users\amyno\source\repos\meldboek\obj\Debug\netcoreapp2.2\meldboek.csproj.CopyComplete
 C:\Users\amyno\source\repos\meldboek\obj\Debug\netcoreapp2.2\meldboek.csprojAssemblyReference.cache
 C:\Users\amyno\source\repos\meldboek\obj\Debug\netcoreapp2.2\Razor\Views\Person\Groepen.cshtml.g.cs
+C:\Users\amyno\source\repos\meldboek\obj\Debug\netcoreapp2.2\Razor\Views\Person\Personlist.cshtml.g.cs

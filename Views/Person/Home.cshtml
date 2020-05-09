@@ -16,7 +16,7 @@
 
         .content {
             position: relative;
-            margin-top: 11%;
+            margin-top: 8%;
         }
 
         .options {
@@ -69,6 +69,14 @@
         #groups:hover {
             background-color: #ffa6a6;
         }
+
+        #personlist {
+            background-color: #e947ff;
+        }
+
+        #personlist:hover {
+            background-color: #f4a3ff;
+        }
     </style>
 </head>
 <body>
@@ -84,6 +92,7 @@
             <a href="#forums" class="button" id="forums">Forums</a>
             <a href="#chat" class="button" id="chat">Chat</a>
             <a href="@Url.Action("Groepen")" class="button" id="groups">Groepen</a>
+            <a href="@Url.Action("Personlist")" class="button" id="personlist">Gebruikers</a>
         </div>
     </div>
     

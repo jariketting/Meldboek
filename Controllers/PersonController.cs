@@ -158,6 +158,11 @@ namespace meldboek.Controllers
             return View(GetGroupsData());
         }
 
+        public IActionResult Personlist()
+        {
+            return View();
+        }
+
         public int GetMaxPostId()
         {
             // GetMaxPostId gets the newspost with the highest id from the database and returns the id.
