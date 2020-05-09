@@ -588,6 +588,19 @@ namespace meldboek.Controllers
             return status;
         }
 
+        public IActionResult Friend(int FriendId)
+        {
+            if(AddFriend(1, FriendId) == true)
+            {
+                return RedirectToAction("Personlist");
+            }
+            else
+            {
+                Console.WriteLine("Er is iets misgegaan.");
+                return null;
+            }
+        }
+
         public Boolean AddFriend(int PersonId, int friendId)
         {
             // maybe add check for if they already are friends
@@ -609,6 +622,7 @@ namespace meldboek.Controllers
                 Success = false;
             }
 
+            RedirectToAction("Personlist");
             return Success;
 
         }

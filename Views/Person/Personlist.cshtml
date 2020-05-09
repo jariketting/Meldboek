@@ -152,9 +152,9 @@
 
                     @if (person.Status == "")
                     {
-                        <div class="person-options"><a href="@Url.Action("AddFriend", new { PersonId = 1, friendId = person.Person.PersonId })" style="color: #00ff00;">Vriend toevoegen</a></div>
+                        <div class="person-options"><a href="@Url.Action("Friend", new { FriendId = person.Person.PersonId })" style="color: #00ff00;">Vriend toevoegen</a></div>
                     }
-
+                    
                     @if (person.Status == "FriendPending")
                     {
                         <div class="person-options"><a style="color: #0000ff;">In behandeling</a></div>
