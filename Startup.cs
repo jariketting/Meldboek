@@ -57,7 +57,7 @@ namespace meldboek
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Person}/{action=Home}");
+                    template: "{controller=Home}/{action=Index}/{id?}");
             });
         }
     }
