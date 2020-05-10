@@ -10,8 +10,8 @@ namespace meldboek.Models
         public int PostId { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
-        public string DateAdded { get; set; }
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
+        public Person Creator { get; set; }
+        public String DateAdded { get; set; }
+        public DateTime TimeStamp { get; set; }
     }
 }
