@@ -1,0 +1,135 @@
+﻿@page
+@model meldboek.Models.ForumItem
+@{
+    Forum forum;
+            if (ViewBag.Forum != null)
+            {
+                forum = ViewBag.forum;
+            
+    }else
+    {
+        forum = (Forum)TempData["Forum"];
+    }
+    meldboek.Controllers.ForumController FC = new meldboek.Controllers.ForumController();
+    List<ForumItem> forumItems = FC.GetAllReplies(forum);
+
+
+
+
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body {
+            font-family: 'Open Sans', sans-serif;
+            background: #ecf0f1; /*21323*/
+            margin: 0 auto 0 auto;
+            width: 100%;
+            text-align: center;
+            margin: 0px 0px 0px 0px;
+        }
+
+        .box {
+            background: #ff3398;
+            width: 800px;
+            border-radius: 6px;
+            position: center;
+            margin: 0 auto 0 auto;
+            padding: 100px 100px 100px 50px;
+            border: #000000 4px solid;
+        }
+
+        .Personname {
+            background: #ecf0f1;
+            border: #8593bc 1px solid;
+            border-bottom: #ccc 2px solid;
+            padding: 8px;
+            width: 350px;
+            color: #AAAAAA;
+            margin-top: 10px;
+            font-size: 1em;
+            border-radius: 4px;
+        }
+
+        .button {
+            background: #6f89c4;
+            width: 200px;
+            padding-top: 5px;
+            padding-bottom: 5px;
+            padding-left: 75px;
+            color: white;
+            border-radius: 4px;
+            border: #27ae60 1px solid;
+            margin-top: 10px;
+            margin-bottom: 20px;
+            margin-left: 100px;
+            margin-right: auto;
+            float: left;
+            margin-left: 125px;
+            font-weight: 600;
+            font-size: 0.8em;
+        }
+
+            .button:hover {
+                background: Blue;
+            }
+
+        .fpwd {
+            color: #6f89c4;
+            text-decoration: underline;
+        }
+
+        #absoluteCenteredDiv {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            margin: auto;
+            width: 800px;
+            height: 300px;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <h1 id="login-header">Forums</h1>
+    <div id="absoluteCenteredDiv">
+
+
+
+
+
+
+            <p class="box">@forum.Content</p>
+
+            @foreach (ForumItem forumItem in forumItems)
+            {
+
+
+             <p class="box">@forumItem.Content</p>
+             }
+
+
+
+
+
+
+
+
+
+            
+    <form asp-action="Forum" method="post">
+
+        <input hidden type="text" value="@forum.ForumId" name=fid id="fid" size="50">
+        <p><font face="verdana" color="black">Content</font></p>
+        <input type="text" required name=Content id="Content" size="50"><br><br>
+
+        <input href="@Url.Action("ForumHome","Forum?id ="+forum.ForumId);" type="submit" value="Submit" id="submit">
+    </form>
+          
+
+</div>
+</body>
+</html>
