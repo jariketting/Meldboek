@@ -56,7 +56,7 @@ namespace meldboek.Controllers
 
         public async Task<List<INode>> ConnectDb(string query)
         {
-            Driver = CreateDriverWithBasicAuth("bolt://localhost:7687", "neo4j", "1234");
+            Driver = CreateDriverWithBasicAuth("bolt://localhost:11005", "neo4j", "1234");
             List<INode> res = new List<INode>();
             IAsyncSession session = Driver.AsyncSession(o => o.WithDatabase("neo4j"));
 
@@ -91,7 +91,7 @@ namespace meldboek.Controllers
 
         // public async Task<List<NodeResult>> ConnectDb(string query)
         // {
-        //     Driver = CreateDriverWithBasicAuth("bolt://localhost:7687", "neo4j", "1234");
+        //     Driver = CreateDriverWithBasicAuth("bolt://localhost:11005", "neo4j", "1234");
         //     List<NodeResult> res = new List<NodeResult>();
         //     IAsyncSession session = Driver.AsyncSession(o => o.WithDatabase("neo4j"));
 
