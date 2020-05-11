@@ -13,12 +13,12 @@ namespace AspNetCore
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Rendering;
     using Microsoft.AspNetCore.Mvc.ViewFeatures;
-#line 1 "C:\Users\amyno\source\repos\meldboek\Views\_ViewImports.cshtml"
+#line 1 "C:\Users\jurri\Desktop\webdev\meldboek3\Views\_ViewImports.cshtml"
 using meldboek;
 
 #line default
 #line hidden
-#line 2 "C:\Users\amyno\source\repos\meldboek\Views\_ViewImports.cshtml"
+#line 2 "C:\Users\jurri\Desktop\webdev\meldboek3\Views\_ViewImports.cshtml"
 using meldboek.Models;
 
 #line default
@@ -312,7 +312,7 @@ using meldboek.Models;
                 __tagHelperExecutionContext.Add(__Microsoft_AspNetCore_Mvc_TagHelpers_ScriptTagHelper);
                 __Microsoft_AspNetCore_Mvc_TagHelpers_ScriptTagHelper.Src = (string)__tagHelperAttribute_14.Value;
                 __tagHelperExecutionContext.AddTagHelperAttribute(__tagHelperAttribute_14);
-#line 69 "C:\Users\amyno\source\repos\meldboek\Views\Shared\_Layout.cshtml"
+#line 69 "C:\Users\jurri\Desktop\webdev\meldboek3\Views\Shared\_Layout.cshtml"
 __Microsoft_AspNetCore_Mvc_TagHelpers_ScriptTagHelper.AppendVersion = true;
 
 #line default
