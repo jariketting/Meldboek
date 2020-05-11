@@ -1,18 +1,100 @@
 @model meldboek.ViewModels.Profile
 
 <!DOCTYPE html>
-            <h2>@Model.Name</h2>
-            <p>@Model.Email</p>
-@* <html>
+
+<html>
 <head>
+    
     <link rel="stylesheet" type="text/css" href="~/css/Groepen.css">
 </head>
+<style>
+    h2{
+        padding-top: 200px;
+        font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    }
+    body{
+                font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+
+    }
+    .info{
+                font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+                padding-top: 150px;
+    }
+    .personlist-content {
+            width: 100%;
+            overflow: hidden;
+            padding-top: 100px;
+            padding-bottom: 50px;
+        }
+                /* Persons list */
+    .person-list {
+            padding-top: 40px;
+            margin-left: 340px;
+        }
+        /* Single person */
+    .person {
+            width: 90%;
+            overflow: hidden;
+            border-bottom: 1px solid orange;
+        }
+        /* Person content consists of name (h1) and friend/unfriend options (a). */
+    .person-content {
+            float: lrgb(24, 16, 0)
+            width: 80%;
+        }
+    .person-content h1 {
+            font-size: 22px;
+            padding-bottom: 10px;
+            padding-top: 20px;
+        }
+    .person-options {
+            margin-top: 20px;
+            margin-left: 83%;
+        }
+    .person-options a {
+            text-decoration: none;
+            font-size: 20px;
+        }
+</style>
 <body>
-<div class="topbar">     *@
+<div class="topbar">    
             <h1>Profile</h1>
+</div> 
+<div class="info">
+    <h1>Info</h1>
+            <p>Name: @Model.Name</p>
+            <p>Email: @Model.Email</p>
+</div>
 
-@* </div> *@
+            @foreach (var person in Model.PersonInfos)
+            {
+                <div class="person">
+                    <div class="person-content">
+                        <h1>@person.Person.FirstName @person.Person.LastName</h1>
+                    </div>
+                    
+                    @if (person.Status == "FriendPending")
+                    {
+                        <div class="person-options"><a style="color: #0000ff;">In behandeling</a></div>
+                    }
 
+                    @if (person.Status == "IsFriendsWith")
+                    {
+                        <div class="person-options">
+                            <a href="@Url.Action("DeleteFriendProfile", "Person", new { FriendId = person.Person.PersonId, PersonId = @Model.PersonId })" style="color: #ff0000;">Vriend verwijderen</a>
+                            </div>
+                    }
+                    @if (person.Status == "requested")
+                    {
+                        <div class="person-options">
+                            <a href="@Url.Action("AcceptFriend", "Person", new { PersonRequestedId = person.Person.PersonId, PersonAcceptedId = @Model.PersonId })" style="color: #ff0000;">Vriend accepteren</a>
+                            </div>
+                    }
+
+                </div>
+            }
+
+        </div>
        
-@* </body>
-</html> *@
+ </body>
+</html>

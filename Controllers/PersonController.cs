@@ -29,16 +29,48 @@ namespace meldboek.Controllers
         {
             return View();
         }
-
+        [Route("Person/Profile")]
         public IActionResult Profile()
         {
             //grab a random person out of the DB untill be have the claims
             int personid = 1;
+            List<PersonInfo> personInfos = new List<PersonInfo>();
+            List<Person> Relations = GetRelationsById(personid);
             Person person = GetPerson(personid);
             Profile profile = new Profile();
             profile.Name = person.FirstName + " " + person.LastName;
             profile.Email = person.Email;
-            profile.Friends = GetFriendsById(personid);
+            profile.Relaties = Relations;
+            profile.PersonId = person.PersonId;
+
+            foreach (var rela in Relations)
+            {
+                var statusreq = CheckFriendRequeststatus(person.PersonId, rela.PersonId);
+                if (statusreq == "requested")
+                {
+                    personInfos.Add(new PersonInfo()
+                    {
+                        Person = rela,
+                        Status = statusreq
+                    });
+                }
+                else if (statusreq == "Friends")
+                {
+                    personInfos.Add(new PersonInfo()
+                    {
+                        Person = rela,
+                        Status = "IsFriendsWith"
+                    });
+                }
+
+                else personInfos.Add(new PersonInfo()
+                {
+                    Person = rela,
+                    Status = CheckFriendStatus(person.PersonId, rela.PersonId)
+                });
+
+            };
+            profile.PersonInfos = personInfos;
 
 
             return View(profile);
@@ -219,6 +251,27 @@ namespace meldboek.Controllers
             await ConnectDb("MATCH(p:Post) WHERE p.PostId= '" + postid + "' DETACH DELETE p");
 
             return RedirectToAction("FilteredNewsfeed", new { filter = page });
+        }
+        public string CheckFriendStatus(int PersonId, int FriendId)
+        {
+            var getStatus = ConnectDb2("MATCH(a:Person)-[r]->(b:Person) WHERE a.PersonId = " + PersonId + " AND b.PersonId = " + FriendId + " RETURN type(r)");
+            string status = getStatus.Result;
+            return status;
+        }
+        public string CheckFriendRequeststatus(int PersonId, int FriendId)
+        {
+            var res = "";
+            var getStatus = ConnectDb2("MATCH(a:Person)-[r]->(b:Person) WHERE a.PersonId = " + FriendId + " AND b.PersonId = " + PersonId + " RETURN type(r)");
+            string status = getStatus.Result;
+            if (status == "FriendPending")
+            {
+                res = "requested";
+            }
+            if (status == "IsFriendsWith")
+            {
+                res = "Friends";
+            }
+            return res;
         }
 
         public List<Newspost> GetFeed()
@@ -412,7 +465,27 @@ namespace meldboek.Controllers
             List<Person> final = friendList.OrderBy(f => f.FirstName).ToList();
             return final;
         }
+        public List<Person> GetRelationsById(int id)
+        {
 
+            List<INode> friendNodes = new List<INode>();
+            var getFriends = ConnectDb("MATCH (a:Person {PersonId : " + id.ToString() + "}) - [:IsFriendsWith| :FriendPending]-(b:Person{}) RETURN b");
+            var friend = new Person();
+            List<Person> friendList = new List<Person>();
+
+            friendNodes = getFriends.Result;
+            foreach (var record in friendNodes)
+            {
+                var nodeprops = JsonConvert.SerializeObject(record.As<INode>().Properties);
+                friend = (JsonConvert.DeserializeObject<Person>(nodeprops));
+
+                friendList.Add(friend);
+
+            }
+
+            List<Person> final = friendList.OrderBy(f => f.FirstName).ToList();
+            return final;
+        }
         public List<Person> GetFriends()
         {
             // GetFriends() gets all the Persons the Person is friends with (relationship type "IsFriendsWith") from the database and puts them in a list of Person objects.
@@ -470,15 +543,30 @@ namespace meldboek.Controllers
 
         }
 
-        public void AcceptFriend(int PersonRequestedId, int PersonAcceptedId)
+        public IActionResult AcceptFriend(int PersonRequestedId, int PersonAcceptedId)
         {
             //delete relationship pending and add relation friendswith 
             var ret = ConnectDb("MATCH (a:Person {PersonId : " + PersonRequestedId.ToString() + "}) - [r:FriendPending]->(b:Person{PersonId: " + PersonAcceptedId.ToString() + "}) DELETE r RETURN a");
             ret.Wait();
             var res = ConnectDb("MATCH (a:Person), (b:Person) WHERE a.PersonId = " + PersonRequestedId.ToString() + " AND b.PersonId = " + PersonAcceptedId.ToString() + " CREATE (a)-[r:IsFriendsWith]->(b)" + " RETURN a");
             res.Wait();
+            // var res2 = ConnectDb("MATCH (a:Person), (b:Person) WHERE a.PersonId = " + PersonAcceptedId.ToString() + " AND b.PersonId = " + PersonRequestedId.ToString() + " CREATE (a)-[r:IsFriendsWith]->(b)" + " RETURN a");
+            // res2.Wait();
+            return RedirectToAction("Profile", "Person");
         }
+        public async Task<IActionResult> DeleteFriend(int FriendId, string page)
+        {
+            await ConnectDb("MATCH (a:Person {PersonId: 1})-[r:IsFriendsWith]->(b:Person {PersonId: " + FriendId + "}) DELETE r");
 
+            return RedirectToAction("FilteredPersonlist", new { filter = page });
+        }
+        public async Task<IActionResult> DeleteFriendProfile(int FriendId, int PersonId)
+        {
+            await ConnectDb("MATCH (a:Person {PersonId: " + PersonId + "})-[r:IsFriendsWith]->(b:Person {PersonId: " + FriendId + "}) DELETE r");
+            await ConnectDb("MATCH (a:Person {PersonId: " + FriendId + "})-[r:IsFriendsWith]->(b:Person {PersonId: " + PersonId + "}) DELETE r");
+
+            return RedirectToAction("Profile");
+        }
         public Person GetPerson(int PersonId)
         {
             List<INode> nodeList = new List<INode>();
@@ -544,6 +632,34 @@ namespace meldboek.Controllers
             }
             return res;
 
+        }
+        public async Task<string> ConnectDb2(string query)
+        {
+            Driver = CreateDriverWithBasicAuth("bolt://localhost:7687", "neo4j", "1234");
+            string res = "";
+            IAsyncSession session = Driver.AsyncSession(o => o.WithDatabase("neo4j"));
+
+            try
+            {
+                res = await session.ReadTransactionAsync(async tx =>
+                {
+                    string results = "";
+                    var reader = await tx.RunAsync(query);
+
+                    while (await reader.FetchAsync())
+                    {
+                        results = reader.Current[0].As<string>();
+                    }
+
+                    return results;
+                });
+            }
+            finally
+            {
+                await session.CloseAsync();
+            }
+
+            return res;
         }
 
 
