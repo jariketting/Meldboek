@@ -17,3 +17,9 @@ obj/Debug/netcoreapp2.2/meldboek.assets.cache
 bin/Debug/netcoreapp2.2/meldboek.Views.pdb
 bin/Debug/netcoreapp2.2/meldboek.Views.dll
 .vs/meldboek/v16/.suo
+*.cache
+obj/meldboek.csproj.nuget.dgspec.json
+obj/meldboek.csproj.nuget.g.props
+obj/project.nuget.cache
+obj/project.assets.json
+obj/meldboek.csproj.nuget.g.targets
