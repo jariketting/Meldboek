@@ -41,7 +41,11 @@ namespace meldboek.Controllers
                 }
                 else if (type == "open")
                 {
-                    return RedirectToAction("Room", new { chat });
+                    return RedirectToAction("Room", new { chat, type });
+                }
+                else if (type == "chat")
+                {
+                    return RedirectToAction("Room", new { chat, type });
                 }
             }
 
@@ -53,6 +57,10 @@ namespace meldboek.Controllers
             List<Chat> joined = GetChatsJoined();
             ViewBag.chatsJoined = joined;
 
+            // get friends and add to viewbag
+            List<User> friends = GetFriends();
+            ViewBag.friends = friends;
+
             return View(ViewBag);
         }
 
@@ -61,22 +69,28 @@ namespace meldboek.Controllers
         /// </summary>
         /// <param name="chat">id of chatroom</param>
         /// <returns>Chatroom view</returns>
-        public IActionResult Room(string chat, string message)
+        public IActionResult Room(string chat, string type, string message)
         {
-            // TODO validate user in room
-
             // check if chat id given
-            if (chat == null)
+            if (chat == null || type == null)
             {
                 return RedirectToAction("Index");
             }
 
-            // get chatroom and add to viewbag
-            Chat room = GetChat(chat);
-            ViewBag.room = room;
+            if(type == "open") 
+            { 
+                // get chatroom and add to viewbag
+                Chat room = GetChat(chat);
+                ViewBag.name = room.Name;
+            }
+            else if(type == "chat")
+            {
+                User friend = GetFriend(chat);
+                ViewBag.name = friend.FirstName + " " + friend.LastName;
+            }
 
             // check if new message added
-            if(message != null)
+            if (message != null)
             {
                 SendMessage(message, chat);
             }
@@ -250,6 +264,58 @@ namespace meldboek.Controllers
             }
 
             return chatList; // return results
+        }
+
+        /// <summary>
+        /// Get friends
+        /// </summary>
+        /// <returns>List with users friends</returns>
+        public List<User> GetFriends()
+        {
+            List<INode> friendNodes = new List<INode>(); // will store friend nodes
+            var getFriends = Db.ConnectDb("MATCH (p:Person) WHERE(p) -[:IsFriendsWith]-(: Person{ Email: 'jariketting@hotmail.com'}) RETURN p"); // run query
+            var friend = new User(); // store friend
+            List<User> friendList = new List<User>(); // store list of all friends
+
+            friendNodes = getFriends.Result; // fill friend nodes with queries result
+            // go trough all items
+            foreach (var item in friendNodes)
+            {
+                // pull data from item and convert json
+                var nodeprops = JsonConvert.SerializeObject(item.As<INode>().Properties);
+                friend = (JsonConvert.DeserializeObject<User>(nodeprops));
+
+                // fill list with chats
+                friendList.Add(new User()
+                {
+                    FirstName = friend.FirstName,
+                    LastName = friend.LastName,
+                    Email = friend.Email
+                });
+            }
+
+            return friendList; // return results
+        }
+
+        /// <summary>
+        /// Get friend by email
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        public User GetFriend(string email)
+        {
+            List<INode> nodeList = new List<INode>();
+            var results = Db.ConnectDb("MATCH (a:Person) WHERE a.Email = '" + email + "' RETURN a");
+            var user = new User();
+
+            nodeList = results.Result;
+            foreach (var record in nodeList)
+            {
+                var nodeprops = JsonConvert.SerializeObject(record.As<INode>().Properties);
+                user = (JsonConvert.DeserializeObject<User>(nodeprops));
+            }
+
+            return user;
         }
     }
 }
