@@ -23,3 +23,4 @@ obj/meldboek.csproj.nuget.g.props
 obj/project.nuget.cache
 obj/project.assets.json
 obj/meldboek.csproj.nuget.g.targets
+obj/Debug/netcoreapp2.2/meldboek.assets.cache
