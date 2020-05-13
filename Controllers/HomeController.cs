@@ -44,14 +44,12 @@ namespace meldboek.Controllers
 
             //AddPersonToGroup(1, 1);
             // DeletePersonFromGroup(1, 1);
-            //   LogIn("Test@s.nl", "wachtwoord");
+          
 
             return View();
         }
 
-
-
-
+        
 
 
         public async Task<List<INode>> ConnectDb(string query)

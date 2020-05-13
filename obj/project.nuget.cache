@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "Wl061rgl6LIkU37Kwx1q4ctsmkIGS2OLNST3+gJ+9kqPfE1l0s64XKyWiZhbHjH2IllepeENZX+Usu7zGu7sDw==",
+  "dgSpecHash": "Na8AmvUWjPbWN2ASm0YIg7rqBeQETz81pXw9ceYSPn4RRoB44FkmcHsfNIYOgE2a55p+M7it02fXptds4lYy9w==",
   "success": true,
   "projectFilePath": "C:\\Users\\Jari\\Dropbox\\Development\\Asp.net\\Meldboek\\meldboek\\meldboek.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\Jari\\.nuget\\packages\\autofac\\5.1.2\\autofac.5.1.2.nupkg.sha512",
     "C:\\Users\\Jari\\.nuget\\packages\\microsoft.aspnet.webapi\\5.2.7\\microsoft.aspnet.webapi.5.2.7.nupkg.sha512",
     "C:\\Users\\Jari\\.nuget\\packages\\microsoft.aspnet.webapi.client\\5.2.7\\microsoft.aspnet.webapi.client.5.2.7.nupkg.sha512",
     "C:\\Users\\Jari\\.nuget\\packages\\microsoft.aspnet.webapi.core\\5.2.7\\microsoft.aspnet.webapi.core.5.2.7.nupkg.sha512",
@@ -103,6 +104,7 @@
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\microsoft.aspnetcore.staticfiles\\2.2.0\\microsoft.aspnetcore.staticfiles.2.2.0.nupkg.sha512",
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\microsoft.aspnetcore.websockets\\2.2.0\\microsoft.aspnetcore.websockets.2.2.0.nupkg.sha512",
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\microsoft.aspnetcore.webutilities\\2.2.0\\microsoft.aspnetcore.webutilities.2.2.0.nupkg.sha512",
+    "C:\\Users\\Jari\\.nuget\\packages\\microsoft.bcl.asyncinterfaces\\1.1.0\\microsoft.bcl.asyncinterfaces.1.1.0.nupkg.sha512",
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\microsoft.codeanalysis.analyzers\\1.1.0\\microsoft.codeanalysis.analyzers.1.1.0.nupkg.sha512",
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\microsoft.codeanalysis.common\\2.8.0\\microsoft.codeanalysis.common.2.8.0.nupkg.sha512",
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\microsoft.codeanalysis.csharp\\2.8.0\\microsoft.codeanalysis.csharp.2.8.0.nupkg.sha512",

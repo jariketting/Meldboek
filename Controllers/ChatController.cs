@@ -106,7 +106,7 @@ namespace meldboek.Controllers
         /// <param name="chat">id of chat to join</param>
         public async void JoinChat(string chat)
         {
-            // TODO replace by current logged in user
+            // TODO replace by current logged in Person
             _ = await Db.ConnectDb("MATCH (u:Person),(c:Chat) WHERE u.Email = 'jariketting@hotmail.com' AND c.ChatId = '" + chat + "' CREATE(u)-[r:InChat]->(c)");
         }
 
@@ -155,7 +155,7 @@ namespace meldboek.Controllers
         }
 
         /// <summary>
-        /// Get chat user van join
+        /// Get chat Person van join
         /// </summary>
         /// <returns></returns>
         public List<Message> GetChatMessages(string chat)
@@ -173,16 +173,16 @@ namespace meldboek.Controllers
                 var nodeprops = JsonConvert.SerializeObject(item.As<INode>().Properties);
                 message = (JsonConvert.DeserializeObject<Message>(nodeprops));
 
-                // Another query gets the related users to a post from the database thus finding its creator, the result is processed similarly.
-                List<INode> userList = new List<INode>();
-                var getuser = Db.ConnectDb("MATCH(u:Person)-[:Sends]-(c:Message) WHERE c.MessageId = '" + message.MessageId + "' RETURN u LIMIT 1");
-                var user = new Person();
+                // Another query gets the related Persons to a post from the database thus finding its creator, the result is processed similarly.
+                List<INode> PersonList = new List<INode>();
+                var getPerson = Db.ConnectDb("MATCH(u:Person)-[:Sends]-(c:Message) WHERE c.MessageId = '" + message.MessageId + "' RETURN u LIMIT 1");
+                var Person = new Person();
 
-                userList = getuser.Result;
-                var userItem = userList.First();
+                PersonList = getPerson.Result;
+                var PersonItem = PersonList.First();
 
-                var userprops = JsonConvert.SerializeObject(userItem.As<INode>().Properties);
-                user = (JsonConvert.DeserializeObject<Person>(userprops));
+                var Personprops = JsonConvert.SerializeObject(PersonItem.As<INode>().Properties);
+                Person = (JsonConvert.DeserializeObject<Person>(Personprops));
 
                 // TODO as all these params should match, this could be automated...
                 // fill list with chats
@@ -192,7 +192,7 @@ namespace meldboek.Controllers
                     Content = message.Content,
                     DatetimeSend = message.DatetimeSend,
                     DatetimeRead = message.DatetimeRead,
-                    Username = user.Email
+                    Personname = Person.Email
                 });
             }
 
@@ -203,7 +203,7 @@ namespace meldboek.Controllers
         }
 
         /// <summary>
-        /// Get chat user van join
+        /// Get chat Person van join
         /// </summary>
         /// <returns></returns>
         public List<Chat> GetChatsJoinable()
@@ -234,7 +234,7 @@ namespace meldboek.Controllers
         }
 
         /// <summary>
-        /// Get chat user has joined
+        /// Get chat Person has joined
         /// </summary>
         /// <returns></returns>
         public List<Chat> GetChatsJoined()
@@ -268,7 +268,7 @@ namespace meldboek.Controllers
         /// <summary>
         /// Get friends
         /// </summary>
-        /// <returns>List with users friends</returns>
+        /// <returns>List with Persons friends</returns>
         public List<Person> GetFriends()
         {
             List<INode> friendNodes = new List<INode>(); // will store friend nodes
@@ -299,22 +299,22 @@ namespace meldboek.Controllers
         /// <summary>
         /// Get friend by email
         /// </summary>
-        /// <param name="userId"></param>
+        /// <param name="PersonId"></param>
         /// <returns></returns>
         public Person GetFriend(string email)
         {
             List<INode> nodeList = new List<INode>(); // store friend node
             var results = Db.ConnectDb("MATCH (a:Person) WHERE a.Email = '" + email + "' RETURN a"); // run query
-            var user = new Person();
+            var Person = new Person();
 
             nodeList = results.Result;
             foreach (var record in nodeList)
             {
                 var nodeprops = JsonConvert.SerializeObject(record.As<INode>().Properties);
-                user = (JsonConvert.DeserializeObject<Person>(nodeprops));
+                Person = (JsonConvert.DeserializeObject<Person>(nodeprops));
             }
 
-            return user;
+            return Person;
         }
     }
 }

@@ -47,12 +47,12 @@ namespace meldboek
         /// Create graph database driver
         /// </summary>
         /// <param name="uri">Url of database</param>
-        /// <param name="user">Username for login</param>
+        /// <param name="Person">Personname for login</param>
         /// <param name="password">Password for login</param>
         /// <returns>Driver</returns>
-        public IDriver CreateDriverWithBasicAuth(string uri, string user, string password)
+        public IDriver CreateDriverWithBasicAuth(string uri, string Person, string password)
         {
-            return GraphDatabase.Driver(new Uri(uri), AuthTokens.Basic(user, password));
+            return GraphDatabase.Driver(new Uri(uri), AuthTokens.Basic(Person, password));
         }
     }
 }

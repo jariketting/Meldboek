@@ -2971,8 +2971,8 @@
       "FileKind": "mvc"
     },
     {
-      "FilePath": "/Users/yaseminsnoek/Documents/Inf jaar 2/Project D/meldboek/Views/Person/Profile.cshtml",
-      "TargetPath": "Views\\Person\\Profile.cshtml",
+      "FilePath": "/Users/yaseminsnoek/Documents/Inf jaar 2/Project D/meldboek/Views/User/CreateAccount.cshtml",
+      "TargetPath": "Views\\User\\CreateAccount.cshtml",
       "FileKind": "mvc"
     },
     {
@@ -2991,18 +2991,8 @@
       "FileKind": "mvc"
     },
     {
-      "FilePath": "/Users/yaseminsnoek/Documents/Inf jaar 2/Project D/meldboek/Views/Shared/Topbar_Sidenav.cshtml",
-      "TargetPath": "Views\\Shared\\Topbar_Sidenav.cshtml",
-      "FileKind": "mvc"
-    },
-    {
       "FilePath": "/Users/yaseminsnoek/Documents/Inf jaar 2/Project D/meldboek/Views/Shared/_CookieConsentPartial.cshtml",
       "TargetPath": "Views\\Shared\\_CookieConsentPartial.cshtml",
-      "FileKind": "mvc"
-    },
-    {
-      "FilePath": "/Users/yaseminsnoek/Documents/Inf jaar 2/Project D/meldboek/Views/Person/Home.cshtml",
-      "TargetPath": "Views\\Person\\Home.cshtml",
       "FileKind": "mvc"
     },
     {
@@ -3011,8 +3001,8 @@
       "FileKind": "mvc"
     },
     {
-      "FilePath": "/Users/yaseminsnoek/Documents/Inf jaar 2/Project D/meldboek/Views/Person/CreateAccount.cshtml",
-      "TargetPath": "Views\\Person\\CreateAccount.cshtml",
+      "FilePath": "/Users/yaseminsnoek/Documents/Inf jaar 2/Project D/meldboek/Views/User/Newsfeed.cshtml",
+      "TargetPath": "Views\\User\\Newsfeed.cshtml",
       "FileKind": "mvc"
     },
     {
@@ -3021,23 +3011,8 @@
       "FileKind": "mvc"
     },
     {
-      "FilePath": "/Users/yaseminsnoek/Documents/Inf jaar 2/Project D/meldboek/Views/Person/GroepenManagen.cshtml",
-      "TargetPath": "Views\\Person\\GroepenManagen.cshtml",
-      "FileKind": "mvc"
-    },
-    {
       "FilePath": "/Users/yaseminsnoek/Documents/Inf jaar 2/Project D/meldboek/Views/Shared/_ValidationScriptsPartial.cshtml",
       "TargetPath": "Views\\Shared\\_ValidationScriptsPartial.cshtml",
-      "FileKind": "mvc"
-    },
-    {
-      "FilePath": "/Users/yaseminsnoek/Documents/Inf jaar 2/Project D/meldboek/Views/Admin/CreateGroups.cshtml",
-      "TargetPath": "Views\\Admin\\CreateGroups.cshtml",
-      "FileKind": "mvc"
-    },
-    {
-      "FilePath": "/Users/yaseminsnoek/Documents/Inf jaar 2/Project D/meldboek/Views/Person/Newsfeed.cshtml",
-      "TargetPath": "Views\\Person\\Newsfeed.cshtml",
       "FileKind": "mvc"
     }
   ],
