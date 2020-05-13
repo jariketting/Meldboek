@@ -304,3 +304,4 @@ C:\Users\amyno\Documents\meldboek\obj\Debug\netcoreapp2.2\Razor\Views\Person\Gro
 C:\Users\amyno\Documents\meldboek\obj\Debug\netcoreapp2.2\Razor\Views\Person\Login.cshtml.g.cs
 C:\Users\amyno\Documents\meldboek\obj\Debug\netcoreapp2.2\Razor\Views\Person\Personlist.cshtml.g.cs
 C:\Users\amyno\Documents\meldboek\obj\Debug\netcoreapp2.2\Razor\Views\Person\Profile.cshtml.g.cs
+C:\Users\amyno\Documents\meldboek\obj\Debug\netcoreapp2.2\Razor\Views\Person\GroepenManagen.cshtml.g.cs

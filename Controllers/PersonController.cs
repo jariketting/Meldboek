@@ -25,11 +25,13 @@ namespace meldboek.Controllers
         {
             return View();
         }
+
         [Route("Person/GroepenManagen")]
         public IActionResult GroepenManagen()
         {
             return View();
         }
+
         [Route("Person/Profile")]
         public IActionResult Profile()
         {
@@ -76,6 +78,7 @@ namespace meldboek.Controllers
 
             return View(profile);
         }
+
         public IActionResult CreateAccount(string firstname, string lastname, string email, string password, string password2)
         {
             //maakt Person als alles ingevoerd is en wachtwoord klopt
@@ -597,6 +600,12 @@ namespace meldboek.Controllers
                 friend = (JsonConvert.DeserializeObject<Person>(nodeprops));
 
                 friendList.Add(friend);
+            }
+
+            List<Person> final = friendList.OrderBy(f => f.FirstName).ToList();
+            return final;
+        }
+
 
         public List<PersonInfo> GetPersonlist()
         {
@@ -699,14 +708,7 @@ namespace meldboek.Controllers
 
         }
 
-        public async Task<IActionResult> DeleteFriend(int FriendId, string page)
-        {
-            await ConnectDb("MATCH (a:Person {PersonId: 1})-[r:IsFriendsWith]->(b:Person {PersonId: " + FriendId + "}) DELETE r");
-
-            return RedirectToAction("FilteredPersonlist", new { filter = page });
-        }
-
-        public void AcceptFriend(int PersonRequestedId, int PersonAcceptedId)
+        public async Task<IActionResult> AcceptFriend(int PersonRequestedId, int PersonAcceptedId)
         {
             //delete relationship pending and add relation friendswith 
             var ret = ConnectDb("MATCH (a:Person {PersonId : " + PersonRequestedId.ToString() + "}) - [r:FriendPending]->(b:Person{PersonId: " + PersonAcceptedId.ToString() + "}) DELETE r RETURN a");
@@ -717,12 +719,14 @@ namespace meldboek.Controllers
             // res2.Wait();
             return RedirectToAction("Profile", "Person");
         }
+
         public async Task<IActionResult> DeleteFriend(int FriendId, string page)
         {
             await ConnectDb("MATCH (a:Person {PersonId: 1})-[r:IsFriendsWith]->(b:Person {PersonId: " + FriendId + "}) DELETE r");
 
             return RedirectToAction("FilteredPersonlist", new { filter = page });
         }
+
         public async Task<IActionResult> DeleteFriendProfile(int FriendId, int PersonId)
         {
             await ConnectDb("MATCH (a:Person {PersonId: " + PersonId + "})-[r:IsFriendsWith]->(b:Person {PersonId: " + FriendId + "}) DELETE r");
@@ -730,6 +734,7 @@ namespace meldboek.Controllers
 
             return RedirectToAction("Profile");
         }
+
         public Person GetPerson(int PersonId)
         {
             List<INode> nodeList = new List<INode>();
@@ -761,35 +766,6 @@ namespace meldboek.Controllers
             res.Wait();
             return RedirectToAction("GroepenManagen", "Person");
 
-        }
-
-        public async Task<string> ConnectDb2(string query)
-        {
-            Driver = CreateDriverWithBasicAuth("bolt://localhost:11003", "neo4j", "1234");
-            string res = "";
-            IAsyncSession session = Driver.AsyncSession(o => o.WithDatabase("neo4j"));
-
-            try
-            {
-                res = await session.ReadTransactionAsync(async tx =>
-                {
-                    string results = "";
-                    var reader = await tx.RunAsync(query);
-
-                    while (await reader.FetchAsync())
-                    {
-                        results = reader.Current[0].As<string>();
-                    }
-
-                    return results;
-                });
-            }
-            finally
-            {
-                await session.CloseAsync();
-            }
-
-            return res;
         }
 
         public async Task<List<INode>> ConnectDb(string query)
@@ -825,9 +801,10 @@ namespace meldboek.Controllers
             return res;
 
         }
+
         public async Task<string> ConnectDb2(string query)
         {
-            Driver = CreateDriverWithBasicAuth("bolt://localhost:7687", "neo4j", "1234");
+            Driver = CreateDriverWithBasicAuth("bolt://localhost:11003", "neo4j", "1234");
             string res = "";
             IAsyncSession session = Driver.AsyncSession(o => o.WithDatabase("neo4j"));
 
