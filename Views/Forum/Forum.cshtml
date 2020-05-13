@@ -120,6 +120,20 @@
              text-align: center;
              position: absolute;
         }
+                        .delete-button {
+            display: block;
+            background-color: #ff5252;
+            padding: 10px;
+            border-radius: 20px;
+            width: 20px;
+            height: 20px;
+            text-align: center;
+            cursor: pointer;
+            color: #ffffff;
+            font-size: 20px;
+            text-decoration: none;
+            transition: 0.2s;
+        }
 
     </style>
     <script>
@@ -171,7 +185,24 @@
         {
 
 
-            <p class="button">@forumItem.Content</p>
+            <table white-space="nowrap" width="100%" class="table">
+                <tr>
+                    <th>
+                        <p class="button">@forumItem.Content</p>
+                    </th>
+                    <th align="right" width="3%" class="info">
+                        <form asp-action="Forum" method="post">
+                            <input hidden type="text" value="@forumItem.ForumItemId" name=del id="del">
+                            <input hidden type="text" value="@forum.ForumId" name=fid id="fid" size="50">
+
+                            @if (forumItem.Owner.PersonId == 1 || forum.Owner.PersonId == 1)
+                            {
+                                <input href="@Url.Action("Forum", new { id = @forum.ForumId })" type="submit" value="&#10005" id="submit" class="delete-button">
+                            }
+                            </form>
+                    </th>
+                </tr>
+            </table>
         }
 
 
@@ -182,15 +213,15 @@
 
 
 
-    <div class="button">
-        <form asp-action="Forum" method="post">
+        <div class="button">
+            <form asp-action="Forum" method="post">
 
-            <input hidden type="text" value="@forum.ForumId" name=fid id="fid" size="50">
-            <input type="text" required name=Content id="Content" size="50"><br><br>
+                <input hidden type="text" value="@forum.ForumId" name=fid id="fid" size="50">
+                <input type="text" required name=Content id="Content" size="50"><br><br>
 
-            <input href="@Url.Action("ForumHome","Forum?id ="+forum.ForumId);" type="submit" value="Submit" id="submit" class="sub">
-        </form>
-    </div>
+                <input href="@Url.Action("Forum", new { id = @forum.ForumId })" type="submit" value="Submit" id="submit" class="sub">
+            </form>
+        </div>
 
     </div>
 </body>

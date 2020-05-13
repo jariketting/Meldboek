@@ -68,20 +68,21 @@ namespace meldboek.Controllers
 
         public int GetMaxGroupId()
         {
-            // GetMaxPostId gets the Person with the highest id from the database and returns the id.
+            int returnId = 0;
+            // GetMaxPostId pakt een id die nog niet gebruikt wordt
+            Random rnd = new Random();
 
-            List<INode> postNodes = new List<INode>();
-            var getPosts = ConnectDb("MATCH(p:Group) RETURN p ORDER BY toInteger(p.GroupId) DESC LIMIT 1");
-            var Group = new Group();
 
-            postNodes = getPosts.Result;
-            foreach (var record in postNodes)
+            while (true)
             {
-                var nodeprops = JsonConvert.SerializeObject(record.As<INode>().Properties);
-                Group = (JsonConvert.DeserializeObject<Group>(nodeprops));
+                returnId = rnd.Next(1000001, 999999999);
+                var r = ConnectDb("MATCH (n:Group) WHERE n.GroupId =" + returnId + " return n;");
+                r.Wait();
+                if (r.Result.Count == 0)
+                {
+                    return returnId;
+                }
             }
-
-            return Group.GroupId + 1;
         }
 
         public async Task<List<INode>> ConnectDb(string query)
