@@ -1,9 +1,12 @@
-﻿@model IEnumerable<GroupData> 
+﻿@{
+    ViewData["Title"] = "Groepen";
+}
+
+@model IEnumerable<GroupData>
 
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Groepen</title>
     <link rel="stylesheet" type="text/css" href="~/css/Topbar_Sidenav.css">
     <script type="text/javascript" src="~/js/site.js"></script>
     <style>
@@ -24,9 +27,9 @@
             background-color: #ff5252;
         }
 
-        .overlay a:hover, .overlay a:focus, .logout a:hover, .logout a:focus {
-            color: #ffa6a6;
-        }
+            .overlay a:hover, .overlay a:focus, .logout a:hover, .logout a:focus {
+                color: #ffa6a6;
+            }
 
         .page-title {
             font-size: 28px;
@@ -59,16 +62,16 @@
             float: left;
         }
 
-        .group-info h1 {
-            font-size: 28px;
-            padding-bottom: 15px;
-            padding-top: 40px;
-        }
+            .group-info h1 {
+                font-size: 28px;
+                padding-bottom: 15px;
+                padding-top: 40px;
+            }
 
-        .group-info h3 {
-            font-size: 20px;
-            padding-bottom: 10px;
-        }
+            .group-info h3 {
+                font-size: 20px;
+                padding-bottom: 10px;
+            }
 
         /* Button to leave a group */
         .leave-button {
@@ -88,9 +91,9 @@
             transition: 0.2s;
         }
 
-        .leave-button:hover {
-            background-color: #ffa6a6;
-        }
+            .leave-button:hover {
+                background-color: #ffa6a6;
+            }
 
         /* Collapsible content (all the Persons in a group) and button */
         .collapsible {
@@ -109,9 +112,9 @@
             transition: 0.2s;
         }
 
-        .collapsible:hover {
-            background-color: #ffa6a6;
-        }
+            .collapsible:hover {
+                background-color: #ffa6a6;
+            }
 
         .collapsible-content {
             max-height: 0;
@@ -120,10 +123,10 @@
             padding: 10px 0px 0px 20px;
         }
 
-        .collapsible-content p {
-            font-size: 18px;
-            color: #000000;
-        }
+            .collapsible-content p {
+                font-size: 18px;
+                color: #000000;
+            }
     </style>
     <script>
         function toggleCollapsible() {
@@ -149,7 +152,7 @@
         <h1>Groepen</h1>
 
         <!-- Account information button -->
-        <a href="#accountinfo"><img id="acc-icon" src="@Url.Content("~/Content/account.png")"/></a>
+        <a href="@Url.Action("Profile")"><img id="acc-icon" src="@Url.Content("~/Content/account.png")" /></a>
     </div>
 
     <!-- Sidemenu overlay -->
@@ -175,7 +178,8 @@
         <div class="group-list">
 
             <!-- Single group attribute; Here all the data from GetGroupsInfo() is put on the page. -->
-            @foreach (var group in Model) {
+            @foreach (var group in Model)
+            {
                 <div class="group">
                     <div class="group-info">
                         <h1>@group.GroupName</h1>
