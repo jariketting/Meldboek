@@ -2,12 +2,18 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+
+using meldboek.Models;
 using Microsoft.AspNetCore.Mvc;
+using Neo4j.Driver;
+using Newtonsoft.Json;
 
 namespace meldboek.Controllers
 {
     public class AdminController : Controller
     {
+        public IDriver Driver { get; set; }
+
         public IActionResult Index()
         {
             return View();
@@ -56,7 +62,7 @@ namespace meldboek.Controllers
             return View();
 
 
-         
+
 
         }
 

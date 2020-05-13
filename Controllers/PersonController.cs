@@ -117,7 +117,7 @@ namespace meldboek.Controllers
 
         public IActionResult FilteredNewsfeed(string filter)
         {
-            // FilteredNewsfeed returns a newsfeed with a filter depending on what the user chose.
+            // FilteredNewsfeed returns a newsfeed with a filter depending on what the Person chose.
 
             if (filter == "Algemeen")
             {
@@ -127,7 +127,7 @@ namespace meldboek.Controllers
             }
             else if (filter == "Vrienden")
             {
-                // If the user chose the filter "Vrienden", GetFriendPosts() is used to get the correct posts.
+                // If the Person chose the filter "Vrienden", GetFriendPosts() is used to get the correct posts.
                 dynamic model = new ExpandoObject();
 
                 model.Post = GetFriendPosts();
@@ -140,7 +140,7 @@ namespace meldboek.Controllers
             }
             else
             {
-                // If the chosen filter is neither "Algemeen" or "Vrienden" the user has chosen a filter for group [groupname].
+                // If the chosen filter is neither "Algemeen" or "Vrienden" the Person has chosen a filter for group [groupname].
                 dynamic model = new ExpandoObject();
 
                 model.Post = GetGroupPosts(filter);
@@ -167,7 +167,7 @@ namespace meldboek.Controllers
 
         public IActionResult FilteredPersonlist(string filter)
         {
-            // FilteredPersonlist returns a personlist with a filter depending on what the user chose.
+            // FilteredPersonlist returns a personlist with a filter depending on what the Person chose.
 
             if (filter == "Alle gebruikers")
             {
@@ -177,7 +177,7 @@ namespace meldboek.Controllers
             }
             else if (filter == "Vrienden")
             {
-                // If the user chose the filter "Vrienden", GetFriends() is used to get the correct Persons.
+                // If the Person chose the filter "Vrienden", GetFriends() is used to get the correct Persons.
 
                 TempData["Page"] = filter;
                 return View("Personlist", GetFriends());
@@ -432,7 +432,7 @@ namespace meldboek.Controllers
 
         public List<GroupData> GetGroupsData()
         {
-            /*  GetGroupsData() gets all the users' groups (relationship IsInGroup) from the database plus:
+            /*  GetGroupsData() gets all the Persons' groups (relationship IsInGroup) from the database plus:
              *   - The creator of the group (relationship IsOwner)
              *   - All the members of the group (relationship IsInGroup)
             */
@@ -441,7 +441,7 @@ namespace meldboek.Controllers
             List<GroupData> groupsInfo = new List<GroupData>();
 
 
-            // First, all the groups the user is part of are fetched.
+            // First, all the groups the Person is part of are fetched.
             List<INode> groupNodes = new List<INode>();
             var getGroups = ConnectDb("MATCH(p:Person)-[r:IsInGroup]->(g:Group) WHERE p.FirstName = 'Amy' RETURN g");
             var group = new Group();
@@ -499,7 +499,7 @@ namespace meldboek.Controllers
 
         public async Task<IActionResult> LeaveGroup(int GroupId)
         {
-            // LeaveGroup() removes the user from the group (deletes relationship IsInGroup).
+            // LeaveGroup() removes the Person from the group (deletes relationship IsInGroup).
 
             await ConnectDb("MATCH (p:Person)-[r:IsInGroup]->(g:Group) WHERE p.FirstName = 'Amy' AND g.GroupId = " + GroupId + " DELETE r");
 
