@@ -22,6 +22,7 @@ namespace meldboek.Controllers
 
         public IActionResult Index()
         {
+
             // var results = ConnectDb("CREATE (n:Person { name: 'Yas2', title: 'Developer' }) RETURN n");
             // var results = ConnectDb("MATCH (a:Person) RETURN a");
 

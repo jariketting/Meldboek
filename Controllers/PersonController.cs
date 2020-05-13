@@ -22,10 +22,10 @@ namespace meldboek.Controllers
     {
         public IDriver Driver { get; set; }
 
-        public IActionResult Index()
-        {
-            return View();
-        }
+        //public IActionResult Index()
+        //{
+        //    return View();
+        //}
         [Route("Person/GroepenManagen")]
         public IActionResult GroepenManagen()
         {
@@ -62,52 +62,7 @@ namespace meldboek.Controllers
         {
             return View();
         }
-        public ActionResult Login(string email, string password)
-        {
-            if (email != null & password != null)
-            {
-
-                List<INode> nodeList = new List<INode>();
-                var results = ConnectDb("MATCH (a:Person) WHERE a.Email = '" + email + "' AND a.Password =  '" + password + "' RETURN a");
-                var user = new Person();
-
-                nodeList = results.Result;
-                foreach (var record in nodeList)
-                {
-                    var nodeprops = JsonConvert.SerializeObject(record.As<INode>().Properties);
-                    user = (JsonConvert.DeserializeObject<Person>(nodeprops));
-                }
-                if (user.Email != null)
-                {
-
-                    var claims = new List<Claim>
-                    {
-                        new Claim(ClaimTypes.Name, "User", ClaimValueTypes.String),
-                        new Claim(ClaimTypes.NameIdentifier, user.Email.ToString(), ClaimValueTypes.String),
-                        new Claim(ClaimTypes.Role, "User", ClaimValueTypes.String)
-                    };
-                    var userIdentity = new ClaimsIdentity(claims, "SecureLogin");
-                    var userPrincipal = new ClaimsPrincipal(userIdentity);
-
-                    HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,
-                        userPrincipal,
-                        new AuthenticationProperties
-                        {
-                            ExpiresUtc = DateTime.UtcNow.AddMinutes(30),
-                            IsPersistent = true,
-                            AllowRefresh = false
-                        });
-
-                    return RedirectToAction("Profile", "Person");
-                }
-                else
-                {
-                    return RedirectToAction("CreateAccount", "Person");
-                }
-            }
-            return View();
-        }
-
+       
         public IActionResult Home()
         {
             return View();
