@@ -11,7 +11,8 @@ namespace meldboek.ViewModels
     {
         public string Name { get; set; }
         public string Email { get; set; }
-
-        public List<Person> Friends { get; set; }
+        public int PersonId { get; set; }
+        public List<PersonInfo> PersonInfos { get; set; }
+        public List<Person> Relaties { get; set; }
     }
 }
