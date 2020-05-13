@@ -399,37 +399,41 @@ namespace meldboek.Controllers
         //genereer nieuw ForumId
         public int GetNewForumId()
         {
-            List<INode> postNodes = new List<INode>();
-            var getPosts = ConnectDb("MATCH(p:Forum) RETURN p ORDER BY toInteger(p.ForumId) DESC LIMIT 1");
-            var Forum = new Forum();
+            int returnId = 0;
+            // GetMaxPostId pakt een id die nog niet gebruikt wordt
+            Random rnd = new Random();
 
-            postNodes = getPosts.Result;
-            int r = 0;
-            foreach (var record in postNodes)
+
+            while (true)
             {
-                var nodeprops = JsonConvert.SerializeObject(record.As<INode>().Properties);
-                r = Convert.ToInt32(record.Properties.Values.ToArray().GetValue(3));
+                returnId = rnd.Next(1000001, 999999999);
+                var r = ConnectDb("MATCH (n:Forum) WHERE n.ForumId =" + returnId + " return n;");
+                r.Wait();
+                if (r.Result.Count == 0)
+                {
+                    return returnId;
+                }
             }
-
-            return r + 1;
         }
 
         //genereer nieuw ForumItemId
         public int GetNewForumItemId()
         {
-            List<INode> postNodes = new List<INode>();
-            var getPosts = ConnectDb("MATCH(p:ForumItem) RETURN p ORDER BY toInteger(p.ForumItemId) DESC LIMIT 1");
-            var Forum = new Forum();
+            int returnId = 0;
+            // GetMaxPostId pakt een id die nog niet gebruikt wordt
+            Random rnd = new Random();
 
-            postNodes = getPosts.Result;
-            int r = 0;
-            foreach (var record in postNodes)
+
+            while (true)
             {
-                var nodeprops = JsonConvert.SerializeObject(record.As<INode>().Properties);
-                r = Convert.ToInt32(record.Properties.Values.ToArray().GetValue(0));
+                returnId = rnd.Next(1000001, 999999999);
+                var r = ConnectDb("MATCH (n:ForumItem) WHERE n.ForumItemId =" + returnId + " return n;");
+                r.Wait();
+                if (r.Result.Count == 0)
+                {
+                    return returnId;
+                }
             }
-
-            return r + 1;
         }
 
 

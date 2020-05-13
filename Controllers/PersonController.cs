@@ -50,7 +50,7 @@ namespace meldboek.Controllers
             if (firstname != null & lastname != null & email != null & password != null & password == password2)
             {
 
-                int persId = GetMaxPersonId() + 1;
+                int persId = GetMaxPersonId();
                 //stuurt Person naar database
                 var r = ConnectDb("CREATE (p:Person { PersonId: " + persId + ", FirstName: '" + firstname + "', LastName: '" + lastname + "' ,Email: '" + email + "', Password: '" + password + "' }) RETURN p");
                 r.Wait();
@@ -190,37 +190,41 @@ namespace meldboek.Controllers
 
         public int GetMaxPostId()
         {
-            // GetMaxPostId gets the newspost with the highest id from the database and returns the id.
+            int returnId = 0;
+            // GetMaxPostId pakt een id die nog niet gebruikt wordt
+            Random rnd = new Random();
 
-            List<INode> postNodes = new List<INode>();
-            var getPosts = ConnectDb("MATCH(p:Post) RETURN p ORDER BY toInteger(p.PostId) DESC LIMIT 1");
-            var post = new Newspost();
 
-            postNodes = getPosts.Result;
-            foreach (var record in postNodes)
+            while (true)
             {
-                var nodeprops = JsonConvert.SerializeObject(record.As<INode>().Properties);
-                post = (JsonConvert.DeserializeObject<Newspost>(nodeprops));
+                returnId = rnd.Next(1000001, 999999999);
+                var r = ConnectDb("MATCH (n:Post) WHERE n.PostId =" + returnId + " return n;");
+                r.Wait();
+                if (r.Result.Count == 0)
+                {
+                    return returnId;
+                }
             }
-
-            return post.PostId;
         }
         public int GetMaxPersonId()
         {
-            // GetMaxPostId gets the Person with the highest id from the database and returns the id.
+            int returnId = 0;
+            // GetMaxPostersonId pakt een id die nog niet gebruikt wordt
+            Random rnd = new Random();
 
-            List<INode> postNodes = new List<INode>();
-            var getPosts = ConnectDb("MATCH(p:Person) RETURN p ORDER BY toInteger(p.PersonId) DESC LIMIT 1");
-            var person = new Person();
 
-            postNodes = getPosts.Result;
-            foreach (var record in postNodes)
+            while (true)
             {
-                var nodeprops = JsonConvert.SerializeObject(record.As<INode>().Properties);
-                person = (JsonConvert.DeserializeObject<Person>(nodeprops));
+                returnId = rnd.Next(1000001, 999999999);
+                var r = ConnectDb("MATCH (n:Person) WHERE n.PersonId ="+ returnId + " return n;");
+                r.Wait();
+                if (r.Result.Count == 0)
+                {
+                    return returnId;
+                }
             }
 
-            return person.PersonId;
+            
         }
 
         [HttpPost]
@@ -229,7 +233,7 @@ namespace meldboek.Controllers
             // AddPost adds a newspost the Person creates to the database. It takes the given title + description and adds the current time itself.
 
             // Getting the id of most recent post node, so a new id can be automatically added to the newly created newspost.
-            int newid = GetMaxPostId() + 1;
+            int newid = GetMaxPostId();
 
             string datetime = DateTime.Now.ToString("d-M-yyyy HH:mm:ss");
 
