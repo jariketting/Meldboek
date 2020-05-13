@@ -610,7 +610,7 @@ namespace meldboek.Controllers
         public List<PersonInfo> GetPersonlist()
         {
             List<INode> personNodes = new List<INode>();
-            var getPersons = ConnectDb("MATCH(p:Person) WHERE NOT p.FirstName = 'Amy' RETURN p");
+            var getPersons = ConnectDb("MATCH(p:Person) WHERE NOT p.PersonId = 1 RETURN p");
             var person = new Person();
             List<PersonInfo> personList = new List<PersonInfo>();
 
@@ -663,10 +663,26 @@ namespace meldboek.Controllers
 
         public string CheckFriendStatus(int PersonId)
         {
-            var getStatus = ConnectDb2("MATCH(a:Person)-[r]->(b:Person) WHERE a.FirstName = 'Amy' AND b.PersonId = " + PersonId + " RETURN type(r)");
-            string status = getStatus.Result;
-
-            return status;
+            var getStatus = ConnectDb2("MATCH(a:Person)-[r]-(b:Person) WHERE a.FirstName = 'Amy' AND b.PersonId = " + PersonId + " RETURN type(r)");
+            if(getStatus.Result == "FriendPending")
+            {
+                var requestCheck = ConnectDb2("MATCH(a:Person)-[r]->(b:Person) WHERE a.PersonId = " + PersonId + " AND b.FirstName = 'Amy' RETURN type(r)");
+                if(requestCheck.Result == "FriendPending")
+                {
+                    string status = requestCheck.Result + "Request";
+                    return status;
+                }
+                else
+                {
+                    string status = getStatus.Result;
+                    return status;
+                }
+            }
+            else
+            {
+                string status = getStatus.Result;
+                return status;
+            }
         }
 
         public IActionResult Friend(int FriendId)
@@ -703,12 +719,11 @@ namespace meldboek.Controllers
                 Success = false;
             }
 
-            RedirectToAction("Personlist");
             return Success;
 
         }
 
-        public async Task<IActionResult> AcceptFriend(int PersonRequestedId, int PersonAcceptedId)
+        public async Task<IActionResult> AcceptFriend(int PersonRequestedId, int PersonAcceptedId, string page)
         {
             //delete relationship pending and add relation friendswith 
             var ret = ConnectDb("MATCH (a:Person {PersonId : " + PersonRequestedId.ToString() + "}) - [r:FriendPending]->(b:Person{PersonId: " + PersonAcceptedId.ToString() + "}) DELETE r RETURN a");
@@ -717,12 +732,12 @@ namespace meldboek.Controllers
             res.Wait();
             // var res2 = ConnectDb("MATCH (a:Person), (b:Person) WHERE a.PersonId = " + PersonAcceptedId.ToString() + " AND b.PersonId = " + PersonRequestedId.ToString() + " CREATE (a)-[r:IsFriendsWith]->(b)" + " RETURN a");
             // res2.Wait();
-            return RedirectToAction("Profile", "Person");
+            return RedirectToAction(page, "Person");
         }
 
         public async Task<IActionResult> DeleteFriend(int FriendId, string page)
         {
-            await ConnectDb("MATCH (a:Person {PersonId: 1})-[r:IsFriendsWith]->(b:Person {PersonId: " + FriendId + "}) DELETE r");
+            await ConnectDb("MATCH (a:Person {PersonId: 1})-[r:IsFriendsWith]-(b:Person {PersonId: " + FriendId + "}) DELETE r");
 
             return RedirectToAction("FilteredPersonlist", new { filter = page });
         }

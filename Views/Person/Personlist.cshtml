@@ -163,6 +163,11 @@
                             <div class="person-options"><a style="color: #0000ff;">In behandeling</a></div>
                         }
 
+                        @if (person.Status == "FriendPendingRequest")
+                        {
+                            <div class="person-options"><a href="@Url.Action("AcceptFriend", new { PersonRequestedId = person.Person.PersonId, PersonAcceptedId = 1, Page = "Personlist" })" style="color: #0000ff;">Verzoek accepteren</a></div>
+                        }
+
                         @if (person.Status == "IsFriendsWith")
                         {
                             <div class="person-options"><a href="@Url.Action("DeleteFriend", new { FriendId = person.Person.PersonId, Page = @TempData["Page"] })" style="color: #ff0000;">Vriend verwijderen</a></div>
