@@ -1,0 +1,44 @@
+﻿<style>
+    .topbar {
+        background-color: #000000; /* Verander deze naar de kleur uit de mockups van je view. */
+    }
+
+    .navbtn {
+        background-color: #000000; /* Verander deze naar de kleur uit de mockups van je view. */
+    }
+
+    .overlay {
+        background-color: #000000; /* Verander deze naar de kleur uit de mockups van je view. */
+    }
+
+    .overlay a:hover, .overlay a:focus, .logout a:hover, .logout a:focus {
+        color: #000000; /* Deze is anders van de vorige 3, dit is de kleur die tekst krijg bij hover (is ook in de mockups te vinden). */
+    }
+</style>
+
+<!-- Colored bar at the top of the page -->
+<div class="topbar">
+
+    <!-- The button that opens the sidemenu -->
+    <span class="navbtn" onclick="nav()">&#9776; </span>
+
+    <!-- Page title -->
+    <h1>Newsfeed</h1>
+
+    <!-- Account information button -->
+    <a href="#accountinfo"><img id="acc-icon" src="@Url.Content("~/Content/account.png")"/></a>
+</div>
+
+<!-- Sidemenu overlay -->
+<div id="nav" class="overlay">
+    <div class="overlay-content">
+        <p style="color: #ffffff;">Newsfeed</p> <!-- Dit is hoe een optie eruit ziet als het de huidige pagina is, dit moet je dus ook veranderen. -->
+        <br>                                    <!-- Zorg dat de kleur hetzelfde is als de kleur van hover (laatste element in de <style>).-->
+        <a href="@Url.Action("ForumHome","Forum")">Forums</a> <!-- Dit is hoe je opties neerzet die niet je huidige pagina zijn. -->
+        <br>
+        <a onclick="nav()" href="#chat">Chat</a>
+        <br>
+        <a  href="@Url.Action("Groepen")">Groepen</a>
+    </div>
+    <div class="logout"><a onclick="nav()" href="#logout">Log uit</a></div>
+</div>
