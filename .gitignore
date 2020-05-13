@@ -17,3 +17,7 @@ obj/Debug/netcoreapp2.2/meldboek.assets.cache
 bin/Debug/netcoreapp2.2/meldboek.Views.pdb
 bin/Debug/netcoreapp2.2/meldboek.Views.dll
 .vs/meldboek/v16/.suo
+obj/Debug/netcoreapp2.2/meldboek.csprojAssemblyReference.cache
+obj/Debug/netcoreapp2.2/meldboek.assets.cache
+.vs/meldboek/v16/Server/sqlite3/storage.ide
+.vs/meldboek/v16/.suo
