@@ -15,6 +15,7 @@ using System.Xml;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Http;
 
 namespace meldboek.Controllers
 {
@@ -58,8 +59,24 @@ namespace meldboek.Controllers
 
 
         }
-        public ActionResult Profile()
+        //[Authorize(Roles = "Person")]
+        public ActionResult Profile(string email, string password )
         {
+            List<INode> nodeList = new List<INode>();
+
+            var results = ConnectDb("MATCH (a:Person) WHERE a.Email = '" + email + "' AND a.Password = '" + password + "'  RETURN a");
+
+            var user = new Models.Person();
+
+            nodeList = results.Result;
+            foreach (var record in nodeList)
+            {
+                var nodeprops = JsonConvert.SerializeObject(record.As<INode>().Properties);
+                user = (JsonConvert.DeserializeObject<Models.Person>(nodeprops));
+               
+            }
+          
+            
             return View();
         }
        
@@ -69,7 +86,8 @@ namespace meldboek.Controllers
         }
 
         public IActionResult Newsfeed()
-        {
+        {      
+            
             // Default page is page with filter "Algemeen", which displays all the posts that are not posted in a group.
             TempData["Page"] = "Algemeen";
 
