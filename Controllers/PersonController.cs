@@ -726,10 +726,10 @@ namespace meldboek.Controllers
         public async Task<IActionResult> AcceptFriend(int PersonRequestedId, int PersonAcceptedId, string page)
         {
             //delete relationship pending and add relation friendswith 
-            var ret = ConnectDb("MATCH (a:Person {PersonId : " + PersonRequestedId.ToString() + "}) - [r:FriendPending]->(b:Person{PersonId: " + PersonAcceptedId.ToString() + "}) DELETE r RETURN a");
-            ret.Wait();
-            var res = ConnectDb("MATCH (a:Person), (b:Person) WHERE a.PersonId = " + PersonRequestedId.ToString() + " AND b.PersonId = " + PersonAcceptedId.ToString() + " CREATE (a)-[r:IsFriendsWith]->(b)" + " RETURN a");
-            res.Wait();
+            await ConnectDb("MATCH (a:Person {PersonId : " + PersonRequestedId.ToString() + "}) - [r:FriendPending]->(b:Person{PersonId: " + PersonAcceptedId.ToString() + "}) DELETE r RETURN a");
+            
+            await ConnectDb("MATCH (a:Person), (b:Person) WHERE a.PersonId = " + PersonRequestedId.ToString() + " AND b.PersonId = " + PersonAcceptedId.ToString() + " CREATE (a)-[r:IsFriendsWith]->(b)" + " RETURN a");
+
             // var res2 = ConnectDb("MATCH (a:Person), (b:Person) WHERE a.PersonId = " + PersonAcceptedId.ToString() + " AND b.PersonId = " + PersonRequestedId.ToString() + " CREATE (a)-[r:IsFriendsWith]->(b)" + " RETURN a");
             // res2.Wait();
             return RedirectToAction(page, "Person");
