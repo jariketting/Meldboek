@@ -4,13 +4,6 @@
     <AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>
   </PropertyGroup>
   <ItemGroup>
-    <None Include="Views\Shared\Error.cshtml" />
-    <None Include="Views\Shared\Topbar_Sidenav.cshtml" />
-    <None Include="Views\Shared\_CookieConsentPartial.cshtml" />
-    <None Include="Views\Shared\_Layout.cshtml" />
-    <None Include="Views\Shared\_ValidationScriptsPartial.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.App">
       <PrivateAssets Condition="'%(PackageReference.Version)' == ''">all</PrivateAssets>
       <Publish Condition="'%(PackageReference.Version)' == ''">true</Publish>
