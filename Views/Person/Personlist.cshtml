@@ -101,6 +101,22 @@
                 text-decoration: none;
                 font-size: 20px;
             }
+
+            #add-accept-friend {
+            color: #00ff00;
+            }
+
+            #add-accept-friend:hover {
+                color: #b3ffb3;
+            }
+
+            #delete-deny-friend {
+                color: #ff0000;
+            }
+
+            #delete-deny-friend:hover {
+                color: #ffb3b3;
+            }
         </style>
     </head>
     <body>
@@ -155,22 +171,31 @@
 
                         @if (person.Status == "")
                         {
-                            <div class="person-options"><a href="@Url.Action("Friend", new { FriendId = person.Person.PersonId })" style="color: #00ff00;">Vriend toevoegen</a></div>
+                            <div class="person-options">
+                                <a id="add-accept-friend" href="@Url.Action("Friend", new { FriendId = person.Person.PersonId })">Vriend toevoegen</a>
+                            </div>
                         }
                     
                         @if (person.Status == "FriendPending")
                         {
-                            <div class="person-options"><a style="color: #0000ff;">In behandeling</a></div>
+                            <div class="person-options">
+                                <a style="color: #0000ff;">In behandeling</a>
+                            </div>
                         }
 
                         @if (person.Status == "FriendPendingRequest")
                         {
-                            <div class="person-options"><a href="@Url.Action("AcceptFriend", new { PersonRequestedId = person.Person.PersonId, PersonAcceptedId = 1, Page = "Personlist" })" style="color: #0000ff;">Verzoek accepteren</a></div>
+                            <div class="person-options" style="margin-top: 10px;">
+                                <a id="add-accept-friend" href="@Url.Action("AcceptFriend", new { PersonRequestedId = person.Person.PersonId, PersonAcceptedId = 1, Page = "Personlist" })">Verzoek accepteren</a>
+                                <a id="delete-deny-friend" href="#DenyFriend">Verzoek afwijzen</a>
+                            </div>
                         }
 
                         @if (person.Status == "IsFriendsWith")
                         {
-                            <div class="person-options"><a href="@Url.Action("DeleteFriend", new { FriendId = person.Person.PersonId, Page = @TempData["Page"] })" style="color: #ff0000;">Vriend verwijderen</a></div>
+                            <div class="person-options">
+                                <a id="delete-deny-friend" href="@Url.Action("DeleteFriend", new { FriendId = person.Person.PersonId, Page = @TempData["Page"] })">Vriend verwijderen</a>
+                            </div>
                         }
 
                     </div>
