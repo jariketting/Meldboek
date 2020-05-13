@@ -20,7 +20,7 @@ namespace meldboek.Controllers
             return View();
         }
 
-        public IActionResult ForumHome(string fid, string Title,string Content)
+        public IActionResult ForumHome(string fid, string Title,string Content,string del)
         {
             Person u = new PersonController().GetPerson(1);
 
@@ -48,6 +48,14 @@ namespace meldboek.Controllers
 
                         */
             /*    var fl = GetAllForums();*/
+            if (del != null)
+            {
+                CurrentForum = LoadForum(Convert.ToInt32(fid));
+                ViewBag.Forum = CurrentForum;
+
+                DeleteForum(CurrentForum);
+                return View();
+            }
             if (fid != null)
             {
                 CurrentForum = LoadForum(Convert.ToInt32(fid));
@@ -55,7 +63,7 @@ namespace meldboek.Controllers
  
                 Response.Redirect("Forum?id="+fid);
             }
-       if(Title != null)
+            if (Title != null)
             {
 
                 Forum forum = new Forum(GetNewForumId(), u, Title, Content);
@@ -63,20 +71,29 @@ namespace meldboek.Controllers
                 SaveForum(forum);
             }
 
+
             return View();
-
         }
-        
-  
 
-   
 
-        public IActionResult Forum(string Content, string fid)
+
+
+
+        public IActionResult Forum(string Content, string fid, string del)
         {
             int ForumId = Convert.ToInt32(fid);
             try
             {
+                if (del != null)
+                {
+
+
+                    DeleteForumItem(Convert.ToInt32(del));
+                }
                 ForumId = Convert.ToInt32(HttpContext.Request.Query["id"].ToString());
+
+
+                
             }
             catch (System.FormatException)
             { 
@@ -357,25 +374,25 @@ namespace meldboek.Controllers
         //Forums delete van de database
         public void DeleteForum(Forum forum)
         {
+            List<ForumItem> list = GetAllReplies(forum);
+            foreach (ForumItem forumItem in list)
+            {
+                var r = ConnectDb("MATCH(n: ForumItem) where n.ForumItemId = " + forumItem.ForumItemId + " DETACH DELETE n");
+                r.Wait();
+            }
+            var r2 = ConnectDb("MATCH(n: Forum) where n.ForumId = " + forum.ForumId + " DETACH DELETE n");
+            r2.Wait();
 
-            
+
         }
         //ForumItems delete van de database
-        public void DeleteForumItem(ForumItem forumItem)
+        public void DeleteForumItem(int forumItem)
         {
+
+            var r = ConnectDb("MATCH (n:ForumItem) WHERE n.ForumItemId = "+ forumItem + " SET n.Content = '(VERWIJDERD)' return n");
+            r.Wait();
 
             
-        }
-        //Forums Update van de database
-        public void UpdateForum(Forum forum)
-        {
-
-
-        }
-        //ForumItems Update van de database
-        public void UpdateForumItem(ForumItem forumItem)
-        {
-
 
         }
 

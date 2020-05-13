@@ -119,6 +119,20 @@
              text-align: center;
              position: absolute;
         }
+                        .delete-button {
+            display: block;
+            background-color: #ff5252;
+            padding: 10px;
+            border-radius: 20px;
+            width: 20px;
+            height: 20px;
+            text-align: center;
+            cursor: pointer;
+            color: #ffffff;
+            font-size: 20px;
+            text-decoration: none;
+            transition: 0.2s;
+        }
     </style>
     <script>
         function toggleCollapsible() {
@@ -177,6 +191,15 @@
                             </th>
                             <th align="right" width="20%" class="info">
                                 @forum.AantalReacties Reacties
+                            </th>
+                            <th align="right" width="3%" class="info">
+                                <form asp-action="ForumHome" method="post">
+                                    <input hidden type="text" value="@forum.ForumId" name=del id="del">
+                                    @if (forum.Owner.PersonId == 1)
+                                    {
+                                        <input href="@Url.Action("Forum", new { id = @forum.ForumId })" type="submit" value="&#10005" id="submit" class="delete-button">
+                                    }
+                                </form>
                             </th>
                         </tr>
                     </table>
