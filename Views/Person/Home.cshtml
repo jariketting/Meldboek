@@ -1,0 +1,100 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Home</title>
+    <link rel="stylesheet" type="text/css" href="~/css/Topbar_Sidenav.css">
+    <script type="text/javascript" src="~/js/site.js"></script>
+    <style>
+        body {
+            font-family: 'Trebuchet MS', sans-serif;
+            background-color: #ffffff;
+        }
+
+        .topbar {
+            background-color: #ffffff;
+        }
+
+        .content {
+            position: relative;
+            margin-top: 8%;
+        }
+
+        .options {
+            padding-left: 37%;
+        }
+
+        .button {
+            display: block;
+            width: 400px;
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 35px;
+            text-align: center;
+            border: none;
+            border-radius: 30px;
+            margin-bottom: 30px;
+            padding-top: 25px;
+            padding-bottom: 25px;
+            transition: 0.2s;
+        }
+
+        #newsfeed {
+            background-color: #3bb546;
+        }
+
+        #newsfeed:hover {
+            background-color: #9ee0a4;
+        }
+
+        #forums {
+            background-color: #ff3398;
+        }
+
+        #forums:hover {
+            background-color: #ffa1d0;
+        }
+
+        #chat {
+            background-color: #0085fe;
+        }
+
+        #chat:hover {
+            background-color: #9cd0ff;
+        }
+
+        #groups {
+            background-color: #ff5252;
+        }
+
+        #groups:hover {
+            background-color: #ffa6a6;
+        }
+
+        #personlist {
+            background-color: #e947ff;
+        }
+
+        #personlist:hover {
+            background-color: #f4a3ff;
+        }
+    </style>
+</head>
+<body>
+    <!-- Bar at the top of the page -->
+    <div class="topbar">
+
+        <!-- Account information button -->
+        <a href="#accountinfo"><img id="acc-icon" src="@Url.Content("~/Content/account.png")" /></a>
+    </div>
+    <div class="content">
+        <div class="options">
+            <a href="@Url.Action("Newsfeed")" class="button" id="newsfeed">Newsfeed</a>
+            <a href="@Url.Action("ForumHome","Forum")" class="button" id="forums">Forums</a>
+            <a href="/Chat/Index" class="button" id="chat">Chat</a>
+            <a href="@Url.Action("Groepen")" class="button" id="groups">Groepen</a>
+            <a href="@Url.Action("Personlist")" class="button" id="personlist">Gebruikers</a>
+        </div>
+    </div>
+    
+</body>
+</html>
