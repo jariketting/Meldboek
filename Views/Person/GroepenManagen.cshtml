@@ -6,30 +6,30 @@
     <link rel="stylesheet" type="text/css" href="~/css/Groepen.css">
 </head>
 <body>
-        <div class="topbar">    
-            <h1>Manage groepen</h1>
+<div class="topbar">    
+    <h1>Manage groepen</h1>
 </div>
        
 
-    <div id="AddPersonToGroup">
-        <a>Add Person to group</a> <br><br>
-        <form asp-action="AddPersonToGroup" method="post">
-   <a> Person id:</a><br>
-  <input type="string" required name = PersonId id="PersonId"><br>
+<div id="AddPersonToGroup">
+    <a>Persoon toevoegen aan groep</a> <br><br>
+    <form asp-action="AddPersonToGroup" method="post">
+    <a> Person id:</a><br>
+    <input type="string" required name = PersonId id="PersonId"><br>
     <a>Group id:</a><br>
-  <input type="string" required name = groupId id="groupId"><br>
-  <input type="submit" value = "Submit" id="submit">
-        </form>
-    </div>
-        <div id="AddPersonToGroup">
-        <a>Delete Person from group</a> <br><br>
-        <form asp-action="DeletePersonFromGroup" method="post">
-   <a> Person id:</a><br>
-  <input type="string" required name = PersonId id="PersonId"><br>
+    <input type="string" required name = groupId id="groupId"><br>
+    <input type="submit" value = "Submit" id="submit">
+    </form>
+</div>
+<div id="AddPersonToGroup">
+    <a>Persoon uit groep verwijderen</a> <br><br>
+    <form asp-action="DeletePersonFromGroup" method="post">
+    <a> Person id:</a><br>
+    <input type="string" required name = PersonId id="PersonId"><br>
     <a>Group id:</a><br>
-  <input type="string" required name = groupId id="groupId"><br>
-  <input type="submit" value = "Submit" id="submit">
-        </form>
-    </div>
+    <input type="string" required name = groupId id="groupId"><br>
+    <input type="submit" value = "Submit" id="submit">
+    </form>
+</div>
 </body>
 </html>
