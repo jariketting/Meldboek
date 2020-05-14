@@ -66,7 +66,7 @@ namespace meldboek.Controllers
             if (Title != null)
             {
 
-                Forum forum = new Forum(GetNewForumId(), u, Title, Content);
+                Forum forum = new Forum(GetNewForumId(), u, Title, Content,DateTime.Now);
 
                 SaveForum(forum);
             }
@@ -151,11 +151,12 @@ namespace meldboek.Controllers
                 string title = (string)result.Properties["Title"];
                 string content = (string)result.Properties["Content"];
                 int forumId = Convert.ToInt32((Int64)result.Properties["ForumId"]);
-               
+                DateTime LastEdit = Convert.ToDateTime(result.Properties["LastEdit"]);
 
 
 
-            var r2 = ConnectDb("MATCH (p:Person)-[Made]-(n:Forum) WHERE n.ForumId=" + forumId + " RETURN p");
+
+                var r2 = ConnectDb("MATCH (p:Person)-[Made]-(n:Forum) WHERE n.ForumId=" + forumId + " RETURN p");
                 r2.Wait();
                 Person owner = new Person();
                 nodeList = r2.Result;
@@ -164,7 +165,7 @@ namespace meldboek.Controllers
                     var nodeprops = JsonConvert.SerializeObject(record.As<INode>().Properties);
                     owner = (JsonConvert.DeserializeObject<Person>(nodeprops));
                 }
-                Forum f = new Forum(forumId, owner, title, content);
+                Forum f = new Forum(forumId, owner, title, content, LastEdit);
                 FL.Add(f);
 
             }
@@ -247,12 +248,13 @@ namespace meldboek.Controllers
 
             string title = (string)r.Result[0].Properties["Title"];
             string content = (string)r.Result[0].Properties["Content"];
-
-            
-
+            DateTime LastEdit = Convert.ToDateTime(r.Result[0].Properties["LastEdit"]);
 
 
-            return new Forum(forumId, owner, title, content); 
+
+
+
+            return new Forum(forumId, owner, title, content, LastEdit); 
         }
        
         //ForumItems laden van de database voor reply of forum
@@ -467,7 +469,7 @@ namespace meldboek.Controllers
 
         public async Task<List<INode>> ConnectDb(string query)
         {
-            Driver = CreateDriverWithBasicAuth("bolt://localhost:11003", "neo4j", "1234");
+            Driver = CreateDriverWithBasicAuth("bolt://localhost:7687", "neo4j", "1234");
             List<INode> res = new List<INode>();
             IAsyncSession session = Driver.AsyncSession(o => o.WithDatabase("neo4j"));
 
