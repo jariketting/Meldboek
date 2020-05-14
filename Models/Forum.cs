@@ -25,7 +25,14 @@ namespace meldboek.Models
             Owner = owner;
             Title = title;
             Content = content;
-            lastEdit = DateTime.Now;
+        }
+        public Forum(int forumId, Person owner, string title, string content, DateTime LastEdit)
+        {
+            ForumId = forumId;
+            Owner = owner;
+            Title = title;
+            Content = content;
+            lastEdit = LastEdit;
         }
 
         //lege constructor
