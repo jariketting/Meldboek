@@ -13,12 +13,12 @@ namespace AspNetCore
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Rendering;
     using Microsoft.AspNetCore.Mvc.ViewFeatures;
-#line 1 "/Users/yaseminsnoek/Documents/Inf jaar 2/Project D/meldboek/Views/_ViewImports.cshtml"
+#line 1 "C:\Users\amyno\Documents\meldboek\Views\_ViewImports.cshtml"
 using meldboek;
 
 #line default
 #line hidden
-#line 2 "/Users/yaseminsnoek/Documents/Inf jaar 2/Project D/meldboek/Views/_ViewImports.cshtml"
+#line 2 "C:\Users\amyno\Documents\meldboek\Views\_ViewImports.cshtml"
 using meldboek.Models;
 
 #line default
@@ -29,7 +29,9 @@ using meldboek.Models;
     {
         private static readonly global::Microsoft.AspNetCore.Razor.TagHelpers.TagHelperAttribute __tagHelperAttribute_0 = new global::Microsoft.AspNetCore.Razor.TagHelpers.TagHelperAttribute("rel", new global::Microsoft.AspNetCore.Html.HtmlString("stylesheet"), global::Microsoft.AspNetCore.Razor.TagHelpers.HtmlAttributeValueStyle.DoubleQuotes);
         private static readonly global::Microsoft.AspNetCore.Razor.TagHelpers.TagHelperAttribute __tagHelperAttribute_1 = new global::Microsoft.AspNetCore.Razor.TagHelpers.TagHelperAttribute("type", new global::Microsoft.AspNetCore.Html.HtmlString("text/css"), global::Microsoft.AspNetCore.Razor.TagHelpers.HtmlAttributeValueStyle.DoubleQuotes);
-        private static readonly global::Microsoft.AspNetCore.Razor.TagHelpers.TagHelperAttribute __tagHelperAttribute_2 = new global::Microsoft.AspNetCore.Razor.TagHelpers.TagHelperAttribute("href", new global::Microsoft.AspNetCore.Html.HtmlString("~/css/Groepen.css"), global::Microsoft.AspNetCore.Razor.TagHelpers.HtmlAttributeValueStyle.DoubleQuotes);
+        private static readonly global::Microsoft.AspNetCore.Razor.TagHelpers.TagHelperAttribute __tagHelperAttribute_2 = new global::Microsoft.AspNetCore.Razor.TagHelpers.TagHelperAttribute("href", new global::Microsoft.AspNetCore.Html.HtmlString("~/css/Topbar_Sidenav.css"), global::Microsoft.AspNetCore.Razor.TagHelpers.HtmlAttributeValueStyle.DoubleQuotes);
+        private static readonly global::Microsoft.AspNetCore.Razor.TagHelpers.TagHelperAttribute __tagHelperAttribute_3 = new global::Microsoft.AspNetCore.Razor.TagHelpers.TagHelperAttribute("type", new global::Microsoft.AspNetCore.Html.HtmlString("text/javascript"), global::Microsoft.AspNetCore.Razor.TagHelpers.HtmlAttributeValueStyle.DoubleQuotes);
+        private static readonly global::Microsoft.AspNetCore.Razor.TagHelpers.TagHelperAttribute __tagHelperAttribute_4 = new global::Microsoft.AspNetCore.Razor.TagHelpers.TagHelperAttribute("src", new global::Microsoft.AspNetCore.Html.HtmlString("~/js/site.js"), global::Microsoft.AspNetCore.Razor.TagHelpers.HtmlAttributeValueStyle.DoubleQuotes);
         #line hidden
         #pragma warning disable 0169
         private string __tagHelperStringValueBuffer;
@@ -54,8 +56,14 @@ using meldboek.Models;
         #pragma warning disable 1998
         public async override global::System.Threading.Tasks.Task ExecuteAsync()
         {
-            BeginContext(35, 25, true);
-            WriteLiteral("\n<!DOCTYPE html>\n\n<html>\n");
+#line 1 "C:\Users\amyno\Documents\meldboek\Views\Person\Profile.cshtml"
+  
+    ViewData["Title"] = "Profiel";
+
+#line default
+#line hidden
+            BeginContext(43, 2, true);
+            WriteLiteral("\r\n");
             EndContext();
             BeginContext(60, 88, false);
             __tagHelperExecutionContext = __tagHelperScopeManager.Begin("head", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "362860ae8c83e93eba6127fa6d0c07b6ed5fa5dc4551", async() => {
@@ -79,8 +87,27 @@ using meldboek.Models;
                 Write(__tagHelperExecutionContext.Output);
                 __tagHelperExecutionContext = __tagHelperScopeManager.End();
                 EndContext();
-                BeginContext(140, 1, true);
-                WriteLiteral("\n");
+                BeginContext(201, 10, true);
+                WriteLiteral("\r\n        ");
+                EndContext();
+                BeginContext(211, 59, false);
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("script", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "fdb14cea7c409d059a331bc8e08ccdab54e747f27319", async() => {
+                }
+                );
+                __Microsoft_AspNetCore_Mvc_Razor_TagHelpers_UrlResolutionTagHelper = CreateTagHelper<global::Microsoft.AspNetCore.Mvc.Razor.TagHelpers.UrlResolutionTagHelper>();
+                __tagHelperExecutionContext.Add(__Microsoft_AspNetCore_Mvc_Razor_TagHelpers_UrlResolutionTagHelper);
+                __tagHelperExecutionContext.AddHtmlAttribute(__tagHelperAttribute_3);
+                __tagHelperExecutionContext.AddHtmlAttribute(__tagHelperAttribute_4);
+                await __tagHelperRunner.RunAsync(__tagHelperExecutionContext);
+                if (!__tagHelperExecutionContext.Output.IsContentModified)
+                {
+                    await __tagHelperExecutionContext.SetOutputContentAsync();
+                }
+                Write(__tagHelperExecutionContext.Output);
+                __tagHelperExecutionContext = __tagHelperScopeManager.End();
+                EndContext();
+                BeginContext(270, 6, true);
+                WriteLiteral("\r\n    ");
                 EndContext();
             }
             );
@@ -94,88 +121,157 @@ using meldboek.Models;
             Write(__tagHelperExecutionContext.Output);
             __tagHelperExecutionContext = __tagHelperScopeManager.End();
             EndContext();
-            BeginContext(148, 1408, true);
+            BeginContext(283, 2396, true);
             WriteLiteral(@"
-<style>
-    h2{
-        padding-top: 200px;
-        font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-    }
-    body{
-                font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    <style>
+        .topbar {
+            background-color: orange;
+        }
 
-    }
-    .info{
-                font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-                padding-top: 150px;
-    }
-    .personlist-content {
+        .navbtn {
+            background-color: orange;
+        }
+
+        .overlay {
+            background-color: orange;
+        }
+
+        .overlay a:hover, .overlay a:focus, .logout a:hover, .logout a:focus {
+            color: #ffe4b3;
+        }
+
+        body {
+            font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+
+        }
+
+        .profile-content {
+            margin-left: 10%;
+            padding-bottom: 10%;
+        }
+
+        .info h1 {
+            font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+            color: orange;
+            font-size: 26px;
+            font-weight: bold;
+            padding-top: 150px;
+        }
+
+        .info h2 {
+            padding-top: 10px;
+            color: #000000;
+            font-size: 22px;
+        }
+
+        .personlist-cont");
+            WriteLiteral(@"ent {
             width: 100%;
             overflow: hidden;
             padding-top: 100px;
             padding-bottom: 50px;
         }
-                /* Persons list */
-    .person-list {
+    
+        /* Persons list */
+        .person-list {
             padding-top: 40px;
-            margin-left: 340px;
         }
+
+        .person-list h1 {
+            color: orange;
+            font-size: 24px;
+        }
+
         /* Single person */
-    .person {
+        .person {
             width: 90%;
             overflow: hidden;
             border-bottom: 1px solid orange;
         }
+
         /* Person content consists of name (h1) and friend/unfriend options (a). */
-    .person-content {
-            f");
-            WriteLiteral(@"loat: lrgb(24, 16, 0)
+        .person-content {
+            float: left;
             width: 80%;
         }
-    .person-content h1 {
+
+        .person-content h1 {
+            color: #000000;
             font-size: 22px;
             padding-bottom: 10px;
             padding-top: 20px;
         }
-    .person-options {
+
+        .person-options {
             margin-top: 20px;
             margin-left: 83%;
         }
-    .person-options a {
+
+        .person-options a {
             text-decoration: none;
-            font-size: 20px;
+     ");
+            WriteLiteral(@"       font-size: 20px;
         }
-</style>
-");
+
+        #accept-friend {
+            color: #00ff00;
+        }
+
+        #accept-friend:hover {
+            color: #b3ffb3;
+        }
+
+        #deny-delete-friend {
+            color: #ff0000;
+        }
+
+        #deny-delete-friend:hover {
+            color: #ffb3b3;
+        }
+    </style>
+    ");
             EndContext();
             BeginContext(1556, 1559, false);
             __tagHelperExecutionContext = __tagHelperScopeManager.Begin("body", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "362860ae8c83e93eba6127fa6d0c07b6ed5fa5dc8554", async() => {
                 BeginContext(1562, 121, true);
                 WriteLiteral("\n<div class=\"topbar\">    \n            <h1>Profiel</h1>\n</div> \n<div class=\"info\">\n    <h1>Info</h1>\n            <p>Naam: ");
                 EndContext();
-                BeginContext(1684, 10, false);
-#line 65 "/Users/yaseminsnoek/Documents/Inf jaar 2/Project D/meldboek/Views/Person/Profile.cshtml"
-                Write(Model.Name);
+                BeginWriteAttribute("src", " src=\"", 2991, "\"", 3034, 1);
+#line 128 "C:\Users\amyno\Documents\meldboek\Views\Person\Profile.cshtml"
+WriteAttributeValue("", 2997, Url.Content("~/Content/account.png"), 2997, 37, false);
 
 #line default
 #line hidden
+                EndWriteAttribute();
+                BeginContext(3035, 162, true);
+                WriteLiteral("/></a>\r\n        </div>\r\n\r\n        <!-- Sidemenu overlay -->\r\n        <div id=\"nav\" class=\"overlay\">\r\n            <div class=\"overlay-content\">\r\n                <a");
                 EndContext();
-                BeginContext(1694, 27, true);
-                WriteLiteral("</p>\n            <p>Email: ");
-                EndContext();
-                BeginContext(1722, 11, false);
-#line 66 "/Users/yaseminsnoek/Documents/Inf jaar 2/Project D/meldboek/Views/Person/Profile.cshtml"
-                 Write(Model.Email);
+                BeginWriteAttribute("href", " href=\"", 3197, "\"", 3227, 1);
+#line 134 "C:\Users\amyno\Documents\meldboek\Views\Person\Profile.cshtml"
+WriteAttributeValue("", 3204, Url.Action("Newsfeed"), 3204, 23, false);
 
 #line default
 #line hidden
+                EndWriteAttribute();
+                BeginContext(3228, 55, true);
+                WriteLiteral(">Newsfeed</a>\r\n                <br>\r\n                <a");
+                EndContext();
+                BeginWriteAttribute("href", " href=\"", 3283, "\"", 3322, 1);
+#line 136 "C:\Users\amyno\Documents\meldboek\Views\Person\Profile.cshtml"
+WriteAttributeValue("", 3290, Url.Action("ForumHome","Forum"), 3290, 32, false);
+
+#line default
+#line hidden
+                EndWriteAttribute();
+                BeginContext(3323, 133, true);
+                WriteLiteral(">Forums</a>\r\n                <br>\r\n                <a onclick=\"nav()\" href=\"#chat\">Chat</a>\r\n                <br>\r\n                <a");
                 EndContext();
                 BeginContext(1733, 30, true);
                 WriteLiteral("</p>\n</div>\n<h1>Vrienden</h1>\n");
                 EndContext();
-#line 69 "/Users/yaseminsnoek/Documents/Inf jaar 2/Project D/meldboek/Views/Person/Profile.cshtml"
-             foreach (var person in Model.PersonInfos)
-            {
+                BeginWriteAttribute("href", " href=\"", 3540, "\"", 3572, 1);
+#line 142 "C:\Users\amyno\Documents\meldboek\Views\Person\Profile.cshtml"
+WriteAttributeValue("", 3547, Url.Action("Personlist"), 3547, 25, false);
 
 #line default
 #line hidden
@@ -202,26 +298,31 @@ using meldboek.Models;
                 BeginContext(1994, 54, true);
                 WriteLiteral("</h1>\n                    </div>\n                    \n");
                 EndContext();
-#line 76 "/Users/yaseminsnoek/Documents/Inf jaar 2/Project D/meldboek/Views/Person/Profile.cshtml"
-                     if (person.Status == "FriendPending")
-                    {
+#line 157 "C:\Users\amyno\Documents\meldboek\Views\Person\Profile.cshtml"
+                 foreach (var person in Model.PersonInfos)
+                 {
+                        
 
 #line default
 #line hidden
                 BeginContext(2129, 104, true);
                 WriteLiteral("                        <div class=\"person-options\"><a style=\"color: #0000ff;\">In behandeling</a></div>\n");
                 EndContext();
-#line 79 "/Users/yaseminsnoek/Documents/Inf jaar 2/Project D/meldboek/Views/Person/Profile.cshtml"
-                    }
+                BeginContext(4328, 23, false);
+#line 163 "C:\Users\amyno\Documents\meldboek\Views\Person\Profile.cshtml"
+                                   Write(person.Person.FirstName);
 
 #line default
 #line hidden
                 BeginContext(2255, 1, true);
                 WriteLiteral("\n");
                 EndContext();
-#line 81 "/Users/yaseminsnoek/Documents/Inf jaar 2/Project D/meldboek/Views/Person/Profile.cshtml"
-                     if (person.Status == "IsFriendsWith")
-                    {
+                BeginContext(4351, 1, true);
+                WriteLiteral(" ");
+                EndContext();
+                BeginContext(4353, 22, false);
+#line 163 "C:\Users\amyno\Documents\meldboek\Views\Person\Profile.cshtml"
+                                                            Write(person.Person.LastName);
 
 #line default
 #line hidden
@@ -238,17 +339,18 @@ WriteAttributeValue("", 2427, Url.Action("DeleteFriendProfile", "Person", new { 
                 BeginContext(2543, 83, true);
                 WriteLiteral(" style=\"color: #ff0000;\">Vriend verwijderen</a>\n                            </div>\n");
                 EndContext();
-#line 86 "/Users/yaseminsnoek/Documents/Inf jaar 2/Project D/meldboek/Views/Person/Profile.cshtml"
-                    }
+#line 169 "C:\Users\amyno\Documents\meldboek\Views\Person\Profile.cshtml"
+                         }
 
 #line default
 #line hidden
                 BeginContext(2648, 20, true);
                 WriteLiteral("                    ");
                 EndContext();
-#line 87 "/Users/yaseminsnoek/Documents/Inf jaar 2/Project D/meldboek/Views/Person/Profile.cshtml"
-                     if (person.Status == "requested")
-                    {
+#line 175 "C:\Users\amyno\Documents\meldboek\Views\Person\Profile.cshtml"
+                     foreach (var person in Model.PersonInfos)
+                     {
+                        
 
 #line default
 #line hidden
@@ -261,25 +363,81 @@ WriteAttributeValue("", 2815, Url.Action("AcceptFriend", "Person", new { PersonR
 
 #line default
 #line hidden
+                EndContext();
+                BeginContext(5289, 1, true);
+                WriteLiteral(" ");
+                EndContext();
+                BeginContext(5291, 22, false);
+#line 181 "C:\Users\amyno\Documents\meldboek\Views\Person\Profile.cshtml"
+                                                            Write(person.Person.LastName);
+
+#line default
+#line hidden
+                EndContext();
+                BeginContext(5313, 192, true);
+                WriteLiteral("</h1>\r\n                                </div>\r\n                                <div class=\"person-options\" style=\"margin-top: 10px;\">\r\n                                    <a id=\"accept-friend\"");
+                EndContext();
+                BeginWriteAttribute("href", " href=\"", 5505, "\"", 5655, 1);
+#line 184 "C:\Users\amyno\Documents\meldboek\Views\Person\Profile.cshtml"
+WriteAttributeValue("", 5512, Url.Action("AcceptFriend", "Person", new { PersonRequestedId = person.Person.PersonId, PersonAcceptedId = @Model.PersonId, page = "Profile" }), 5512, 143, false);
+
+#line default
+#line hidden
                 EndWriteAttribute();
                 BeginContext(2941, 82, true);
                 WriteLiteral(" style=\"color: #ff0000;\">Vriend accepteren</a>\n                            </div>\n");
                 EndContext();
-#line 92 "/Users/yaseminsnoek/Documents/Inf jaar 2/Project D/meldboek/Views/Person/Profile.cshtml"
-                    }
+#line 188 "C:\Users\amyno\Documents\meldboek\Views\Person\Profile.cshtml"
+                         }
 
 #line default
 #line hidden
                 BeginContext(3045, 24, true);
                 WriteLiteral("\n                </div>\n");
                 EndContext();
-#line 95 "/Users/yaseminsnoek/Documents/Inf jaar 2/Project D/meldboek/Views/Person/Profile.cshtml"
-            }
+#line 194 "C:\Users\amyno\Documents\meldboek\Views\Person\Profile.cshtml"
+                     foreach (var person in Model.PersonInfos)
+                     {
+                        
 
 #line default
 #line hidden
                 BeginContext(3083, 25, true);
                 WriteLiteral("\n        </div>\n       \n ");
+                EndContext();
+                BeginContext(6364, 23, false);
+#line 200 "C:\Users\amyno\Documents\meldboek\Views\Person\Profile.cshtml"
+                                   Write(person.Person.FirstName);
+
+#line default
+#line hidden
+                EndContext();
+                BeginContext(6387, 1, true);
+                WriteLiteral(" ");
+                EndContext();
+                BeginContext(6389, 22, false);
+#line 200 "C:\Users\amyno\Documents\meldboek\Views\Person\Profile.cshtml"
+                                                            Write(person.Person.LastName);
+
+#line default
+#line hidden
+                EndContext();
+                BeginContext(6411, 196, true);
+                WriteLiteral("</h1>\r\n                                </div>\r\n                                <div class=\"person-options\"><a style=\"color: #0000ff;\">In behandeling</a></div>\r\n                            </div>\r\n");
+                EndContext();
+#line 204 "C:\Users\amyno\Documents\meldboek\Views\Person\Profile.cshtml"
+                         }
+
+#line default
+#line hidden
+#line 204 "C:\Users\amyno\Documents\meldboek\Views\Person\Profile.cshtml"
+                          
+                     }
+
+#line default
+#line hidden
+                BeginContext(6659, 44, true);
+                WriteLiteral("            </div>\r\n\r\n        </div>\r\n\r\n    ");
                 EndContext();
             }
             );
