@@ -2961,6 +2961,11 @@
   "RootNamespace": "meldboek",
   "Documents": [
     {
+      "FilePath": "/Users/yaseminsnoek/Documents/Inf jaar 2/Project D/meldboek/Views/Person/Groepen.cshtml",
+      "TargetPath": "Views\\Person\\Groepen.cshtml",
+      "FileKind": "mvc"
+    },
+    {
       "FilePath": "/Users/yaseminsnoek/Documents/Inf jaar 2/Project D/meldboek/Views/_ViewImports.cshtml",
       "TargetPath": "Views\\_ViewImports.cshtml",
       "FileKind": "mvc"
@@ -2971,8 +2976,8 @@
       "FileKind": "mvc"
     },
     {
-      "FilePath": "/Users/yaseminsnoek/Documents/Inf jaar 2/Project D/meldboek/Views/User/CreateAccount.cshtml",
-      "TargetPath": "Views\\User\\CreateAccount.cshtml",
+      "FilePath": "/Users/yaseminsnoek/Documents/Inf jaar 2/Project D/meldboek/Views/Person/Profile.cshtml",
+      "TargetPath": "Views\\Person\\Profile.cshtml",
       "FileKind": "mvc"
     },
     {
@@ -2991,8 +2996,23 @@
       "FileKind": "mvc"
     },
     {
+      "FilePath": "/Users/yaseminsnoek/Documents/Inf jaar 2/Project D/meldboek/Views/Shared/Topbar_Sidenav.cshtml",
+      "TargetPath": "Views\\Shared\\Topbar_Sidenav.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "/Users/yaseminsnoek/Documents/Inf jaar 2/Project D/meldboek/Views/Person/Login.cshtml",
+      "TargetPath": "Views\\Person\\Login.cshtml",
+      "FileKind": "mvc"
+    },
+    {
       "FilePath": "/Users/yaseminsnoek/Documents/Inf jaar 2/Project D/meldboek/Views/Shared/_CookieConsentPartial.cshtml",
       "TargetPath": "Views\\Shared\\_CookieConsentPartial.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "/Users/yaseminsnoek/Documents/Inf jaar 2/Project D/meldboek/Views/Person/Home.cshtml",
+      "TargetPath": "Views\\Person\\Home.cshtml",
       "FileKind": "mvc"
     },
     {
@@ -3001,8 +3021,23 @@
       "FileKind": "mvc"
     },
     {
-      "FilePath": "/Users/yaseminsnoek/Documents/Inf jaar 2/Project D/meldboek/Views/User/Newsfeed.cshtml",
-      "TargetPath": "Views\\User\\Newsfeed.cshtml",
+      "FilePath": "/Users/yaseminsnoek/Documents/Inf jaar 2/Project D/meldboek/Views/Forum/Forum.cshtml",
+      "TargetPath": "Views\\Forum\\Forum.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "/Users/yaseminsnoek/Documents/Inf jaar 2/Project D/meldboek/Views/Forum/ForumHome.cshtml",
+      "TargetPath": "Views\\Forum\\ForumHome.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "/Users/yaseminsnoek/Documents/Inf jaar 2/Project D/meldboek/Views/Person/Personlist.cshtml",
+      "TargetPath": "Views\\Person\\Personlist.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "/Users/yaseminsnoek/Documents/Inf jaar 2/Project D/meldboek/Views/Person/CreateAccount.cshtml",
+      "TargetPath": "Views\\Person\\CreateAccount.cshtml",
       "FileKind": "mvc"
     },
     {
@@ -3011,8 +3046,28 @@
       "FileKind": "mvc"
     },
     {
+      "FilePath": "/Users/yaseminsnoek/Documents/Inf jaar 2/Project D/meldboek/Views/Person/GroepenManagen.cshtml",
+      "TargetPath": "Views\\Person\\GroepenManagen.cshtml",
+      "FileKind": "mvc"
+    },
+    {
       "FilePath": "/Users/yaseminsnoek/Documents/Inf jaar 2/Project D/meldboek/Views/Shared/_ValidationScriptsPartial.cshtml",
       "TargetPath": "Views\\Shared\\_ValidationScriptsPartial.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "/Users/yaseminsnoek/Documents/Inf jaar 2/Project D/meldboek/Views/Person/Newsfeed.cshtml",
+      "TargetPath": "Views\\Person\\Newsfeed.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "/Users/yaseminsnoek/Documents/Inf jaar 2/Project D/meldboek/Views/Chat/room.cshtml",
+      "TargetPath": "Views\\Chat\\room.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "/Users/yaseminsnoek/Documents/Inf jaar 2/Project D/meldboek/Views/Chat/Index.cshtml",
+      "TargetPath": "Views\\Chat\\Index.cshtml",
       "FileKind": "mvc"
     }
   ],
