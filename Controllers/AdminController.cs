@@ -1,12 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
+using System.Threading;
 using System.Threading.Tasks;
-
+using IdentityModel;
 using meldboek.Models;
 using Microsoft.AspNetCore.Mvc;
 using Neo4j.Driver;
 using Newtonsoft.Json;
+using Remotion.Linq.Clauses.ResultOperators;
 
 namespace meldboek.Controllers
 {
@@ -58,6 +61,18 @@ namespace meldboek.Controllers
 
             }
 
+            //var a =  (ClaimsPrincipal)Thread.CurrentPrincipal;
+            //  // var naaam = Microsoft.AspNet.Identity.Claims.Where(c => c.Type == ClaimTypes.Name);
+            //  string UserId;
+            //  foreach (var v in a.Identities)
+            //  {
+            //      UserId = v.Name;
+            //  }
+            //var USerID = Thread.CurrentPrincipal?.Identity.Name;
+
+            //var username = User.Claims.First(x => x.Type == ClaimTypes.NameIdentifier).Value;
+
+            Person p = ClaimsController.Instance.GetClaim();
 
             return View();
 
