@@ -1,5 +1,5 @@
 ﻿@{
-    ViewData["Title"] = "Groepen managen";
+    ViewData["Title"] = "Groepen beheren";
 }
 
 @model meldboek.Models.Person
@@ -8,12 +8,25 @@
 <html>
 <head>
     <link rel="stylesheet" type="text/css" href="~/css/Groepen.css">
+    <style>
+        #create-groups {
+            text-decoration: none;
+            color: #0000ff;
+            font-size: 22px;
+            transition: 0.2s;
+        }
+
+        #create-groups:hover {
+            color: #b3b3ff;
+        }
+    </style>
 </head>
 <body>
     <div class="topbar">
-        <h1>Manage groepen</h1>
+        <h1>Beheer groepen</h1>
     </div>
 
+    <a id="create-groups" href="@Url.Action("CreateGroups", "Admin")">Groep maken &#8594;</a>
 
     <div id="AddPersonToGroup">
         <a>Add Person to group</a> <br><br>

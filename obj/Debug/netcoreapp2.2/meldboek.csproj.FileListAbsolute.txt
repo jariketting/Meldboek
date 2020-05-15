@@ -305,3 +305,4 @@ C:\Users\amyno\Documents\meldboek\obj\Debug\netcoreapp2.2\Razor\Views\Person\Per
 C:\Users\amyno\Documents\meldboek\obj\Debug\netcoreapp2.2\Razor\Views\Person\Profile.cshtml.g.cs
 C:\Users\amyno\Documents\meldboek\obj\Debug\netcoreapp2.2\Razor\Views\Person\GroepenManagen.cshtml.g.cs
 C:\Users\amyno\Documents\meldboek\obj\Debug\netcoreapp2.2\meldboek.csprojAssemblyReference.cache
+C:\Users\amyno\Documents\meldboek\obj\Debug\netcoreapp2.2\Razor\Views\Admin\CreateGroups.cshtml.g.cs
