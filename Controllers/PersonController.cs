@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Web;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -14,6 +15,7 @@ using System.Dynamic;
 using System.Xml;
 using meldboek.ViewModels;
 using System.Globalization;
+using Microsoft.AspNetCore.Http;
 
 namespace meldboek.Controllers
 {
@@ -30,6 +32,51 @@ namespace meldboek.Controllers
         public IActionResult GroepenManagen()
         {
             return View();
+        }
+        public IActionResult AddFile()
+        {
+            return View();
+        }
+        [HttpPost]
+        public async Task<IActionResult> FileUpload(IFormFile file, int NewspostId)
+        {
+            //would do Newspost post and then post.postid later
+
+            //get person logged in but for now just person 1 or even post.creator
+            Person person = GetPerson(1);
+
+            var folder = "/Users/yaseminsnoek/Library/Application Support/Neo4j Desktop/Application/neo4jDatabases/database-35932c80-623d-4c95-b045-447e246bf8bf/installation-4.0.1/import/" + person.PersonId.ToString() + "/" + NewspostId.ToString();
+            if (!System.IO.Directory.Exists(folder))
+            {
+                System.IO.Directory.CreateDirectory(folder);
+            }
+            if (file.Length > 0)
+            {
+
+                var filename = file.FileName + person.PersonId.ToString();
+
+
+                var path = "/Users/yaseminsnoek/Library/Application Support/Neo4j Desktop/Application/neo4jDatabases/database-35932c80-623d-4c95-b045-447e246bf8bf/installation-4.0.1/import/" + person.PersonId.ToString() + "/" + NewspostId.ToString() + "/" + filename;
+
+                using (var stream = System.IO.File.Create(path))
+                {
+                    await file.CopyToAsync(stream);
+                }
+
+            }
+            //just to test
+
+            return RedirectToAction("AddFile");
+        }
+        [HttpGet("download")]
+        public IActionResult GetDownload(string link)
+        {
+            //not done yet
+            var net = new System.Net.WebClient();
+            var data = net.DownloadData(link);
+            var content = new System.IO.MemoryStream(data);
+            var contentType = "APPLICATION/octet-stream";
+            return File(content, contentType);
         }
 
         [Route("Person/Profile")]

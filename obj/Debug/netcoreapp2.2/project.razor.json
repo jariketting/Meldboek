@@ -3061,6 +3061,11 @@
       "FileKind": "mvc"
     },
     {
+      "FilePath": "/Users/yaseminsnoek/Documents/Inf jaar 2/Project D/meldboek/Views/Person/AddFile.cshtml",
+      "TargetPath": "Views\\Person\\AddFile.cshtml",
+      "FileKind": "mvc"
+    },
+    {
       "FilePath": "/Users/yaseminsnoek/Documents/Inf jaar 2/Project D/meldboek/Views/Chat/room.cshtml",
       "TargetPath": "Views\\Chat\\room.cshtml",
       "FileKind": "mvc"

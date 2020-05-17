@@ -321,3 +321,4 @@ C:/Users/amyno/Documents/meldboek/obj/Debug/netcoreapp2.2/meldboek.csprojAssembl
 /Users/yaseminsnoek/Documents/Inf jaar 2/Project D/meldboek/obj/Debug/netcoreapp2.2/Razor/Views/_ViewImports.cshtml.g.cs
 /Users/yaseminsnoek/Documents/Inf jaar 2/Project D/meldboek/obj/Debug/netcoreapp2.2/Razor/Views/_ViewStart.cshtml.g.cs
 /Users/yaseminsnoek/Documents/Inf jaar 2/Project D/meldboek/obj/Debug/netcoreapp2.2/meldboek.genruntimeconfig.cache
+/Users/yaseminsnoek/Documents/Inf jaar 2/Project D/meldboek/obj/Debug/netcoreapp2.2/Razor/Views/Person/AddFile.cshtml.g.cs
