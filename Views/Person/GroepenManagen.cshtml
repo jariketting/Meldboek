@@ -7,7 +7,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <link rel="stylesheet" type="text/css" href="~/css/Groepen.css">
+    <link rel="stylesheet" type="text/css" href="~/css/Topbar_Sidenav.css">
     <style>
         #create-groups {
             text-decoration: none;
@@ -19,34 +19,104 @@
         #create-groups:hover {
             color: #b3b3ff;
         }
+
+        #AddPersonToGroup {
+            /* width: 320px; */
+            padding: 10px;
+            border: 2px solid red;
+            margin: 10px;
+            margin-top: 50px;
+        }
+
+        body {
+            font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+            "Lucida Sans", Arial, sans-serif;
+        }
+
+        a {
+            font-size: 18px;
+            padding: 10px;
+            font-family: "Trebuchet MS", sans-serif;
+        }
+
+        input[type="submit"] {
+            font-family: "Trebuchet MS", sans-serif;
+            background-color: orange;
+            color: white;
+            font-size: 18px;
+            border-radius: 25px;
+            padding: 10px 15px;
+            border: none;
+            cursor: pointer;
+        }
+
+        .topbar {
+            background-color: orange;
+        }
+
+        .navbtn {
+            background-color: orange;
+        }
+
+        .overlay {
+            background-color: orange; 
+        }
+
+        .overlay a:hover, .overlay a:focus, .logout a:hover, .logout a:focus {
+            color: #ffe4b3;
+        }
+
+        .content {
+            padding-top: 100px;
+            padding-left: 20px;
+            width: 90%;
+        }
     </style>
 </head>
 <body>
     <div class="topbar">
+        <span class="navbtn" onclick="nav()">&#9776; </span>
         <h1>Beheer groepen</h1>
+        <a href="@Url.Action("Profile")"><img id="acc-icon" src="@Url.Content("~/Content/account.png")" /></a>
     </div>
 
-    <a id="create-groups" href="@Url.Action("CreateGroups", "Admin")">Groep maken &#8594;</a>
-
-    <div id="AddPersonToGroup">
-        <a>Add Person to group</a> <br><br>
-        <form asp-action="AddPersonToGroup" method="post">
-            <a> Person id:</a><br>
-            <input type="string" required name=PersonId id="PersonId"><br>
-            <a>Group id:</a><br>
-            <input type="string" required name=groupId id="groupId"><br>
-            <input type="submit" value="Submit" id="submit">
-        </form>
+    <div id="nav" class="overlay">
+        <div class="overlay-content">
+            <a href="@Url.Action("Newsfeed")">Newsfeed</a> 
+            <br>
+            <a href="@Url.Action("ForumHome","Forum")">Forums</a>
+            <br>
+            <a onclick="nav()" href="#chat">Chat</a>
+            <br>
+            <a  href="@Url.Action("Groepen")">Groepen</a>
+            <br>
+            <a href="@Url.Action("Personlist")">Gebruikers</a>
+        </div>
+        <div class="logout"><a onclick="nav()" href="#logout">Log uit</a></div>
     </div>
-    <div id="AddPersonToGroup">
-        <a>Delete Person from group</a> <br><br>
-        <form asp-action="DeletePersonFromGroup" method="post">
-            <a> Person id:</a><br>
-            <input type="string" required name=PersonId id="PersonId"><br>
-            <a>Group id:</a><br>
-            <input type="string" required name=groupId id="groupId"><br>
-            <input type="submit" value="Submit" id="submit">
-        </form>
+    <div class="content">
+        <a id="create-groups" href="@Url.Action("Groepen")">&#8592; Groepen</a><a id="create-groups" href="@Url.Action("CreateGroups", "Admin")">Groep maken &#8594;</a>
+
+        <div id="AddPersonToGroup">
+            <a>Add Person to group</a> <br><br>
+            <form asp-action="AddPersonToGroup" method="post">
+                <a> Person id:</a><br>
+                <input type="string" required name=PersonId id="PersonId"><br>
+                <a>Group id:</a><br>
+                <input type="string" required name=groupId id="groupId"><br>
+                <input type="submit" value="Submit" id="submit">
+            </form>
+        </div>
+        <div id="AddPersonToGroup">
+            <a>Delete Person from group</a> <br><br>
+            <form asp-action="DeletePersonFromGroup" method="post">
+                <a> Person id:</a><br>
+                <input type="string" required name=PersonId id="PersonId"><br>
+                <a>Group id:</a><br>
+                <input type="string" required name=groupId id="groupId"><br>
+                <input type="submit" value="Submit" id="submit">
+            </form>
+        </div>
     </div>
 </body>
 </html>
