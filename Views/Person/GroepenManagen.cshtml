@@ -2,7 +2,7 @@
     ViewData["Title"] = "Groepen beheren";
 }
 
-@model meldboek.Models.Person
+@model dynamic
 
 <!DOCTYPE html>
 <html>
@@ -10,6 +10,7 @@
     <link rel="stylesheet" type="text/css" href="~/css/Topbar_Sidenav.css">
     <style>
         #create-groups {
+            padding: 10px;
             text-decoration: none;
             color: #0000ff;
             font-size: 22px;
@@ -20,12 +21,11 @@
             color: #b3b3ff;
         }
 
-        #AddPersonToGroup {
+        #Add-Delete-PersonToGroup {
             /* width: 320px; */
-            padding: 10px;
+            padding: 15px;
             border: 2px solid red;
-            margin: 10px;
-            margin-top: 50px;
+            margin: 50px 0px 40px 0px;
         }
 
         body {
@@ -33,9 +33,8 @@
             "Lucida Sans", Arial, sans-serif;
         }
 
-        a {
+        .group-options a {
             font-size: 18px;
-            padding: 10px;
             font-family: "Trebuchet MS", sans-serif;
         }
 
@@ -68,8 +67,55 @@
 
         .content {
             padding-top: 100px;
-            padding-left: 20px;
             width: 90%;
+        }
+
+        .groups {
+            position: fixed;
+            float: left;
+            width: 200px;
+            height: 550px;
+            padding-top: 80px;
+            padding-left: 50px;
+            border-right: 2px solid orange;
+            overflow-y: auto;
+        }
+
+        .groups a {
+            color: #000000;
+            font-size: 24px;
+            text-decoration: none;
+            display: block;
+            padding-bottom: 15px;
+            width: 105px;
+        }
+
+        .groups a:hover {
+            color: #ffe4b3;
+        }
+
+        .group-options {
+            padding-top: 40px;
+            margin-left: 350px;
+        }
+
+        select {
+            font-family: 'Trebuchet MS', sans-serif;
+            font-size: 18px;
+            margin: 15px 0px 20px 0px;
+            padding: 5px;
+        }
+
+        option {
+            font-family: 'Trebuchet MS', sans-serif;
+            font-size: 18px;
+            padding: 5px;
+        }
+
+        input {
+            font-family: 'Trebuchet MS', sans-serif;
+            font-size: 18px;
+            margin-bottom: 10px;
         }
     </style>
 </head>
@@ -95,27 +141,59 @@
         <div class="logout"><a onclick="nav()" href="#logout">Log uit</a></div>
     </div>
     <div class="content">
-        <a id="create-groups" href="@Url.Action("Groepen")">&#8592; Groepen</a><a id="create-groups" href="@Url.Action("CreateGroups", "Admin")">Groep maken &#8594;</a>
+        <div class="groups">
 
-        <div id="AddPersonToGroup">
-            <a>Add Person to group</a> <br><br>
-            <form asp-action="AddPersonToGroup" method="post">
-                <a> Person id:</a><br>
-                <input type="string" required name=PersonId id="PersonId"><br>
-                <a>Group id:</a><br>
-                <input type="string" required name=groupId id="groupId"><br>
-                <input type="submit" value="Submit" id="submit">
-            </form>
+            @foreach (var group in Model.OwnedGroups)
+             {
+                <a href="@Url.Action("ManageGroup", new { GroupId = group.GroupId })">@group.GroupName</a>
+             }
+
         </div>
-        <div id="AddPersonToGroup">
-            <a>Delete Person from group</a> <br><br>
-            <form asp-action="DeletePersonFromGroup" method="post">
-                <a> Person id:</a><br>
-                <input type="string" required name=PersonId id="PersonId"><br>
-                <a>Group id:</a><br>
-                <input type="string" required name=groupId id="groupId"><br>
-                <input type="submit" value="Submit" id="submit">
-            </form>
+
+        <div class="group-options">
+            <a id="create-groups" href="@Url.Action("Groepen")">&#8592; Groepen</a><a id="create-groups" href="@Url.Action("CreateGroups", "Admin")">Groep maken &#8594;</a>
+
+           @if (Model.GroupsManagement != null)
+            {
+               @foreach (var group in Model.GroupsManagement)
+                {
+                    <div id="Add-Delete-PersonToGroup">
+                        <a>Voeg een nieuw lid toe aan @group.Group.GroupName</a>
+                        <form asp-action="AddPersonToGroup" method="post">
+                            <input type="hidden" name="GroupId" value="@group.Group.GroupId">
+
+                            <select id="PersonId" name="PersonId">
+
+                                @foreach (var nonmember in group.NonMembers)
+                                 {
+                                    <option value="@nonmember.PersonId">@nonmember.FirstName @nonmember.LastName</option>
+                                 }
+
+                            </select><br>
+
+                            <input type="submit" value="Toevoegen" id="submit">
+                        </form>
+                    </div>
+
+                    <div id="Add-Delete-PersonToGroup">
+                        <a>Verwijder een groepslid uit @group.Group.GroupName</a>
+                        <form asp-action="DeletePersonFromGroup" method="post">
+                            <input type="hidden" name="GroupId" value="@group.Group.GroupId">
+      
+                            <select id="PersonId" name="PersonId">
+
+                                @foreach (var member in group.Group.Members)
+                                 {
+                                    <option value="@member.PersonId">@member.FirstName @member.LastName</option>
+                                 }
+
+                            </select><br>
+
+                            <input type="submit" value="Verwijderen" id="submit">
+                        </form>
+                    </div>
+                }
+            }
         </div>
     </div>
 </body>

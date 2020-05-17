@@ -29,7 +29,22 @@ namespace meldboek.Controllers
         [Route("Person/GroepenManagen")]
         public IActionResult GroepenManagen()
         {
-            return View();
+            dynamic model = new ExpandoObject();
+            model.OwnedGroups = GetOwnedGroups();
+
+            model.GroupsManagement = null;
+
+            return View(model);
+        }
+
+        public IActionResult ManageGroup(int GroupId)
+        {
+            dynamic model = new ExpandoObject();
+            model.OwnedGroups = GetOwnedGroups();
+
+            model.GroupsManagement = GetGroupsManagement(GroupId);
+
+            return View("GroepenManagen", model);
         }
 
         [Route("Person/Profile")]
@@ -457,6 +472,49 @@ namespace meldboek.Controllers
             return feed;
         }
 
+        public List<GroupData> GetGroupById(int GroupId)
+        {
+            List<INode> groupNodes = new List<INode>();
+            var getGroups = ConnectDb("MATCH (g:Group) WHERE g.GroupId = " + GroupId + " RETURN g");
+            var group = new GroupData();
+            List<GroupData> groupList = new List<GroupData>();
+
+            groupNodes = getGroups.Result;
+            foreach (var record1 in groupNodes)
+            {
+                var nodeprops1 = JsonConvert.SerializeObject(record1.As<INode>().Properties);
+                group = (JsonConvert.DeserializeObject<GroupData>(nodeprops1));
+
+                List<INode> personNodes = new List<INode>();
+                var getPersons = ConnectDb("MATCH (p:Person)-[r:IsInGroup]->(g:Group {GroupId: " + group.GroupId + "}) RETURN p");
+                var person = new Person();
+                List<Person> personList = new List<Person>();
+
+                personNodes = getPersons.Result;
+                foreach (var record2 in personNodes)
+                {
+                    var nodeprops2 = JsonConvert.SerializeObject(record2.As<INode>().Properties);
+                    person = (JsonConvert.DeserializeObject<Person>(nodeprops2));
+
+                    personList.Add(person);
+                }
+                List<Person> members = personList.OrderBy(p => p.FirstName).ThenBy(p => p.LastName).ToList();
+
+                // After getting al the required data, it is put into a Group object and added to the list of groups.
+                groupList.Add(new GroupData()
+                {
+                    GroupId = group.GroupId,
+                    GroupName = group.GroupName,
+                    Members = members
+                });
+
+            }
+
+            // The final list is ordered by GroupName and put into a list called "final".
+            List<GroupData> final = groupList.OrderBy(g => g.GroupName).ToList();
+            return final;
+        }
+
         public List<Group> GetGroups()
         {
             // GetGroups() gets all the groups the Person is part of (relationship type "IsInGroup") from the database and puts them in a list of Group objects.
@@ -585,6 +643,7 @@ namespace meldboek.Controllers
             List<Person> final = friendList.OrderBy(f => f.FirstName).ToList();
             return final;
         }
+
         public List<Person> GetRelationsById(int id)
         {
 
@@ -605,7 +664,6 @@ namespace meldboek.Controllers
             List<Person> final = friendList.OrderBy(f => f.FirstName).ToList();
             return final;
         }
-
 
         public List<PersonInfo> GetPersonlist()
         {
@@ -768,19 +826,80 @@ namespace meldboek.Controllers
             return Person;
         }
 
-        public IActionResult AddPersonToGroup(int PersonId, int groupId)
+        public List<Group> GetOwnedGroups()
         {
-            var res = ConnectDb("MATCH (a:Person), (b:Group) WHERE a.PersonId = " + PersonId.ToString() + " AND b.GroupId = " + groupId.ToString() + " CREATE (a)-[r:IsInGroup]->(b)" + " RETURN a");
-            res.Wait();
-            return RedirectToAction("GroepenManagen", "Person");
+            List<INode> ownedGroupNodes = new List<INode>();
+            var getOwnedGroups = ConnectDb("MATCH (g:Group) WHERE (:Person {PersonId: 1})-[:IsOwner]->(g) RETURN g");
+            var group = new Group();
+            List<Group> ownedGroupsList = new List<Group>();
 
+            ownedGroupNodes = getOwnedGroups.Result;
+            foreach (var record in ownedGroupNodes)
+            {
+                var nodeprops = JsonConvert.SerializeObject(record.As<INode>().Properties);
+                group = (JsonConvert.DeserializeObject<Group>(nodeprops));
+
+                // After getting al the required data, it is put into a Group object and added to the list of groups.
+                ownedGroupsList.Add(new Group()
+                {
+                    GroupId = group.GroupId,
+                    GroupName = group.GroupName
+                });
+
+            }
+
+            // The final list is ordered by GroupName and put into a list called "final".
+            List<Group> final = ownedGroupsList.OrderBy(g => g.GroupName).ToList();
+            return final;
         }
-        public IActionResult DeletePersonFromGroup(int PersonId, int groupId)
-        {
-            var res = ConnectDb("MATCH (a:Person {PersonId : " + PersonId.ToString() + "}) - [r:IsInGroup]->(b:Group{GroupId: " + groupId.ToString() + "}) DELETE r RETURN a");
-            res.Wait();
-            return RedirectToAction("GroepenManagen", "Person");
 
+        public List<GroepenManagen> GetGroupsManagement(int GroupId)
+        {
+            List<GroepenManagen> groupsManagement = new List<GroepenManagen>();
+
+            var getGroups = GetGroupById(GroupId);
+            foreach (var record1 in getGroups)
+            {
+                List<INode> nonmemberNodes = new List<INode>();
+                var getNonMembers = ConnectDb("MATCH (p:Person) WHERE NOT (p)-[:IsInGroup]->(:Group {GroupId: " + record1.GroupId + "}) RETURN p");
+                var nonMember = new Person();
+                List<Person> personList = new List<Person>();
+
+                nonmemberNodes = getNonMembers.Result;
+                foreach (var record2 in nonmemberNodes)
+                {
+                    var nodeprops = JsonConvert.SerializeObject(record2.As<INode>().Properties);
+                    nonMember = (JsonConvert.DeserializeObject<Person>(nodeprops));
+
+                    personList.Add(nonMember);
+                }
+                List<Person> nonMemberList = personList.OrderBy(p => p.FirstName).ThenBy(p => p.LastName).ToList();
+
+                groupsManagement.Add(new GroepenManagen()
+                {
+                    Group = record1,
+                    NonMembers = nonMemberList
+                });
+            }
+
+            List<GroepenManagen> final = groupsManagement.OrderBy(g => g.Group.GroupName).ToList();
+            return final;
+        }
+
+        public IActionResult AddPersonToGroup(int PersonId, int GroupId)
+        {
+            var res = ConnectDb("MATCH (a:Person), (b:Group) WHERE a.PersonId = " + PersonId.ToString() + " AND b.GroupId = " + GroupId.ToString() + " CREATE (a)-[r:IsInGroup]->(b)" + " RETURN a");
+            res.Wait();
+
+            return RedirectToAction("ManageGroup", new { GroupId });
+        }
+
+        public IActionResult DeletePersonFromGroup(int PersonId, int GroupId)
+        {
+            var res = ConnectDb("MATCH (a:Person {PersonId : " + PersonId.ToString() + "}) - [r:IsInGroup]->(b:Group{GroupId: " + GroupId.ToString() + "}) DELETE r RETURN a");
+            res.Wait();
+
+            return RedirectToAction("ManageGroup", new { GroupId });
         }
 
         public async Task<List<INode>> ConnectDb(string query)
