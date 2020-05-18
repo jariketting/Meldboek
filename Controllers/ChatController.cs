@@ -91,10 +91,11 @@ namespace meldboek.Controllers
             // check if new message added
             if (message != null)
             {
-                SendMessage(message, chat);
+                SendMessage(message, chat, type);
+                System.Threading.Thread.Sleep(500);
             }
 
-            List<Message> messages = GetChatMessages(chat);
+            List<Message> messages = GetChatMessages(chat, type);
             ViewBag.messages = messages;
 
             return View();
@@ -142,58 +143,107 @@ namespace meldboek.Controllers
         /// </summary>
         /// <param name="message">Message to send</param>
         /// <param name="chat">Id of chat</param>
-        public async void SendMessage(string message, string chat)
+        public async void SendMessage(string message, string chat, string type)
         {
             Random rnd = new Random();
             int id = rnd.Next(1, 9999999);
 
-            string Date = DateTime.Now.ToString("dd-MM-yyyy HH:mm:ss");
+            string Date = DateTime.Now.ToString("MM-dd-yyyy HH:mm:ss");
 
             _ = await Db.ConnectDb("CREATE (p:Message { MessageId: '" + id + "', Content: '" + message + "', DatetimeSend: '" + Date + "', DatetimeRead: ''}) RETURN p");
             _ = await Db.ConnectDb("MATCH (u:Person),(p:Message) WHERE u.Email = 'jariketting@hotmail.com' AND p.MessageId = '" + id + "' CREATE(u)-[r:Sends]->(p)");
-            _ = await Db.ConnectDb("MATCH (u:Message),(p:Chat) WHERE u.MessageId = '" + id + "' AND p.ChatId = '" + chat + "' CREATE(p)-[r:Contains]->(u)");
+
+            if(type == "open")
+            {
+                _ = await Db.ConnectDb("MATCH (u:Message),(p:Chat) WHERE u.MessageId = '" + id + "' AND p.ChatId = '" + chat + "' CREATE(p)-[r:Contains]->(u)");
+            } 
+            else if(type == "chat")
+            {
+                _ = await Db.ConnectDb("MATCH (u:Message),(p:Person) WHERE u.MessageId = '" + id + "' AND p.Email = '" + chat + "' CREATE(p)-[r:Receives]->(u)");
+            }
+
+            System.Threading.Thread.Sleep(500);
         }
 
         /// <summary>
         /// Get chat Person van join
         /// </summary>
         /// <returns></returns>
-        public List<Message> GetChatMessages(string chat)
+        public List<Message> GetChatMessages(string chat, string type)
         {
             List<INode> messageNodes = new List<INode>(); // will store Message nodes
-            var getMessages = Db.ConnectDb("MATCH (n:Chat{ChatId:'" + chat + "'})-[:Contains]->(m:Message) RETURN m"); // run query
             var message = new Message(); // store Message
             List<Message> messageList = new List<Message>(); // store list of all messages
 
-            messageNodes = getMessages.Result; // fill chat nodes with queries result
-            // go trough all items
-            foreach (var item in messageNodes)
+            if (type == "open")
             {
-                // pull data from item and convert json
-                var nodeprops = JsonConvert.SerializeObject(item.As<INode>().Properties);
-                message = (JsonConvert.DeserializeObject<Message>(nodeprops));
+                var getMessages = Db.ConnectDb("MATCH (n:Chat{ChatId:'" + chat + "'})-[:Contains]->(m:Message) RETURN m"); // run query
 
-                // Another query gets the related Persons to a post from the database thus finding its creator, the result is processed similarly.
-                List<INode> PersonList = new List<INode>();
-                var getPerson = Db.ConnectDb("MATCH(u:Person)-[:Sends]-(c:Message) WHERE c.MessageId = '" + message.MessageId + "' RETURN u LIMIT 1");
-                var Person = new Person();
-
-                PersonList = getPerson.Result;
-                var PersonItem = PersonList.First();
-
-                var Personprops = JsonConvert.SerializeObject(PersonItem.As<INode>().Properties);
-                Person = (JsonConvert.DeserializeObject<Person>(Personprops));
-
-                // TODO as all these params should match, this could be automated...
-                // fill list with chats
-                messageList.Add(new Message()
+                messageNodes = getMessages.Result; // fill chat nodes with queries result
+                // go trough all items
+                foreach (var item in messageNodes)
                 {
-                    MessageId = message.MessageId,
-                    Content = message.Content,
-                    DatetimeSend = message.DatetimeSend,
-                    DatetimeRead = message.DatetimeRead,
-                    Personname = Person.Email
-                });
+                    // pull data from item and convert json
+                    var nodeprops = JsonConvert.SerializeObject(item.As<INode>().Properties);
+                    message = (JsonConvert.DeserializeObject<Message>(nodeprops));
+
+                    // Another query gets the related Persons to a post from the database thus finding its creator, the result is processed similarly.
+                    List<INode> PersonList = new List<INode>();
+                    var getPerson = Db.ConnectDb("MATCH(u:Person)-[:Sends]-(c:Message) WHERE c.MessageId = '" + message.MessageId + "' RETURN u LIMIT 1");
+                    var Person = new Person();
+
+                    PersonList = getPerson.Result;
+                    var PersonItem = PersonList.First();
+
+                    var Personprops = JsonConvert.SerializeObject(PersonItem.As<INode>().Properties);
+                    Person = (JsonConvert.DeserializeObject<Person>(Personprops));
+
+                    // TODO as all these params should match, this could be automated...
+                    // fill list with chats
+                    messageList.Add(new Message()
+                    {
+                        MessageId = message.MessageId,
+                        Content = message.Content,
+                        DatetimeSend = message.DatetimeSend,
+                        DatetimeRead = message.DatetimeRead,
+                        Personname = Person.Email
+                    });
+                }
+            }
+            else if(type == "chat")
+            {
+                var getMessages = Db.ConnectDb("MATCH (n:Person{Email:'jariketting@hotmail.com'})-[:Sends]->(m:Message)<-[:Receives]-(P:Person{Email:'"+ chat +"'}) RETURN m"); // run query
+
+                messageNodes = getMessages.Result; // fill chat nodes with queries result
+                // go trough all items
+                foreach (var item in messageNodes)
+                {
+                    // pull data from item and convert json
+                    var nodeprops = JsonConvert.SerializeObject(item.As<INode>().Properties);
+                    message = (JsonConvert.DeserializeObject<Message>(nodeprops));
+
+                    // Another query gets the related Persons to a post from the database thus finding its creator, the result is processed similarly.
+                    List<INode> PersonList = new List<INode>();
+                    var getPerson = Db.ConnectDb("MATCH(u:Person)-[:Sends]-(c:Message) WHERE c.MessageId = '" + message.MessageId + "' RETURN u LIMIT 1");
+                    var Person = new Person();
+
+                    PersonList = getPerson.Result;
+                    var PersonItem = PersonList.First();
+
+                    var Personprops = JsonConvert.SerializeObject(PersonItem.As<INode>().Properties);
+                    Person = (JsonConvert.DeserializeObject<Person>(Personprops));
+
+                    // TODO as all these params should match, this could be automated...
+                    // fill list with chats
+                    messageList.Add(new Message()
+                    {
+                        MessageId = message.MessageId,
+                        Content = message.Content,
+                        DatetimeSend = message.DatetimeSend,
+                        DatetimeRead = message.DatetimeRead,
+                        Personname = Person.Email
+                    });
+                }
             }
 
             // order by time send

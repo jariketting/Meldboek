@@ -1,6 +1,6 @@
 ﻿@{
     ViewData["Title"] = "Chats";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "~/Views/Shared/_LayoutJari.cshtml";
 }
 
     <div class="container">
@@ -11,14 +11,16 @@
             </div>
         }
 
+        <h1 class="page-title">Chatrooms</h1>
+
         <div class="row">
             <div class="col-6">
-                <h2>Chatrooms</h2>
+                <h2>Deelnemen nieuwe chatroom</h2>
                 <form method="post">
                     <input type="hidden" name="type" value="join" />
 
                     <div class="form-group">
-                        <label for="join">Join chatroom</label>
+                        <label for="join"></label>
                         <select name="chat" class="form-control" id="join">
                             @foreach (var chat in ViewBag.chatsJoinable)
                             {
@@ -27,16 +29,17 @@
                         </select>
                     </div>
 
-                    <button class="btn btn-primary" type="submit" disabled="@(ViewBag.chatsJoinable.Count == 0 ? "disabled" : null)">Join</button>
+                    <button class="btn btn-primary" type="submit" disabled="@(ViewBag.chatsJoinable.Count == 0 ? "disabled" : null)">Deelnemen</button>
                 </form>
 
                 <hr />
 
+                <h2>Mijn chatrooms</h2>
                 <form method="post">
                     <input type="hidden" name="type" value="open" />
 
                     <div class="form-group">
-                        <label for="open">My chatrooms</label>
+                        <label for="open"></label>
                         <select name="chat" class="form-control" id="open">
                             @foreach (var chat in ViewBag.chatsJoined)
                             {
@@ -44,12 +47,12 @@
                             }
                         </select>
                     </div>
-                    <button class="btn btn-primary" type="submit" disabled="@(ViewBag.chatsJoined.Count == 0 ? "disabled" : null)">Open</button>
+                    <button class="btn btn-primary" type="submit" disabled="@(ViewBag.chatsJoined.Count == 0 ? "disabled" : null)">Chat openen</button>
                 </form>
             </div>
 
             <div class="col-6">
-                <h2>Friends</h2>
+                <h2>Vrienden</h2>
                 <form method="post">
                     <input type="hidden" name="type" value="chat" />
 
@@ -58,12 +61,12 @@
                         <select name="chat" class="form-control" id="friend">
                             @foreach (var Person in ViewBag.friends)
                             {
-                            <option value="@Person.Email">@Person.FirstName @Person.LastName</option>
+                                <option value="@Person.Email">@Person.FirstName @Person.LastName</option>
                             }
                         </select>
                     </div>
 
-                    <button class="btn btn-primary" type="submit" disabled="@(ViewBag.friends.Count == 0 ? "disabled" : null)">Open chat</button>
+                    <button class="btn btn-primary" type="submit" disabled="@(ViewBag.friends.Count == 0 ? "disabled" : null)">Chat openen</button>
                 </form>
             </div>
 

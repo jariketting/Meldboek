@@ -8,6 +8,8 @@
 
 
     List<Forum> forumlist = FC.GetAllForums();
+    forumlist.Sort((x, y) => DateTime.Compare(x.lastEdit, y.lastEdit));
+    forumlist.Reverse();
 
 
     //Aantal Reacties laden
@@ -232,15 +234,15 @@
                 <table white-space="nowrap" width="100%" class="table">
                     <tr>
                         <th align="center" width="20%" class="infoi">
-                            <p><font face="verdana" color="black">New Forum Titel</font></p>
+                            <p><font face="verdana" color="black">Forum Titel</font></p>
                             <input type="text" required name=Title id="Title" size="50"><br><br>
                         </th>
                         <th align="center" width="60%" class="infoi">
-                            <p><font face="verdana" color="black">Text</font></p>
+                            <p><font face="verdana" color="black">Forum Tekst</font></p>
                             <input type="text" required name=Content id="Content" size="50"><br><br>
                         </th>
                         <th align="center" width="20%" class="infoi">
-                            <input type="submit" value="Submit" id="submit" class="sub">
+                            <input type="submit" value="Nieuw forum" id="submit" class="sub">
                         </th>
                     </tr>
                 </table>
