@@ -31,7 +31,6 @@
 
         .topbar {
             background-color: #ff3398;
-            position: relative;
             margin-bottom: 20px;
         }
 
@@ -41,6 +40,7 @@
 
         .overlay {
             background-color: #ff3398;
+            margin-top: 0px;
         }
 
         .overlay a:hover, .overlay a:focus, .logout a:hover, .logout a:focus {
@@ -107,11 +107,6 @@
                 background-color: #ffa1d0;
             }
 
-        #absoluteCenteredDiv {
-            position: relative;
-            margin-top: 20px;
-        }
-
         #Content {
             width: 90%;
             height: 40px;
@@ -137,15 +132,19 @@
             transition: 0.2s;
         }
 
-        #forum-link {
+        .forum-link {
+            margin: 74px 0px 0px 0px;
+            padding: 20px;
+        }
+
+        .forum-link a {
             text-decoration: none;
             color: #0000ff;
             font-size: 22px;
-            padding: 20px;
             transition: 0.2s;
         }
 
-        #forum-link:hover {
+        .forum-link a:hover {
             color: #b3b3ff;
         }
     </style>
@@ -186,10 +185,12 @@
         <a href="@Url.Action("Profile", "Person")"><img id="acc-icon" src="@Url.Content("~/Content/account.png")" /></a>
     </div>
 
-    <a id="forum-link" href="@Url.Action("ForumHome")">&#8592; Forums</a>
+    <div class="forum-link">
+        <a href="@Url.Action("ForumHome")">&#8592; Forums</a>
+    </div>
 
     <div id="absoluteCenteredDiv">
-
+        
         
 
 
