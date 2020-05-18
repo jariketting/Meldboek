@@ -245,7 +245,7 @@ namespace meldboek.Controllers
                     });
                 }
 
-                getMessages = Db.ConnectDb("MATCH (n:Person{Email:'jariketting@hotmail.com'})-[:Receives]->(m:Message)<-[:Sends]-(P:Person{Email:'" + chat + "'}) RETURN m"); // run query
+                getMessages = Db.ConnectDb("MATCH (n:Person{PersonId: 1})-[:Receives]->(m:Message)<-[:Sends]-(P:Person{Email:'" + chat + "'}) RETURN m"); // run query
 
                 messageNodes = getMessages.Result; // fill chat nodes with queries result
                 // go trough all items
