@@ -106,6 +106,7 @@
             #add-accept-friend {
                 color: #00ff00;
                 transition: 0.2s;
+                display: block;
             }
 
             #add-accept-friend:hover {
@@ -190,7 +191,7 @@
                         {
                             <div class="person-options" style="margin-top: 10px;">
                                 <a id="add-accept-friend" href="@Url.Action("AcceptFriend", new { PersonRequestedId = person.Person.PersonId, PersonAcceptedId = 1, Page = "Personlist" })">Verzoek accepteren</a>
-                                <a id="delete-deny-friend" href="#DenyFriend">Verzoek afwijzen</a>
+                                <a id="deny-delete-friend" href="@Url.Action("RefuseFriendReq", "Person", new { PersonId = person.Person.PersonId, page = "Personlist" })">Vriend afwijzen</a>
                             </div>
                         }
 
