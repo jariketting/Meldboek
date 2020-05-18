@@ -145,10 +145,9 @@ namespace meldboek.Controllers
         /// <param name="chat">Id of chat</param>
         public async void SendMessage(string message, string chat, string type)
         {
-            Random rnd = new Random();
-            int id = rnd.Next(1, 9999999);
-
             string Date = DateTime.Now.ToString("MM-dd-yyyy HH:mm:ss");
+
+            string id = Db.GenerateUniqueId(Date + message.Substring(Math.Max(0, message.Length - 5)));
 
             _ = await Db.ConnectDb("CREATE (p:Message { MessageId: '" + id + "', Content: '" + message + "', DatetimeSend: '" + Date + "', DatetimeRead: ''}) RETURN p");
             _ = await Db.ConnectDb("MATCH (u:Person),(p:Message) WHERE u.Email = 'jariketting@hotmail.com' AND p.MessageId = '" + id + "' CREATE(u)-[r:Sends]->(p)");
@@ -215,6 +214,7 @@ namespace meldboek.Controllers
                 var getMessages = Db.ConnectDb("MATCH (n:Person{Email:'jariketting@hotmail.com'})-[:Sends]->(m:Message)<-[:Receives]-(P:Person{Email:'"+ chat +"'}) RETURN m"); // run query
 
                 messageNodes = getMessages.Result; // fill chat nodes with queries result
+
                 // go trough all items
                 foreach (var item in messageNodes)
                 {

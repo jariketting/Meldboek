@@ -7,7 +7,7 @@ namespace meldboek.Models
 {
     public class Chat
     {
-        public int ChatId { get; set; } // Id of chat
+        public string ChatId { get; set; } // Id of chat
         public String Name { get; set; } // Name of chat
         public String Description { get; set; } // Description (unused atm)
     }
