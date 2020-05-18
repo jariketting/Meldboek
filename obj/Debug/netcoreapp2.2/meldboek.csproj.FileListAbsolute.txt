@@ -378,3 +378,5 @@ C:/Users/amyno/Documents/meldboek/obj/Debug/netcoreapp2.2/meldboek.csprojAssembl
 /Users/yasemin/Documents/Inf_jaar_2/Project D/meldboek/obj/Debug/netcoreapp2.2/meldboek.dll
 /Users/yasemin/Documents/Inf_jaar_2/Project D/meldboek/obj/Debug/netcoreapp2.2/meldboek.pdb
 /Users/yasemin/Documents/Inf_jaar_2/Project D/meldboek/obj/Debug/netcoreapp2.2/meldboek.csproj.CopyComplete
+/Users/yasemin/Documents/Inf_jaar_2/Project D/meldboek/obj/Debug/netcoreapp2.2/Razor/Views/Admin/CreateGroups.cshtml.g.cs
+/Users/yasemin/Documents/Inf_jaar_2/Project D/meldboek/obj/Debug/netcoreapp2.2/Razor/Views/Shared/_LayoutJari.cshtml.g.cs
