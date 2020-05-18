@@ -31,11 +31,21 @@ body {
 }
 
 .overlay a:hover, .overlay a:focus, .logout a:hover, .logout a:focus {
-    color: #9ee0a4;
+    color: #9cd0ff;
 }
 
 .btn {
     border-radius: 100px;
+}
+
+.btn-primary {
+    background-color: #0085fe;
+    border: none;
+}
+
+.btn-primaty:hover {
+    cursor: pointer;
+    background-color: #9cd0ff;
 }
 
 h1 {
