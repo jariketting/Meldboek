@@ -244,6 +244,39 @@ namespace meldboek.Controllers
                         Personname = Person.Email
                     });
                 }
+
+                getMessages = Db.ConnectDb("MATCH (n:Person{Email:'jariketting@hotmail.com'})-[:Receives]->(m:Message)<-[:Sends]-(P:Person{Email:'" + chat + "'}) RETURN m"); // run query
+
+                messageNodes = getMessages.Result; // fill chat nodes with queries result
+                // go trough all items
+                foreach (var item in messageNodes)
+                {
+                    // pull data from item and convert json
+                    var nodeprops = JsonConvert.SerializeObject(item.As<INode>().Properties);
+                    message = (JsonConvert.DeserializeObject<Message>(nodeprops));
+
+                    // Another query gets the related Persons to a post from the database thus finding its creator, the result is processed similarly.
+                    List<INode> PersonList = new List<INode>();
+                    var getPerson = Db.ConnectDb("MATCH(u:Person)-[:Sends]-(c:Message) WHERE c.MessageId = '" + message.MessageId + "' RETURN u LIMIT 1");
+                    var Person = new Person();
+
+                    PersonList = getPerson.Result;
+                    var PersonItem = PersonList.First();
+
+                    var Personprops = JsonConvert.SerializeObject(PersonItem.As<INode>().Properties);
+                    Person = (JsonConvert.DeserializeObject<Person>(Personprops));
+
+                    // TODO as all these params should match, this could be automated...
+                    // fill list with chats
+                    messageList.Add(new Message()
+                    {
+                        MessageId = message.MessageId,
+                        Content = message.Content,
+                        DatetimeSend = message.DatetimeSend,
+                        DatetimeRead = message.DatetimeRead,
+                        Personname = Person.Email
+                    });
+                }
             }
 
             // order by time send
