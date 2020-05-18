@@ -13510,11 +13510,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\amyno\\Documents\\meldboek\\meldboek.csproj",
+      "projectUniqueName": "C:\\Users\\amyno\\Documents\\Repos\\meldboek\\meldboek.csproj",
       "projectName": "meldboek",
-      "projectPath": "C:\\Users\\amyno\\Documents\\meldboek\\meldboek.csproj",
+      "projectPath": "C:\\Users\\amyno\\Documents\\Repos\\meldboek\\meldboek.csproj",
       "packagesPath": "C:\\Users\\amyno\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\amyno\\Documents\\meldboek\\obj\\",
+      "outputPath": "C:\\Users\\amyno\\Documents\\Repos\\meldboek\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
