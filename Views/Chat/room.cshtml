@@ -4,13 +4,13 @@
 }
 
 <div class="container">
-    <h2>Chatroom: <span class="text-info">@ViewBag.name</span> <a class="float-right text-danger" href="/Chat/Index">Leave chat</a></h2>
+    <h2>Chatroom: <span class="text-info">@ViewBag.name</span> <a class="float-right text-danger" href="/Chat">Leave chat</a></h2>
     <hr />
 
     @foreach(var message in ViewBag.messages)
     {
     <div class="row">
-        <div class="col-2">@message.Personname </div><div class="col-2">@message.DatetimeSend</div><div class="col-8"></div>
+        <div class="col-2">@message.Username </div><div class="col-2">@message.DatetimeSend</div><div class="col-8"></div>
 
         <div class="col-12">@message.Content</div>
     </div>

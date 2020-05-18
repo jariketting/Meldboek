@@ -56,9 +56,9 @@
                     <div class="form-group">
                         <label for="join"></label>
                         <select name="chat" class="form-control" id="friend">
-                            @foreach (var Person in ViewBag.friends)
+                            @foreach (var user in ViewBag.friends)
                             {
-                            <option value="@Person.Email">@Person.FirstName @Person.LastName</option>
+                            <option value="@user.Email">@user.FirstName @user.LastName</option>
                             }
                         </select>
                     </div>

@@ -8,6 +8,8 @@
 
 
     List<Forum> forumlist = FC.GetAllForums();
+    forumlist.Sort((x, y) => DateTime.Compare(x.lastEdit, y.lastEdit));
+    forumlist.Reverse();
 
 
     //Aantal Reacties laden
@@ -31,24 +33,16 @@
             font-family: 'Trebuchet MS', sans-serif;
             background-color: #ffffff;
         }
-
         .topbar {
             background-color: #ff3398;
             position: relative
         }
-
         .navbtn {
             background-color: #ff3398;
         }
-
         .overlay {
             background-color: #ff3398;
         }
-
-        .overlay a:hover, .overlay a:focus, .logout a:hover, .logout a:focus {
-            color: #ffa1d0;
-        }
-
         .info {
             color: #000000;
             vertical-align: middle;
@@ -56,7 +50,6 @@
             border-bottom-width: 2px;
             border-color: #000000;
         }
-
         .infoi {
             color: #000000;
             vertical-align: middle;
@@ -64,21 +57,16 @@
             border-bottom-width: 2px;
             border-color: #000000;
         }
-
         .table {
             height: inherit;
         }
-
-
         #forums {
             background-color: #ffffff;
             width: 100%;
         }
-
             #forums:hover {
                 background-color: #8593bc;
             }
-
         .button {
             display: block;
             width: 400px;
@@ -89,7 +77,6 @@
             height: 100px;
             transition: 0.2s;
         }
-
         .sub {
             display: block;
             width: 100%;
@@ -100,20 +87,16 @@
             height: 100%;
             transition: 0.2s;
         }
-
             .sub:hover {
                 background-color: #ffa1d0;
             }
-
         #absoluteCenteredDiv {
             position: relative;
         }
-
         #Content {
             width: 90%;
             height: 40px;
         }
-
         #Title {
             width: 90%;
             height: 40px;
@@ -155,15 +138,15 @@
     <!-- Sidemenu overlay -->
     <div id="nav" class="overlay">
         <div class="overlay-content">
-            <a href="@Url.Action("Newsfeed", "Person")">Newsfeed</a>
+            <p style="color: #9ee0a4;">Newsfeed</p>
             <br>
-            <p style="color: #ffa1d0">Forums</p>
+            <a onclick="nav()" href="#forums">Forums</a>
             <br>
             <a onclick="nav()" href="#chat">Chat</a>
             <br>
-            <a href="@Url.Action("Groepen", "Person")">Groepen</a>
+            <a href="@Url.Action("Groepen")">Groepen</a>
             <br>
-            <a href="@Url.Action("Personlist", "Person")">Gebruikers</a>
+            <a href="@Url.Action("Personlist")">Gebruikers</a>
         </div>
         <div class="logout"><a onclick="nav()" href="#logout">Log uit</a></div>
     </div>
@@ -172,7 +155,7 @@
         <h1>Forums</h1>
         <span class="navbtn" onclick="nav()">&#9776; </span>
 
-        <a href="@Url.Action("Profile")"><img id="acc-icon" src="@Url.Content("~/Content/account.png")" /></a>
+        <a href="#accountinfo"><img id="acc-icon" src="@Url.Content("~/Content/account.png")" /></a>
     </div>
     <div id="absoluteCenteredDiv">
         @foreach (Forum forum in forumlist)
@@ -207,55 +190,28 @@
                             </th>
                         </tr>
                     </table>
-
-
-
-
-
-
-
-
                 </a>
-
-
-
-
-
-
-
-
-
-
             </form>
-
         }
         <div class="box">
             <form asp-action="ForumHome" method="post">
-
-
                 <table white-space="nowrap" width="100%" class="table">
                     <tr>
                         <th align="center" width="20%" class="infoi">
-                            <p><font face="verdana" color="black">New Forum Titel</font></p>
+                            <p><font face="verdana" color="black">Forum Titel</font></p>
                             <input type="text" required name=Title id="Title" size="50"><br><br>
                         </th>
                         <th align="center" width="60%" class="infoi">
-                            <p><font face="verdana" color="black">Text</font></p>
+                            <p><font face="verdana" color="black">Forum Tekst</font></p>
                             <input type="text" required name=Content id="Content" size="50"><br><br>
                         </th>
                         <th align="center" width="20%" class="infoi">
-                            <input type="submit" value="Submit" id="submit" class="sub">
+                            <input type="submit" value="Nieuw forum" id="submit" class="sub">
                         </th>
                     </tr>
                 </table>
-
-
-
-
-
             </form>
         </div>
-
     </div>
 </body>
 </html>

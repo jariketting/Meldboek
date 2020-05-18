@@ -45,7 +45,7 @@ namespace meldboek.Controllers
             //get person logged in but for now just person 1 or even post.creator
             Person person = GetPerson(1);
 
-            var folder = "/Users/yaseminsnoek/Library/Application Support/Neo4j Desktop/Application/neo4jDatabases/database-35932c80-623d-4c95-b045-447e246bf8bf/installation-4.0.1/import/" + person.PersonId.ToString() + "/" + NewspostId.ToString();
+            var folder = "/Users/yasemin/Library/Application Support/Neo4j Desktop/Application/neo4jDatabases/database-a67a9b4b-e0cb-404c-99ce-fccc6509622f/installation-4.0.2/import/" + person.PersonId.ToString() + "/" + NewspostId.ToString();
             if (!System.IO.Directory.Exists(folder))
             {
                 System.IO.Directory.CreateDirectory(folder);
@@ -53,10 +53,10 @@ namespace meldboek.Controllers
             if (file.Length > 0)
             {
 
-                var filename = file.FileName + person.PersonId.ToString();
+                var filename = file.FileName;
 
 
-                var path = "/Users/yaseminsnoek/Library/Application Support/Neo4j Desktop/Application/neo4jDatabases/database-35932c80-623d-4c95-b045-447e246bf8bf/installation-4.0.1/import/" + person.PersonId.ToString() + "/" + NewspostId.ToString() + "/" + filename;
+                var path = "/Users/yasemin/Library/Application Support/Neo4j Desktop/Application/neo4jDatabases/database-a67a9b4b-e0cb-404c-99ce-fccc6509622f/installation-4.0.2/import/" + person.PersonId.ToString() + "/" + NewspostId.ToString() + "/" + filename;
 
                 using (var stream = System.IO.File.Create(path))
                 {
@@ -64,6 +64,7 @@ namespace meldboek.Controllers
                 }
 
             }
+        
             //just to test
 
             return RedirectToAction("AddFile");
