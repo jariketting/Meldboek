@@ -23,13 +23,13 @@ using meldboek.Models;
 
 #line default
 #line hidden
-    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"a8358e407ef87006bba6c794fe120103b8764ad9", @"/Views/Person/GroepenManagen.cshtml")]
-    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"f8de9e6b9d5c199835f9faa7d02b60c87e660435", @"/Views/_ViewImports.cshtml")]
-    public class Views_Person_GroepenManagen : global::Microsoft.AspNetCore.Mvc.Razor.RazorPage<meldboek.Models.Person>
+    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"9eceb6ba31001fb32c4463252534c255f855a97e", @"/Views/Person/GroepenManagen.cshtml")]
+    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"b303f695a79eb6d1dfd699c250715c9df1ce1a57", @"/Views/_ViewImports.cshtml")]
+    public class Views_Person_GroepenManagen : global::Microsoft.AspNetCore.Mvc.Razor.RazorPage<dynamic>
     {
         private static readonly global::Microsoft.AspNetCore.Razor.TagHelpers.TagHelperAttribute __tagHelperAttribute_0 = new global::Microsoft.AspNetCore.Razor.TagHelpers.TagHelperAttribute("rel", new global::Microsoft.AspNetCore.Html.HtmlString("stylesheet"), global::Microsoft.AspNetCore.Razor.TagHelpers.HtmlAttributeValueStyle.DoubleQuotes);
         private static readonly global::Microsoft.AspNetCore.Razor.TagHelpers.TagHelperAttribute __tagHelperAttribute_1 = new global::Microsoft.AspNetCore.Razor.TagHelpers.TagHelperAttribute("type", new global::Microsoft.AspNetCore.Html.HtmlString("text/css"), global::Microsoft.AspNetCore.Razor.TagHelpers.HtmlAttributeValueStyle.DoubleQuotes);
-        private static readonly global::Microsoft.AspNetCore.Razor.TagHelpers.TagHelperAttribute __tagHelperAttribute_2 = new global::Microsoft.AspNetCore.Razor.TagHelpers.TagHelperAttribute("href", new global::Microsoft.AspNetCore.Html.HtmlString("~/css/Groepen.css"), global::Microsoft.AspNetCore.Razor.TagHelpers.HtmlAttributeValueStyle.DoubleQuotes);
+        private static readonly global::Microsoft.AspNetCore.Razor.TagHelpers.TagHelperAttribute __tagHelperAttribute_2 = new global::Microsoft.AspNetCore.Razor.TagHelpers.TagHelperAttribute("href", new global::Microsoft.AspNetCore.Html.HtmlString("~/css/Topbar_Sidenav.css"), global::Microsoft.AspNetCore.Razor.TagHelpers.HtmlAttributeValueStyle.DoubleQuotes);
         private static readonly global::Microsoft.AspNetCore.Razor.TagHelpers.TagHelperAttribute __tagHelperAttribute_3 = new global::Microsoft.AspNetCore.Razor.TagHelpers.TagHelperAttribute("asp-action", "AddPersonToGroup", global::Microsoft.AspNetCore.Razor.TagHelpers.HtmlAttributeValueStyle.DoubleQuotes);
         private static readonly global::Microsoft.AspNetCore.Razor.TagHelpers.TagHelperAttribute __tagHelperAttribute_4 = new global::Microsoft.AspNetCore.Razor.TagHelpers.TagHelperAttribute("method", "post", global::Microsoft.AspNetCore.Razor.TagHelpers.HtmlAttributeValueStyle.DoubleQuotes);
         private static readonly global::Microsoft.AspNetCore.Razor.TagHelpers.TagHelperAttribute __tagHelperAttribute_5 = new global::Microsoft.AspNetCore.Razor.TagHelpers.TagHelperAttribute("asp-action", "DeletePersonFromGroup", global::Microsoft.AspNetCore.Razor.TagHelpers.HtmlAttributeValueStyle.DoubleQuotes);
@@ -56,20 +56,21 @@ using meldboek.Models;
         private global::Microsoft.AspNetCore.Mvc.Razor.TagHelpers.BodyTagHelper __Microsoft_AspNetCore_Mvc_Razor_TagHelpers_BodyTagHelper;
         private global::Microsoft.AspNetCore.Mvc.TagHelpers.FormTagHelper __Microsoft_AspNetCore_Mvc_TagHelpers_FormTagHelper;
         private global::Microsoft.AspNetCore.Mvc.TagHelpers.RenderAtEndOfFormTagHelper __Microsoft_AspNetCore_Mvc_TagHelpers_RenderAtEndOfFormTagHelper;
+        private global::Microsoft.AspNetCore.Mvc.TagHelpers.OptionTagHelper __Microsoft_AspNetCore_Mvc_TagHelpers_OptionTagHelper;
         #pragma warning disable 1998
         public async override global::System.Threading.Tasks.Task ExecuteAsync()
         {
 #line 1 "/Users/yasemin/Documents/Inf_jaar_2/Project D/meldboek/Views/Person/GroepenManagen.cshtml"
   
-    ViewData["Title"] = "Groepen managen";
+    ViewData["Title"] = "Groepen beheren";
 
 #line default
 #line hidden
-            BeginContext(48, 1, true);
-            WriteLiteral("\n");
+            BeginContext(51, 2, true);
+            WriteLiteral("\r\n");
             EndContext();
-            BeginContext(79, 24, true);
-            WriteLiteral("\n<!DOCTYPE html>\n<html>\n");
+            BeginContext(69, 27, true);
+            WriteLiteral("\r\n<!DOCTYPE html>\r\n<html>\r\n");
             EndContext();
             BeginContext(103, 83, false);
             __tagHelperExecutionContext = __tagHelperScopeManager.Begin("head", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "a8358e407ef87006bba6c794fe120103b8764ad96049", async() => {
@@ -93,8 +94,126 @@ using meldboek.Models;
                 Write(__tagHelperExecutionContext.Output);
                 __tagHelperExecutionContext = __tagHelperScopeManager.End();
                 EndContext();
-                BeginContext(178, 1, true);
-                WriteLiteral("\n");
+                BeginContext(179, 2808, true);
+                WriteLiteral(@"
+    <style>
+        #create-groups {
+            padding: 10px;
+            text-decoration: none;
+            color: #0000ff;
+            font-size: 22px;
+            transition: 0.2s;
+        }
+
+        #create-groups:hover {
+            color: #b3b3ff;
+        }
+
+        #Add-Delete-PersonToGroup {
+            /* width: 320px; */
+            padding: 15px;
+            border: 2px solid #ffed00;
+            margin: 50px 0px 40px 0px;
+        }
+
+        body {
+            font-family: ""Trebuchet MS"", ""Lucida Sans Unicode"", ""Lucida Grande"",
+            ""Lucida Sans"", Arial, sans-serif;
+        }
+
+        .group-options a {
+            font-size: 18px;
+            font-family: ""Trebuchet MS"", sans-serif;
+        }
+
+        input[type=""submit""] {
+            font-family: ""Trebuchet MS"", sans-serif;
+            background-color: #ffed00;
+            color: white;
+            font-size: 18px;
+            border-radius: 25px;
+            padding: 10px 15px;
+            border");
+                WriteLiteral(@": none;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        input[type=""submit""]:hover {
+            background-color: #fff9a6;
+        }
+
+        .topbar {
+            background-color: #ffed00;
+        }
+
+        .navbtn {
+            background-color: #ffed00;
+        }
+
+        .overlay {
+            background-color: #ffed00; 
+        }
+
+        .overlay a:hover, .overlay a:focus, .logout a:hover, .logout a:focus {
+            color: #fff9a6;
+        }
+
+        .content {
+            padding-top: 100px;
+            width: 90%;
+        }
+
+        .groups {
+            position: fixed;
+            float: left;
+            width: 180px;
+            height: 550px;
+            padding: 80px 30px 0px 40px;
+            border-right: 2px solid #ffed00;
+            overflow-y: auto;
+        }
+
+        .groups a {
+            color: #000000;
+            font-size: 24px;
+            text-decoration: none;
+            display: block;
+            ");
+                WriteLiteral(@"padding-bottom: 15px;
+            transition: 0.2s;
+            word-wrap: break-word;
+        }
+
+        .groups a:hover {
+            color: #fff9a6;
+        }
+
+        .group-options {
+            padding-top: 40px;
+            margin-left: 350px;
+        }
+
+        select {
+            font-family: 'Trebuchet MS', sans-serif;
+            font-size: 18px;
+            margin: 15px 0px 20px 0px;
+            padding: 5px;
+        }
+
+        option {
+            font-family: 'Trebuchet MS', sans-serif;
+            font-size: 18px;
+            padding: 5px;
+        }
+
+        input {
+            font-family: 'Trebuchet MS', sans-serif;
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+    </style>
+");
                 EndContext();
             }
             );
@@ -108,8 +227,8 @@ using meldboek.Models;
             Write(__tagHelperExecutionContext.Output);
             __tagHelperExecutionContext = __tagHelperScopeManager.End();
             EndContext();
-            BeginContext(186, 1, true);
-            WriteLiteral("\n");
+            BeginContext(2994, 2, true);
+            WriteLiteral("\r\n");
             EndContext();
             BeginContext(187, 876, false);
             __tagHelperExecutionContext = __tagHelperScopeManager.Begin("body", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "a8358e407ef87006bba6c794fe120103b8764ad98604", async() => {
@@ -120,6 +239,76 @@ using meldboek.Models;
                 __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "a8358e407ef87006bba6c794fe120103b8764ad99141", async() => {
                     BeginContext(393, 248, true);
                     WriteLiteral("\n    <a> Person id:</a><br>\n    <input type=\"string\" required name = PersonId id=\"PersonId\"><br>\n    <a>Group id:</a><br>\n    <input type=\"string\" required name = groupId id=\"groupId\"><br>\n    <input type=\"submit\" value = \"Submit\" id=\"submit\">\n    ");
+                    EndContext();
+                    BeginWriteAttribute("value", " value=\"", 4924, "\"", 4952, 1);
+#line 173 "C:\Users\amyno\Documents\Repos\meldboek\Views\Person\GroepenManagen.cshtml"
+WriteAttributeValue("", 4932, group.Group.GroupId, 4932, 20, false);
+
+#line default
+#line hidden
+                    EndWriteAttribute();
+                    BeginContext(4953, 75, true);
+                    WriteLiteral(">\r\n\r\n                            <select id=\"PersonId\" name=\"PersonId\">\r\n\r\n");
+                    EndContext();
+#line 177 "C:\Users\amyno\Documents\Repos\meldboek\Views\Person\GroepenManagen.cshtml"
+                                 foreach (var nonmember in group.NonMembers)
+                                 {
+
+#line default
+#line hidden
+                    BeginContext(5142, 36, true);
+                    WriteLiteral("                                    ");
+                    EndContext();
+                    BeginContext(5178, 85, false);
+                    __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "9eceb6ba31001fb32c4463252534c255f855a97e21402", async() => {
+                        BeginContext(5215, 19, false);
+#line 179 "C:\Users\amyno\Documents\Repos\meldboek\Views\Person\GroepenManagen.cshtml"
+                                                                   Write(nonmember.FirstName);
+
+#line default
+#line hidden
+                        EndContext();
+                        BeginContext(5234, 1, true);
+                        WriteLiteral(" ");
+                        EndContext();
+                        BeginContext(5236, 18, false);
+#line 179 "C:\Users\amyno\Documents\Repos\meldboek\Views\Person\GroepenManagen.cshtml"
+                                                                                        Write(nonmember.LastName);
+
+#line default
+#line hidden
+                        EndContext();
+                    }
+                    );
+                    __Microsoft_AspNetCore_Mvc_TagHelpers_OptionTagHelper = CreateTagHelper<global::Microsoft.AspNetCore.Mvc.TagHelpers.OptionTagHelper>();
+                    __tagHelperExecutionContext.Add(__Microsoft_AspNetCore_Mvc_TagHelpers_OptionTagHelper);
+                    BeginWriteTagHelperAttribute();
+#line 179 "C:\Users\amyno\Documents\Repos\meldboek\Views\Person\GroepenManagen.cshtml"
+                                       WriteLiteral(nonmember.PersonId);
+
+#line default
+#line hidden
+                    __tagHelperStringValueBuffer = EndWriteTagHelperAttribute();
+                    __Microsoft_AspNetCore_Mvc_TagHelpers_OptionTagHelper.Value = __tagHelperStringValueBuffer;
+                    __tagHelperExecutionContext.AddTagHelperAttribute("value", __Microsoft_AspNetCore_Mvc_TagHelpers_OptionTagHelper.Value, global::Microsoft.AspNetCore.Razor.TagHelpers.HtmlAttributeValueStyle.DoubleQuotes);
+                    await __tagHelperRunner.RunAsync(__tagHelperExecutionContext);
+                    if (!__tagHelperExecutionContext.Output.IsContentModified)
+                    {
+                        await __tagHelperExecutionContext.SetOutputContentAsync();
+                    }
+                    Write(__tagHelperExecutionContext.Output);
+                    __tagHelperExecutionContext = __tagHelperScopeManager.End();
+                    EndContext();
+                    BeginContext(5263, 2, true);
+                    WriteLiteral("\r\n");
+                    EndContext();
+#line 180 "C:\Users\amyno\Documents\Repos\meldboek\Views\Person\GroepenManagen.cshtml"
+                                 }
+
+#line default
+#line hidden
+                    BeginContext(5301, 152, true);
+                    WriteLiteral("\r\n                            </select><br>\r\n\r\n                            <input type=\"submit\" value=\"Toevoegen\" id=\"submit\">\r\n                        ");
                     EndContext();
                 }
                 );
@@ -139,13 +328,83 @@ using meldboek.Models;
                 Write(__tagHelperExecutionContext.Output);
                 __tagHelperExecutionContext = __tagHelperScopeManager.End();
                 EndContext();
-                BeginContext(648, 90, true);
-                WriteLiteral("\n</div>\n<div id=\"AddPersonToGroup\">\n    <a>Persoon uit groep verwijderen</a> <br><br>\n    ");
+                BeginContext(5460, 30, true);
+                WriteLiteral("\r\n                    </div>\r\n");
                 EndContext();
                 BeginContext(738, 310, false);
                 __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "a8358e407ef87006bba6c794fe120103b8764ad911424", async() => {
                     BeginContext(793, 248, true);
                     WriteLiteral("\n    <a> Person id:</a><br>\n    <input type=\"string\" required name = PersonId id=\"PersonId\"><br>\n    <a>Group id:</a><br>\n    <input type=\"string\" required name = groupId id=\"groupId\"><br>\n    <input type=\"submit\" value = \"Submit\" id=\"submit\">\n    ");
+                    EndContext();
+                    BeginWriteAttribute("value", " value=\"", 5776, "\"", 5804, 1);
+#line 191 "C:\Users\amyno\Documents\Repos\meldboek\Views\Person\GroepenManagen.cshtml"
+WriteAttributeValue("", 5784, group.Group.GroupId, 5784, 20, false);
+
+#line default
+#line hidden
+                    EndWriteAttribute();
+                    BeginContext(5805, 81, true);
+                    WriteLiteral(">\r\n      \r\n                            <select id=\"PersonId\" name=\"PersonId\">\r\n\r\n");
+                    EndContext();
+#line 195 "C:\Users\amyno\Documents\Repos\meldboek\Views\Person\GroepenManagen.cshtml"
+                                 foreach (var member in group.Group.Members)
+                                 {
+
+#line default
+#line hidden
+                    BeginContext(6000, 36, true);
+                    WriteLiteral("                                    ");
+                    EndContext();
+                    BeginContext(6036, 76, false);
+                    __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "9eceb6ba31001fb32c4463252534c255f855a97e28122", async() => {
+                        BeginContext(6070, 16, false);
+#line 197 "C:\Users\amyno\Documents\Repos\meldboek\Views\Person\GroepenManagen.cshtml"
+                                                                Write(member.FirstName);
+
+#line default
+#line hidden
+                        EndContext();
+                        BeginContext(6086, 1, true);
+                        WriteLiteral(" ");
+                        EndContext();
+                        BeginContext(6088, 15, false);
+#line 197 "C:\Users\amyno\Documents\Repos\meldboek\Views\Person\GroepenManagen.cshtml"
+                                                                                  Write(member.LastName);
+
+#line default
+#line hidden
+                        EndContext();
+                    }
+                    );
+                    __Microsoft_AspNetCore_Mvc_TagHelpers_OptionTagHelper = CreateTagHelper<global::Microsoft.AspNetCore.Mvc.TagHelpers.OptionTagHelper>();
+                    __tagHelperExecutionContext.Add(__Microsoft_AspNetCore_Mvc_TagHelpers_OptionTagHelper);
+                    BeginWriteTagHelperAttribute();
+#line 197 "C:\Users\amyno\Documents\Repos\meldboek\Views\Person\GroepenManagen.cshtml"
+                                       WriteLiteral(member.PersonId);
+
+#line default
+#line hidden
+                    __tagHelperStringValueBuffer = EndWriteTagHelperAttribute();
+                    __Microsoft_AspNetCore_Mvc_TagHelpers_OptionTagHelper.Value = __tagHelperStringValueBuffer;
+                    __tagHelperExecutionContext.AddTagHelperAttribute("value", __Microsoft_AspNetCore_Mvc_TagHelpers_OptionTagHelper.Value, global::Microsoft.AspNetCore.Razor.TagHelpers.HtmlAttributeValueStyle.DoubleQuotes);
+                    await __tagHelperRunner.RunAsync(__tagHelperExecutionContext);
+                    if (!__tagHelperExecutionContext.Output.IsContentModified)
+                    {
+                        await __tagHelperExecutionContext.SetOutputContentAsync();
+                    }
+                    Write(__tagHelperExecutionContext.Output);
+                    __tagHelperExecutionContext = __tagHelperScopeManager.End();
+                    EndContext();
+                    BeginContext(6112, 2, true);
+                    WriteLiteral("\r\n");
+                    EndContext();
+#line 198 "C:\Users\amyno\Documents\Repos\meldboek\Views\Person\GroepenManagen.cshtml"
+                                 }
+
+#line default
+#line hidden
+                    BeginContext(6150, 154, true);
+                    WriteLiteral("\r\n                            </select><br>\r\n\r\n                            <input type=\"submit\" value=\"Verwijderen\" id=\"submit\">\r\n                        ");
                     EndContext();
                 }
                 );
@@ -165,8 +424,22 @@ using meldboek.Models;
                 Write(__tagHelperExecutionContext.Output);
                 __tagHelperExecutionContext = __tagHelperScopeManager.End();
                 EndContext();
-                BeginContext(1048, 8, true);
-                WriteLiteral("\n</div>\n");
+                BeginContext(6311, 30, true);
+                WriteLiteral("\r\n                    </div>\r\n");
+                EndContext();
+#line 205 "C:\Users\amyno\Documents\Repos\meldboek\Views\Person\GroepenManagen.cshtml"
+                }
+
+#line default
+#line hidden
+#line 205 "C:\Users\amyno\Documents\Repos\meldboek\Views\Person\GroepenManagen.cshtml"
+                 
+            }
+
+#line default
+#line hidden
+                BeginContext(6375, 28, true);
+                WriteLiteral("        </div>\r\n    </div>\r\n");
                 EndContext();
             }
             );
@@ -180,8 +453,8 @@ using meldboek.Models;
             Write(__tagHelperExecutionContext.Output);
             __tagHelperExecutionContext = __tagHelperScopeManager.End();
             EndContext();
-            BeginContext(1063, 8, true);
-            WriteLiteral("\n</html>");
+            BeginContext(6410, 9, true);
+            WriteLiteral("\r\n</html>");
             EndContext();
         }
         #pragma warning restore 1998
@@ -194,7 +467,7 @@ using meldboek.Models;
         [global::Microsoft.AspNetCore.Mvc.Razor.Internal.RazorInjectAttribute]
         public global::Microsoft.AspNetCore.Mvc.Rendering.IJsonHelper Json { get; private set; }
         [global::Microsoft.AspNetCore.Mvc.Razor.Internal.RazorInjectAttribute]
-        public global::Microsoft.AspNetCore.Mvc.Rendering.IHtmlHelper<meldboek.Models.Person> Html { get; private set; }
+        public global::Microsoft.AspNetCore.Mvc.Rendering.IHtmlHelper<dynamic> Html { get; private set; }
     }
 }
 #pragma warning restore 1591

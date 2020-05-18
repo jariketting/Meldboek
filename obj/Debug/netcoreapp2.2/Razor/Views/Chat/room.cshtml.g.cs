@@ -54,12 +54,12 @@ using meldboek.Models;
 #line 1 "/Users/yasemin/Documents/Inf_jaar_2/Project D/meldboek/Views/Chat/room.cshtml"
   
     ViewData["Title"] = "Chatroom: ";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "~/Views/Shared/_LayoutJari.cshtml";
 
 #line default
 #line hidden
-            BeginContext(89, 67, true);
-            WriteLiteral("\n<div class=\"container\">\n    <h2>Chatroom: <span class=\"text-info\">");
+            BeginContext(97, 88, true);
+            WriteLiteral("\r\n<div class=\"container\">\r\n    <h1 class=\"page-title\">Chatroom: <span class=\"text-info\">");
             EndContext();
             BeginContext(157, 12, false);
 #line 7 "/Users/yasemin/Documents/Inf_jaar_2/Project D/meldboek/Views/Chat/room.cshtml"

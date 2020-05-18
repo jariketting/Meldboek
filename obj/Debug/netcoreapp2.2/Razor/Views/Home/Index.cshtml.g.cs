@@ -23,8 +23,8 @@ using meldboek.Models;
 
 #line default
 #line hidden
-    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"2e8bf2e84a4876cb0e12f20527c48089dcd9f894", @"/Views/Home/Index.cshtml")]
-    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"f8de9e6b9d5c199835f9faa7d02b60c87e660435", @"/Views/_ViewImports.cshtml")]
+    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"ce6be0b6d80dcdf72a07ef1fcdb95f8f1ce0972e", @"/Views/Home/Index.cshtml")]
+    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"b303f695a79eb6d1dfd699c250715c9df1ce1a57", @"/Views/_ViewImports.cshtml")]
     public class Views_Home_Index : global::Microsoft.AspNetCore.Mvc.Razor.RazorPage<dynamic>
     {
         #pragma warning disable 1998
@@ -36,8 +36,8 @@ using meldboek.Models;
 
 #line default
 #line hidden
-            BeginContext(42, 191, true);
-            WriteLiteral("\n<div class=\"text-center\">\n    <h1 class=\"display-4\">Welcome</h1>\n    <p>Learn about <a href=\"https://docs.microsoft.com/aspnet/core\">building Web apps with ASP.NET Core</a>.</p>\n</div>\n\n<h2>");
+            BeginContext(45, 197, true);
+            WriteLiteral("\r\n<div class=\"text-center\">\r\n    <h1 class=\"display-4\">Welcome</h1>\r\n    <p>Learn about <a href=\"https://docs.microsoft.com/aspnet/core\">building Web apps with ASP.NET Core</a>.</p>\r\n</div>\r\n\r\n<h2>");
             EndContext();
             BeginContext(234, 18, false);
 #line 10 "/Users/yasemin/Documents/Inf_jaar_2/Project D/meldboek/Views/Home/Index.cshtml"
@@ -46,7 +46,7 @@ Write(ViewData["Result"]);
 #line default
 #line hidden
             EndContext();
-            BeginContext(252, 5, true);
+            BeginContext(261, 5, true);
             WriteLiteral("</h2>");
             EndContext();
         }

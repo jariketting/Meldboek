@@ -23,8 +23,8 @@ using meldboek.Models;
 
 #line default
 #line hidden
-    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"eaa9d08e9ae9cc3b9e8fe03bce4b49db7b41dbb6", @"/Views/Person/Profile.cshtml")]
-    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"f8de9e6b9d5c199835f9faa7d02b60c87e660435", @"/Views/_ViewImports.cshtml")]
+    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"1c58f0e8e2715d322d74ebad0cefd0e4ed7e36ab", @"/Views/Person/Profile.cshtml")]
+    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"b303f695a79eb6d1dfd699c250715c9df1ce1a57", @"/Views/_ViewImports.cshtml")]
     public class Views_Person_Profile : global::Microsoft.AspNetCore.Mvc.Razor.RazorPage<meldboek.ViewModels.Profile>
     {
         private static readonly global::Microsoft.AspNetCore.Razor.TagHelpers.TagHelperAttribute __tagHelperAttribute_0 = new global::Microsoft.AspNetCore.Razor.TagHelpers.TagHelperAttribute("rel", new global::Microsoft.AspNetCore.Html.HtmlString("stylesheet"), global::Microsoft.AspNetCore.Razor.TagHelpers.HtmlAttributeValueStyle.DoubleQuotes);
@@ -62,11 +62,11 @@ using meldboek.Models;
 
 #line default
 #line hidden
-            BeginContext(40, 1, true);
-            WriteLiteral("\n");
+            BeginContext(43, 2, true);
+            WriteLiteral("\r\n");
             EndContext();
-            BeginContext(76, 29, true);
-            WriteLiteral("\n<!DOCTYPE html>\n\n<html>\n    ");
+            BeginContext(81, 33, true);
+            WriteLiteral("\r\n<!DOCTYPE html>\r\n\r\n<html>\r\n    ");
             EndContext();
             BeginContext(105, 166, false);
             __tagHelperExecutionContext = __tagHelperScopeManager.Begin("head", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "eaa9d08e9ae9cc3b9e8fe03bce4b49db7b41dbb65507", async() => {
@@ -90,8 +90,8 @@ using meldboek.Models;
                 Write(__tagHelperExecutionContext.Output);
                 __tagHelperExecutionContext = __tagHelperScopeManager.End();
                 EndContext();
-                BeginContext(191, 9, true);
-                WriteLiteral("\n        ");
+                BeginContext(201, 10, true);
+                WriteLiteral("\r\n        ");
                 EndContext();
                 BeginContext(200, 59, false);
                 __tagHelperExecutionContext = __tagHelperScopeManager.Begin("script", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "eaa9d08e9ae9cc3b9e8fe03bce4b49db7b41dbb67291", async() => {
@@ -109,8 +109,8 @@ using meldboek.Models;
                 Write(__tagHelperExecutionContext.Output);
                 __tagHelperExecutionContext = __tagHelperScopeManager.End();
                 EndContext();
-                BeginContext(259, 5, true);
-                WriteLiteral("\n    ");
+                BeginContext(270, 6, true);
+                WriteLiteral("\r\n    ");
                 EndContext();
             }
             );
@@ -124,7 +124,7 @@ using meldboek.Models;
             Write(__tagHelperExecutionContext.Output);
             __tagHelperExecutionContext = __tagHelperScopeManager.End();
             EndContext();
-            BeginContext(271, 2319, true);
+            BeginContext(283, 2487, true);
             WriteLiteral(@"
     <style>
         .topbar {
@@ -167,10 +167,10 @@ using meldboek.Models;
             font-size: 22px;
         }
 
-        .personlist-content {
+        .personlist-cont");
+            WriteLiteral(@"ent {
             width: 100%;
-           ");
-            WriteLiteral(@" overflow: hidden;
+            overflow: hidden;
             padding-top: 100px;
             padding-bottom: 50px;
         }
@@ -212,12 +212,13 @@ using meldboek.Models;
 
         .person-options a {
             text-decoration: none;
-            font-size: 20px;
+     ");
+            WriteLiteral(@"       font-size: 20px;
         }
 
         #accept-friend {
-            color: #00ff00");
-            WriteLiteral(@";
+            color: #00ff00;
+            transition: 0.2s;
             display: block;
         }
 
@@ -227,6 +228,7 @@ using meldboek.Models;
 
         #deny-delete-friend {
             color: #ff0000;
+            transition: 0.2s;
         }
 
         #deny-delete-friend:hover {
@@ -245,7 +247,7 @@ using meldboek.Models;
             <span class=""navbtn"" onclick=""nav()"">&#9776; </span>
 
             <!-- Page title -->
-            <h1>Profiel</h1>
+            <h1 style=""width: 53%;"">Profiel</h1>
 
             <!-- Account information button -->
             <a><img id=""acc-icon""");
@@ -257,8 +259,8 @@ WriteAttributeValue("", 2898, Url.Content("~/Content/account.png"), 2898, 37, fa
 #line default
 #line hidden
                 EndWriteAttribute();
-                BeginContext(2936, 156, true);
-                WriteLiteral("/></a>\n        </div>\n\n        <!-- Sidemenu overlay -->\n        <div id=\"nav\" class=\"overlay\">\n            <div class=\"overlay-content\">\n                <a");
+                BeginContext(3146, 162, true);
+                WriteLiteral("/></a>\r\n        </div>\r\n\r\n        <!-- Sidemenu overlay -->\r\n        <div id=\"nav\" class=\"overlay\">\r\n            <div class=\"overlay-content\">\r\n                <a");
                 EndContext();
                 BeginWriteAttribute("href", " href=\"", 3092, "\"", 3122, 1);
 #line 135 "/Users/yasemin/Documents/Inf_jaar_2/Project D/meldboek/Views/Person/Profile.cshtml"
@@ -267,8 +269,8 @@ WriteAttributeValue("", 3099, Url.Action("Newsfeed"), 3099, 23, false);
 #line default
 #line hidden
                 EndWriteAttribute();
-                BeginContext(3123, 53, true);
-                WriteLiteral(">Newsfeed</a>\n                <br>\n                <a");
+                BeginContext(3339, 53, true);
+                WriteLiteral(">Nieuws</a>\r\n                <br>\r\n                <a");
                 EndContext();
                 BeginWriteAttribute("href", " href=\"", 3176, "\"", 3215, 1);
 #line 137 "/Users/yasemin/Documents/Inf_jaar_2/Project D/meldboek/Views/Person/Profile.cshtml"
@@ -277,8 +279,8 @@ WriteAttributeValue("", 3183, Url.Action("ForumHome","Forum"), 3183, 32, false);
 #line default
 #line hidden
                 EndWriteAttribute();
-                BeginContext(3216, 129, true);
-                WriteLiteral(">Forums</a>\n                <br>\n                <a onclick=\"nav()\" href=\"#chat\">Chat</a>\n                <br>\n                <a");
+                BeginContext(3432, 53, true);
+                WriteLiteral(">Forums</a>\r\n                <br>\r\n                <a");
                 EndContext();
                 BeginWriteAttribute("href", " href=\"", 3345, "\"", 3374, 1);
 #line 141 "/Users/yasemin/Documents/Inf_jaar_2/Project D/meldboek/Views/Person/Profile.cshtml"
@@ -287,8 +289,8 @@ WriteAttributeValue("", 3352, Url.Action("Groepen"), 3352, 22, false);
 #line default
 #line hidden
                 EndWriteAttribute();
-                BeginContext(3375, 52, true);
-                WriteLiteral(">Groepen</a>\n                <br>\n                <a");
+                BeginContext(3521, 51, true);
+                WriteLiteral(">Chat</a>\r\n                <br>\r\n                <a");
                 EndContext();
                 BeginWriteAttribute("href", " href=\"", 3427, "\"", 3459, 1);
 #line 143 "/Users/yasemin/Documents/Inf_jaar_2/Project D/meldboek/Views/Person/Profile.cshtml"
@@ -297,7 +299,17 @@ WriteAttributeValue("", 3434, Url.Action("Personlist"), 3434, 25, false);
 #line default
 #line hidden
                 EndWriteAttribute();
-                BeginContext(3460, 260, true);
+                BeginContext(3602, 54, true);
+                WriteLiteral(">Groepen</a>\r\n                <br>\r\n                <a");
+                EndContext();
+                BeginWriteAttribute("href", " href=\"", 3656, "\"", 3688, 1);
+#line 145 "C:\Users\amyno\Documents\Repos\meldboek\Views\Person\Profile.cshtml"
+WriteAttributeValue("", 3663, Url.Action("Personlist"), 3663, 25, false);
+
+#line default
+#line hidden
+                EndWriteAttribute();
+                BeginContext(3689, 268, true);
                 WriteLiteral(@">Gebruikers</a>
             </div>
             <div class=""logout""><a onclick=""nav()"" href=""#logout"">Log uit</a></div>
@@ -315,8 +327,8 @@ WriteAttributeValue("", 3434, Url.Action("Personlist"), 3434, 25, false);
 #line default
 #line hidden
                 EndContext();
-                BeginContext(3731, 33, true);
-                WriteLiteral("</h2>\n                <h2>Email: ");
+                BeginContext(3968, 34, true);
+                WriteLiteral("</h2>\r\n                <h2>Email: ");
                 EndContext();
                 BeginContext(3765, 11, false);
 #line 152 "/Users/yasemin/Documents/Inf_jaar_2/Project D/meldboek/Views/Person/Profile.cshtml"
@@ -325,8 +337,8 @@ WriteAttributeValue("", 3434, Url.Action("Personlist"), 3434, 25, false);
 #line default
 #line hidden
                 EndContext();
-                BeginContext(3776, 99, true);
-                WriteLiteral("</h2>\n            </div>\n\n            <div class=\"person-list\">\n                <h1>Vrienden</h1>\n\n");
+                BeginContext(4014, 105, true);
+                WriteLiteral("</h2>\r\n            </div>\r\n\r\n            <div class=\"person-list\">\r\n                <h1>Vrienden</h1>\r\n\r\n");
                 EndContext();
 #line 158 "/Users/yasemin/Documents/Inf_jaar_2/Project D/meldboek/Views/Person/Profile.cshtml"
                  foreach (var person in Model.PersonInfos)
@@ -341,8 +353,8 @@ WriteAttributeValue("", 3434, Url.Action("Personlist"), 3434, 25, false);
 
 #line default
 #line hidden
-                BeginContext(4043, 150, true);
-                WriteLiteral("                            <div class=\"person\">\n                                <div class=\"person-content\">\n                                    <h1>");
+                BeginContext(4291, 152, true);
+                WriteLiteral("                            <div class=\"person\">\r\n                                <div class=\"person-content\">\r\n                                    <h1>");
                 EndContext();
                 BeginContext(4194, 23, false);
 #line 164 "/Users/yasemin/Documents/Inf_jaar_2/Project D/meldboek/Views/Person/Profile.cshtml"
@@ -351,7 +363,7 @@ WriteAttributeValue("", 3434, Url.Action("Personlist"), 3434, 25, false);
 #line default
 #line hidden
                 EndContext();
-                BeginContext(4217, 1, true);
+                BeginContext(4467, 1, true);
                 WriteLiteral(" ");
                 EndContext();
                 BeginContext(4219, 22, false);
@@ -361,8 +373,8 @@ WriteAttributeValue("", 3434, Url.Action("Personlist"), 3434, 25, false);
 #line default
 #line hidden
                 EndContext();
-                BeginContext(4241, 168, true);
-                WriteLiteral("</h1>\n                                </div>\n                                <div class=\"person-options\">\n                                    <a id=\"deny-delete-friend\"");
+                BeginContext(4491, 171, true);
+                WriteLiteral("</h1>\r\n                                </div>\r\n                                <div class=\"person-options\">\r\n                                    <a id=\"deny-delete-friend\"");
                 EndContext();
                 BeginWriteAttribute("href", " href=\"", 4409, "\"", 4531, 1);
 #line 167 "/Users/yasemin/Documents/Inf_jaar_2/Project D/meldboek/Views/Person/Profile.cshtml"
@@ -371,8 +383,8 @@ WriteAttributeValue("", 4416, Url.Action("DeleteFriendProfile", "Person", new { 
 #line default
 #line hidden
                 EndWriteAttribute();
-                BeginContext(4532, 98, true);
-                WriteLiteral(">Vriend verwijderen</a>\n                                </div>\n                            </div>\n");
+                BeginContext(4785, 101, true);
+                WriteLiteral(">Vriend verwijderen</a>\r\n                                </div>\r\n                            </div>\r\n");
                 EndContext();
 #line 170 "/Users/yasemin/Documents/Inf_jaar_2/Project D/meldboek/Views/Person/Profile.cshtml"
                          }
@@ -385,8 +397,8 @@ WriteAttributeValue("", 4416, Url.Action("DeleteFriendProfile", "Person", new { 
 
 #line default
 #line hidden
-                BeginContext(4676, 115, true);
-                WriteLiteral("            </div>\n\n            <div class=\"person-list\">\n                <h1>Ontvangen vriendschapsverzoeken</h1>\n");
+                BeginContext(4934, 119, true);
+                WriteLiteral("            </div>\r\n\r\n            <div class=\"person-list\">\r\n                <h1>Ontvangen vriendschapsverzoeken</h1>\r\n");
                 EndContext();
 #line 176 "/Users/yasemin/Documents/Inf_jaar_2/Project D/meldboek/Views/Person/Profile.cshtml"
                      foreach (var person in Model.PersonInfos)
@@ -401,8 +413,8 @@ WriteAttributeValue("", 4416, Url.Action("DeleteFriendProfile", "Person", new { 
 
 #line default
 #line hidden
-                BeginContext(4963, 150, true);
-                WriteLiteral("                            <div class=\"person\">\n                                <div class=\"person-content\">\n                                    <h1>");
+                BeginContext(5229, 152, true);
+                WriteLiteral("                            <div class=\"person\">\r\n                                <div class=\"person-content\">\r\n                                    <h1>");
                 EndContext();
                 BeginContext(5114, 23, false);
 #line 182 "/Users/yasemin/Documents/Inf_jaar_2/Project D/meldboek/Views/Person/Profile.cshtml"
@@ -411,7 +423,7 @@ WriteAttributeValue("", 4416, Url.Action("DeleteFriendProfile", "Person", new { 
 #line default
 #line hidden
                 EndContext();
-                BeginContext(5137, 1, true);
+                BeginContext(5405, 1, true);
                 WriteLiteral(" ");
                 EndContext();
                 BeginContext(5139, 22, false);
@@ -421,8 +433,8 @@ WriteAttributeValue("", 4416, Url.Action("DeleteFriendProfile", "Person", new { 
 #line default
 #line hidden
                 EndContext();
-                BeginContext(5161, 189, true);
-                WriteLiteral("</h1>\n                                </div>\n                                <div class=\"person-options\" style=\"margin-top: 10px;\">\n                                    <a id=\"accept-friend\"");
+                BeginContext(5429, 192, true);
+                WriteLiteral("</h1>\r\n                                </div>\r\n                                <div class=\"person-options\" style=\"margin-top: 10px;\">\r\n                                    <a id=\"accept-friend\"");
                 EndContext();
                 BeginWriteAttribute("href", " href=\"", 5350, "\"", 5500, 1);
 #line 185 "/Users/yasemin/Documents/Inf_jaar_2/Project D/meldboek/Views/Person/Profile.cshtml"
@@ -431,8 +443,8 @@ WriteAttributeValue("", 5357, Url.Action("AcceptFriend", "Person", new { PersonR
 #line default
 #line hidden
                 EndWriteAttribute();
-                BeginContext(5501, 85, true);
-                WriteLiteral(">Vriend accepteren</a>\n                                    <a id=\"deny-delete-friend\"");
+                BeginContext(5772, 86, true);
+                WriteLiteral(">Vriend accepteren</a>\r\n                                    <a id=\"deny-delete-friend\"");
                 EndContext();
                 BeginWriteAttribute("href", " href=\"", 5586, "\"", 5694, 1);
 #line 186 "/Users/yasemin/Documents/Inf_jaar_2/Project D/meldboek/Views/Person/Profile.cshtml"
@@ -441,8 +453,8 @@ WriteAttributeValue("", 5593, Url.Action("RefuseFriendReq", "Person", new { Pers
 #line default
 #line hidden
                 EndWriteAttribute();
-                BeginContext(5695, 95, true);
-                WriteLiteral(">Vriend afwijzen</a>\n                                </div>\n                            </div>\n");
+                BeginContext(5967, 98, true);
+                WriteLiteral(">Vriend afwijzen</a>\r\n                                </div>\r\n                            </div>\r\n");
                 EndContext();
 #line 189 "/Users/yasemin/Documents/Inf_jaar_2/Project D/meldboek/Views/Person/Profile.cshtml"
                          }
@@ -455,8 +467,8 @@ WriteAttributeValue("", 5593, Url.Action("RefuseFriendReq", "Person", new { Pers
 
 #line default
 #line hidden
-                BeginContext(5840, 116, true);
-                WriteLiteral("            </div>\n\n            <div class=\"person-list\">\n                <h1>Verstuurde vriendschapsverzoeken</h1>\n");
+                BeginContext(6117, 120, true);
+                WriteLiteral("            </div>\r\n\r\n            <div class=\"person-list\">\r\n                <h1>Verstuurde vriendschapsverzoeken</h1>\r\n");
                 EndContext();
 #line 195 "/Users/yasemin/Documents/Inf_jaar_2/Project D/meldboek/Views/Person/Profile.cshtml"
                      foreach (var person in Model.PersonInfos)
@@ -471,8 +483,8 @@ WriteAttributeValue("", 5593, Url.Action("RefuseFriendReq", "Person", new { Pers
 
 #line default
 #line hidden
-                BeginContext(6132, 150, true);
-                WriteLiteral("                            <div class=\"person\">\n                                <div class=\"person-content\">\n                                    <h1>");
+                BeginContext(6417, 152, true);
+                WriteLiteral("                            <div class=\"person\">\r\n                                <div class=\"person-content\">\r\n                                    <h1>");
                 EndContext();
                 BeginContext(6283, 23, false);
 #line 201 "/Users/yasemin/Documents/Inf_jaar_2/Project D/meldboek/Views/Person/Profile.cshtml"
@@ -481,7 +493,7 @@ WriteAttributeValue("", 5593, Url.Action("RefuseFriendReq", "Person", new { Pers
 #line default
 #line hidden
                 EndContext();
-                BeginContext(6306, 1, true);
+                BeginContext(6593, 1, true);
                 WriteLiteral(" ");
                 EndContext();
                 BeginContext(6308, 22, false);
@@ -491,8 +503,8 @@ WriteAttributeValue("", 5593, Url.Action("RefuseFriendReq", "Person", new { Pers
 #line default
 #line hidden
                 EndContext();
-                BeginContext(6330, 192, true);
-                WriteLiteral("</h1>\n                                </div>\n                                <div class=\"person-options\"><a style=\"color: #0000ff;\">In behandeling</a></div>\n                            </div>\n");
+                BeginContext(6617, 196, true);
+                WriteLiteral("</h1>\r\n                                </div>\r\n                                <div class=\"person-options\"><a style=\"color: #0000ff;\">In behandeling</a></div>\r\n                            </div>\r\n");
                 EndContext();
 #line 205 "/Users/yasemin/Documents/Inf_jaar_2/Project D/meldboek/Views/Person/Profile.cshtml"
                          }
@@ -505,8 +517,8 @@ WriteAttributeValue("", 5593, Url.Action("RefuseFriendReq", "Person", new { Pers
 
 #line default
 #line hidden
-                BeginContext(6572, 40, true);
-                WriteLiteral("            </div>\n\n        </div>\n\n    ");
+                BeginContext(6865, 44, true);
+                WriteLiteral("            </div>\r\n\r\n        </div>\r\n\r\n    ");
                 EndContext();
             }
             );
@@ -520,8 +532,8 @@ WriteAttributeValue("", 5593, Url.Action("RefuseFriendReq", "Person", new { Pers
             Write(__tagHelperExecutionContext.Output);
             __tagHelperExecutionContext = __tagHelperScopeManager.End();
             EndContext();
-            BeginContext(6619, 8, true);
-            WriteLiteral("\n</html>");
+            BeginContext(6916, 9, true);
+            WriteLiteral("\r\n</html>");
             EndContext();
         }
         #pragma warning restore 1998

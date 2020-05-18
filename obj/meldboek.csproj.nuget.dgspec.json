@@ -14,7 +14,7 @@
         "outputPath": "/Users/yasemin/Documents/Inf_jaar_2/Project D/meldboek/obj/",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
-          "/usr/local/share/dotnet/sdk/NuGetFallbackFolder"
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
           "/Users/yasemin/.nuget/NuGet/NuGet.Config"
@@ -23,6 +23,7 @@
           "netcoreapp2.2"
         ],
         "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {

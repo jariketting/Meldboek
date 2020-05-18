@@ -55,12 +55,12 @@ using meldboek.Models;
 #line 1 "/Users/yasemin/Documents/Inf_jaar_2/Project D/meldboek/Views/Chat/Index.cshtml"
   
     ViewData["Title"] = "Chats";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "~/Views/Shared/_LayoutJari.cshtml";
 
 #line default
 #line hidden
-            BeginContext(84, 29, true);
-            WriteLiteral("\n    <div class=\"container\">\n");
+            BeginContext(92, 31, true);
+            WriteLiteral("\r\n    <div class=\"container\">\r\n");
             EndContext();
 #line 7 "/Users/yasemin/Documents/Inf_jaar_2/Project D/meldboek/Views/Chat/Index.cshtml"
          if (ViewBag.success != null)
@@ -68,8 +68,8 @@ using meldboek.Models;
 
 #line default
 #line hidden
-            BeginContext(161, 75, true);
-            WriteLiteral("            <div class=\"alert alert-success\" role=\"alert\">\n                ");
+            BeginContext(173, 76, true);
+            WriteLiteral("            <div class=\"alert alert-success\" role=\"alert\">\r\n                ");
             EndContext();
             BeginContext(237, 15, false);
 #line 10 "/Users/yasemin/Documents/Inf_jaar_2/Project D/meldboek/Views/Chat/Index.cshtml"
@@ -78,16 +78,16 @@ using meldboek.Models;
 #line default
 #line hidden
             EndContext();
-            BeginContext(252, 20, true);
-            WriteLiteral("\n            </div>\n");
+            BeginContext(265, 22, true);
+            WriteLiteral("\r\n            </div>\r\n");
             EndContext();
 #line 12 "/Users/yasemin/Documents/Inf_jaar_2/Project D/meldboek/Views/Chat/Index.cshtml"
         }
 
 #line default
 #line hidden
-            BeginContext(282, 110, true);
-            WriteLiteral("\n        <div class=\"row\">\n            <div class=\"col-6\">\n                <h2>Chatrooms</h2>\n                ");
+            BeginContext(298, 179, true);
+            WriteLiteral("\r\n        <h1 class=\"page-title\">Chatrooms</h1>\r\n\r\n        <div class=\"row\">\r\n            <div class=\"col-6\">\r\n                <h2>Deelnemen nieuwe chatroom</h2>\r\n                ");
             EndContext();
             BeginContext(392, 722, false);
             __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "1371a9eb30a1ec25ac2cfa5e32283e21735d53b04941", async() => {
@@ -106,7 +106,7 @@ using meldboek.Models;
 
 #line default
 #line hidden
-                BeginContext(771, 32, true);
+                BeginContext(851, 32, true);
                 WriteLiteral("                                ");
                 EndContext();
                 BeginContext(803, 48, false);
@@ -139,16 +139,16 @@ using meldboek.Models;
                 Write(__tagHelperExecutionContext.Output);
                 __tagHelperExecutionContext = __tagHelperScopeManager.End();
                 EndContext();
-                BeginContext(851, 1, true);
-                WriteLiteral("\n");
+                BeginContext(931, 2, true);
+                WriteLiteral("\r\n");
                 EndContext();
 #line 26 "/Users/yasemin/Documents/Inf_jaar_2/Project D/meldboek/Views/Chat/Index.cshtml"
                             }
 
 #line default
 #line hidden
-                BeginContext(882, 127, true);
-                WriteLiteral("                        </select>\n                    </div>\n\n                    <button class=\"btn btn-primary\" type=\"submit\"");
+                BeginContext(964, 130, true);
+                WriteLiteral("                        </select>\r\n                    </div>\r\n\r\n                    <button class=\"btn btn-primary\" type=\"submit\"");
                 EndContext();
                 BeginWriteAttribute("disabled", " disabled=\"", 1009, "\"", 1075, 1);
 #line 30 "/Users/yasemin/Documents/Inf_jaar_2/Project D/meldboek/Views/Chat/Index.cshtml"
@@ -157,8 +157,8 @@ WriteAttributeValue("", 1020, ViewBag.chatsJoinable.Count == 0 ? "disabled" : nu
 #line default
 #line hidden
                 EndWriteAttribute();
-                BeginContext(1076, 31, true);
-                WriteLiteral(">Join</button>\n                ");
+                BeginContext(1161, 37, true);
+                WriteLiteral(">Deelnemen</button>\r\n                ");
                 EndContext();
             }
             );
@@ -176,8 +176,8 @@ WriteAttributeValue("", 1020, ViewBag.chatsJoinable.Count == 0 ? "disabled" : nu
             Write(__tagHelperExecutionContext.Output);
             __tagHelperExecutionContext = __tagHelperScopeManager.End();
             EndContext();
-            BeginContext(1114, 42, true);
-            WriteLiteral("\n\n                <hr />\n\n                ");
+            BeginContext(1205, 87, true);
+            WriteLiteral("\r\n\r\n                <hr />\r\n\r\n                <h2>Mijn chatrooms</h2>\r\n                ");
             EndContext();
             BeginContext(1156, 716, false);
             __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "1371a9eb30a1ec25ac2cfa5e32283e21735d53b010131", async() => {
@@ -190,7 +190,7 @@ WriteAttributeValue("", 1020, ViewBag.chatsJoinable.Count == 0 ? "disabled" : nu
 
 #line default
 #line hidden
-                BeginContext(1532, 32, true);
+                BeginContext(1664, 32, true);
                 WriteLiteral("                                ");
                 EndContext();
                 BeginContext(1564, 48, false);
@@ -223,16 +223,16 @@ WriteAttributeValue("", 1020, ViewBag.chatsJoinable.Count == 0 ? "disabled" : nu
                 Write(__tagHelperExecutionContext.Output);
                 __tagHelperExecutionContext = __tagHelperScopeManager.End();
                 EndContext();
-                BeginContext(1612, 1, true);
-                WriteLiteral("\n");
+                BeginContext(1744, 2, true);
+                WriteLiteral("\r\n");
                 EndContext();
 #line 44 "/Users/yasemin/Documents/Inf_jaar_2/Project D/meldboek/Views/Chat/Index.cshtml"
                             }
 
 #line default
 #line hidden
-                BeginContext(1643, 126, true);
-                WriteLiteral("                        </select>\n                    </div>\n                    <button class=\"btn btn-primary\" type=\"submit\"");
+                BeginContext(1777, 128, true);
+                WriteLiteral("                        </select>\r\n                    </div>\r\n                    <button class=\"btn btn-primary\" type=\"submit\"");
                 EndContext();
                 BeginWriteAttribute("disabled", " disabled=\"", 1769, "\"", 1833, 1);
 #line 47 "/Users/yasemin/Documents/Inf_jaar_2/Project D/meldboek/Views/Chat/Index.cshtml"
@@ -241,8 +241,8 @@ WriteAttributeValue("", 1780, ViewBag.chatsJoined.Count == 0 ? "disabled" : null
 #line default
 #line hidden
                 EndWriteAttribute();
-                BeginContext(1834, 31, true);
-                WriteLiteral(">Open</button>\n                ");
+                BeginContext(1970, 39, true);
+                WriteLiteral(">Chat openen</button>\r\n                ");
                 EndContext();
             }
             );
@@ -260,8 +260,8 @@ WriteAttributeValue("", 1780, ViewBag.chatsJoined.Count == 0 ? "disabled" : null
             Write(__tagHelperExecutionContext.Output);
             __tagHelperExecutionContext = __tagHelperScopeManager.End();
             EndContext();
-            BeginContext(1872, 102, true);
-            WriteLiteral("\n            </div>\n\n            <div class=\"col-6\">\n                <h2>Friends</h2>\n                ");
+            BeginContext(2016, 108, true);
+            WriteLiteral("\r\n            </div>\r\n\r\n            <div class=\"col-6\">\r\n                <h2>Vrienden</h2>\r\n                ");
             EndContext();
             BeginContext(1974, 719, false);
             __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "1371a9eb30a1ec25ac2cfa5e32283e21735d53b015391", async() => {

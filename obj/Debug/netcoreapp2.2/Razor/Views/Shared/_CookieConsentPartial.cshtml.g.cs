@@ -28,8 +28,8 @@ using Microsoft.AspNetCore.Http.Features;
 
 #line default
 #line hidden
-    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"6a0849f73a980a2bf4428e006cf61b98a9e80a75", @"/Views/Shared/_CookieConsentPartial.cshtml")]
-    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"f8de9e6b9d5c199835f9faa7d02b60c87e660435", @"/Views/_ViewImports.cshtml")]
+    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"221c220872faa0ba404aaf1350fac6c0453b5070", @"/Views/Shared/_CookieConsentPartial.cshtml")]
+    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"b303f695a79eb6d1dfd699c250715c9df1ce1a57", @"/Views/_ViewImports.cshtml")]
     public class Views_Shared__CookieConsentPartial : global::Microsoft.AspNetCore.Mvc.Razor.RazorPage<dynamic>
     {
         private static readonly global::Microsoft.AspNetCore.Razor.TagHelpers.TagHelperAttribute __tagHelperAttribute_0 = new global::Microsoft.AspNetCore.Razor.TagHelpers.TagHelperAttribute("asp-area", "", global::Microsoft.AspNetCore.Razor.TagHelpers.HtmlAttributeValueStyle.DoubleQuotes);
@@ -57,8 +57,8 @@ using Microsoft.AspNetCore.Http.Features;
         #pragma warning disable 1998
         public async override global::System.Threading.Tasks.Task ExecuteAsync()
         {
-            BeginContext(42, 1, true);
-            WriteLiteral("\n");
+            BeginContext(43, 2, true);
+            WriteLiteral("\r\n");
             EndContext();
 #line 3 "/Users/yasemin/Documents/Inf_jaar_2/Project D/meldboek/Views/Shared/_CookieConsentPartial.cshtml"
   
@@ -70,8 +70,8 @@ using Microsoft.AspNetCore.Http.Features;
 
 #line default
 #line hidden
-            BeginContext(250, 1, true);
-            WriteLiteral("\n");
+            BeginContext(258, 2, true);
+            WriteLiteral("\r\n");
             EndContext();
 #line 10 "/Users/yasemin/Documents/Inf_jaar_2/Project D/meldboek/Views/Shared/_CookieConsentPartial.cshtml"
      if (showBanner)
@@ -79,8 +79,8 @@ using Microsoft.AspNetCore.Http.Features;
 
 #line default
 #line hidden
-            BeginContext(278, 167, true);
-            WriteLiteral("    <div id=\"cookieConsent\" class=\"alert alert-info alert-dismissible fade show\" role=\"alert\">\n        Use this space to summarize your privacy and cookie use policy. ");
+            BeginContext(289, 168, true);
+            WriteLiteral("    <div id=\"cookieConsent\" class=\"alert alert-info alert-dismissible fade show\" role=\"alert\">\r\n        Use this space to summarize your privacy and cookie use policy. ");
             EndContext();
             BeginContext(445, 72, false);
             __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "6a0849f73a980a2bf4428e006cf61b98a9e80a755181", async() => {
@@ -105,8 +105,8 @@ using Microsoft.AspNetCore.Http.Features;
             Write(__tagHelperExecutionContext.Output);
             __tagHelperExecutionContext = __tagHelperScopeManager.End();
             EndContext();
-            BeginContext(517, 120, true);
-            WriteLiteral(".\n        <button type=\"button\" class=\"accept-policy close\" data-dismiss=\"alert\" aria-label=\"Close\" data-cookie-string=\"");
+            BeginContext(529, 121, true);
+            WriteLiteral(".\r\n        <button type=\"button\" class=\"accept-policy close\" data-dismiss=\"alert\" aria-label=\"Close\" data-cookie-string=\"");
             EndContext();
             BeginContext(638, 12, false);
 #line 14 "/Users/yasemin/Documents/Inf_jaar_2/Project D/meldboek/Views/Shared/_CookieConsentPartial.cshtml"
@@ -115,7 +115,7 @@ using Microsoft.AspNetCore.Http.Features;
 #line default
 #line hidden
             EndContext();
-            BeginContext(650, 391, true);
+            BeginContext(663, 403, true);
             WriteLiteral(@""">
             <span aria-hidden=""true"">Accept</span>
         </button>

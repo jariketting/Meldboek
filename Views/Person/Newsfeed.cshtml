@@ -42,10 +42,9 @@
             .categories {
                 position: fixed;
                 float: left;
-                width: 200px;
+                width: 180px;
                 height: 550px;
-                padding-top: 80px;
-                padding-left: 50px;
+                padding: 80px 30px 0px 40px;
                 border-right: 2px solid #3bb546;
                 overflow-y: auto;
             }
@@ -56,7 +55,8 @@
                 text-decoration: none;
                 display: block;
                 padding-bottom: 15px;
-                width: 105px;
+                transition: 0.2s;
+                word-wrap: break-word;
             }
 
             .categories a:hover {
@@ -181,6 +181,7 @@
                 padding: 10px 15px;
                 border: none;
                 cursor: pointer;
+                transition: 0.2s;
             }
 
             input[type=submit]:hover {
@@ -208,7 +209,7 @@
             <span class="navbtn" onclick="nav()">&#9776; </span>
 
             <!-- Page title -->
-            <h1>Newsfeed</h1>
+            <h1 style="width: 53%;">Nieuws</h1>
 
             <!-- Account information button -->
             <a href="@Url.Action("Profile")"><img id="acc-icon" src="@Url.Content("~/Content/account.png")"/></a>
@@ -217,11 +218,11 @@
         <!-- Sidemenu overlay -->
         <div id="nav" class="overlay">
             <div class="overlay-content">
-                <p style="color: #9ee0a4;">Newsfeed</p>
+                <p style="color: #9ee0a4;">Nieuws</p>
                 <br>
                 <a href="@Url.Action("ForumHome","Forum")">Forums</a>
                 <br>
-                <a onclick="nav()" href="#chat">Chat</a>
+                <a href="@Url.Action("Index", "Chat")">Chat</a>
                 <br>
                 <a href="@Url.Action("Groepen")">Groepen</a>
                 <br>
@@ -246,7 +247,7 @@
             </div>
 
             <div class="articles-list">
-                <h1 class="page-title">Nieuws - @TempData["Page"]</h1>
+                <h1 class="page-title">@TempData["Page"]</h1>
 
                 <!-- The form to add a newspost links to a function in the PersonController called AddPost. -->
                 <button class="collapsible" id="collapsible-button" onclick="toggleCollapsible.call(this)">&#x2BC6; Nieuwsbericht maken</button>

@@ -23,8 +23,8 @@ using meldboek.Models;
 
 #line default
 #line hidden
-    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"7f42843d64c47e0b1873b6665e68e602cfe551a9", @"/Views/Admin/LogIn.cshtml")]
-    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"f8de9e6b9d5c199835f9faa7d02b60c87e660435", @"/Views/_ViewImports.cshtml")]
+    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"fd943af09c9e2968083675a5283e28eb143d6c98", @"/Views/Admin/LogIn.cshtml")]
+    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"b303f695a79eb6d1dfd699c250715c9df1ce1a57", @"/Views/_ViewImports.cshtml")]
     public class Views_Admin_LogIn : global::Microsoft.AspNetCore.Mvc.Razor.RazorPage<meldboek.Models.Admin>
     {
         private static readonly global::Microsoft.AspNetCore.Razor.TagHelpers.TagHelperAttribute __tagHelperAttribute_0 = new global::Microsoft.AspNetCore.Razor.TagHelpers.TagHelperAttribute("asp-action", "LogIn", global::Microsoft.AspNetCore.Razor.TagHelpers.HtmlAttributeValueStyle.DoubleQuotes);
@@ -54,8 +54,8 @@ using meldboek.Models;
         #pragma warning disable 1998
         public async override global::System.Threading.Tasks.Task ExecuteAsync()
         {
-            BeginContext(29, 23, true);
-            WriteLiteral("<!DOCTYPE html>\n<html>\n");
+            BeginContext(30, 25, true);
+            WriteLiteral("<!DOCTYPE html>\r\n<html>\r\n");
             EndContext();
             BeginContext(52, 1835, false);
             __tagHelperExecutionContext = __tagHelperScopeManager.Begin("head", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "7f42843d64c47e0b1873b6665e68e602cfe551a94175", async() => {
@@ -98,9 +98,9 @@ using meldboek.Models;
             width: 200px;
             padding-top: 5px;
             padding-bottom: 5px;
-            padding-left: 75px;
-       ");
-                WriteLiteral(@"     color: white;
+ ");
+                WriteLiteral(@"           padding-left: 75px;
+            color: white;
             border-radius: 4px;
             border: #27ae60 1px solid;
             margin-top: 10px;
@@ -148,8 +148,8 @@ using meldboek.Models;
             Write(__tagHelperExecutionContext.Output);
             __tagHelperExecutionContext = __tagHelperScopeManager.End();
             EndContext();
-            BeginContext(1887, 1, true);
-            WriteLiteral("\n");
+            BeginContext(1963, 2, true);
+            WriteLiteral("\r\n");
             EndContext();
             BeginContext(1888, 762, false);
             __tagHelperExecutionContext = __tagHelperScopeManager.Begin("body", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "7f42843d64c47e0b1873b6665e68e602cfe551a97192", async() => {
@@ -170,8 +170,8 @@ using meldboek.Models;
                 <input type=""submit"" value=""button"" id=""submit"">
 ");
                     EndContext();
-                    BeginContext(2516, 27, true);
-                    WriteLiteral("            </div>\n        ");
+                    BeginContext(2606, 28, true);
+                    WriteLiteral("            </div>\r\n        ");
                     EndContext();
                 }
                 );
@@ -191,11 +191,11 @@ using meldboek.Models;
                 Write(__tagHelperExecutionContext.Output);
                 __tagHelperExecutionContext = __tagHelperScopeManager.End();
                 EndContext();
-                BeginContext(2550, 1, true);
-                WriteLiteral("\n");
+                BeginContext(2641, 2, true);
+                WriteLiteral("\r\n");
                 EndContext();
-                BeginContext(2632, 11, true);
-                WriteLiteral("    </div>\n");
+                BeginContext(2725, 12, true);
+                WriteLiteral("    </div>\r\n");
                 EndContext();
             }
             );
@@ -209,8 +209,8 @@ using meldboek.Models;
             Write(__tagHelperExecutionContext.Output);
             __tagHelperExecutionContext = __tagHelperScopeManager.End();
             EndContext();
-            BeginContext(2650, 8, true);
-            WriteLiteral("\n</html>");
+            BeginContext(2744, 9, true);
+            WriteLiteral("\r\n</html>");
             EndContext();
         }
         #pragma warning restore 1998

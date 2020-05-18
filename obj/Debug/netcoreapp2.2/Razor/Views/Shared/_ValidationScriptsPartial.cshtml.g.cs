@@ -23,8 +23,8 @@ using meldboek.Models;
 
 #line default
 #line hidden
-    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"7631e4da89d29e0eeb44833ec88dfdfd0d361c3d", @"/Views/Shared/_ValidationScriptsPartial.cshtml")]
-    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"f8de9e6b9d5c199835f9faa7d02b60c87e660435", @"/Views/_ViewImports.cshtml")]
+    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"1161b4f9c26a241dfca291df40a11895ab0c72a2", @"/Views/Shared/_ValidationScriptsPartial.cshtml")]
+    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"b303f695a79eb6d1dfd699c250715c9df1ce1a57", @"/Views/_ViewImports.cshtml")]
     public class Views_Shared__ValidationScriptsPartial : global::Microsoft.AspNetCore.Mvc.Razor.RazorPage<dynamic>
     {
         private static readonly global::Microsoft.AspNetCore.Razor.TagHelpers.TagHelperAttribute __tagHelperAttribute_0 = new global::Microsoft.AspNetCore.Razor.TagHelpers.TagHelperAttribute("src", new global::Microsoft.AspNetCore.Html.HtmlString("~/lib/jquery-validation/dist/jquery.validate.js"), global::Microsoft.AspNetCore.Razor.TagHelpers.HtmlAttributeValueStyle.DoubleQuotes);
@@ -84,8 +84,8 @@ using meldboek.Models;
                 Write(__tagHelperExecutionContext.Output);
                 __tagHelperExecutionContext = __tagHelperScopeManager.End();
                 EndContext();
-                BeginContext(111, 5, true);
-                WriteLiteral("\n    ");
+                BeginContext(112, 6, true);
+                WriteLiteral("\r\n    ");
                 EndContext();
                 BeginContext(116, 90, false);
                 __tagHelperExecutionContext = __tagHelperScopeManager.Begin("script", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "7631e4da89d29e0eeb44833ec88dfdfd0d361c3d9825", async() => {
@@ -102,8 +102,8 @@ using meldboek.Models;
                 Write(__tagHelperExecutionContext.Output);
                 __tagHelperExecutionContext = __tagHelperScopeManager.End();
                 EndContext();
-                BeginContext(206, 1, true);
-                WriteLiteral("\n");
+                BeginContext(208, 2, true);
+                WriteLiteral("\r\n");
                 EndContext();
             }
             );
@@ -119,8 +119,8 @@ using meldboek.Models;
             Write(__tagHelperExecutionContext.Output);
             __tagHelperExecutionContext = __tagHelperScopeManager.End();
             EndContext();
-            BeginContext(221, 1, true);
-            WriteLiteral("\n");
+            BeginContext(224, 2, true);
+            WriteLiteral("\r\n");
             EndContext();
             BeginContext(222, 906, false);
             __tagHelperExecutionContext = __tagHelperScopeManager.Begin("environment", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "7631e4da89d29e0eeb44833ec88dfdfd0d361c3d12046", async() => {
@@ -152,8 +152,8 @@ using meldboek.Models;
                 Write(__tagHelperExecutionContext.Output);
                 __tagHelperExecutionContext = __tagHelperScopeManager.End();
                 EndContext();
-                BeginContext(643, 5, true);
-                WriteLiteral("\n    ");
+                BeginContext(653, 6, true);
+                WriteLiteral("\r\n    ");
                 EndContext();
                 BeginContext(648, 465, false);
                 __tagHelperExecutionContext = __tagHelperScopeManager.Begin("script", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "7631e4da89d29e0eeb44833ec88dfdfd0d361c3d14483", async() => {
@@ -180,8 +180,8 @@ using meldboek.Models;
                 Write(__tagHelperExecutionContext.Output);
                 __tagHelperExecutionContext = __tagHelperScopeManager.End();
                 EndContext();
-                BeginContext(1113, 1, true);
-                WriteLiteral("\n");
+                BeginContext(1129, 2, true);
+                WriteLiteral("\r\n");
                 EndContext();
             }
             );
@@ -197,8 +197,8 @@ using meldboek.Models;
             Write(__tagHelperExecutionContext.Output);
             __tagHelperExecutionContext = __tagHelperScopeManager.End();
             EndContext();
-            BeginContext(1128, 1, true);
-            WriteLiteral("\n");
+            BeginContext(1145, 2, true);
+            WriteLiteral("\r\n");
             EndContext();
         }
         #pragma warning restore 1998
