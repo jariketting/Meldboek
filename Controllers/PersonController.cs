@@ -47,7 +47,7 @@ namespace meldboek.Controllers
             return View("GroepenManagen", model);
         }
 
-        [Route("Person/Profile")]
+        //[Route("Person/Profile")]
         public IActionResult Profile()
         {
             //grab a random person out of the DB untill be have the claims

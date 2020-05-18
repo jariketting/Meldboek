@@ -42,10 +42,9 @@
             .options {
                 position: fixed;
                 float: left;
-                width: 200px;
+                width: 180px;
                 height: 550px;
-                padding-top: 80px;
-                padding-left: 40px;
+                padding: 80px 30px 0px 40px;
                 border-right: 2px solid #e947ff;
                 overflow-y: auto;
             }
@@ -56,6 +55,7 @@
                 text-decoration: none;
                 display: block;
                 padding-bottom: 15px;
+                word-wrap: break-word;
             }
 
             .options a:hover {
@@ -136,7 +136,7 @@
         <!-- Sidemenu overlay -->
         <div id="nav" class="overlay">
             <div class="overlay-content">
-                <a href="@Url.Action("Newsfeed")">Newsfeed</a>
+                <a href="@Url.Action("Newsfeed")">Nieuws</a>
                 <br>
                 <a href="@Url.Action("ForumHome","Forum")">Forums</a>
                 <br>

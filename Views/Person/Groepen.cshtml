@@ -66,6 +66,7 @@
                 font-size: 28px;
                 padding-bottom: 15px;
                 padding-top: 40px;
+                width: 85%;
             }
 
             .group-info h3 {
@@ -79,9 +80,9 @@
                 background-color: #ff5252;
                 padding: 10px;
                 margin-top: 50px;
-                margin-left: 96.7%;
+                margin-left: 87%;
                 border-radius: 20px;
-                width: 20px;
+                width: 140px;
                 height: 20px;
                 text-align: center;
                 cursor: pointer;
@@ -169,7 +170,7 @@
         <!-- Sidemenu overlay -->
         <div id="nav" class="overlay">
             <div class="overlay-content">
-                <a href="@Url.Action("Newsfeed")">Newsfeed</a>
+                <a href="@Url.Action("Newsfeed")">Nieuws</a>
                 <br>
                 <a href="@Url.Action("ForumHome","Forum")">Forums</a>
                 <br>
@@ -198,7 +199,7 @@
                             <h1>@group.GroupName</h1>
                             <h3>@group.Creator.FirstName @group.Creator.LastName</h3>
                         </div>
-                        <div class="leave-button" onclick="window.location='@Url.Action("LeaveGroup", new { GroupId = group.GroupId })';">&#10005;</div>
+                        <div class="leave-button" onclick="window.location='@Url.Action("LeaveGroup", new { GroupId = group.GroupId })';">Verlaat groep</div>
                         <button class="collapsible" id="collapsible-button-@group.GroupId" onclick="toggleCollapsible.call(this)">Deelnemers</button>
                         <div class="collapsible-content" id="collapsible-section-@group.GroupId">
                             <!-- Here all the members from List<Person> are put into the collapsible. -->
