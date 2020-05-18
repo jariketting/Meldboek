@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "8yl2oPwwkTJ08315ZZrnskAJPbPOR3xcvN2jhFXp+6F9MD9u9t8lzVIF4lXgmsmrXj9AO2LeCaYLgZayKZXEqw==",
+  "dgSpecHash": "9J2svQ2lUYZ8O8eZeU9jN4dF9jVZOLjMXqR4ChrOwaVxYu1n3EodZeGzkDLzBHspcLtndOkEy/JpgKqQo/HojA==",
   "success": true,
   "projectFilePath": "C:\\Users\\amyno\\Documents\\Repos\\meldboek\\meldboek.csproj",
   "expectedPackageFiles": [
@@ -42,7 +42,7 @@
     "C:\\Users\\amyno\\.nuget\\packages\\microsoft.aspnetcore.hosting.abstractions\\2.2.0\\microsoft.aspnetcore.hosting.abstractions.2.2.0.nupkg.sha512",
     "C:\\Users\\amyno\\.nuget\\packages\\microsoft.aspnetcore.hosting.server.abstractions\\2.2.0\\microsoft.aspnetcore.hosting.server.abstractions.2.2.0.nupkg.sha512",
     "C:\\Users\\amyno\\.nuget\\packages\\microsoft.aspnetcore.html.abstractions\\2.2.0\\microsoft.aspnetcore.html.abstractions.2.2.0.nupkg.sha512",
-    "C:\\Users\\amyno\\.nuget\\packages\\microsoft.aspnetcore.http\\2.2.0\\microsoft.aspnetcore.http.2.2.0.nupkg.sha512",
+    "C:\\Users\\amyno\\.nuget\\packages\\microsoft.aspnetcore.http\\2.2.2\\microsoft.aspnetcore.http.2.2.2.nupkg.sha512",
     "C:\\Users\\amyno\\.nuget\\packages\\microsoft.aspnetcore.http.abstractions\\2.2.0\\microsoft.aspnetcore.http.abstractions.2.2.0.nupkg.sha512",
     "C:\\Users\\amyno\\.nuget\\packages\\microsoft.aspnetcore.http.connections\\1.1.0\\microsoft.aspnetcore.http.connections.1.1.0.nupkg.sha512",
     "C:\\Users\\amyno\\.nuget\\packages\\microsoft.aspnetcore.http.connections.common\\1.1.0\\microsoft.aspnetcore.http.connections.common.1.1.0.nupkg.sha512",
