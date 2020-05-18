@@ -1,5 +1,4 @@
-﻿
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
@@ -14,11 +13,11 @@ namespace meldboek.Models
         public string FirstName { get; set; }
         public string LastName { get; set; }
         [DisplayName("Uw email")]
-        [Required(ErrorMessage ="Deze veld is verplicht")]
+        [Required(ErrorMessage = "Deze veld is verplicht")]
         public string Email { get; set; }
         [DataType(DataType.Password)]
         [Required(ErrorMessage = "Deze veld is verplicht")]
-        [DisplayName("Uw wachtwoord")] 
+        [DisplayName("Uw wachtwoord")]
         public string Password { get; set; }
         public string LoginErrorMessage { get; set; }
 

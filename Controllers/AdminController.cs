@@ -1,15 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Claims;
-using System.Threading;
 using System.Threading.Tasks;
-using IdentityModel;
+
 using meldboek.Models;
 using Microsoft.AspNetCore.Mvc;
 using Neo4j.Driver;
 using Newtonsoft.Json;
-using Remotion.Linq.Clauses.ResultOperators;
 
 namespace meldboek.Controllers
 {
@@ -61,47 +58,36 @@ namespace meldboek.Controllers
 
             }
 
-            //var a =  (ClaimsPrincipal)Thread.CurrentPrincipal;
-            //  // var naaam = Microsoft.AspNet.Identity.Claims.Where(c => c.Type == ClaimTypes.Name);
-            //  string UserId;
-            //  foreach (var v in a.Identities)
-            //  {
-            //      UserId = v.Name;
-            //  }
-            //var USerID = Thread.CurrentPrincipal?.Identity.Name;
-
-            //var username = User.Claims.First(x => x.Type == ClaimTypes.NameIdentifier).Value;
-
-            Person p = ClaimsController.Instance.GetClaim();
 
             return View();
 
 
-         
+
 
         }
 
         public int GetMaxGroupId()
         {
-            // GetMaxPostId gets the Person with the highest id from the database and returns the id.
+            int returnId = 0;
+            // GetMaxPostId pakt een id die nog niet gebruikt wordt
+            Random rnd = new Random();
 
-            List<INode> postNodes = new List<INode>();
-            var getPosts = ConnectDb("MATCH(p:Group) RETURN p ORDER BY toInteger(p.GroupId) DESC LIMIT 1");
-            var Group = new Group();
 
-            postNodes = getPosts.Result;
-            foreach (var record in postNodes)
+            while (true)
             {
-                var nodeprops = JsonConvert.SerializeObject(record.As<INode>().Properties);
-                Group = (JsonConvert.DeserializeObject<Group>(nodeprops));
+                returnId = rnd.Next(1000001, 999999999);
+                var r = ConnectDb("MATCH (n:Group) WHERE n.GroupId =" + returnId + " return n;");
+                r.Wait();
+                if (r.Result.Count == 0)
+                {
+                    return returnId;
+                }
             }
-
-            return Group.GroupId + 1;
         }
 
         public async Task<List<INode>> ConnectDb(string query)
         {
-            Driver = CreateDriverWithBasicAuth("bolt://localhost:7687", "neo4j", "1234");
+            Driver = CreateDriverWithBasicAuth("bolt://localhost:11005", "neo4j", "1234");
             List<INode> res = new List<INode>();
             IAsyncSession session = Driver.AsyncSession(o => o.WithDatabase("neo4j"));
 

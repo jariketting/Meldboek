@@ -1,0 +1,217 @@
+﻿@{
+    ViewData["Title"] = "Groepen";
+}
+
+@model IEnumerable<GroupData>
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" type="text/css" href="~/css/Topbar_Sidenav.css">
+        <script type="text/javascript" src="~/js/site.js"></script>
+        <style>
+            body {
+                font-family: 'Trebuchet MS', sans-serif;
+                background-color: #ffffff;
+            }
+
+            .topbar {
+                background-color: #ff5252;
+            }
+
+            .navbtn {
+                background-color: #ff5252;
+            }
+
+            .overlay {
+                background-color: #ff5252;
+            }
+
+            .overlay a:hover, .overlay a:focus, .logout a:hover, .logout a:focus {
+               color: #ffa6a6;
+            }
+
+            .page-title {
+                font-size: 28px;
+                padding-bottom: 20px;
+            }
+
+            .groups-content {
+                width: 100%;
+                overflow: hidden;
+                padding-top: 100px;
+                padding-bottom: 50px;
+            }
+
+            /* Groups list */
+            .group-list {
+                padding-top: 40px;
+                margin-left: 10%;
+            }
+
+            /* Single group */
+            .group {
+                width: 90%;
+                overflow: hidden;
+                padding-bottom: 10px;
+                border-bottom: 1px solid #ff5252;
+            }
+
+            /* Group information consists of name (h1) and creator (h3). */
+            .group-info {
+                float: left;
+            }
+
+            .group-info h1 {
+                font-size: 28px;
+                padding-bottom: 15px;
+                padding-top: 40px;
+                width: 85%;
+            }
+
+            .group-info h3 {
+                font-size: 20px;
+                padding-bottom: 10px;
+            }
+
+            /* Button to leave a group */
+            .leave-button {
+                display: block;
+                background-color: #ff5252;
+                padding: 10px;
+                margin-top: 50px;
+                margin-left: 87%;
+                border-radius: 20px;
+                width: 140px;
+                height: 20px;
+                text-align: center;
+                cursor: pointer;
+                color: #ffffff;
+                font-size: 20px;
+                text-decoration: none;
+                transition: 0.2s;
+            }
+
+            .leave-button:hover {
+                background-color: #ffa6a6;
+            }
+
+            /* Collapsible content (all the Persons in a group) and button */
+            .collapsible {
+                font-family: 'Trebuchet MS', sans-serif;
+                background-color: #ff5252;
+                color: #ffffff;
+                cursor: pointer;
+                width: 100%;
+                border: none;
+                border-radius: 20px;
+                text-align: left;
+                margin-top: 10px;
+                padding: 10px 0px 10px 20px;
+                outline: none;
+                font-size: 18px;
+                transition: 0.2s;
+            }
+
+            .collapsible:hover {
+                background-color: #ffa6a6;
+            }
+
+            .collapsible-content {
+                max-height: 0;
+                overflow: hidden;
+                transition: max-height 0.2s ease-out;
+                padding: 10px 0px 0px 20px;
+            }
+
+            .collapsible-content p {
+                font-size: 18px;
+                color: #000000;
+            }
+
+            #manage-groups {
+                text-decoration: none;
+                color: #0000ff;
+                font-size: 22px;
+                transition: 0.2s;
+            }
+
+            #manage-groups:hover {
+                color: #b3b3ff;
+            }
+        </style>
+        <script>
+            function toggleCollapsible() {
+                var buttonId = this.id;
+                var sectionId = buttonId.replace("button", "section");
+                var content = document.getElementById(sectionId);
+                if (content.style.maxHeight) {
+                    content.style.maxHeight = null;
+                } else {
+                    content.style.maxHeight = content.scrollHeight + "px";
+                }
+            }
+        </script>
+    </head>
+    <body>
+        <!-- Colored bar at the top of the page -->
+        <div class="topbar">
+
+            <!-- The button that opens the sidemenu -->
+            <span class="navbtn" onclick="nav()">&#9776; </span>
+
+            <!-- Page title -->
+            <h1 style="width: 54%;">Groepen</h1>
+
+            <!-- Account information button -->
+            <a href="@Url.Action("Profile")"><img id="acc-icon" src="@Url.Content("~/Content/account.png")" /></a>
+        </div>
+
+        <!-- Sidemenu overlay -->
+        <div id="nav" class="overlay">
+            <div class="overlay-content">
+                <a href="@Url.Action("Newsfeed")">Nieuws</a>
+                <br>
+                <a href="@Url.Action("ForumHome","Forum")">Forums</a>
+                <br>
+                <a href="@Url.Action("Index", "Chat")">Chat</a>
+                <br>
+                <p style="color: #ffa6a6;">Groepen</p>
+                <br>
+                <a href="@Url.Action("Personlist")">Gebruikers</a>
+            </div>
+            <div class="logout"><a onclick="nav()" href="#logout">Log uit</a></div>
+        </div>
+
+        <!-- All the actual content of the page -->
+        <div class="groups-content">
+
+            <!-- The list of groups -->
+            <div class="group-list">
+
+                <a id="manage-groups" href="@Url.Action("GroepenManagen")">Groepen beheren &#8594;</a>
+
+                <!-- Single group attribute; Here all the data from GetGroupsInfo() is put on the page. -->
+                @foreach (var group in Model)
+                {
+                    <div class="group">
+                        <div class="group-info">
+                            <h1>@group.GroupName</h1>
+                            <h3>@group.Creator.FirstName @group.Creator.LastName</h3>
+                        </div>
+                        <div class="leave-button" onclick="window.location='@Url.Action("LeaveGroup", new { GroupId = group.GroupId })';">Verlaat groep</div>
+                        <button class="collapsible" id="collapsible-button-@group.GroupId" onclick="toggleCollapsible.call(this)">Deelnemers</button>
+                        <div class="collapsible-content" id="collapsible-section-@group.GroupId">
+                            <!-- Here all the members from List<Person> are put into the collapsible. -->
+                            @foreach (var member in group.Members)
+                            {
+                                <p>@member.FirstName @member.LastName</p>
+                            }
+                        </div>
+                    </div>
+                }
+            </div>
+
+        </div>
+    </body>
+</html>

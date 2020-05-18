@@ -22,7 +22,6 @@ namespace meldboek.Controllers
 
         public IActionResult Index()
         {
-
             // var results = ConnectDb("CREATE (n:Person { name: 'Yas2', title: 'Developer' }) RETURN n");
             // var results = ConnectDb("MATCH (a:Person) RETURN a");
 
@@ -45,14 +44,12 @@ namespace meldboek.Controllers
 
             //AddPersonToGroup(1, 1);
             // DeletePersonFromGroup(1, 1);
-            //   LogIn("Test@s.nl", "wachtwoord");
+          
 
             return View();
         }
 
-
-
-
+        
 
 
         public async Task<List<INode>> ConnectDb(string query)

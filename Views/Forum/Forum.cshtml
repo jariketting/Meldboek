@@ -1,0 +1,215 @@
+﻿@page
+@model meldboek.Models.ForumItem
+@{
+    Forum forum;
+            if (ViewBag.Forum != null)
+            {
+                forum = ViewBag.forum;
+            
+    }else
+    {
+        forum = (Forum)TempData["Forum"];
+    }
+    meldboek.Controllers.ForumController FC = new meldboek.Controllers.ForumController();
+    List<ForumItem> forumItems = FC.GetAllReplies(forum);
+
+
+
+
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Forums</title>
+    <link rel="stylesheet" type="text/css" href="~/css/Topbar_Sidenav.css">
+    <script type="text/javascript" src="~/js/site.js"></script>
+    <style>
+        body {
+            font-family: 'Trebuchet MS', sans-serif;
+            background-color: #ffffff;
+        }
+        .topbar {
+            background-color: #ff3398;
+            margin-bottom: 20px;
+        }
+        .navbtn {
+            background-color: #ff3398;
+        }
+        .overlay {
+            background-color: #ff3398;
+            margin-top: 0px;
+        }
+        .info {
+            color: #000000;
+            vertical-align: middle;
+            border: solid;
+            border-bottom-width: 2px;
+            border-color: #000000;
+        }
+        .infoi {
+            color: #000000;
+            vertical-align: middle;
+            border: solid;
+            border-bottom-width: 2px;
+            border-color: #000000;
+        }
+        .table {
+            height: inherit;
+        }
+        #forums {
+            background-color: #ffffff;
+            width: 100%;
+        }
+        .button {
+            display: block;
+            width: inherit;
+            color: #000000;
+            text-decoration: none;
+            font-size: 35px;
+            text-align: center;
+            height: 150px;
+            transition: 0.2s;
+            border: solid;
+            border-bottom-width: 2px;
+            border-color: #000000;
+            background-color: #ffffff;
+        }
+        .sub {
+            display: block;
+            width: 90%;
+            margin-left:5%;
+            margin-right:5%;
+            background-color: #ff3398;
+            text-decoration: none;
+            font-size: 35px;
+            text-align: center;
+            height: 90%;
+            transition: 0.2s;
+        }
+            .sub:hover {
+                background-color: #ffa1d0;
+            }
+
+        #Content {
+            width: 90%;
+            height: 40px;
+        }
+        #Title {
+            width: 90%;
+            height: 40px;
+        }
+        
+        .delete-button {
+            display: block;
+            background-color: #ff5252;
+            padding: 10px;
+            border-radius: 20px;
+            width: 20px;
+            height: 20px;
+            text-align: center;
+            cursor: pointer;
+            color: #ffffff;
+            font-size: 20px;
+            text-decoration: none;
+            transition: 0.2s;
+        }
+
+        .forum-link {
+            margin: 74px 0px 0px 0px;
+            padding: 20px;
+        }
+
+        .forum-link a {
+            text-decoration: none;
+            color: #0000ff;
+            font-size: 22px;
+            transition: 0.2s;
+        }
+
+        .forum-link a:hover {
+            color: #b3b3ff;
+        }
+    </style>
+    <script>
+        function toggleCollapsible() {
+            var buttonId = this.id;
+            var sectionId = buttonId.replace("button", "section");
+            var content = document.getElementById(sectionId);
+            if (content.style.maxHeight) {
+                content.style.maxHeight = null;
+            } else {
+                content.style.maxHeight = content.scrollHeight + "px";
+            }
+        }
+    </script>
+</head>
+<body>
+    <!-- Sidemenu overlay -->
+    <div id="nav" class="overlay">
+        <div class="overlay-content">
+            <a href="@Url.Action("Newsfeed", "Person")">Nieuws</a>
+            <br>
+            <a onclick="nav()" href="#forums">Forums</a>
+            <br>
+            <a href="@Url.Action("Index", "Chat")">Chat</a>
+            <br>
+            <a href="@Url.Action("Groepen")">Groepen</a>
+            <br>
+            <a href="@Url.Action("Personlist")">Gebruikers</a>
+        </div>
+        <div class="logout"><a onclick="nav()" href="#logout">Log uit</a></div>
+    </div>
+
+    <div class="topbar">
+        <h1 style="width: 54%;" class="title">@forum.Title</h1>
+        <span class="navbtn" onclick="nav()">&#9776; </span>
+
+        <a href="@Url.Action("Profile", "Person")"><img id="acc-icon" src="@Url.Content("~/Content/account.png")" /></a>
+    </div>
+
+    <div class="forum-link">
+        <a href="@Url.Action("ForumHome")">&#8592; Forums</a>
+    </div>
+
+    <div id="absoluteCenteredDiv">
+        
+        
+
+
+
+        <p class="button">@forum.Content</p>
+
+        @foreach (ForumItem forumItem in forumItems)
+        {
+
+
+            <table white-space="nowrap" width="100%" class="table">
+                <tr>
+                    <th>
+                        <p class="button">@forumItem.Content</p>
+                    </th>
+                    <th align="right" width="3%" class="info">
+                        <form asp-action="Forum" method="post">
+                            <input hidden type="text" value="@forumItem.ForumItemId" name=del id="del">
+                            <input hidden type="text" value="@forum.ForumId" name=fid id="fid" size="50">
+
+                            @if (forumItem.Owner.PersonId == 1 || forum.Owner.PersonId == 1)
+                            {
+                                <input href="@Url.Action("Forum", new { id = @forum.ForumId })" type="submit" value="&#10005" id="submit" class="delete-button">
+                            }
+                            </form>
+                    </th>
+                </tr>
+            </table>
+        }
+        <div class="button">
+            <form asp-action="Forum" method="post">
+                <input hidden type="text" value="@forum.ForumId" name=fid id="fid" size="50">
+                <input type="text" required name=Content id="Content" size="50"><br><br>
+
+                <input href="@Url.Action("Forum", new { id = @forum.ForumId })" type="submit" value="Nieuwe comment" id="submit" class="sub">
+            </form>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,290 +1,298 @@
-﻿<!-- model IEnumerable<Newspost> -->
+﻿@{ 
+    ViewData["Title"] = "Nieuws";
+}
+
 @model dynamic
 
 <!DOCTYPE html>
 <html>
-<head>
-    <title>Newsfeed</title>
-    <link rel="stylesheet" type="text/css" href="~/css/Topbar_Sidenav.css">
-    <script type="text/javascript" src="~/js/site.js"></script>
-    <style>
-        body {
-            font-family: 'Trebuchet MS', sans-serif;
-            background-color: #ffffff;
-        }
+    <head>
+        <link rel="stylesheet" type="text/css" href="~/css/Topbar_Sidenav.css">
+        <script type="text/javascript" src="~/js/site.js"></script>
+        <style>
+            body {
+                font-family: 'Trebuchet MS', sans-serif;
+                background-color: #ffffff;
+            }
 
-        .topbar {
-            background-color: #3bb546;
-        }
+            .topbar {
+                background-color: #3bb546;
+            }
 
-        .navbtn {
-            background-color: #3bb546;
-        }
+            .navbtn {
+                background-color: #3bb546;
+            }
 
-        .overlay {
-            background-color: #3bb546;
-        }
+            .overlay {
+                background-color: #3bb546;
+            }
 
-        .overlay a:hover, .overlay a:focus, .logout a:hover, .logout a:focus {
-            color: #9ee0a4;
-        }
+            .overlay a:hover, .overlay a:focus, .logout a:hover, .logout a:focus {
+                color: #9ee0a4;
+            }
 
-        .newsfeed-content {
-            width: 100%;
-            overflow: hidden;
-            padding-top: 100px;
-            padding-bottom: 50px;
-        }
+            .newsfeed-content {
+                width: 100%;
+                overflow: hidden;
+                padding-top: 100px;
+                padding-bottom: 50px;
+            }
 
-        /* Categories list */
-        .categories {
-            position: fixed;
-            float: left;
-            width: 200px;
-            height: 550px;
-            padding-top: 80px;
-            padding-left: 50px;
-            border-right: 2px solid #3bb546;
-        }
+            /* Categories list */
+            .categories {
+                position: fixed;
+                float: left;
+                width: 180px;
+                height: 550px;
+                padding: 80px 30px 0px 40px;
+                border-right: 2px solid #3bb546;
+                overflow-y: auto;
+            }
 
-        .categories a {
-            color: #000000;
-            font-size: 24px;
-            text-decoration: none;
-            display: block;
-            padding-bottom: 15px;
-            width: 105px;
-        }
+            .categories a {
+                color: #000000;
+                font-size: 24px;
+                text-decoration: none;
+                display: block;
+                padding-bottom: 15px;
+                transition: 0.2s;
+                word-wrap: break-word;
+            }
 
-        .categories a:hover {
-             color: #9ee0a4;
-        }
+            .categories a:hover {
+                 color: #9ee0a4;
+            }
 
-        .page-title {
-            font-size: 28px;
-            padding-bottom: 20px;
-        }
+            .page-title {
+                font-size: 28px;
+                padding-bottom: 20px;
+            }
 
-        /* Articles list */
-        .articles-list {
-            padding-top: 40px;
-            margin-left: 350px;
-        }
+            /* Articles list */
+            .articles-list {
+                padding-top: 40px;
+                margin-left: 350px;
+            }
 
-        /* Single article */
-        .article {
-            width: 90%;
-            overflow: hidden;
-            padding-bottom: 5px;
-            border-bottom: 1px solid #3bb546;
-        }
+            /* Single article */
+            .article {
+                width: 90%;
+                overflow: hidden;
+                padding-bottom: 5px;
+                border-bottom: 1px solid #3bb546;
+            }
 
-        /* Article content consists of title (h1) and author + date (h3). */
-        .article-content {
-            float: left;
-            width: 90%;
-        }
+            /* Article content consists of title (h1) and author + date (h3). */
+            .article-content {
+                float: left;
+                width: 90%;
+            }
 
-        .article-content h1 {
-            font-size: 28px;
-            padding-bottom: 15px;
-            padding-top: 40px;
-        }
+            .article-content h1 {
+                font-size: 28px;
+                padding-bottom: 15px;
+                padding-top: 40px;
+            }
 
-        .article-content h3 {
-            font-size: 20px;
-            padding-bottom: 10px;
-        }
+            .article-content h3 {
+                font-size: 20px;
+                padding-bottom: 10px;
+            }
         
-        .article-content p {
-            color: #000000;
-            font-size: 18px;
-            padding-bottom: 10px;
-        }
-
-        .delete-button {
-            display: block;
-            background-color: #ff5252;
-            padding: 10px;
-            margin-top: 90px;
-            margin-left: 90%;
-            border-radius: 20px;
-            width: 20px;
-            height: 20px;
-            text-align: center;
-        }
-
-        .delete-button:hover {
-            background-color: #ffa6a6;
-        }
-
-        .article a {
-            color: #ffffff;
-            font-size: 20px;
-            text-decoration: none;
-        }
-
-        /* Form to add an article'. */
-        .collapsible {
-            font-family: 'Trebuchet MS', sans-serif;
-            background-color: #3bb546;
-            color: #ffffff;
-            cursor: pointer;
-            width: 90%;
-            border: none;
-            border-radius: 20px;
-            text-align: left;
-            margin-top: 10px;
-            padding: 10px 0px 10px 20px;
-            outline: none;
-            font-size: 18px;
-        }
-
-        .collapsible:hover {
-            background-color: #9ee0a4;
-        }
-
-        .collapsible-content {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.2s ease-out;
-        }
-
-        .add-article {
-            width: 90%;
-            font-size: 18px;
-            padding-top: 20px;
-        }
-
-        input[type=text], select, textarea {
-            font-family: 'Trebuchet MS', sans-serif;
-            font-size: 16px;
-            width: 100%;
-            padding: 12px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            box-sizing: border-box;
-            margin-top: 6px;
-            margin-bottom: 16px;
-            resize: vertical;
-        }
-
-        input[type=submit] {
-            font-family: 'Trebuchet MS', sans-serif;
-            background-color: #3bb546;
-            color: white;
-            font-size: 18px;
-            border-radius: 25px;
-            padding: 10px 15px;
-            border: none;
-            cursor: pointer;
-        }
-
-        input[type=submit]:hover {
-            background-color: #9ee0a4;
-        }
-    </style>
-    <script>
-        function toggleCollapsible() {
-            var buttonId = this.id;
-            var sectionId = buttonId.replace("button", "section");
-            var content = document.getElementById(sectionId);
-            if (content.style.maxHeight) {
-                content.style.maxHeight = null;
-            } else {
-                content.style.maxHeight = content.scrollHeight + "px";
-            }
-        }
-    </script>
-</head>
-<body>
-    <!-- Colored bar at the top of the page -->
-    <div class="topbar">
-
-        <!-- The button that opens the sidemenu -->
-        <span class="navbtn" onclick="nav()">&#9776; </span>
-
-        <!-- Page title -->
-        <h1>Newsfeed</h1>
-
-        <!-- Account information button -->
-        <a href="#accountinfo"><img id="acc-icon" src="@Url.Content("~/Content/account.png")"/></a>
-    </div>
-
-    <!-- Sidemenu overlay -->
-    <div id="nav" class="overlay">
-        <div class="overlay-content">
-            <p style="color: #9ee0a4;">Newsfeed</p>
-            <br>
-            <a onclick="nav()" href="#forums">Forums</a>
-            <br>
-            <a onclick="nav()" href="#chat">Chat</a>
-            <br>
-            <a href="@Url.Action("GroepenManagen")">Groepen</a>
-        </div>
-        <div class="logout"><a onclick="nav()" href="#logout">Log uit</a></div>
-    </div>
-
-    <!-- All the actual content of the page -->
-    <div class="newsfeed-content">
-
-        <!-- Newsfeed categories -->
-        <div class="categories">
-            <a href="@Url.Action("FilteredNewsfeed", new { filter = "Algemeen" })">Algemeen</a>
-    
-            @foreach (var group in Model.Group)
-            {
-                <a href="@Url.Action("FilteredNewsfeed", new { filter = group.GroupName })">@group.GroupName</a>
+            .article-content p {
+                color: #000000;
+                font-size: 18px;
+                padding-bottom: 10px;
             }
 
-            <a href="@Url.Action("FilteredNewsfeed", new { filter = "Vrienden"})">Vrienden</a> 
+            .delete-button {
+                display: block;
+                background-color: #ff5252;
+                padding: 10px;
+                margin-top: 90px;
+                margin-left: 90%;
+                border-radius: 20px;
+                width: 20px;
+                height: 20px;
+                text-align: center;
+                cursor: pointer;
+                color: #ffffff;
+                font-size: 20px;
+                text-decoration: none;
+                transition: 0.2s;
+            }
+
+            .delete-button:hover {
+                background-color: #ffa6a6;
+            }
+
+            /* Form to add an article'. */
+            .collapsible {
+                font-family: 'Trebuchet MS', sans-serif;
+                background-color: #3bb546;
+                color: #ffffff;
+                cursor: pointer;
+                width: 90%;
+                border: none;
+                border-radius: 20px;
+                text-align: left;
+                margin-top: 10px;
+                padding: 10px 0px 10px 20px;
+                outline: none;
+                font-size: 18px;
+                transition: 0.2s;
+            }
+
+            .collapsible:hover {
+                background-color: #9ee0a4;
+            }
+
+            .collapsible-content {
+                max-height: 0;
+                overflow: hidden;
+                transition: max-height 0.2s ease-out;
+            }
+
+            .add-article {
+                width: 90%;
+                font-size: 18px;
+                padding-top: 20px;
+            }
+
+            input[type=text], select, textarea {
+                font-family: 'Trebuchet MS', sans-serif;
+                font-size: 16px;
+                width: 100%;
+                padding: 12px;
+                border: 1px solid #ccc;
+                border-radius: 4px;
+                box-sizing: border-box;
+                margin-top: 6px;
+                margin-bottom: 16px;
+                resize: vertical;
+            }
+
+            input[type=submit] {
+                font-family: 'Trebuchet MS', sans-serif;
+                background-color: #3bb546;
+                color: white;
+                font-size: 18px;
+                border-radius: 25px;
+                padding: 10px 15px;
+                border: none;
+                cursor: pointer;
+                transition: 0.2s;
+            }
+
+            input[type=submit]:hover {
+                background-color: #9ee0a4;
+            }
+        </style>
+        <script>
+            function toggleCollapsible() {
+                var buttonId = this.id;
+                var sectionId = buttonId.replace("button", "section");
+                var content = document.getElementById(sectionId);
+                if (content.style.maxHeight) {
+                    content.style.maxHeight = null;
+                } else {
+                    content.style.maxHeight = content.scrollHeight + "px";
+                }
+            }
+        </script>
+    </head>
+    <body>
+        <!-- Colored bar at the top of the page -->
+        <div class="topbar">
+
+            <!-- The button that opens the sidemenu -->
+            <span class="navbtn" onclick="nav()">&#9776; </span>
+
+            <!-- Page title -->
+            <h1 style="width: 53%;">Nieuws</h1>
+
+            <!-- Account information button -->
+            <a href="@Url.Action("Profile")"><img id="acc-icon" src="@Url.Content("~/Content/account.png")"/></a>
         </div>
 
-        <div class="articles-list">
-           <h1 class="page-title">Nieuws - @TempData["Page"]</h1>
-
-            <!-- The form to add a newspost links to a function in the PersonController called AddPost. -->
-           <button class="collapsible" id="collapsible-button" onclick="toggleCollapsible.call(this)">&#x2BC6; Nieuwsbericht maken</button>
-            <div class="collapsible-content" id="collapsible-section">
-                <form action="AddPost" method="post" class="add-article">
-                    <label for="title">Titel</label>
-                    <input type="text" id="title" name="title" placeholder="Titel nieuwsbericht">
-
-                    <label for="category">Categorie</label>
-                    <select id="group" name="group">
-                        <option id="Algemeen" name="Algemeen">Algemeen</option>
-
-                        @foreach (var group in Model.Group)
-                        {
-                            <option id="@group.GroupName" name="@group.GroupName">@group.GroupName</option>
-                        }
-
-                    </select>
-
-                    <label for="description">Beschrijving</label>
-                    <textarea id="description" name="description" value="description" placeholder="Beschrijving nieuwsbericht" style="height:200px"></textarea>
-
-                    <input type="submit" value="Voeg toe">
-                </form>
+        <!-- Sidemenu overlay -->
+        <div id="nav" class="overlay">
+            <div class="overlay-content">
+                <p style="color: #9ee0a4;">Nieuws</p>
+                <br>
+                <a href="@Url.Action("ForumHome","Forum")">Forums</a>
+                <br>
+                <a href="@Url.Action("Index", "Chat")">Chat</a>
+                <br>
+                <a href="@Url.Action("Groepen")">Groepen</a>
+                <br>
+                <a href="@Url.Action("Personlist")">Gebruikers</a>
             </div>
+            <div class="logout"><a onclick="nav()" href="#logout">Log uit</a></div>
+        </div>
 
-            <!-- Single post attribute; Here all the posts from GetFeed() or FilteredNewsfeed() are put on the page. -->
-                @foreach (var post in Model.Post)
+        <!-- All the actual content of the page -->
+        <div class="newsfeed-content">
+
+            <!-- Newsfeed categories -->
+            <div class="categories">
+                <a href="@Url.Action("FilteredNewsfeed", new { filter = "Algemeen" })">Algemeen</a>
+
+                @foreach (var group in Model.Group)
                 {
-                    <div class="article">
-                        <div class="article-content">
-                            <h1>@post.Title</h1>
-                            <h3>@post.FirstName @post.LastName, @post.DateAdded @post.TimeAdded</h3>
-                            <p>@post.Description</p>
-                        </div>
-                        @if (post.FirstName == "Amy" && post.LastName == "Nowé")
-                        {
-                            <a href="@Url.Action("DeletePost", new { postid = post.PostId, page = TempData["Page"] })"><div class="delete-button">&#10005;</div></a>
-                        }
-                    </div>
+                    <a href="@Url.Action("FilteredNewsfeed", new { filter = group.GroupName })">@group.GroupName</a>
                 }
 
+                <a href="@Url.Action("FilteredNewsfeed", new { filter = "Vrienden"})">Vrienden</a>
+            </div>
+
+            <div class="articles-list">
+                <h1 class="page-title">@TempData["Page"]</h1>
+
+                <!-- The form to add a newspost links to a function in the PersonController called AddPost. -->
+                <button class="collapsible" id="collapsible-button" onclick="toggleCollapsible.call(this)">&#x2BC6; Nieuwsbericht maken</button>
+                <div class="collapsible-content" id="collapsible-section">
+                    <form action="AddPost" method="post" class="add-article">
+                        <label for="title">Titel</label>
+                        <input type="text" id="title" name="title" placeholder="Titel nieuwsbericht" required>
+
+                        <label for="category">Categorie</label>
+                        <select id="group" name="group">
+                            <option id="Algemeen" name="Algemeen">Algemeen</option>
+
+                            @foreach (var group in Model.Group)
+                            {
+                                <option id="@group.GroupName" name="@group.GroupName">@group.GroupName</option>
+                            }
+
+                        </select>
+
+                        <label for="description">Beschrijving</label>
+                        <textarea id="description" name="description" value="description" placeholder="Beschrijving nieuwsbericht" style="height:200px" required></textarea>
+
+                        <input type="submit" value="Voeg toe">
+                    </form>
+                </div>
+
+                <!-- Single post attribute; Here all the posts from GetFeed() or FilteredNewsfeed() are put on the page. -->
+                    @foreach (var post in Model.Post)
+                    {
+                        <div class="article">
+                            <div class="article-content">
+                                <h1>@post.Title</h1>
+                                <h3>@post.Creator.FirstName @post.Creator.LastName, @post.DateAdded</h3>
+                                <p>@post.Description</p>
+                            </div>
+
+                            <!-- If the current Person is the creator of a newspost (relationship Posted) they can delete it. -->
+                            @if (post.Creator.PersonId == 1)
+                            {
+                                <div class="delete-button" onclick="window.location='@Url.Action("DeletePost", new { postid = post.PostId, page = TempData["Page"] })'">&#10005;</div>
+                            }
+                        </div>
+                    }
+
+            </div>
         </div>
-    </div>
-</body>
+    </body>
 </html>

@@ -17,8 +17,9 @@
             border: 2px solid #184a0e;
             padding: 50px 50px;
         }
-        .field-validation-error{
-            color:red;
+
+        .field-validation-error {
+            color: red;
         }
     </style>
 </head>
@@ -26,7 +27,7 @@
     <div id="login-div">
         @using (Html.BeginForm("Authorize", "Login", FormMethod.Post))
         {
-            <table >
+            <table>
                 <tr>
                     <td></td>
                     <td style="text-decoration:wavy"> Meldboek</td>
@@ -57,11 +58,11 @@
                     <td colspan="2">
                         <label class="filed-validation-error">@Html.DisplayFor(model => model.LoginErrorMessage)</label>
                     </td>
-                <td>
-                    <input type="submit" name="name" value="Login" />
-                    <input type="reset" name="name" value="Verwijder" />
+                    <td>
+                        <input type="submit" name="name" value="Login" />
+                        <input type="reset" name="name" value="Verwijder" />
 
-                </td>
+                    </td>
                 </tr>
 
             </table>

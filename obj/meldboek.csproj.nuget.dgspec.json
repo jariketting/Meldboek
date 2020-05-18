@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\ses-9\\Desktop\\meldboek\\meldboek\\meldboek.csproj": {}
+    "C:\\Users\\ses-9\\Desktop\\merge yas\\meldboek.csproj": {}
   },
   "projects": {
-    "C:\\Users\\ses-9\\Desktop\\meldboek\\meldboek\\meldboek.csproj": {
+    "C:\\Users\\ses-9\\Desktop\\merge yas\\meldboek.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\ses-9\\Desktop\\meldboek\\meldboek\\meldboek.csproj",
+        "projectUniqueName": "C:\\Users\\ses-9\\Desktop\\merge yas\\meldboek.csproj",
         "projectName": "meldboek",
-        "projectPath": "C:\\Users\\ses-9\\Desktop\\meldboek\\meldboek\\meldboek.csproj",
+        "projectPath": "C:\\Users\\ses-9\\Desktop\\merge yas\\meldboek.csproj",
         "packagesPath": "C:\\Users\\ses-9\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\ses-9\\Desktop\\meldboek\\meldboek\\obj\\",
+        "outputPath": "C:\\Users\\ses-9\\Desktop\\merge yas\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -41,14 +41,6 @@
       "frameworks": {
         "netcoreapp2.2": {
           "dependencies": {
-            "IdentityModel": {
-              "target": "Package",
-              "version": "[4.2.0, )"
-            },
-            "Microsoft.AspNet.Identity.Core": {
-              "target": "Package",
-              "version": "[2.2.3, )"
-            },
             "Microsoft.AspNet.WebApi": {
               "target": "Package",
               "version": "[5.2.7, )"
@@ -62,12 +54,12 @@
               "target": "Package",
               "version": "[2.2.0, )"
             },
+            "Microsoft.AspNetCore.Http": {
+              "target": "Package",
+              "version": "[2.2.2, )"
+            },
             "Microsoft.AspNetCore.Razor.Design": {
               "suppressParent": "All",
-              "target": "Package",
-              "version": "[2.2.0, )"
-            },
-            "Microsoft.AspNetCore.Session": {
               "target": "Package",
               "version": "[2.2.0, )"
             },
@@ -84,14 +76,6 @@
             "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
               "target": "Package",
               "version": "[2.2.4, )"
-            },
-            "Microsoft.Web.RedisSessionStateProvider": {
-              "target": "Package",
-              "version": "[4.0.1, )"
-            },
-            "MySql.Data": {
-              "target": "Package",
-              "version": "[8.0.20, )"
             },
             "Neo4j.Driver": {
               "target": "Package",

@@ -1,0 +1,28 @@
+﻿@{
+    ViewData["Title"] = "Chatroom: ";
+    Layout = "~/Views/Shared/_LayoutJari.cshtml";
+}
+
+<div class="container">
+    <h1 class="page-title">Chatroom: <span class="text-info">@ViewBag.name</span> <a class="float-right text-danger" href="/Chat/Index">Chat verlaten</a></h1>
+    <hr />
+
+    @foreach(var message in ViewBag.messages)
+    {
+    <div class="row">
+        <div class="col-2">@message.Personname </div> <div class="col-2">@message.DatetimeSend</div> <div class="col-8"></div>
+        <div class="col-12"> <br /></div>                                                                           
+        <div class="col-12">@message.Content</div>
+    </div>
+
+    <hr />
+
+    }
+
+    <form method="post">
+        <label for="message"></label>
+        <textarea rows="3" class="form-control" name="message" id="message"></textarea>
+        <br />
+        <input class="btn btn-primary" type="submit" value="Versturen" />
+    </form>
+</div>

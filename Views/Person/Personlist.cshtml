@@ -1,0 +1,211 @@
+﻿@{
+    ViewData["Title"] = "Gebruikers";
+}
+
+@model IEnumerable<PersonInfo>
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" type="text/css" href="~/css/Topbar_Sidenav.css">
+        <script type="text/javascript" src="~/js/site.js"></script>
+        <style>
+            body {
+                font-family: 'Trebuchet MS', sans-serif;
+                background-color: #ffffff;
+            }
+
+            .topbar {
+                background-color: #e947ff;
+            }
+
+            .navbtn {
+                background-color: #e947ff;
+            }
+
+            .overlay {
+                background-color: #e947ff;
+            }
+
+            .overlay a:hover, .overlay a:focus, .logout a:hover, .logout a:focus {
+                color: #f4a3ff;
+            }
+
+            .personlist-content {
+                width: 100%;
+                overflow: hidden;
+                padding-top: 100px;
+                padding-bottom: 50px;
+            }
+
+            /* options list */
+            .options {
+                position: fixed;
+                float: left;
+                width: 180px;
+                height: 550px;
+                padding: 80px 30px 0px 40px;
+                border-right: 2px solid #e947ff;
+                overflow-y: auto;
+            }
+
+            .options a {
+                color: #000000;
+                font-size: 24px;
+                text-decoration: none;
+                display: block;
+                padding-bottom: 15px;
+                word-wrap: break-word;
+                transition: 0.2s;
+            }
+
+            .options a:hover {
+                 color: #f4a3ff;
+            }
+
+            .page-title {
+                font-size: 28px;
+                padding-bottom: 20px;
+            }
+
+            /* Persons list */
+            .person-list {
+                padding-top: 40px;
+                margin-left: 340px;
+            }
+
+            /* Single person */
+            .person {
+                width: 90%;
+                overflow: hidden;
+                border-bottom: 1px solid #e947ff;
+            }
+
+            /* Person content consists of name (h1) and friend/unfriend options (a). */
+            .person-content {
+                float: left;
+                width: 80%;
+            }
+
+            .person-content h1 {
+                font-size: 22px;
+                padding-bottom: 10px;
+                padding-top: 20px;
+            }
+
+            .person-options {
+                margin-top: 20px;
+                margin-left: 83%;
+            }
+
+            .person-options a {
+                text-decoration: none;
+                font-size: 20px;
+            }
+
+            #add-accept-friend {
+                color: #00ff00;
+                transition: 0.2s;
+                display: block;
+            }
+
+            #add-accept-friend:hover {
+                color: #b3ffb3;
+            }
+
+            #delete-deny-friend {
+                color: #ff0000;
+                transition: 0.2s;
+            }
+
+            #delete-deny-friend:hover {
+                color: #ffb3b3;
+            }
+        </style>
+    </head>
+    <body>
+        <!-- Colored bar at the top of the page -->
+        <div class="topbar">
+
+            <!-- The button that opens the sidemenu -->
+            <span class="navbtn" onclick="nav()">&#9776; </span>
+
+            <!-- Page title -->
+            <h1>Gebruikers</h1>
+
+            <!-- Account information button -->
+            <a href="@Url.Action("Profile")"><img id="acc-icon" src="@Url.Content("~/Content/account.png")"/></a>
+        </div>
+
+        <!-- Sidemenu overlay -->
+        <div id="nav" class="overlay">
+            <div class="overlay-content">
+                <a href="@Url.Action("Newsfeed")">Nieuws</a>
+                <br>
+                <a href="@Url.Action("ForumHome","Forum")">Forums</a>
+                <br>
+                <a href="@Url.Action("Index", "Chat")">Chat</a>
+                <br>
+                <a href="@Url.Action("Groepen")">Groepen</a>
+                <br>
+                <p style="color: #f4a3ff;">Gebruikers</p>
+            </div>
+            <div class="logout"><a onclick="nav()" href="#logout">Log uit</a></div>
+        </div>
+
+        <!-- All the actual content of the page -->
+        <div class="personlist-content">
+
+            <!-- Personlist options -->
+            <div class="options">
+                <a href="@Url.Action("FilteredPersonlist", new { filter = "Alle gebruikers" })">Alle gebruikers</a>
+                <a href="@Url.Action("FilteredPersonlist", new { filter = "Vrienden"})">Vrienden</a>
+            </div>
+
+            <div class="person-list">
+                <h1 class="page-title">@TempData["Page"]</h1>
+
+                <!-- Single person attribute; Here all the posts from GetPersonlist() or FilteredPersonlist() are put on the page. -->
+                @foreach (var person in Model)
+                {
+                    <div class="person">
+                        <div class="person-content">
+                            <h1>@person.Person.FirstName @person.Person.LastName</h1>
+                        </div>
+
+                        @if (person.Status == "")
+                        {
+                            <div class="person-options">
+                                <a id="add-accept-friend" href="@Url.Action("Friend", new { FriendId = person.Person.PersonId })">Vriend toevoegen</a>
+                            </div>
+                        }
+                    
+                        @if (person.Status == "FriendPending")
+                        {
+                            <div class="person-options">
+                                <a style="color: #0000ff;">In behandeling</a>
+                            </div>
+                        }
+
+                        @if (person.Status == "FriendPendingRequest")
+                        {
+                            <div class="person-options" style="margin-top: 10px;">
+                                <a id="add-accept-friend" href="@Url.Action("AcceptFriend", new { PersonRequestedId = person.Person.PersonId, PersonAcceptedId = 1, Page = "Personlist" })">Verzoek accepteren</a>
+                                <a id="deny-delete-friend" href="@Url.Action("RefuseFriendReq", "Person", new { PersonId = person.Person.PersonId, page = "Personlist" })">Vriend afwijzen</a>
+                            </div>
+                        }
+
+                        @if (person.Status == "IsFriendsWith")
+                        {
+                            <div class="person-options">
+                                <a id="delete-deny-friend" href="@Url.Action("DeleteFriend", new { FriendId = person.Person.PersonId, Page = @TempData["Page"] })">Vriend verwijderen</a>
+                            </div>
+                        }
+
+                    </div>
+                }
+
+            </div>
+        </div>
+    </body>
+</html>

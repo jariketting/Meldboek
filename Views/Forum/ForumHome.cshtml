@@ -1,0 +1,211 @@
+﻿@page
+@model meldboek.Models.Forum
+@{
+
+    meldboek.Controllers.ForumController FC = new meldboek.Controllers.ForumController();
+
+
+
+    List<Forum> forumlist = FC.GetAllForums();
+    forumlist.Sort((x, y) => DateTime.Compare(x.lastEdit, y.lastEdit));
+    forumlist.Reverse();
+
+
+    //Aantal Reacties laden
+    foreach (Forum forum in forumlist)
+    {
+        FC.GetAllReplies(forum);
+    }
+
+
+
+
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Forums</title>
+    <link rel="stylesheet" type="text/css" href="~/css/Topbar_Sidenav.css">
+    <script type="text/javascript" src="~/js/site.js"></script>
+    <style>
+        body {
+            font-family: 'Trebuchet MS', sans-serif;
+            background-color: #ffffff;
+        }
+        .topbar {
+            background-color: #ff3398;
+        }
+        .navbtn {
+            background-color: #ff3398;
+        }
+        .overlay {
+            background-color: #ff3398;
+        }
+        .info {
+            color: #000000;
+            vertical-align: middle;
+            border: solid;
+            border-bottom-width: 2px;
+            border-color: #000000;
+        }
+        .infoi {
+            color: #000000;
+            vertical-align: middle;
+            border: solid;
+            border-bottom-width: 2px;
+            border-color: #000000;
+        }
+        .table {
+            height: inherit;
+        }
+        #forums {
+            background-color: #ffffff;
+            width: 100%;
+        }
+            #forums:hover {
+                background-color: #8593bc;
+            }
+        .button {
+            display: block;
+            width: 400px;
+            color: #000000;
+            text-decoration: none;
+            font-size: 35px;
+            text-align: center;
+            height: 100px;
+            transition: 0.2s;
+        }
+        .sub {
+            display: block;
+            width: 100%;
+            background-color: #ff3398;
+            text-decoration: none;
+            font-size: 35px;
+            text-align: center;
+            height: 100%;
+            transition: 0.2s;
+        }
+            .sub:hover {
+                background-color: #ffa1d0;
+            }
+        #absoluteCenteredDiv {
+            padding-top: 74px;
+        }
+        #Content {
+            width: 90%;
+            height: 40px;
+        }
+        #Title {
+            width: 90%;
+            height: 40px;
+        }
+        
+        .delete-button {
+            display: block;
+            background-color: #ff5252;
+            padding: 10px;
+            border-radius: 20px;
+            width: 20px;
+            height: 20px;
+            text-align: center;
+            cursor: pointer;
+            color: #ffffff;
+            font-size: 20px;
+            text-decoration: none;
+            transition: 0.2s;
+        }
+    </style>
+    <script>
+        function toggleCollapsible() {
+            var buttonId = this.id;
+            var sectionId = buttonId.replace("button", "section");
+            var content = document.getElementById(sectionId);
+            if (content.style.maxHeight) {
+                content.style.maxHeight = null;
+            } else {
+                content.style.maxHeight = content.scrollHeight + "px";
+            }
+        }
+    </script>
+</head>
+<body>
+    <!-- Sidemenu overlay -->
+    <div id="nav" class="overlay">
+        <div class="overlay-content">
+            <a href="@Url.Action("Newsfeed", "Person")">Nieuws</a>
+            <br>
+            <a onclick="nav()" href="#forums">Forums</a>
+            <br>
+            <a href="@Url.Action("Index", "Chat")">Chat</a>
+            <br>
+            <a href="@Url.Action("Groepen")">Groepen</a>
+            <br>
+            <a href="@Url.Action("Personlist")">Gebruikers</a>
+        </div>
+        <div class="logout"><a onclick="nav()" href="#logout">Log uit</a></div>
+    </div>
+
+    <div class="topbar">
+        <h1 style="width: 53%;">Forums</h1>
+        <span class="navbtn" onclick="nav()">&#9776; </span>
+
+        <a href="@Url.Action("Profile", "Person")"><img id="acc-icon" src="@Url.Content("~/Content/account.png")" /></a>
+    </div>
+    <div id="absoluteCenteredDiv">
+        @foreach (Forum forum in forumlist)
+        {
+            <form asp-action="ForumHome" method="post">
+
+
+
+
+
+                <input hidden type="text" value="@forum.ForumId" name=fid id="fid" size="50">
+                <a href="@Url.Action("Forum", new { id = @forum.ForumId })" class="button" type="submit" id="forums" value=" " name="@forum.Title">
+                    <table white-space="nowrap" width="100%" class="table">
+                        <tr>
+                            <th align="left" class="info">
+                                @forum.Title
+                            </th>
+                            <th align="right" width="20%" class="info">
+                                @forum.lastEdit
+                            </th>
+                            <th align="right" width="20%" class="info">
+                                @forum.AantalReacties Reacties
+                            </th>
+                            <th align="right" width="3%" class="info">
+                                <form asp-action="ForumHome" method="post">
+                                    <input hidden type="text" value="@forum.ForumId" name=del id="del">
+                                    @if (forum.Owner.PersonId == 1)
+                                    {
+                                        <input href="@Url.Action("Forum", new { id = @forum.ForumId })" type="submit" value="&#10005" id="submit" class="delete-button">
+                                    }
+                                </form>
+                            </th>
+                        </tr>
+                    </table>
+                </a>
+            </form>
+        }
+        <div class="box">
+            <form asp-action="ForumHome" method="post">
+                <table white-space="nowrap" width="100%" class="table">
+                    <tr>
+                        <th align="center" width="20%" class="infoi">
+                            <p><font face="verdana" color="black">Forum Titel</font></p>
+                            <input type="text" required name=Title id="Title" size="50"><br><br>
+                        </th>
+                        <th align="center" width="60%" class="infoi">
+                            <p><font face="verdana" color="black">Forum Tekst</font></p>
+                            <input type="text" required name=Content id="Content" size="50"><br><br>
+                        </th>
+                        <th align="center" width="20%" class="infoi">
+                            <input type="submit" value="Nieuw forum" id="submit" class="sub">
+                        </th>
+                    </tr>
+                </table>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
