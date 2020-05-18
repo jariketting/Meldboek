@@ -7,24 +7,67 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <link rel="stylesheet" type="text/css" href="~/css/Topbar_Sidenav.css">
+    <script type="text/javascript" src="~/js/site.js"></script>
     <style>
         body {
             font-family: 'Trebuchet MS', sans-serif;
-            background: #ecf0f1; /*21323*/
+            background: #ffffff;
             margin: 0 auto 0 auto;
             width: 100%;
             text-align: center;
             margin: 0px 0px 0px 0px;
         }
 
+        .topbar {
+            background-color: #808080;
+        }
+
+        .navbtn {
+            background-color: #808080;
+        }
+
+        .overlay {
+            background-color: #808080;
+        }
+
+        .overlay a:hover, .overlay a:focus, .logout a:hover, .logout a:focus {
+            color: #cccccc;
+        }
+
         .box {
             background: #808080;
-            width: 800px;
+            width: 600px;
             border-radius: 6px;
             position: center;
             margin: 0 auto 0 auto;
-            padding: 100px 100px 100px 50px;
+            padding: 50px 100px 50px 50px;
             border: #000000 4px solid;
+        }
+
+        .box p {
+            color: #ffffff;
+            font-size: 26px;
+        }
+
+        input {
+            font-family: 'Trebuchet MS', sans-serif;
+            font-size: 24px;
+        }
+
+        #submit {
+            margin-top: 20px;
+            background-color: #ffffff;
+            border-radius: 25px;
+            border: none;
+            padding: 5px;
+            width: 150px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        #submit:hover {
+            background-color: #cccccc;
         }
 
         .Personname {
@@ -58,9 +101,9 @@
             font-size: 0.8em;
         }
 
-            .button:hover {
-                background: Blue;
-            }
+        .button:hover {
+            background: Blue;
+        }
 
         .fpwd {
             color: #6f89c4;
@@ -73,25 +116,70 @@
             bottom: 0;
             left: 0;
             right: 0;
-            margin: auto;
-            width: 800px;
-            height: 300px;
             text-align: left;
+            margin-top: 94px;
+        }
+
+        #manage-groups {
+            padding: 20px;
+            text-decoration: none;
+            color: #0000ff;
+            font-size: 22px;
+            transition: 0.2s;
+        }
+
+        #manage-groups:hover {
+            color: #b3b3ff;
+        }
+
+        form {
+            margin-top: 110px;
         }
     </style>
 </head>
 <body>
-    <h1 id="login-header">Create groups</h1>
+    <!-- Colored bar at the top of the page -->
+    <div class="topbar">
+
+        <!-- The button that opens the sidemenu -->
+        <span class="navbtn" onclick="nav()">&#9776; </span>
+
+        <!-- Page title -->
+        <h1 style="width: 58%;">Groep aanmaken</h1>
+
+        <!-- Account information button -->
+        <a href="@Url.Action("Profile", "Person")"><img id="acc-icon" src="@Url.Content("~/Content/account.png")" /></a>
+    </div>
+
+    <!-- Sidemenu overlay -->
+    <div id="nav" class="overlay">
+        <div class="overlay-content">
+            <a href="@Url.Action("Newsfeed", "Person")">Nieuws</a>
+            <br>
+            <a href="@Url.Action("ForumHome","Forum")">Forums</a>
+            <br>
+            <a href="@Url.Action("Index", "Chat")">Chat</a>
+            <br>
+            <a href="@Url.Action("Groepen", "Person")">Groepen</a>
+            <br>
+            <a href="@Url.Action("Personlist", "Person")">Gebruikers</p>
+        </div>
+        <div class="logout"><a onclick="nav()" href="#logout">Log uit</a></div>
+    </div>
+
+
     <div id="absoluteCenteredDiv">
+        <a id="manage-groups" href="@Url.Action("GroepenManagen", "Person")">&#8592; Groepen beheren</a>
+
         <form asp-action="CreateGroups" method="post">
             <div class="box">
-                <p><font face="verdana" color="black">Groepnaam</font></p>
+                <p>Groepnaam</p>
                 <input type="text" required name=Groepnaam id="Groepnaam" size="50"><br><br>
 
-                <p><font face="verdana" color="black">ManagerID</font></p>
+                <p>ManagerID</p>
                 <input type="text" required name=ManagerID id="ManagerID" size="50"><br><br>
 
-                <input type="submit" value="Submit" id="submit">
+                <input type="submit" value="Aanmaken" id="submit">
 
 
             </div>
