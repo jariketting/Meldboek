@@ -568,7 +568,7 @@ namespace meldboek.Controllers
             // GetGroups() gets all the groups the Person is part of (relationship type "IsInGroup") from the database and puts them in a list of Group objects.
 
             List<INode> groupNodes = new List<INode>();
-            var getGroups = ConnectDb("MATCH(p:Person)-[r:IsInGroup]->(g:Group) WHERE p.PersonId = 1 RETURN g");
+            var getGroups = ConnectDb("MATCH(p:Person)-[:IsInGroup|:IsOwner]->(g:Group) WHERE p.PersonId = 1 RETURN DISTINCT g");
             var group = new Group();
             List<Group> groupList = new List<Group>();
 
@@ -605,7 +605,7 @@ namespace meldboek.Controllers
 
             // First, all the groups the Person is part of are fetched.
             List<INode> groupNodes = new List<INode>();
-            var getGroups = ConnectDb("MATCH(p:Person)-[r:IsInGroup]->(g:Group) WHERE p.PersonId = 1 RETURN g");
+            var getGroups = ConnectDb("MATCH(p:Person)-[:IsInGroup|:IsOwner]->(g:Group) WHERE p.PersonId = 1 RETURN DISTINCT g");
             var group = new Group();
             List<Group> groupList = new List<Group>();
 
