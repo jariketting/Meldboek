@@ -688,7 +688,7 @@ namespace meldboek.Controllers
             }
 
             // The final list is ordered by FirstName and put into a list called "final".
-            List<Person> final = friendList.OrderBy(f => f.FirstName).ToList();
+            List<Person> final = friendList.OrderBy(p => p.FirstName).ThenBy(p => p.LastName).ToList();
             return final;
         }
 
@@ -735,7 +735,7 @@ namespace meldboek.Controllers
             }
 
             // The final list is ordered by FirstName and put into a list called "final".
-            List<PersonInfo> final = personList.OrderBy(p => p.Person.FirstName).ToList();
+            List<PersonInfo> final = personList.OrderBy(p => p.Person.FirstName).ThenBy(p => p.Person.LastName).ToList();
             return final;
         }
 
@@ -763,7 +763,7 @@ namespace meldboek.Controllers
             }
 
             // The final list is ordered by FirstName and put into a list called "final".
-            List<PersonInfo> final = friendList.OrderBy(f => f.Person.FirstName).ToList();
+            List<PersonInfo> final = friendList.OrderBy(f => f.Person.FirstName).ThenBy(f => f.Person.LastName).ToList();
             return final;
         }
 
@@ -959,7 +959,7 @@ namespace meldboek.Controllers
 
         public async Task<List<INode>> ConnectDb(string query)
         {
-            Driver = CreateDriverWithBasicAuth("bolt://localhost:7687", "neo4j", "1234");
+            Driver = CreateDriverWithBasicAuth("bolt://localhost:11005", "neo4j", "1234");
             List<INode> res = new List<INode>();
             IAsyncSession session = Driver.AsyncSession(o => o.WithDatabase("neo4j"));
 
@@ -993,7 +993,7 @@ namespace meldboek.Controllers
 
         public async Task<string> ConnectDb2(string query)
         {
-            Driver = CreateDriverWithBasicAuth("bolt://localhost:7687", "neo4j", "1234");
+            Driver = CreateDriverWithBasicAuth("bolt://localhost:11005", "neo4j", "1234");
             string res = "";
             IAsyncSession session = Driver.AsyncSession(o => o.WithDatabase("neo4j"));
 

@@ -2,7 +2,7 @@
     ViewData["Title"] = "Groep aanmaken";
 }
 
-@model meldboek.Models.Admin
+@model IEnumerable<Person>
 
 <!DOCTYPE html>
 <html>
@@ -135,6 +135,13 @@
         form {
             margin-top: 110px;
         }
+
+        select {
+            font-family: 'Trebuchet MS', sans-serif;
+            font-size: 18px;
+            margin: 0px 0px 20px 0px;
+            padding: 5px;
+        }
     </style>
 </head>
 <body>
@@ -174,10 +181,17 @@
         <form asp-action="CreateGroups" method="post">
             <div class="box">
                 <p>Groepnaam</p>
-                <input type="text" required name=Groepnaam id="Groepnaam" size="50"><br><br>
+                <input type="text" required name=GroupName id="GroupName" size="50"><br><br>
 
-                <p>ManagerID</p>
-                <input type="text" required name=ManagerID id="ManagerID" size="50"><br><br>
+                <p>Manager</p>
+                <select id="ManagerId" name="ManagerId">
+
+                    @foreach (var manager in Model)
+                    {
+                        <option value="@manager.PersonId">@manager.FirstName @manager.LastName</option>
+                    }
+
+                </select><br>
 
                 <input type="submit" value="Aanmaken" id="submit">
 
