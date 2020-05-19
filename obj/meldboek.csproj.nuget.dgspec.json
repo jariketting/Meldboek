@@ -1,23 +1,24 @@
 {
   "format": 1,
   "restore": {
-    "/Users/yasemin/Documents/Inf_jaar_2/Project D/meldboek/meldboek.csproj": {}
+    "C:\\Users\\amyno\\Documents\\Repos\\meldboek\\meldboek.csproj": {}
   },
   "projects": {
-    "/Users/yasemin/Documents/Inf_jaar_2/Project D/meldboek/meldboek.csproj": {
+    "C:\\Users\\amyno\\Documents\\Repos\\meldboek\\meldboek.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/yasemin/Documents/Inf_jaar_2/Project D/meldboek/meldboek.csproj",
+        "projectUniqueName": "C:\\Users\\amyno\\Documents\\Repos\\meldboek\\meldboek.csproj",
         "projectName": "meldboek",
-        "projectPath": "/Users/yasemin/Documents/Inf_jaar_2/Project D/meldboek/meldboek.csproj",
-        "packagesPath": "/Users/yasemin/.nuget/packages/",
-        "outputPath": "/Users/yasemin/Documents/Inf_jaar_2/Project D/meldboek/obj/",
+        "projectPath": "C:\\Users\\amyno\\Documents\\Repos\\meldboek\\meldboek.csproj",
+        "packagesPath": "C:\\Users\\amyno\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\amyno\\Documents\\Repos\\meldboek\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
-          "/Users/yasemin/.nuget/NuGet/NuGet.Config"
+          "C:\\Users\\amyno\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "netcoreapp2.2"
@@ -99,7 +100,7 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
-          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/3.1.100/RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.201\\RuntimeIdentifierGraph.json"
         }
       }
     }
