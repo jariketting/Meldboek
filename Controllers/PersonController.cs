@@ -941,6 +941,13 @@ namespace meldboek.Controllers
             return final;
         }
 
+        public async Task<IActionResult> DeleteGroup(int GroupId)
+        {
+            await ConnectDb("MATCH(g:Group) WHERE g.GroupId = " + GroupId + " DETACH DELETE g");
+
+            return RedirectToAction("GroepenManagen");
+        }
+
         public IActionResult AddPersonToGroup(int PersonId, int GroupId)
         {
             var res = ConnectDb("MATCH (a:Person), (b:Group) WHERE a.PersonId = " + PersonId.ToString() + " AND b.GroupId = " + GroupId.ToString() + " CREATE (a)-[r:IsInGroup]->(b)" + " RETURN a");

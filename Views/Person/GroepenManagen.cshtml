@@ -122,6 +122,28 @@
             font-size: 18px;
             margin-bottom: 10px;
         }
+
+        .delete-button {
+            display: block;
+            background-color: #ff5252;
+            padding: 10px;
+            border-radius: 20px;
+            width: 160px;
+            height: 20px;
+            text-align: center;
+            cursor: pointer;
+            font-size: 20px;
+            transition: 0.2s;
+        }
+
+        .delete-button a {
+            text-decoration: none;
+            color: #ffffff;
+        }
+
+        .delete-button:hover {
+            background-color: #ffa6a6;
+        }
     </style>
 </head>
 <body>
@@ -202,6 +224,8 @@
                             <input type="submit" value="Verwijderen" id="submit">
                         </form>
                     </div>
+
+                    <div class="delete-button"><a href="@Url.Action("DeleteGroup", new { group.Group.GroupId })">Groep verwijderen</a></div>
                 }
             }
         </div>
