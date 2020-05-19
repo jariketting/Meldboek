@@ -28,25 +28,17 @@
             font-family: 'Trebuchet MS', sans-serif;
             background-color: #ffffff;
         }
-
         .topbar {
             background-color: #ff3398;
             margin-bottom: 20px;
         }
-
         .navbtn {
             background-color: #ff3398;
         }
-
         .overlay {
             background-color: #ff3398;
             margin-top: 0px;
         }
-
-        .overlay a:hover, .overlay a:focus, .logout a:hover, .logout a:focus {
-            color: #ffa1d0;
-        }
-
         .info {
             color: #000000;
             vertical-align: middle;
@@ -54,7 +46,6 @@
             border-bottom-width: 2px;
             border-color: #000000;
         }
-
         .infoi {
             color: #000000;
             vertical-align: middle;
@@ -62,19 +53,13 @@
             border-bottom-width: 2px;
             border-color: #000000;
         }
-
         .table {
             height: inherit;
         }
-
-
         #forums {
             background-color: #ffffff;
             width: 100%;
         }
-
-
-
         .button {
             display: block;
             width: inherit;
@@ -89,7 +74,6 @@
             border-color: #000000;
             background-color: #ffffff;
         }
-
         .sub {
             display: block;
             width: 90%;
@@ -102,7 +86,6 @@
             height: 90%;
             transition: 0.2s;
         }
-
             .sub:hover {
                 background-color: #ffa1d0;
             }
@@ -111,7 +94,6 @@
             width: 90%;
             height: 40px;
         }
-
         #Title {
             width: 90%;
             height: 40px;
@@ -167,13 +149,13 @@
         <div class="overlay-content">
             <a href="@Url.Action("Newsfeed", "Person")">Nieuws</a>
             <br>
-            <a style="color: #ffa1d0;">Forums</a>
+            <a onclick="nav()" href="#forums">Forums</a>
             <br>
             <a href="@Url.Action("Index", "Chat")">Chat</a>
             <br>
-            <a href="@Url.Action("Groepen", "Person")">Groepen</a>
+            <a href="@Url.Action("Groepen")">Groepen</a>
             <br>
-            <a href="@Url.Action("Personlist", "Person")">Gebruikers</a>
+            <a href="@Url.Action("Personlist")">Gebruikers</a>
         </div>
         <div class="logout"><a onclick="nav()" href="#logout">Log uit</a></div>
     </div>
@@ -220,25 +202,14 @@
                 </tr>
             </table>
         }
-
-
-
-
-
-
-
-
-
         <div class="button">
             <form asp-action="Forum" method="post">
-
                 <input hidden type="text" value="@forum.ForumId" name=fid id="fid" size="50">
                 <input type="text" required name=Content id="Content" size="50"><br><br>
 
                 <input href="@Url.Action("Forum", new { id = @forum.ForumId })" type="submit" value="Nieuwe comment" id="submit" class="sub">
             </form>
         </div>
-
     </div>
 </body>
 </html>

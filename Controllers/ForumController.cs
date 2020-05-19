@@ -27,11 +27,8 @@ namespace meldboek.Controllers
 
             /* Forum f = new Forum(GetNewForumId(),u , "Test", "Hoe moet je dit testen?");
                  SaveForum(f);
-
-
                  ForumItem fi1 = new ForumItem(GetNewForumItemId(), u, "Geen Idee", f);
                  SaveForumItem(fi1);
-
                  ForumItem fi2 = new ForumItem(GetNewForumItemId(), u, "Meer replies!", fi1);
                  SaveForumItem(fi2);
      ForumItem fi3 = new ForumItem(GetNewForumItemId(), u, "Meer replies!", fi2);
@@ -43,9 +40,6 @@ namespace meldboek.Controllers
 
             /*            Forum a = LoadForum(4);
                         List<ForumItem> l = GetAllReplies(a);
-
-
-
                         */
             /*    var fl = GetAllForums();*/
             if (del != null)
@@ -469,7 +463,7 @@ namespace meldboek.Controllers
 
         public async Task<List<INode>> ConnectDb(string query)
         {
-            Driver = CreateDriverWithBasicAuth("bolt://localhost:11005", "neo4j", "1234");
+            Driver = CreateDriverWithBasicAuth("bolt://localhost:7687", "neo4j", "1234");
             List<INode> res = new List<INode>();
             IAsyncSession session = Driver.AsyncSession(o => o.WithDatabase("neo4j"));
 

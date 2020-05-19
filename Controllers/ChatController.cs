@@ -165,7 +165,7 @@ namespace meldboek.Controllers
         }
 
         /// <summary>
-        /// Get chat Person van join
+        /// Get chat user van join
         /// </summary>
         /// <returns></returns>
         public List<Message> GetChatMessages(string chat, string type)
@@ -286,7 +286,7 @@ namespace meldboek.Controllers
         }
 
         /// <summary>
-        /// Get chat Person van join
+        /// Get chat user van join
         /// </summary>
         /// <returns></returns>
         public List<Chat> GetChatsJoinable()
@@ -317,7 +317,7 @@ namespace meldboek.Controllers
         }
 
         /// <summary>
-        /// Get chat Person has joined
+        /// Get chat user has joined
         /// </summary>
         /// <returns></returns>
         public List<Chat> GetChatsJoined()
@@ -351,7 +351,7 @@ namespace meldboek.Controllers
         /// <summary>
         /// Get friends
         /// </summary>
-        /// <returns>List with Persons friends</returns>
+        /// <returns>List with users friends</returns>
         public List<Person> GetFriends()
         {
             List<INode> friendNodes = new List<INode>(); // will store friend nodes
@@ -382,22 +382,22 @@ namespace meldboek.Controllers
         /// <summary>
         /// Get friend by email
         /// </summary>
-        /// <param name="PersonId"></param>
+        /// <param name="userId"></param>
         /// <returns></returns>
         public Person GetFriend(string email)
         {
             List<INode> nodeList = new List<INode>(); // store friend node
             var results = Db.ConnectDb("MATCH (a:Person) WHERE a.Email = '" + email + "' RETURN a"); // run query
-            var Person = new Person();
+            var user = new Person();
 
             nodeList = results.Result;
             foreach (var record in nodeList)
             {
                 var nodeprops = JsonConvert.SerializeObject(record.As<INode>().Properties);
-                Person = (JsonConvert.DeserializeObject<Person>(nodeprops));
+                user = (JsonConvert.DeserializeObject<Person>(nodeprops));
             }
 
-            return Person;
+            return user;
         }
     }
 }

@@ -32,23 +32,15 @@
             font-family: 'Trebuchet MS', sans-serif;
             background-color: #ffffff;
         }
-
         .topbar {
             background-color: #ff3398;
         }
-
         .navbtn {
             background-color: #ff3398;
         }
-
         .overlay {
             background-color: #ff3398;
         }
-
-        .overlay a:hover, .overlay a:focus, .logout a:hover, .logout a:focus {
-            color: #ffa1d0;
-        }
-
         .info {
             color: #000000;
             vertical-align: middle;
@@ -56,7 +48,6 @@
             border-bottom-width: 2px;
             border-color: #000000;
         }
-
         .infoi {
             color: #000000;
             vertical-align: middle;
@@ -64,21 +55,16 @@
             border-bottom-width: 2px;
             border-color: #000000;
         }
-
         .table {
             height: inherit;
         }
-
-
         #forums {
             background-color: #ffffff;
             width: 100%;
         }
-
             #forums:hover {
                 background-color: #8593bc;
             }
-
         .button {
             display: block;
             width: 400px;
@@ -89,7 +75,6 @@
             height: 100px;
             transition: 0.2s;
         }
-
         .sub {
             display: block;
             width: 100%;
@@ -100,20 +85,16 @@
             height: 100%;
             transition: 0.2s;
         }
-
             .sub:hover {
                 background-color: #ffa1d0;
             }
-
         #absoluteCenteredDiv {
             padding-top: 74px;
         }
-
         #Content {
             width: 90%;
             height: 40px;
         }
-
         #Title {
             width: 90%;
             height: 40px;
@@ -153,13 +134,13 @@
         <div class="overlay-content">
             <a href="@Url.Action("Newsfeed", "Person")">Nieuws</a>
             <br>
-            <p style="color: #ffa1d0">Forums</p>
+            <a onclick="nav()" href="#forums">Forums</a>
             <br>
             <a href="@Url.Action("Index", "Chat")">Chat</a>
             <br>
-            <a href="@Url.Action("Groepen", "Person")">Groepen</a>
+            <a href="@Url.Action("Groepen")">Groepen</a>
             <br>
-            <a href="@Url.Action("Personlist", "Person")">Gebruikers</a>
+            <a href="@Url.Action("Personlist")">Gebruikers</a>
         </div>
         <div class="logout"><a onclick="nav()" href="#logout">Log uit</a></div>
     </div>
@@ -203,32 +184,11 @@
                             </th>
                         </tr>
                     </table>
-
-
-
-
-
-
-
-
                 </a>
-
-
-
-
-
-
-
-
-
-
             </form>
-
         }
         <div class="box">
             <form asp-action="ForumHome" method="post">
-
-
                 <table white-space="nowrap" width="100%" class="table">
                     <tr>
                         <th align="center" width="20%" class="infoi">
@@ -244,14 +204,8 @@
                         </th>
                     </tr>
                 </table>
-
-
-
-
-
             </form>
         </div>
-
     </div>
 </body>
 </html>

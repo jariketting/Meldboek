@@ -60,7 +60,7 @@ namespace meldboek.Controllers
             //get person logged in but for now just person 1 or even post.creator
             Person person = GetPerson(1);
 
-            var folder = "/Users/yaseminsnoek/Library/Application Support/Neo4j Desktop/Application/neo4jDatabases/database-35932c80-623d-4c95-b045-447e246bf8bf/installation-4.0.1/import/" + person.PersonId.ToString() + "/" + NewspostId.ToString();
+            var folder = "/Users/yasemin/Library/Application Support/Neo4j Desktop/Application/neo4jDatabases/database-a67a9b4b-e0cb-404c-99ce-fccc6509622f/installation-4.0.2/import/" + person.PersonId.ToString() + "/" + NewspostId.ToString();
             if (!System.IO.Directory.Exists(folder))
             {
                 System.IO.Directory.CreateDirectory(folder);
@@ -68,10 +68,10 @@ namespace meldboek.Controllers
             if (file.Length > 0)
             {
 
-                var filename = file.FileName + person.PersonId.ToString();
+                var filename = file.FileName;
 
 
-                var path = "/Users/yaseminsnoek/Library/Application Support/Neo4j Desktop/Application/neo4jDatabases/database-35932c80-623d-4c95-b045-447e246bf8bf/installation-4.0.1/import/" + person.PersonId.ToString() + "/" + NewspostId.ToString() + "/" + filename;
+                var path = "/Users/yasemin/Library/Application Support/Neo4j Desktop/Application/neo4jDatabases/database-a67a9b4b-e0cb-404c-99ce-fccc6509622f/installation-4.0.2/import/" + person.PersonId.ToString() + "/" + NewspostId.ToString() + "/" + filename;
 
                 using (var stream = System.IO.File.Create(path))
                 {
@@ -79,6 +79,7 @@ namespace meldboek.Controllers
                 }
 
             }
+        
             //just to test
 
             return RedirectToAction("AddFile");
@@ -161,36 +162,7 @@ namespace meldboek.Controllers
 
 
         }
-        public IActionResult LogIn(string email, string password)
-        {
-            List<INode> nodeList = new List<INode>();
-            if (email != null & password != null)
-            {
-                var results = ConnectDb("MATCH (a:Person) WHERE a.Email = '" + email + "' AND a.Password =  '" + password + "' RETURN a");
-                var Person = new Person();
-
-                nodeList = results.Result;
-                foreach (var record in nodeList)
-                {
-                    var nodeprops = JsonConvert.SerializeObject(record.As<INode>().Properties);
-                    Person = (JsonConvert.DeserializeObject<Person>(nodeprops));
-                }
-                //   Console.WriteLine(Person.Email.ToString());
-
-
-                if (email == Person.Email & password == Person.Password)
-                {
-                    RedirectToAction("Profile", "PersonController");
-                }
-                else
-                {
-                    RedirectToAction("CreateAccount", "PersonController");
-
-                }
-            }
-
-            return View();
-        }
+        
 
         public IActionResult Home()
         {
@@ -776,6 +748,7 @@ namespace meldboek.Controllers
                 {
                     string status = requestCheck.Result + "Request";
                     return status;
+
                 }
                 else
                 {
@@ -957,7 +930,7 @@ namespace meldboek.Controllers
 
         public async Task<List<INode>> ConnectDb(string query)
         {
-            Driver = CreateDriverWithBasicAuth("bolt://localhost:11005", "neo4j", "1234");
+            Driver = CreateDriverWithBasicAuth("bolt://localhost:7687", "neo4j", "1234");
             List<INode> res = new List<INode>();
             IAsyncSession session = Driver.AsyncSession(o => o.WithDatabase("neo4j"));
 
@@ -991,7 +964,7 @@ namespace meldboek.Controllers
 
         public async Task<string> ConnectDb2(string query)
         {
-            Driver = CreateDriverWithBasicAuth("bolt://localhost:11005", "neo4j", "1234");
+            Driver = CreateDriverWithBasicAuth("bolt://localhost:7687", "neo4j", "1234");
             string res = "";
             IAsyncSession session = Driver.AsyncSession(o => o.WithDatabase("neo4j"));
 
