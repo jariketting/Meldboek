@@ -15,6 +15,12 @@
 
         .topbar {
             background-color: #ffffff;
+            text-align: unset;
+            padding: 10px 0px 0px 0px;
+        }
+
+        #acc-icon {
+            padding: 10px 20px;
         }
 
         .content {
@@ -80,11 +86,25 @@
         #personlist:hover {
             background-color: #f4a3ff;
         }
+
+        #logout {
+            padding: 20px;
+            text-decoration: none;
+            color: #0000ff;
+            font-size: 22px;
+            transition: 0.2s;
+        }
+
+        #logout:hover {
+            color: #b3b3ff;
+        }
     </style>
 </head>
 <body>
     <!-- Bar at the top of the page -->
     <div class="topbar">
+
+        <a id="logout" href="@Url.Action("Index1", "Login")">&#8592; Log uit</a>
 
         <!-- Account information button -->
         <a href="@Url.Action("Profile")"><img id="acc-icon" src="@Url.Content("~/Content/account.png")" /></a>
