@@ -36,11 +36,11 @@
         <br>                                    <!-- Zorg dat de kleur hetzelfde is als de kleur van hover (laatste element in de <style>).-->
         <a href="@Url.Action("ForumHome","Forum")">Forums</a> <!-- Dit is hoe je opties neerzet die niet je huidige pagina zijn. -->
         <br>
-        <a onclick="nav()" href="#chat">Chat</a>
+        <a href="@Url.Action("Index", "Chat")">Chat</a>
         <br>
         <a href="@Url.Action("Groepen")">Groepen</a>
         <br>
         <a href="@Url.Action("Personlist")">Gebruikers</a>
     </div>
-    <div class="logout"><a onclick="nav()" href="#logout">Log uit</a></div>
+    <div class="logout"><a href="@Url.Action("Index1", "Login")">Log uit</a></div>
 </div>
