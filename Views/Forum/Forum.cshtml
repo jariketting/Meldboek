@@ -39,11 +39,6 @@
             background-color: #ff3398;
             margin-top: 0px;
         }
-
-        .overlay a:hover, .overlay a:focus, .logout a:hover, .logout a:focus {
-            color: #ffa1d0;
-        }
-
         .info {
             color: #000000;
             vertical-align: middle;
@@ -154,13 +149,13 @@
         <div class="overlay-content">
             <a href="@Url.Action("Newsfeed", "Person")">Nieuws</a>
             <br>
-            <a style="color: #ffa1d0;">Forums</a>
+            <a onclick="nav()" href="#forums">Forums</a>
             <br>
             <a href="@Url.Action("Index", "Chat")">Chat</a>
             <br>
-            <a href="@Url.Action("Groepen", "Person")">Groepen</a>
+            <a href="@Url.Action("Groepen")">Groepen</a>
             <br>
-            <a href="@Url.Action("Personlist", "Person")">Gebruikers</a>
+            <a href="@Url.Action("Personlist")">Gebruikers</a>
         </div>
         <div class="logout"><a onclick="nav()" href="#logout">Log uit</a></div>
     </div>

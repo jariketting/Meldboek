@@ -162,36 +162,7 @@ namespace meldboek.Controllers
 
 
         }
-        public IActionResult LogIn(string email, string password)
-        {
-            List<INode> nodeList = new List<INode>();
-            if (email != null & password != null)
-            {
-                var results = ConnectDb("MATCH (a:Person) WHERE a.Email = '" + email + "' AND a.Password =  '" + password + "' RETURN a");
-                var Person = new Person();
-
-                nodeList = results.Result;
-                foreach (var record in nodeList)
-                {
-                    var nodeprops = JsonConvert.SerializeObject(record.As<INode>().Properties);
-                    Person = (JsonConvert.DeserializeObject<Person>(nodeprops));
-                }
-                //   Console.WriteLine(Person.Email.ToString());
-
-
-                if (email == Person.Email & password == Person.Password)
-                {
-                    RedirectToAction("Profile", "PersonController");
-                }
-                else
-                {
-                    RedirectToAction("CreateAccount", "PersonController");
-
-                }
-            }
-
-            return View();
-        }
+        
 
         public IActionResult Home()
         {
@@ -966,7 +937,7 @@ namespace meldboek.Controllers
 
         public async Task<List<INode>> ConnectDb(string query)
         {
-            Driver = CreateDriverWithBasicAuth("bolt://localhost:11005", "neo4j", "1234");
+            Driver = CreateDriverWithBasicAuth("bolt://localhost:7687", "neo4j", "1234");
             List<INode> res = new List<INode>();
             IAsyncSession session = Driver.AsyncSession(o => o.WithDatabase("neo4j"));
 
@@ -1000,7 +971,7 @@ namespace meldboek.Controllers
 
         public async Task<string> ConnectDb2(string query)
         {
-            Driver = CreateDriverWithBasicAuth("bolt://localhost:11005", "neo4j", "1234");
+            Driver = CreateDriverWithBasicAuth("bolt://localhost:7687", "neo4j", "1234");
             string res = "";
             IAsyncSession session = Driver.AsyncSession(o => o.WithDatabase("neo4j"));
 
