@@ -1,75 +1,177 @@
 ﻿@model meldboek.Models.Person
 @{
     Layout = null;
+    ViewData["Title"] = "Login";
 }
 
 <!DOCTYPE html>
 
 <html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Login</title>
-    <style>
-        #login-div {
-            position: absolute;
-            left: 35%;
-            top: 35%;
-            border: 2px solid #184a0e;
-            padding: 50px 50px;
-        }
+    <head>
+        <meta name="viewport" content="width=device-width" />
+        <link rel="stylesheet" type="text/css" href="~/css/Topbar_Sidenav.css">
+        <title>Login</title>
+        <style>
+            body {
+                font-family: 'Trebuchet MS', sans-serif;
+            }
 
-        .field-validation-error {
-            color: red;
-        }
-    </style>
-</head>
-<body>
-    <div id="login-div">
-        @using (Html.BeginForm("Authorize", "Login", FormMethod.Post))
-        {
-            <table>
-                <tr>
-                    <td></td>
-                    <td style="text-decoration:wavy"> Meldboek</td>
-                </tr>
-                <tr>
-                    <td>
-                        @Html.LabelFor(model => model.Email)
-                    </td>
-                    <td>
-                        @Html.EditorFor(model => model.Email)
-                    </td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td>@Html.ValidationMessageFor(model => model.Email)</td>
-                </tr>
-                <tr>
-                    <td> @Html.LabelFor(model => model.Password)</td>
-                    <td> @Html.EditorFor(model => model.Password)</td>
-                </tr>
-                <tr>
-                <tr>
-                    <td></td>
-                    <td>@Html.ValidationMessageFor(model => model.Password)</td>
-                </tr>
-                <td></td>
-                <tr>
-                    <td colspan="2">
-                        <label class="filed-validation-error">@Html.DisplayFor(model => model.LoginErrorMessage)</label>
-                    </td>
-                    <td>
-                        <input type="submit" name="name" value="Login" />
-                        <input type="reset" name="name" value="Verwijder" />
+            .content {
+                margin-left: 25%;
+            }
 
-                    </td>
-                </tr>
+            #login-div {
+                position: relative;
+                width: 650px;
+                margin-top: 200px;
+                margin-bottom: 25px;
+                border: 2px solid #a4c2f4;
+                padding: 45px 40px 30px 40px;
+            }
 
-            </table>
-        }
-    </div>
-    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
-    <script src="~/Scripts/jquery.validate.min.js"></script>
-    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
-</body>
+            .field-validation-error {
+                color: red;
+            }
+
+            .topbar {
+                background-color: #a4c2f4;
+                text-align: unset;
+            }
+
+            #h1-meldboek {
+                color: #d2e2f9;
+                width: 10%;
+                padding-left: 30px;
+            }
+
+            #h1-login {
+                float: right;
+                width: 52%;
+            }
+
+            td {
+                padding-bottom: 10px;
+            }
+
+            label {
+                font-size: 22px;
+            }
+
+            #label {
+                width: 250px;
+            }
+
+            input {
+                font-family: 'Trebuchet MS', sans-serif;
+                font-size: 22px;
+                width: 400px;
+            }
+
+            .button {
+                width: 245px;
+                padding: 10px;
+                margin-left: 200px;
+                font-size: 30px;
+                color: #ffffff;
+                background-color: #a4c2f4;
+                border: none;
+                border-radius: 30px;
+                cursor: pointer;
+                transition: 0.2s;
+            }
+
+            .button:hover {
+                background-color: #d2e2f9;
+            }
+
+            #empty-fields {
+                color: #000000;
+                cursor: pointer;
+                background: none;
+                border: none;
+                width: auto;
+                font-size: 18px;
+                margin-bottom: 30px;
+                transition: 0.2s;
+            }
+
+            #empty-fields:hover {
+                color: #a4c2f4
+            }
+
+            #error-message {
+                color: red;
+                padding-top: 10px;
+                padding-bottom: 25px;
+            }
+
+            #create-account {
+                margin-top: 25px;
+                text-decoration: none;
+                color: #a4c2f4;
+                font-size: 20px;
+                transition: 0.2s;
+            }
+
+            #create-account:hover {
+                color: #d2e2f9;
+            }
+        </style>
+    </head>
+    <body>
+        <!-- Colored bar at the top of the page -->
+        <div class="topbar">
+
+            <!-- Page titles -->
+            <h1 id="h1-meldboek">Meldboek</h1>
+            <h1 id="h1-login">Login</h1>
+
+        </div>
+        <div class="content">
+            <div id="login-div">
+
+               @using (Html.BeginForm("Authorize", "Login", FormMethod.Post))
+                {
+                    <table>
+                        <tr>
+                            <td id="label">
+                                @Html.LabelFor(model => model.Email)
+                            </td>
+                            <td>
+                                @Html.EditorFor(model => model.Email)
+                            </td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td>@Html.ValidationMessageFor(model => model.Email)</td>
+                        </tr>
+                        <tr>
+                            <td id="label"> @Html.LabelFor(model => model.Password)</td>
+                            <td> @Html.EditorFor(model => model.Password)</td>
+                        </tr>
+                        <tr>
+                        <tr>
+                            <td></td>
+                            <td>@Html.ValidationMessageFor(model => model.Password)</td>
+                        </tr>
+                        <tr>
+                            <td id="error-message" colspan="2">
+                                <label class="filed-validation-error">@Html.DisplayFor(model => model.LoginErrorMessage)</label>
+                            </td>
+                        </tr>
+                    </table>
+
+                    <input id="empty-fields" type="reset" name="name" value="Velden leeg maken" /><br>
+                    <input class="button" type="submit" name="name" value="Login" />
+                }
+
+            </div>
+
+            <a id="create-account" href="@Url.Action("CreateAccount", "Person")">Account aanmaken &#8594;</a>
+        </div>
+
+        <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+        <script src="~/Scripts/jquery.validate.min.js"></script>
+        <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    </body>
 </html>

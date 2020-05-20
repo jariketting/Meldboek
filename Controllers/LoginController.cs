@@ -75,7 +75,7 @@ namespace meldboek.Controllers
                     AllowRefresh = false
                 });
 
-                return RedirectToAction("Profile", "Person");
+                return RedirectToAction("Home", "Person");
             }
 
         }

@@ -31,7 +31,6 @@ C:\Users\amyno\Documents\Repos\meldboek\obj\Debug\netcoreapp2.2\Razor\Views\Pers
 C:\Users\amyno\Documents\Repos\meldboek\obj\Debug\netcoreapp2.2\Razor\Views\Person\Groepen.cshtml.g.cs
 C:\Users\amyno\Documents\Repos\meldboek\obj\Debug\netcoreapp2.2\Razor\Views\Person\GroepenManagen.cshtml.g.cs
 C:\Users\amyno\Documents\Repos\meldboek\obj\Debug\netcoreapp2.2\Razor\Views\Person\Home.cshtml.g.cs
-C:\Users\amyno\Documents\Repos\meldboek\obj\Debug\netcoreapp2.2\Razor\Views\Person\Login.cshtml.g.cs
 C:\Users\amyno\Documents\Repos\meldboek\obj\Debug\netcoreapp2.2\Razor\Views\Person\Newsfeed.cshtml.g.cs
 C:\Users\amyno\Documents\Repos\meldboek\obj\Debug\netcoreapp2.2\Razor\Views\Person\Personlist.cshtml.g.cs
 C:\Users\amyno\Documents\Repos\meldboek\obj\Debug\netcoreapp2.2\Razor\Views\Person\Profile.cshtml.g.cs
@@ -50,3 +49,4 @@ C:\Users\amyno\Documents\Repos\meldboek\obj\Debug\netcoreapp2.2\meldboek.dll
 C:\Users\amyno\Documents\Repos\meldboek\obj\Debug\netcoreapp2.2\meldboek.pdb
 C:\Users\amyno\Documents\Repos\meldboek\obj\Debug\netcoreapp2.2\meldboek.genruntimeconfig.cache
 C:\Users\amyno\Documents\Repos\meldboek\obj\Debug\netcoreapp2.2\meldboek.csproj.CopyComplete
+C:\Users\amyno\Documents\Repos\meldboek\obj\Debug\netcoreapp2.2\Razor\Views\Login\Index1.cshtml.g.cs
