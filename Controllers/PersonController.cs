@@ -324,6 +324,8 @@ namespace meldboek.Controllers
 
         public async Task<IActionResult> DeletePost(int postid, string page)
         {
+            // DeletePost() deletes a Newspost using its id and redirects to the correct page (a filter might've been used beforehand).
+
             await ConnectDb("MATCH(p:Post) WHERE p.PostId= " + postid + " DETACH DELETE p");
 
             return RedirectToAction("FilteredNewsfeed", new { filter = page });
@@ -493,6 +495,8 @@ namespace meldboek.Controllers
 
         public List<GroupData> GetGroupById(int GroupId)
         {
+            // GetGroupById() gets a Groups from the database using its id and puts all the info into a list of GroupData objects.
+
             List<INode> groupNodes = new List<INode>();
             var getGroups = ConnectDb("MATCH (g:Group) WHERE g.GroupId = " + GroupId + " RETURN g");
             var group = new GroupData();
@@ -504,6 +508,7 @@ namespace meldboek.Controllers
                 var nodeprops1 = JsonConvert.SerializeObject(record1.As<INode>().Properties);
                 group = (JsonConvert.DeserializeObject<GroupData>(nodeprops1));
 
+                // Another query gets all the Persons who are in the Group and puts them into a list of Person objects.
                 List<INode> personNodes = new List<INode>();
                 var getPersons = ConnectDb("MATCH (p:Person)-[r:IsInGroup]->(g:Group {GroupId: " + group.GroupId + "}) RETURN p");
                 var person = new Person();
@@ -632,7 +637,7 @@ namespace meldboek.Controllers
 
         public async Task<IActionResult> LeaveGroup(int GroupId)
         {
-            // LeaveGroup() removes the Person from the group (deletes relationship IsInGroup).
+            // LeaveGroup() removes the current Person from the group (deletes relationship IsInGroup).
 
             await ConnectDb("MATCH (p:Person)-[r:IsInGroup]->(g:Group) WHERE p.PersonId = 1 AND g.GroupId = " + GroupId + " DELETE r");
 
@@ -686,6 +691,8 @@ namespace meldboek.Controllers
 
         public List<PersonInfo> GetPersonlist()
         {
+            // GetPersonList() gets all the Persons except for the current Person from the database and puts them into a list of PersonInfo objects.
+
             List<INode> personNodes = new List<INode>();
             var getPersons = ConnectDb("MATCH(p:Person) WHERE NOT p.PersonId = 1 RETURN p");
             var person = new Person();
@@ -733,19 +740,24 @@ namespace meldboek.Controllers
                 });
             }
 
-            // The final list is ordered by FirstName and put into a list called "final".
+            // The final list is ordered by FirstName and put into a list called final.
             List<PersonInfo> final = friendList.OrderBy(f => f.Person.FirstName).ThenBy(f => f.Person.LastName).ToList();
             return final;
         }
 
         public string CheckFriendStatus(int PersonId)
         {
+            // CheckFriendStatus returns the relationship between the current Person and the Person requested by PersonId.
+
             var getStatus = ConnectDb2("MATCH(a:Person)-[r]-(b:Person) WHERE a.PersonId = 1 AND b.PersonId = " + PersonId + " RETURN type(r)");
             if (getStatus.Result == "FriendPending")
             {
+                // If the relationship is FriendPending, another check determines whether the current Person is the one who sent the request.
                 var requestCheck = ConnectDb2("MATCH(a:Person)-[r]->(b:Person) WHERE a.PersonId = " + PersonId + " AND b.PersonId = 1 RETURN type(r)");
                 if (requestCheck.Result == "FriendPending")
                 {
+
+                    // If the current Person is the one who sent the request, the relationship string is expanded.
                     string status = requestCheck.Result + "Request";
                     return status;
 
@@ -765,6 +777,8 @@ namespace meldboek.Controllers
 
         public IActionResult Friend(int FriendId)
         {
+            // Friend() uses AddFriend() to send a friendrequest and redirects back to the Personlist.
+
             if (AddFriend(1, FriendId) == true)
             {
                 return RedirectToAction("Personlist");
@@ -854,6 +868,8 @@ namespace meldboek.Controllers
 
         public List<Group> GetOwnedGroups()
         {
+            // GetOwnedGroups gets all the groups the Person owns and puts them into a list of Group object.
+
             List<INode> ownedGroupNodes = new List<INode>();
             var getOwnedGroups = ConnectDb("MATCH (g:Group) WHERE (:Person {PersonId: 1})-[:IsOwner]->(g) RETURN g");
             var group = new Group();
@@ -865,7 +881,7 @@ namespace meldboek.Controllers
                 var nodeprops = JsonConvert.SerializeObject(record.As<INode>().Properties);
                 group = (JsonConvert.DeserializeObject<Group>(nodeprops));
 
-                // After getting al the required data, it is put into a Group object and added to the list of groups.
+                // After getting al the required data, it is put into a Group object and added to the list of owned groups.
                 ownedGroupsList.Add(new Group()
                 {
                     GroupId = group.GroupId,
@@ -881,11 +897,14 @@ namespace meldboek.Controllers
 
         public List<GroepenManagen> GetGroupsManagement(int GroupId)
         {
+            // GetGroupsManagement() gets the GroupData of a single group and the Persons who are not in the group from the database and puts it in a GroepenManagen object.
+
             List<GroepenManagen> groupsManagement = new List<GroepenManagen>();
 
             var getGroups = GetGroupById(GroupId);
             foreach (var record1 in getGroups)
             {
+                // Getting all the Persons who are not in the group from the database and putting them into a list of Person objects.
                 List<INode> nonmemberNodes = new List<INode>();
                 var getNonMembers = ConnectDb("MATCH (p:Person) WHERE NOT (p)-[:IsInGroup]->(:Group {GroupId: " + record1.GroupId + "}) RETURN p");
                 var nonMember = new Person();
@@ -899,8 +918,11 @@ namespace meldboek.Controllers
 
                     personList.Add(nonMember);
                 }
+
+                // The list of non-members is sorted before being put into the final nonMemberList.
                 List<Person> nonMemberList = personList.OrderBy(p => p.FirstName).ThenBy(p => p.LastName).ToList();
 
+                // All the fetched data is put into a GroepenManagen object.
                 groupsManagement.Add(new GroepenManagen()
                 {
                     Group = record1,
@@ -908,12 +930,13 @@ namespace meldboek.Controllers
                 });
             }
 
-            List<GroepenManagen> final = groupsManagement.OrderBy(g => g.Group.GroupName).ToList();
-            return final;
+            return groupsManagement;
         }
 
         public async Task<IActionResult> DeleteGroup(int GroupId)
         {
+            // DeleteGroup() deletes a group using its id.
+
             await ConnectDb("MATCH(g:Group) WHERE g.GroupId = " + GroupId + " DETACH DELETE g");
 
             return RedirectToAction("GroepenManagen");
@@ -971,6 +994,8 @@ namespace meldboek.Controllers
 
         public async Task<string> ConnectDb2(string query)
         {
+            // ConnectDb2 returns a string instead of list of nodes.
+
             Driver = CreateDriverWithBasicAuth("bolt://localhost:11005", "neo4j", "1234");
             string res = "";
             IAsyncSession session = Driver.AsyncSession(o => o.WithDatabase("neo4j"));

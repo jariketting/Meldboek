@@ -38,7 +38,7 @@
                 padding-bottom: 50px;
             }
 
-            /* options list */
+            /* Options list */
             .options {
                 position: fixed;
                 float: left;
@@ -63,6 +63,7 @@
                  color: #f4a3ff;
             }
 
+            /* Title of the page shows the Person whether they are viewing all the Persons or just their friends. */
             .page-title {
                 font-size: 28px;
                 padding-bottom: 20px;
@@ -103,6 +104,7 @@
                 font-size: 20px;
             }
 
+            /* Link to add a new friend or accept an incoming friend request. */
             #add-accept-friend {
                 color: #00ff00;
                 transition: 0.2s;
@@ -113,6 +115,7 @@
                 color: #b3ffb3;
             }
 
+            /* Link to delete a friend or deny an incoming friend request. */
             #delete-deny-friend {
                 color: #ff0000;
                 transition: 0.2s;
@@ -163,31 +166,34 @@
             </div>
 
             <div class="person-list">
+
+                <!-- Page title changes according to the possibly applied friends filter. -->
                 <h1 class="page-title">@TempData["Page"]</h1>
 
                 <!-- Single person attribute; Here all the posts from GetPersonlist() or FilteredPersonlist() are put on the page. -->
-                @foreach (var person in Model)
+               @foreach (var person in Model)
                 {
                     <div class="person">
                         <div class="person-content">
                             <h1>@person.Person.FirstName @person.Person.LastName</h1>
                         </div>
 
-                        @if (person.Status == "")
+                        <!-- Depending on the Persons relationship with the Person in the model, certain options or statuses are added. -->
+                       @if (person.Status == "")
                         {
                             <div class="person-options">
                                 <a id="add-accept-friend" href="@Url.Action("Friend", new { FriendId = person.Person.PersonId })">Vriend toevoegen</a>
                             </div>
                         }
                     
-                        @if (person.Status == "FriendPending")
+                       @if (person.Status == "FriendPending")
                         {
                             <div class="person-options">
                                 <a style="color: #0000ff;">In behandeling</a>
                             </div>
                         }
 
-                        @if (person.Status == "FriendPendingRequest")
+                       @if (person.Status == "FriendPendingRequest")
                         {
                             <div class="person-options" style="margin-top: 10px;">
                                 <a id="add-accept-friend" href="@Url.Action("AcceptFriend", new { PersonRequestedId = person.Person.PersonId, PersonAcceptedId = 1, Page = "Personlist" })">Verzoek accepteren</a>
@@ -195,7 +201,7 @@
                             </div>
                         }
 
-                        @if (person.Status == "IsFriendsWith")
+                       @if (person.Status == "IsFriendsWith")
                         {
                             <div class="person-options">
                                 <a id="delete-deny-friend" href="@Url.Action("DeleteFriend", new { FriendId = person.Person.PersonId, Page = @TempData["Page"] })">Vriend verwijderen</a>

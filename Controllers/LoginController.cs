@@ -12,11 +12,10 @@ using Neo4j.Driver;
 using Newtonsoft.Json;
 
 
-
 namespace meldboek.Controllers
 {
     //This class inherits properties of PersonController
-    public class LoginController : PersonController
+    public class LoginController : Controller
     {
         //This method returns the view of Login page
         public IActionResult Index1()
@@ -78,6 +77,45 @@ namespace meldboek.Controllers
                 return RedirectToAction("Home", "Person");
             }
 
+        }
+
+        public async Task<List<INode>> ConnectDb(string query)
+        {
+            var Driver = CreateDriverWithBasicAuth("bolt://localhost:11005", "neo4j", "1234");
+            List<INode> res = new List<INode>();
+            IAsyncSession session = Driver.AsyncSession(o => o.WithDatabase("neo4j"));
+
+            try
+            {
+                res = await session.ReadTransactionAsync(async tx =>
+                {
+                    var results = new List<INode>();
+                    var reader = await tx.RunAsync(query);
+
+                    while (await reader.FetchAsync())
+                    {
+                        results.Add(reader.Current[0].As<INode>());
+
+                    }
+
+                    return results;
+                });
+
+
+            }
+
+            finally
+            {
+                await session.CloseAsync();
+
+            }
+            return res;
+
+        }
+
+        public IDriver CreateDriverWithBasicAuth(string uri, string Person, string password)
+        {
+            return GraphDatabase.Driver(new Uri(uri), AuthTokens.Basic(Person, password));
         }
 
     }

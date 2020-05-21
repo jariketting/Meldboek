@@ -6,200 +6,164 @@
 
 <!DOCTYPE html>
 <html>
-<head>
-    <link rel="stylesheet" type="text/css" href="~/css/Topbar_Sidenav.css">
-    <script type="text/javascript" src="~/js/site.js"></script>
-    <style>
-        body {
-            font-family: 'Trebuchet MS', sans-serif;
-            background: #ffffff;
-            margin: 0 auto 0 auto;
-            width: 100%;
-            text-align: center;
-            margin: 0px 0px 0px 0px;
-        }
+    <head>
+        <link rel="stylesheet" type="text/css" href="~/css/Topbar_Sidenav.css">
+        <script type="text/javascript" src="~/js/site.js"></script>
+        <style>
+            body {
+                font-family: 'Trebuchet MS', sans-serif;
+                background: #ffffff;
+                margin: 0 auto 0 auto;
+                width: 100%;
+                text-align: center;
+                margin: 0px 0px 0px 0px;
+            }
 
-        .topbar {
-            background-color: #808080;
-        }
+            .topbar {
+                background-color: #808080;
+            }
 
-        .navbtn {
-            background-color: #808080;
-        }
+            .navbtn {
+                background-color: #808080;
+            }
 
-        .overlay {
-            background-color: #808080;
-        }
+            .overlay {
+                background-color: #808080;
+            }
 
-        .overlay a:hover, .overlay a:focus, .logout a:hover, .logout a:focus {
-            color: #cccccc;
-        }
+            .overlay a:hover, .overlay a:focus, .logout a:hover, .logout a:focus {
+                color: #cccccc;
+            }
 
-        .box {
-            background: #808080;
-            width: 600px;
-            border-radius: 6px;
-            position: center;
-            margin: 0 auto 0 auto;
-            padding: 50px 100px 50px 50px;
-            border: #000000 4px solid;
-        }
+            /* Colored box in the center of the page contains the CreateGroups form. */
+            .box {
+                background: #808080;
+                width: 600px;
+                border-radius: 6px;
+                position: center;
+                margin: 0 auto 0 auto;
+                padding: 50px 100px 50px 50px;
+                border: #000000 4px solid;
+            }
 
-        .box p {
-            color: #ffffff;
-            font-size: 26px;
-        }
+            .box p {
+                color: #ffffff;
+                font-size: 26px;
+            }
 
-        input {
-            font-family: 'Trebuchet MS', sans-serif;
-            font-size: 24px;
-        }
+            form {
+                margin-top: 110px;
+            }
 
-        #submit {
-            margin-top: 20px;
-            background-color: #ffffff;
-            border-radius: 25px;
-            border: none;
-            padding: 5px;
-            width: 150px;
-            cursor: pointer;
-            transition: 0.2s;
-        }
+            input {
+                font-family: 'Trebuchet MS', sans-serif;
+                font-size: 24px;
+            }
 
-        #submit:hover {
-            background-color: #cccccc;
-        }
+            select {
+                font-family: 'Trebuchet MS', sans-serif;
+                font-size: 18px;
+                margin: 0px 0px 20px 0px;
+                padding: 5px;
+            }
 
-        .Personname {
-            background: #ecf0f1;
-            border: #8593bc 1px solid;
-            border-bottom: #ccc 2px solid;
-            padding: 8px;
-            width: 350px;
-            color: #AAAAAA;
-            margin-top: 10px;
-            font-size: 1em;
-            border-radius: 4px;
-        }
+            /* Button to submit the new group */
+            #submit {
+                margin-top: 20px;
+                background-color: #ffffff;
+                border-radius: 25px;
+                border: none;
+                padding: 5px;
+                width: 150px;
+                cursor: pointer;
+                transition: 0.2s;
+            }
 
-        .button {
-            background: #6f89c4;
-            width: 200px;
-            padding-top: 5px;
-            padding-bottom: 5px;
-            padding-left: 75px;
-            color: white;
-            border-radius: 4px;
-            border: #27ae60 1px solid;
-            margin-top: 10px;
-            margin-bottom: 20px;
-            margin-left: 100px;
-            margin-right: auto;
-            float: left;
-            margin-left: 125px;
-            font-weight: 600;
-            font-size: 0.8em;
-        }
+            #submit:hover {
+                background-color: #cccccc;
+            }
 
-        .button:hover {
-            background: Blue;
-        }
+            #absoluteCenteredDiv {
+                position: absolute;
+                top: 0;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                text-align: left;
+                margin-top: 94px;
+            }
 
-        .fpwd {
-            color: #6f89c4;
-            text-decoration: underline;
-        }
+            /* Link back to the groupmanagement page. */
+            #manage-groups {
+                padding: 20px;
+                text-decoration: none;
+                color: #0000ff;
+                font-size: 22px;
+                transition: 0.2s;
+            }
 
-        #absoluteCenteredDiv {
-            position: absolute;
-            top: 0;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            text-align: left;
-            margin-top: 94px;
-        }
+            #manage-groups:hover {
+                color: #b3b3ff;
+            }
+        </style>
+    </head>
+    <body>
+        <!-- Colored bar at the top of the page -->
+        <div class="topbar">
 
-        #manage-groups {
-            padding: 20px;
-            text-decoration: none;
-            color: #0000ff;
-            font-size: 22px;
-            transition: 0.2s;
-        }
+            <!-- The button that opens the sidemenu -->
+            <span class="navbtn" onclick="nav()">&#9776; </span>
 
-        #manage-groups:hover {
-            color: #b3b3ff;
-        }
+            <!-- Page title -->
+            <h1 style="width: 58%;">Groep aanmaken</h1>
 
-        form {
-            margin-top: 110px;
-        }
-
-        select {
-            font-family: 'Trebuchet MS', sans-serif;
-            font-size: 18px;
-            margin: 0px 0px 20px 0px;
-            padding: 5px;
-        }
-    </style>
-</head>
-<body>
-    <!-- Colored bar at the top of the page -->
-    <div class="topbar">
-
-        <!-- The button that opens the sidemenu -->
-        <span class="navbtn" onclick="nav()">&#9776; </span>
-
-        <!-- Page title -->
-        <h1 style="width: 58%;">Groep aanmaken</h1>
-
-        <!-- Account information button -->
-        <a href="@Url.Action("Profile", "Person")"><img id="acc-icon" src="@Url.Content("~/Content/account.png")" /></a>
-    </div>
-
-    <!-- Sidemenu overlay -->
-    <div id="nav" class="overlay">
-        <div class="overlay-content">
-            <a href="@Url.Action("Newsfeed", "Person")">Nieuws</a>
-            <br>
-            <a href="@Url.Action("ForumHome","Forum")">Forums</a>
-            <br>
-            <a href="@Url.Action("Index", "Chat")">Chat</a>
-            <br>
-            <a href="@Url.Action("Groepen", "Person")">Groepen</a>
-            <br>
-            <a href="@Url.Action("Personlist", "Person")">Gebruikers</p>
+            <!-- Account information button -->
+            <a href="@Url.Action("Profile", "Person")"><img id="acc-icon" src="@Url.Content("~/Content/account.png")" /></a>
         </div>
-        <div class="logout"><a href="@Url.Action("Index1", "Login")">Log uit</a></div>
-    </div>
 
-
-    <div id="absoluteCenteredDiv">
-        <a id="manage-groups" href="@Url.Action("GroepenManagen", "Person")">&#8592; Groepen beheren</a>
-
-        <form asp-action="CreateGroups" method="post">
-            <div class="box">
-                <p>Groepnaam</p>
-                <input type="text" required name=GroupName id="GroupName" size="50"><br><br>
-
-                <p>Manager</p>
-                <select id="ManagerId" name="ManagerId">
-
-                    @foreach (var manager in Model)
-                    {
-                        <option value="@manager.PersonId">@manager.FirstName @manager.LastName</option>
-                    }
-
-                </select><br>
-
-                <input type="submit" value="Aanmaken" id="submit">
-
-
+        <!-- Sidemenu overlay -->
+        <div id="nav" class="overlay">
+            <div class="overlay-content">
+                <a href="@Url.Action("Newsfeed", "Person")">Nieuws</a>
+                <br>
+                <a href="@Url.Action("ForumHome","Forum")">Forums</a>
+                <br>
+                <a href="@Url.Action("Index", "Chat")">Chat</a>
+                <br>
+                <a href="@Url.Action("Groepen", "Person")">Groepen</a>
+                <br>
+                <a href="@Url.Action("Personlist", "Person")">Gebruikers</p>
             </div>
-        </form>
+            <div class="logout"><a href="@Url.Action("Index1", "Login")">Log uit</a></div>
+        </div>
 
-    </div>
-</body>
+        <!-- Actual content of the page -->
+        <div id="absoluteCenteredDiv">
+
+            <!-- Link back to the groupmanagement page. -->
+            <a id="manage-groups" href="@Url.Action("GroepenManagen", "Person")">&#8592; Groepen beheren</a>
+
+            <!-- Form to create a new group. -->
+            <form asp-action="CreateGroups" method="post">
+                <div class="box">
+                    <p>Groepnaam</p>
+                    <input type="text" required name=GroupName id="GroupName" size="50"><br><br>
+
+                    <p>Manager</p>
+                    <select id="ManagerId" name="ManagerId">
+                        
+                        <!-- The Person can choose an existing manager from the model for the new group. -->
+                       @foreach (var manager in Model)
+                        {
+                            <option value="@manager.PersonId">@manager.FirstName @manager.LastName</option>
+                        }
+
+                    </select><br>
+
+                    <input type="submit" value="Aanmaken" id="submit">
+                </div>
+            </form>
+        </div>
+    </body>
 </html>
 

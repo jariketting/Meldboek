@@ -106,7 +106,11 @@
             <h1 id="h1-createaccount">Account aanmaken</h1>
 
         </div>
+
+        <!-- Actual content of the page -->
         <div id="absoluteCenteredDiv">
+
+            <!-- Form to create a new account -->
             <form asp-action="CreateAccount" method="post">
                 <div class="box">
                     <div class="row">
@@ -137,6 +141,7 @@
                 </div>
             </form>
 
+            <!-- Link back to login page -->
             <a id="login" href="@Url.Action("Index1", "Login")">&#8592; Terug naar login</a>
         </div>
     </body>

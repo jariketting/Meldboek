@@ -63,6 +63,7 @@
                  color: #9ee0a4;
             }
 
+            /* Newsfeed title (tells the Person which feed they are viewing.) */
             .page-title {
                 font-size: 28px;
                 padding-bottom: 20px;
@@ -105,6 +106,7 @@
                 padding-bottom: 10px;
             }
 
+            /* Button to delete a newspost */
             .delete-button {
                 display: block;
                 background-color: #ff5252;
@@ -126,7 +128,7 @@
                 background-color: #ffa6a6;
             }
 
-            /* Form to add an article'. */
+            /* Form to add an article. */
             .collapsible {
                 font-family: 'Trebuchet MS', sans-serif;
                 background-color: #3bb546;
@@ -153,6 +155,7 @@
                 transition: max-height 0.2s ease-out;
             }
 
+            /* Form to add an article. */
             .add-article {
                 width: 90%;
                 font-size: 18px;
@@ -275,23 +278,22 @@
                 </div>
 
                 <!-- Single post attribute; Here all the posts from GetFeed() or FilteredNewsfeed() are put on the page. -->
-                    @foreach (var post in Model.Post)
-                    {
-                        <div class="article">
-                            <div class="article-content">
-                                <h1>@post.Title</h1>
-                                <h3>@post.Creator.FirstName @post.Creator.LastName, @post.DateAdded</h3>
-                                <p>@post.Description</p>
-                            </div>
-
-                            <!-- If the current Person is the creator of a newspost (relationship Posted) they can delete it. -->
-                            @if (post.Creator.PersonId == 1)
-                            {
-                                <div class="delete-button" onclick="window.location='@Url.Action("DeletePost", new { postid = post.PostId, page = TempData["Page"] })'">&#10005;</div>
-                            }
+               @foreach (var post in Model.Post)
+                {
+                    <div class="article">
+                        <div class="article-content">
+                            <h1>@post.Title</h1>
+                            <h3>@post.Creator.FirstName @post.Creator.LastName, @post.DateAdded</h3>
+                            <p>@post.Description</p>
                         </div>
-                    }
 
+                        <!-- If the current Person is the creator of a newspost (relationship Posted) they can delete it. -->
+                       @if (post.Creator.PersonId == 1)
+                        {
+                            <div class="delete-button" onclick="window.location='@Url.Action("DeletePost", new { postid = post.PostId, page = TempData["Page"] })'">&#10005;</div>
+                        }
+                    </div>
+                }
             </div>
         </div>
     </body>
