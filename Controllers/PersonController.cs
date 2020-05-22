@@ -722,7 +722,7 @@ namespace meldboek.Controllers
             // GetFriends() gets all the Persons the Person is friends with (relationship type "IsFriendsWith") from the database and puts them in a list of Person objects.
 
             List<INode> friendNodes = new List<INode>();
-            var getFriends = ConnectDb("MATCH(a:Person)-[:IsFriendsWith]->(b:Person) WHERE a.PersonId = 1 RETURN b");
+            var getFriends = ConnectDb("MATCH(a:Person)-[:IsFriendsWith]-(b:Person) WHERE a.PersonId = 1 RETURN b");
             var friend = new Person();
             List<PersonInfo> friendList = new List<PersonInfo>();
 
