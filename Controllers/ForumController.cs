@@ -262,7 +262,7 @@ namespace meldboek.Controllers
             var r = ConnectDb("MATCH (p:ForumItem)-[]-(n:Forum) WHERE n.ForumId="+replyOnForum.ForumId+" RETURN p");
             r.Wait();
             int forumItemId = Convert.ToInt32((Int64)r.Result[0].Properties["ForumItemId"]);
-            var r2 = ConnectDb("MATCH (p:Person)-[Made]-(n:ForumItem) WHERE n.forumItemId=" + forumItemId + " RETURN p");
+            var r2 = ConnectDb("MATCH (p:Person)-[Made]-(n:ForumItem) WHERE n.ForumItemId=" + forumItemId + " RETURN p");
             r2.Wait();
             Person owner = new Person();
             nodeList = r2.Result;
@@ -298,7 +298,7 @@ namespace meldboek.Controllers
             r.Wait();
             int forumItemId = Convert.ToInt32((Int64)r.Result[0].Properties["ForumItemId"]);
 
-            var r2 = ConnectDb("MATCH (p:Person)-[Made]-(n:ForumItem) WHERE n.forumItemId=" + forumItemId + " RETURN p");
+            var r2 = ConnectDb("MATCH (p:Person)-[Made]-(n:ForumItem) WHERE n.ForumItemId=" + forumItemId + " RETURN p");
             r2.Wait();
             Person owner = new Person();
             nodeList = r2.Result;
