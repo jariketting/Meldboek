@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\ses-9\\Desktop\\merge yas\\meldboek.csproj": {}
+    "C:\\Users\\ses-9\\Desktop\\meldboek\\meldboek\\meldboek.csproj": {}
   },
   "projects": {
-    "C:\\Users\\ses-9\\Desktop\\merge yas\\meldboek.csproj": {
+    "C:\\Users\\ses-9\\Desktop\\meldboek\\meldboek\\meldboek.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\ses-9\\Desktop\\merge yas\\meldboek.csproj",
+        "projectUniqueName": "C:\\Users\\ses-9\\Desktop\\meldboek\\meldboek\\meldboek.csproj",
         "projectName": "meldboek",
-        "projectPath": "C:\\Users\\ses-9\\Desktop\\merge yas\\meldboek.csproj",
+        "projectPath": "C:\\Users\\ses-9\\Desktop\\meldboek\\meldboek\\meldboek.csproj",
         "packagesPath": "C:\\Users\\ses-9\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\ses-9\\Desktop\\merge yas\\obj\\",
+        "outputPath": "C:\\Users\\ses-9\\Desktop\\meldboek\\meldboek\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"

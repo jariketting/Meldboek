@@ -16,6 +16,7 @@ using System.Xml;
 using meldboek.ViewModels;
 using System.Globalization;
 using Microsoft.AspNetCore.Http;
+using System.Security.Claims;
 
 namespace meldboek.Controllers
 {
@@ -97,7 +98,11 @@ namespace meldboek.Controllers
 
         //[Route("Person/Profile")]
         public IActionResult Profile()
-        {
+        {   // De claims in de Login controller worden aangemaakt wanneer een user inlogt
+            //Vervolgens wordt daar een cookie van gemaakt.
+           // het komende regel hoort de ingelogd user te pakken van de claims maar die geeft een lege sequentie terug.
+            var username = User.Claims.First(x => x.Type == ClaimTypes.NameIdentifier).Value;
+            ViewBag.username = username;
             //grab a random person out of the DB untill be have the claims
             int personid = 1;
             List<PersonInfo> personInfos = new List<PersonInfo>();
