@@ -62,6 +62,7 @@ namespace meldboek
             app.UseCookiePolicy();
             app.UseDefaultFiles();
 
+            app.UseAuthentication();
 
             app.UseMvc(routes =>
             {

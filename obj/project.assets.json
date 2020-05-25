@@ -7779,10 +7779,7 @@
       "path": "microsoft.netcore.targets/2.0.0",
       "files": [
         ".nupkg.metadata",
-<<<<<<< HEAD
         ".signature.p7s",
-=======
->>>>>>> origin/Saad
         "LICENSE.TXT",
         "THIRD-PARTY-NOTICES.TXT",
         "lib/netstandard1.0/_._",
@@ -8596,10 +8593,6 @@
       "path": "runtime.native.system.io.compression/4.3.0",
       "files": [
         ".nupkg.metadata",
-<<<<<<< HEAD
-=======
-        ".signature.p7s",
->>>>>>> origin/Saad
         "ThirdPartyNotices.txt",
         "dotnet_library_license.txt",
         "lib/netstandard1.0/_._",
@@ -8639,10 +8632,6 @@
       "path": "runtime.native.system.security.cryptography.apple/4.3.0",
       "files": [
         ".nupkg.metadata",
-<<<<<<< HEAD
-=======
-        ".signature.p7s",
->>>>>>> origin/Saad
         "ThirdPartyNotices.txt",
         "dotnet_library_license.txt",
         "lib/netstandard1.0/_._",
@@ -9066,10 +9055,6 @@
       "path": "system.collections.nongeneric/4.3.0",
       "files": [
         ".nupkg.metadata",
-<<<<<<< HEAD
-=======
-        ".signature.p7s",
->>>>>>> origin/Saad
         "ThirdPartyNotices.txt",
         "dotnet_library_license.txt",
         "lib/MonoAndroid10/_._",
@@ -9235,10 +9220,6 @@
       "path": "system.composition/1.0.31",
       "files": [
         ".nupkg.metadata",
-<<<<<<< HEAD
-=======
-        ".signature.p7s",
->>>>>>> origin/Saad
         "ThirdPartyNotices.txt",
         "dotnet_library_license.txt",
         "system.composition.1.0.31.nupkg.sha512",
@@ -9251,10 +9232,6 @@
       "path": "system.composition.attributedmodel/1.0.31",
       "files": [
         ".nupkg.metadata",
-<<<<<<< HEAD
-=======
-        ".signature.p7s",
->>>>>>> origin/Saad
         "ThirdPartyNotices.txt",
         "dotnet_library_license.txt",
         "lib/netstandard1.0/System.Composition.AttributedModel.dll",
@@ -9269,10 +9246,6 @@
       "path": "system.composition.convention/1.0.31",
       "files": [
         ".nupkg.metadata",
-<<<<<<< HEAD
-=======
-        ".signature.p7s",
->>>>>>> origin/Saad
         "ThirdPartyNotices.txt",
         "dotnet_library_license.txt",
         "lib/netstandard1.0/System.Composition.Convention.dll",
@@ -9287,10 +9260,6 @@
       "path": "system.composition.hosting/1.0.31",
       "files": [
         ".nupkg.metadata",
-<<<<<<< HEAD
-=======
-        ".signature.p7s",
->>>>>>> origin/Saad
         "ThirdPartyNotices.txt",
         "dotnet_library_license.txt",
         "lib/netstandard1.0/System.Composition.Hosting.dll",
@@ -9305,10 +9274,6 @@
       "path": "system.composition.runtime/1.0.31",
       "files": [
         ".nupkg.metadata",
-<<<<<<< HEAD
-=======
-        ".signature.p7s",
->>>>>>> origin/Saad
         "ThirdPartyNotices.txt",
         "dotnet_library_license.txt",
         "lib/netstandard1.0/System.Composition.Runtime.dll",
@@ -9323,10 +9288,6 @@
       "path": "system.composition.typedparts/1.0.31",
       "files": [
         ".nupkg.metadata",
-<<<<<<< HEAD
-=======
-        ".signature.p7s",
->>>>>>> origin/Saad
         "ThirdPartyNotices.txt",
         "dotnet_library_license.txt",
         "lib/netstandard1.0/System.Composition.TypedParts.dll",
@@ -10490,10 +10451,6 @@
       "path": "system.linq.parallel/4.3.0",
       "files": [
         ".nupkg.metadata",
-<<<<<<< HEAD
-=======
-        ".signature.p7s",
->>>>>>> origin/Saad
         "ThirdPartyNotices.txt",
         "dotnet_library_license.txt",
         "lib/MonoAndroid10/_._",
@@ -12442,10 +12399,6 @@
       "path": "system.security.principal/4.3.0",
       "files": [
         ".nupkg.metadata",
-<<<<<<< HEAD
-=======
-        ".signature.p7s",
->>>>>>> origin/Saad
         "ThirdPartyNotices.txt",
         "dotnet_library_license.txt",
         "lib/MonoAndroid10/_._",
@@ -13123,7 +13076,6 @@
       "path": "system.threading.threadpool/4.3.0",
       "files": [
         ".nupkg.metadata",
-        ".signature.p7s",
         "ThirdPartyNotices.txt",
         "dotnet_library_license.txt",
         "lib/MonoAndroid10/_._",
@@ -13493,10 +13445,6 @@
       "path": "system.xml.xpath.xdocument/4.3.0",
       "files": [
         ".nupkg.metadata",
-<<<<<<< HEAD
-=======
-        ".signature.p7s",
->>>>>>> origin/Saad
         "ThirdPartyNotices.txt",
         "dotnet_library_license.txt",
         "lib/MonoAndroid10/_._",
@@ -13546,39 +13494,23 @@
     ]
   },
   "packageFolders": {
-<<<<<<< HEAD
     "C:\\Users\\amyno\\.nuget\\packages\\": {},
-=======
-    "C:\\Users\\ses-9\\.nuget\\packages\\": {},
->>>>>>> origin/Saad
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-<<<<<<< HEAD
       "projectUniqueName": "C:\\Users\\amyno\\Documents\\Repos\\meldboek\\meldboek.csproj",
       "projectName": "meldboek",
       "projectPath": "C:\\Users\\amyno\\Documents\\Repos\\meldboek\\meldboek.csproj",
       "packagesPath": "C:\\Users\\amyno\\.nuget\\packages\\",
       "outputPath": "C:\\Users\\amyno\\Documents\\Repos\\meldboek\\obj\\",
-=======
-      "projectUniqueName": "C:\\Users\\ses-9\\Desktop\\meldboek\\meldboek\\meldboek.csproj",
-      "projectName": "meldboek",
-      "projectPath": "C:\\Users\\ses-9\\Desktop\\meldboek\\meldboek\\meldboek.csproj",
-      "packagesPath": "C:\\Users\\ses-9\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\ses-9\\Desktop\\meldboek\\meldboek\\obj\\",
->>>>>>> origin/Saad
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
       ],
       "configFilePaths": [
-<<<<<<< HEAD
         "C:\\Users\\amyno\\AppData\\Roaming\\NuGet\\NuGet.Config",
-=======
-        "C:\\Users\\ses-9\\AppData\\Roaming\\NuGet\\NuGet.Config",
->>>>>>> origin/Saad
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [

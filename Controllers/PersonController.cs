@@ -101,10 +101,14 @@ namespace meldboek.Controllers
         {   // De claims in de Login controller worden aangemaakt wanneer een user inlogt
             //Vervolgens wordt daar een cookie van gemaakt.
            // het komende regel hoort de ingelogd user te pakken van de claims maar die geeft een lege sequentie terug.
-            var username = User.Claims.First(x => x.Type == ClaimTypes.NameIdentifier).Value;
-            ViewBag.username = username;
-            //grab a random person out of the DB untill be have the claims
-            int personid = 1;
+            
+            var currentperson = User.Claims.First(x => x.Type == ClaimTypes.Name).Value;
+            Person user = (JsonConvert.DeserializeObject<Person>(currentperson));
+
+            ViewBag.username = user.PersonId; 
+
+            //grab a random person out of the DB until be have the claims
+            int personid = user.PersonId;
             List<PersonInfo> personInfos = new List<PersonInfo>();
             List<Person> Relations = GetRelationsById(personid);
             Person person = GetPerson(personid);
@@ -314,7 +318,10 @@ namespace meldboek.Controllers
             await ConnectDb("CREATE(p:Post {Title: '" + title + "', Description: '" + description + "', PostId: " + newid + ", DateAdded: '" + datetime + "'})");
 
             // After adding the post to the database, a relationship is created between the post and the Person who made it. | (Person-[Posted]->Post)
-            await ConnectDb("MATCH(u:Person), (p:Post) WHERE u.PersonId = 1 AND p.Title = '" + title + "' CREATE(u)-[r:Posted]->(p)");
+            var claims = User.Claims.First(x => x.Type == ClaimTypes.Name).Value;
+            Person CurrentPerson = (JsonConvert.DeserializeObject<Person>(claims));
+
+            await ConnectDb("MATCH(u:Person), (p:Post) WHERE u.PersonId = " + CurrentPerson.PersonId + " AND p.Title = '" + title + "' CREATE(u)-[r:Posted]->(p)");
 
             // If the chosen category is not "general", the Person has chosen to post in a group they are part of.
             if (group != "Algemeen")

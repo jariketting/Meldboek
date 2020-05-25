@@ -43,6 +43,10 @@ namespace meldboek.Controllers
             user = (JsonConvert.DeserializeObject<Person>(userprops));
 
 
+            // Get user role
+            var role = ConnectDb2("MATCH(:Person{PersonId: " + user.PersonId + "})-[:HasRole]->(r:Role) RETURN r.RoleName").Result;
+
+
             //Checks if inserted data is not correct
             if (user.Email == null || user.Password == null)
             {
@@ -56,9 +60,11 @@ namespace meldboek.Controllers
                 //if inserted data is found in the database, make claims for the logged in user
                 var claims = new List<Claim>
                                 {
-                                    new Claim(ClaimTypes.Name, "Person", ClaimValueTypes.String),
-                                    new Claim(ClaimTypes.NameIdentifier, user.FirstName.ToString(), ClaimValueTypes.String),
-                                    new Claim(ClaimTypes.Role, "Person", ClaimValueTypes.String)
+                                    //new Claim(ClaimTypes.Name, "Person", ClaimValueTypes.String),
+                                    new Claim(ClaimTypes.NameIdentifier, user.PersonId.ToString(), ClaimValueTypes.String),
+                                    new Claim(ClaimTypes.Role, role, ClaimValueTypes.String),
+
+                                    new Claim(ClaimTypes.Name, userprops, ClaimValueTypes.String)
 
                                 };
                 var userIdentity = new ClaimsIdentity(claims, "SecureLogin");
@@ -111,6 +117,37 @@ namespace meldboek.Controllers
             }
             return res;
 
+        }
+
+        public async Task<string> ConnectDb2(string query)
+        {
+            // ConnectDb2 returns a string instead of list of nodes.
+
+            var Driver = CreateDriverWithBasicAuth("bolt://localhost:11005", "neo4j", "1234");
+            string res = "";
+            IAsyncSession session = Driver.AsyncSession(o => o.WithDatabase("neo4j"));
+
+            try
+            {
+                res = await session.ReadTransactionAsync(async tx =>
+                {
+                    string results = "";
+                    var reader = await tx.RunAsync(query);
+
+                    while (await reader.FetchAsync())
+                    {
+                        results = reader.Current[0].As<string>();
+                    }
+
+                    return results;
+                });
+            }
+            finally
+            {
+                await session.CloseAsync();
+            }
+
+            return res;
         }
 
         public IDriver CreateDriverWithBasicAuth(string uri, string Person, string password)
