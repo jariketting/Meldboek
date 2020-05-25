@@ -1,6 +1,7 @@
 {
   "format": 1,
   "restore": {
+<<<<<<< HEAD
     "C:\\Users\\amyno\\Documents\\Repos\\meldboek\\meldboek.csproj": {}
   },
   "projects": {
@@ -12,12 +13,29 @@
         "projectPath": "C:\\Users\\amyno\\Documents\\Repos\\meldboek\\meldboek.csproj",
         "packagesPath": "C:\\Users\\amyno\\.nuget\\packages\\",
         "outputPath": "C:\\Users\\amyno\\Documents\\Repos\\meldboek\\obj\\",
+=======
+    "C:\\Users\\ses-9\\Desktop\\meldboek\\meldboek\\meldboek.csproj": {}
+  },
+  "projects": {
+    "C:\\Users\\ses-9\\Desktop\\meldboek\\meldboek\\meldboek.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\ses-9\\Desktop\\meldboek\\meldboek\\meldboek.csproj",
+        "projectName": "meldboek",
+        "projectPath": "C:\\Users\\ses-9\\Desktop\\meldboek\\meldboek\\meldboek.csproj",
+        "packagesPath": "C:\\Users\\ses-9\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\ses-9\\Desktop\\meldboek\\meldboek\\obj\\",
+>>>>>>> origin/Saad
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
+<<<<<<< HEAD
           "C:\\Users\\amyno\\AppData\\Roaming\\NuGet\\NuGet.Config",
+=======
+          "C:\\Users\\ses-9\\AppData\\Roaming\\NuGet\\NuGet.Config",
+>>>>>>> origin/Saad
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [

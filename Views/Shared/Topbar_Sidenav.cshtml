@@ -23,7 +23,11 @@
     <span class="navbtn" onclick="nav()">&#9776; </span>
 
     <!-- Page title -->
+<<<<<<< HEAD
     <h1>Newsfeed</h1> <!-- Verander deze naar de juiste titel. -->
+=======
+    <h1>Newsfeed</h1>
+>>>>>>> origin/Saad
 
     <!-- Account information button -->
     <a href="@Url.Action("Profile")"><img id="acc-icon" src="@Url.Content("~/Content/account.png")"/></a>
@@ -36,11 +40,19 @@
         <br>                                    <!-- Zorg dat de kleur hetzelfde is als de kleur van hover (laatste element in de <style>).-->
         <a href="@Url.Action("ForumHome","Forum")">Forums</a> <!-- Dit is hoe je opties neerzet die niet je huidige pagina zijn. -->
         <br>
+<<<<<<< HEAD
         <a href="@Url.Action("Index", "Chat")">Chat</a>
+=======
+        <a onclick="nav()" href="#chat">Chat</a>
+>>>>>>> origin/Saad
         <br>
         <a href="@Url.Action("Groepen")">Groepen</a>
         <br>
         <a href="@Url.Action("Personlist")">Gebruikers</a>
     </div>
+<<<<<<< HEAD
     <div class="logout"><a href="@Url.Action("Index1", "Login")">Log uit</a></div>
+=======
+    <div class="logout"><a onclick="nav()" href="#logout">Log uit</a></div>
+>>>>>>> origin/Saad
 </div>

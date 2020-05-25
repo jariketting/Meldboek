@@ -5,10 +5,15 @@
 @model meldboek.ViewModels.Profile
 
 <!DOCTYPE html>
+<<<<<<< HEAD
+=======
+
+>>>>>>> origin/Saad
 <html>
     <head>
         <link rel="stylesheet" type="text/css" href="~/css/Topbar_Sidenav.css">
         <script type="text/javascript" src="~/js/site.js"></script>
+<<<<<<< HEAD
         <style>
             .topbar {
                 background-color: orange;
@@ -120,6 +125,116 @@
             }
         </style>
     </head>
+=======
+    </head>
+    <style>
+        .topbar {
+            background-color: orange;
+        }
+
+        .navbtn {
+            background-color: orange;
+        }
+
+        .overlay {
+            background-color: orange;
+        }
+
+        .overlay a:hover, .overlay a:focus, .logout a:hover, .logout a:focus {
+            color: #ffe4b3;
+        }
+
+        body {
+            font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+
+        }
+
+        .profile-content {
+            margin-left: 10%;
+            padding-bottom: 10%;
+        }
+
+        .info h1 {
+            font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+            color: orange;
+            font-size: 26px;
+            font-weight: bold;
+            padding-top: 150px;
+        }
+
+        .info h2 {
+            padding-top: 10px;
+            color: #000000;
+            font-size: 22px;
+        }
+
+        .personlist-content {
+            width: 100%;
+            overflow: hidden;
+            padding-top: 100px;
+            padding-bottom: 50px;
+        }
+    
+        /* Persons list */
+        .person-list {
+            padding-top: 40px;
+        }
+
+        .person-list h1 {
+            color: orange;
+            font-size: 24px;
+        }
+
+        /* Single person */
+        .person {
+            width: 90%;
+            overflow: hidden;
+            border-bottom: 1px solid orange;
+        }
+
+        /* Person content consists of name (h1) and friend/unfriend options (a). */
+        .person-content {
+            float: left;
+            width: 80%;
+        }
+
+        .person-content h1 {
+            color: #000000;
+            font-size: 22px;
+            padding-bottom: 10px;
+            padding-top: 20px;
+        }
+
+        .person-options {
+            margin-top: 20px;
+            margin-left: 83%;
+        }
+
+        .person-options a {
+            text-decoration: none;
+            font-size: 20px;
+        }
+
+        #accept-friend {
+            color: #00ff00;
+            transition: 0.2s;
+            display: block;
+        }
+
+        #accept-friend:hover {
+            color: #b3ffb3;
+        }
+
+        #deny-delete-friend {
+            color: #ff0000;
+            transition: 0.2s;
+        }
+
+        #deny-delete-friend:hover {
+            color: #ffb3b3;
+        }
+    </style>
+>>>>>>> origin/Saad
     <body>
         <div class="topbar">
 
@@ -146,6 +261,7 @@
                 <br>
                 <a href="@Url.Action("Personlist")">Gebruikers</a>
             </div>
+<<<<<<< HEAD
             <div class="logout"><a href="@Url.Action("Index1", "Login")">Log uit</a></div>
         </div>
 
@@ -153,12 +269,19 @@
         <div class="profile-content">
 
             <!-- Information of the current Person -->
+=======
+            <div class="logout"><a onclick="nav()" href="#logout">Log uit</a></div>
+        </div>
+
+        <div class="profile-content">
+>>>>>>> origin/Saad
             <div class="info">
                 <h1>Info</h1>
                 <h2>Naam: @Model.Name</h2>
                 <h2>Email: @Model.Email</h2>
             </div>
 
+<<<<<<< HEAD
             <!-- This personlist includes friends and incoming/outgoing friend requests. -->
             <div class="person-list">
                 <h1>Vrienden</h1>
@@ -180,10 +303,30 @@
                     }
                 }
 
+=======
+            <div class="person-list">
+                <h1>Vrienden</h1>
+
+                @foreach (var person in Model.PersonInfos)
+                 {
+                        @if (person.Status == "IsFriendsWith")
+                         {
+                            <div class="person">
+                                <div class="person-content">
+                                    <h1>@person.Person.FirstName @person.Person.LastName</h1>
+                                </div>
+                                <div class="person-options">
+                                    <a id="deny-delete-friend" href="@Url.Action("DeleteFriendProfile", "Person", new { FriendId = person.Person.PersonId, PersonId = @Model.PersonId })">Vriend verwijderen</a>
+                                </div>
+                            </div>
+                         }
+                 }
+>>>>>>> origin/Saad
             </div>
 
             <div class="person-list">
                 <h1>Ontvangen vriendschapsverzoeken</h1>
+<<<<<<< HEAD
                
                @foreach (var person in Model.PersonInfos)
                 {
@@ -202,10 +345,28 @@
                     }
                 }
 
+=======
+                    @foreach (var person in Model.PersonInfos)
+                     {
+                        @if (person.Status == "requested")
+                         {
+                            <div class="person">
+                                <div class="person-content">
+                                    <h1>@person.Person.FirstName @person.Person.LastName</h1>
+                                </div>
+                                <div class="person-options" style="margin-top: 10px;">
+                                    <a id="accept-friend" href="@Url.Action("AcceptFriend", "Person", new { PersonRequestedId = person.Person.PersonId, PersonAcceptedId = @Model.PersonId, page = "Profile" })">Vriend accepteren</a>
+                                    <a id="deny-delete-friend" href="@Url.Action("RefuseFriendReq", "Person", new { PersonId = person.Person.PersonId, page = "Profile" })">Vriend afwijzen</a>
+                                </div>
+                            </div>
+                         }
+                     }
+>>>>>>> origin/Saad
             </div>
 
             <div class="person-list">
                 <h1>Verstuurde vriendschapsverzoeken</h1>
+<<<<<<< HEAD
                @foreach (var person in Model.PersonInfos)
                 {
 
@@ -223,5 +384,23 @@
 
             </div>
         </div>
+=======
+                    @foreach (var person in Model.PersonInfos)
+                     {
+                        @if (person.Status == "FriendPending")
+                         {
+                            <div class="person">
+                                <div class="person-content">
+                                    <h1>@person.Person.FirstName @person.Person.LastName</h1>
+                                </div>
+                                <div class="person-options"><a style="color: #0000ff;">In behandeling</a></div>
+                            </div>
+                         }
+                     }
+            </div>
+
+        </div>
+
+>>>>>>> origin/Saad
     </body>
 </html>

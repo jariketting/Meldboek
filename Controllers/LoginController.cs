@@ -29,18 +29,18 @@ namespace meldboek.Controllers
         public ActionResult Authorize(meldboek.Models.Person userModel, string email, string password)
         {
             //Gets the user from database
-            List<INode> nodeList = new List<INode>();
-
-            var results = ConnectDb("MATCH (a:Person) WHERE a.Email = '" + email + "' AND a.Password = '" + password + "'  RETURN a");
-
+            List<INode> userlist = new List<INode>();
+            var getuser = ConnectDb("MATCH (a:Person) WHERE a.Email = '" + email + "' AND a.Password = '" + password + "'  RETURN a");
+         
             var user = new Person();
+            
+            userlist = getuser.Result; // fill chat nodes with queries result
 
-            nodeList = results.Result;
-            foreach (var record in nodeList)
-            {
-                var nodeprops = JsonConvert.SerializeObject(record.As<INode>().Properties);
-                user = (JsonConvert.DeserializeObject<Models.Person>(nodeprops));
-            }
+            var useritem = userlist.First();
+
+            // pull data from useritem and convert json
+            var userprops = JsonConvert.SerializeObject(useritem.As<INode>().Properties);
+            user = (JsonConvert.DeserializeObject<Person>(userprops));
 
 
             //Checks if inserted data is not correct

@@ -128,7 +128,10 @@ table {
     transition: 0.3s;
 }
 
+<<<<<<< HEAD
 /* Logout link */
+=======
+>>>>>>> origin/Saad
 .logout {
     position: absolute;
     bottom: 10%;
