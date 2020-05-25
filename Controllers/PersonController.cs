@@ -541,7 +541,7 @@ namespace meldboek.Controllers
 
         public List<Group> GetGroups()
         {
-            // GetGroups() gets all the groups the Person is part of (relationship type "IsInGroup") from the database and puts them in a list of Group objects.
+            // GetGroups() gets all the groups the Person is part of or owns (relationship type "IsInGroup" or "IsOwner") from the database and puts them in a list of Group objects.
 
             List<INode> groupNodes = new List<INode>();
             var getGroups = ConnectDb("MATCH(p:Person)-[:IsInGroup|:IsOwner]->(g:Group) WHERE p.PersonId = 1 RETURN DISTINCT g");
