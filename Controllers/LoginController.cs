@@ -36,7 +36,18 @@ namespace meldboek.Controllers
             
             userlist = getuser.Result; // fill chat nodes with queries result
 
-            var useritem = userlist.First();
+            INode useritem;
+
+            try
+            {
+                useritem = userlist.First();
+            }
+            catch
+            {
+                userModel.LoginErrorMessage = "Email of wachtwoord zijn onjuist";
+                return View("Index1", userModel);
+            }
+
 
             // pull data from useritem and convert json
             var userprops = JsonConvert.SerializeObject(useritem.As<INode>().Properties);
