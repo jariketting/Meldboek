@@ -182,10 +182,15 @@
                 border: none;
                 cursor: pointer;
                 transition: 0.2s;
+                
             }
 
             input[type=submit]:hover {
                 background-color: #9ee0a4;
+            }
+
+            input[type=file]{
+                margin-bottom: 16px;
             }
         </style>
         <script>
@@ -268,7 +273,7 @@
 
                         <label for="description">Beschrijving</label>
                         <textarea id="description" name="description" value="description" placeholder="Beschrijving nieuwsbericht" style="height:200px" required></textarea>
-                        <label for="file">Filename: </label>
+                        <label for="file">Bijlage: </label>
                         <input type="file" name="file" id="file" /><br>
                         <input type="submit" value="Voeg toe">
                     </form>
