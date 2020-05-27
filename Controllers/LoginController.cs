@@ -8,8 +8,11 @@ using meldboek.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Authorization;
 using Neo4j.Driver;
 using Newtonsoft.Json;
+using meldboek.ViewModels;
 
 
 namespace meldboek.Controllers
@@ -82,7 +85,7 @@ namespace meldboek.Controllers
                 Thread.CurrentPrincipal = new ClaimsPrincipal(userIdentity);
                 //Login the user
                 HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,
-                userPrincipal,
+                 userPrincipal,
                 new AuthenticationProperties
                 {
                     ExpiresUtc = DateTime.UtcNow.AddMinutes(30),
