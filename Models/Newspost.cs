@@ -13,5 +13,6 @@ namespace meldboek.Models
         public Person Creator { get; set; }
         public String DateAdded { get; set; }
         public DateTime TimeStamp { get; set; }
+        public string Path {get;set;}
     }
 }

@@ -16,6 +16,11 @@ using System.Xml;
 using meldboek.ViewModels;
 using System.Globalization;
 using Microsoft.AspNetCore.Http;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authorization;
+
 
 namespace meldboek.Controllers
 {
@@ -53,13 +58,13 @@ namespace meldboek.Controllers
             return View();
         }
         [HttpPost]
-        public async Task<IActionResult> FileUpload(IFormFile file, int NewspostId)
+        public async Task<String> FileUpload(IFormFile file, int NewspostId)
         {
             //would do Newspost post and then post.postid later
 
             //get person logged in but for now just person 1 or even post.creator
             Person person = GetPerson(1);
-
+var path = "";
             var folder = "/Users/yasemin/Library/Application Support/Neo4j Desktop/Application/neo4jDatabases/database-a67a9b4b-e0cb-404c-99ce-fccc6509622f/installation-4.0.2/import/" + person.PersonId.ToString() + "/" + NewspostId.ToString();
             if (!System.IO.Directory.Exists(folder))
             {
@@ -71,7 +76,7 @@ namespace meldboek.Controllers
                 var filename = file.FileName;
 
 
-                var path = "/Users/yasemin/Library/Application Support/Neo4j Desktop/Application/neo4jDatabases/database-a67a9b4b-e0cb-404c-99ce-fccc6509622f/installation-4.0.2/import/" + person.PersonId.ToString() + "/" + NewspostId.ToString() + "/" + filename;
+                 path = "/Users/yasemin/Library/Application Support/Neo4j Desktop/Application/neo4jDatabases/database-a67a9b4b-e0cb-404c-99ce-fccc6509622f/installation-4.0.2/import/" + person.PersonId.ToString() + "/" + NewspostId.ToString() + "/" + filename;
 
                 using (var stream = System.IO.File.Create(path))
                 {
@@ -82,7 +87,7 @@ namespace meldboek.Controllers
         
             //just to test
 
-            return RedirectToAction("AddFile");
+            return path;
         }
         [HttpGet("download")]
         public IActionResult GetDownload(string link)
@@ -97,9 +102,19 @@ namespace meldboek.Controllers
 
         //[Route("Person/Profile")]
         public IActionResult Profile()
-        {
+        {   // De claims in de Login controller worden aangemaakt wanneer een user inlogt
+            //Vervolgens wordt daar een cookie van gemaakt.
+           // het komende regel hoort de ingelogd user te pakken van de claims maar die geeft een lege sequentie terug.
+           
+            var claims = User.Claims.First(x => x.Type == ClaimTypes.NameIdentifier).Value;
+//Console.WriteLine(smt);
+          //  ViewBag.username = username;
+              
+              // var PersonId = userPrincipal.Claims.First(x => x.Type == ClaimTypes.NameIdentifier).Value.ToString();
+
+
             //grab a random person out of the DB untill be have the claims
-            int personid = 1;
+            int personid = int.Parse(claims);
             List<PersonInfo> personInfos = new List<PersonInfo>();
             List<Person> Relations = GetRelationsById(personid);
             Person person = GetPerson(personid);
@@ -162,36 +177,7 @@ namespace meldboek.Controllers
 
 
         }
-        public IActionResult LogIn(string email, string password)
-        {
-            List<INode> nodeList = new List<INode>();
-            if (email != null & password != null)
-            {
-                var results = ConnectDb("MATCH (a:Person) WHERE a.Email = '" + email + "' AND a.Password =  '" + password + "' RETURN a");
-                var Person = new Person();
-
-                nodeList = results.Result;
-                foreach (var record in nodeList)
-                {
-                    var nodeprops = JsonConvert.SerializeObject(record.As<INode>().Properties);
-                    Person = (JsonConvert.DeserializeObject<Person>(nodeprops));
-                }
-                //   Console.WriteLine(Person.Email.ToString());
-
-
-                if (email == Person.Email & password == Person.Password)
-                {
-                    RedirectToAction("Profile", "PersonController");
-                }
-                else
-                {
-                    RedirectToAction("CreateAccount", "PersonController");
-
-                }
-            }
-
-            return View();
-        }
+        
 
         public IActionResult Home()
         {
@@ -326,16 +312,21 @@ namespace meldboek.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddPost(string title, string description, string group)
+        public async Task<IActionResult> AddPost(string title, string description, string group,IFormFile file)
         {
             // AddPost adds a newspost the Person creates to the database. It takes the given title + description and adds the current time itself.
 
             // Getting the id of most recent post node, so a new id can be automatically added to the newly created newspost.
             int newid = GetMaxPostId();
+            var path = "";
 
             string datetime = DateTime.Now.ToString("d-M-yyyy HH:mm:ss");
+            if (file != null)
+            {
+                path = await FileUpload(file,newid);
+            }
 
-            await ConnectDb("CREATE(p:Post {Title: '" + title + "', Description: '" + description + "', PostId: " + newid + ", DateAdded: '" + datetime + "'})");
+            await ConnectDb("CREATE(p:Post {Title: '" + title + "', Description: '" + description + "', PostId: " + newid + ", DateAdded: '" + datetime + "', Path: '" + path +"'})");
 
             // After adding the post to the database, a relationship is created between the post and the Person who made it. | (Person-[Posted]->Post)
             await ConnectDb("MATCH(u:Person), (p:Post) WHERE u.PersonId = 1 AND p.Title = '" + title + "' CREATE(u)-[r:Posted]->(p)");
