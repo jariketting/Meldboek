@@ -5,6 +5,7 @@ using meldboek.Models;
 using Microsoft.AspNetCore.Mvc;
 using Neo4j.Driver;
 using Newtonsoft.Json;
+using System.Security.Claims;
 
 namespace meldboek.Controllers
 {
@@ -18,6 +19,14 @@ namespace meldboek.Controllers
         public ChatController()
         {
             Db = new Database(); // init database
+        }
+
+        public Person GetCurrentPerson()
+        {
+            var getClaims = User.Claims.First(x => x.Type == ClaimTypes.Name).Value;
+            Person CurrentPerson = (JsonConvert.DeserializeObject<Person>(getClaims));
+
+            return CurrentPerson;
         }
 
         /// <summary>
@@ -108,7 +117,7 @@ namespace meldboek.Controllers
         public async void JoinChat(string chat)
         {
             // TODO replace by current logged in Person
-            _ = await Db.ConnectDb("MATCH (u:Person),(c:Chat) WHERE u.PersonId = 1 AND c.ChatId = '" + chat + "' CREATE(u)-[r:InChat]->(c)");
+            _ = await Db.ConnectDb("MATCH (u:Person),(c:Chat) WHERE u.PersonId = " +GetCurrentPerson().PersonId + " AND c.ChatId = '" + chat + "' CREATE(u)-[r:InChat]->(c)");
         }
 
         /// <summary>
@@ -150,7 +159,7 @@ namespace meldboek.Controllers
             string id = Db.GenerateUniqueId(Date + message.Substring(Math.Max(0, message.Length - 5)));
 
             _ = await Db.ConnectDb("CREATE (p:Message { MessageId: '" + id + "', Content: '" + message + "', DatetimeSend: '" + Date + "', DatetimeRead: ''}) RETURN p");
-            _ = await Db.ConnectDb("MATCH (u:Person),(p:Message) WHERE u.PersonId = 1 AND p.MessageId = '" + id + "' CREATE(u)-[r:Sends]->(p)");
+            _ = await Db.ConnectDb("MATCH (u:Person),(p:Message) WHERE u.PersonId = " + GetCurrentPerson().PersonId + " AND p.MessageId = '" + id + "' CREATE(u)-[r:Sends]->(p)");
 
             if(type == "open")
             {
@@ -211,7 +220,7 @@ namespace meldboek.Controllers
             }
             else if(type == "chat")
             {
-                var getMessages = Db.ConnectDb("MATCH (n:Person{PersonId: 1})-[:Sends]->(m:Message)<-[:Receives]-(P:Person{Email:'"+ chat +"'}) RETURN m"); // run query
+                var getMessages = Db.ConnectDb("MATCH (n:Person{PersonId: " + GetCurrentPerson().PersonId + "})-[:Sends]->(m:Message)<-[:Receives]-(P:Person{Email:'"+ chat +"'}) RETURN m"); // run query
 
                 messageNodes = getMessages.Result; // fill chat nodes with queries result
 
@@ -245,7 +254,7 @@ namespace meldboek.Controllers
                     });
                 }
 
-                getMessages = Db.ConnectDb("MATCH (n:Person{PersonId: 1})-[:Receives]->(m:Message)<-[:Sends]-(P:Person{Email:'" + chat + "'}) RETURN m"); // run query
+                getMessages = Db.ConnectDb("MATCH (n:Person{PersonId: " + GetCurrentPerson().PersonId + "})-[:Receives]->(m:Message)<-[:Sends]-(P:Person{Email:'" + chat + "'}) RETURN m"); // run query
 
                 messageNodes = getMessages.Result; // fill chat nodes with queries result
                 // go trough all items
@@ -292,7 +301,7 @@ namespace meldboek.Controllers
         public List<Chat> GetChatsJoinable()
         {
             List<INode> chatNodes = new List<INode>(); // will store chat nodes
-            var getChats = Db.ConnectDb("MATCH (p:Chat) WHERE NOT(p) -[:InChat]-(: Person{ PersonId: 1}) RETURN p"); // run query
+            var getChats = Db.ConnectDb("MATCH (p:Chat) WHERE NOT(p) -[:InChat]-(: Person{ PersonId: " + GetCurrentPerson().PersonId + "}) RETURN p"); // run query
             var chat = new Chat(); // store chat
             List<Chat> chatList = new List<Chat>(); // store list of al chats
 
@@ -323,7 +332,7 @@ namespace meldboek.Controllers
         public List<Chat> GetChatsJoined()
         {
             List<INode> chatNodes = new List<INode>(); // will store chat nodes
-            var getChats = Db.ConnectDb("MATCH (p:Chat) WHERE(p) -[:InChat]-(: Person{ PersonId: 1}) RETURN p"); // run query
+            var getChats = Db.ConnectDb("MATCH (p:Chat) WHERE(p) -[:InChat]-(: Person{ PersonId: " + GetCurrentPerson().PersonId + "}) RETURN p"); // run query
             var chat = new Chat(); // store chat
             List<Chat> chatList = new List<Chat>(); // store list of al chats
 
@@ -355,7 +364,7 @@ namespace meldboek.Controllers
         public List<Person> GetFriends()
         {
             List<INode> friendNodes = new List<INode>(); // will store friend nodes
-            var getFriends = Db.ConnectDb("MATCH (p:Person) WHERE(p) -[:IsFriendsWith]-(: Person{ PersonId: 1}) RETURN p"); // run query
+            var getFriends = Db.ConnectDb("MATCH (p:Person) WHERE(p) -[:IsFriendsWith]-(: Person{ PersonId: " + GetCurrentPerson().PersonId + "}) RETURN p"); // run query
             var friend = new Person(); // store friend
             List<Person> friendList = new List<Person>(); // store list of all friends
 

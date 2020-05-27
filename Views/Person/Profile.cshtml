@@ -174,7 +174,7 @@
                                 <h1>@person.Person.FirstName @person.Person.LastName</h1>
                             </div>
                             <div class="person-options">
-                                <a id="deny-delete-friend" href="@Url.Action("DeleteFriendProfile", "Person", new { FriendId = person.Person.PersonId, PersonId = @Model.PersonId })">Vriend verwijderen</a>
+                                <a id="deny-delete-friend" href="@Url.Action("DeleteFriendProfile", "Person", new { FriendId = person.Person.PersonId })">Vriend verwijderen</a>
                             </div>
                         </div>
                     }
@@ -195,7 +195,7 @@
                                 <h1>@person.Person.FirstName @person.Person.LastName</h1>
                             </div>
                             <div class="person-options" style="margin-top: 10px;">
-                                <a id="accept-friend" href="@Url.Action("AcceptFriend", "Person", new { PersonRequestedId = person.Person.PersonId, PersonAcceptedId = @Model.PersonId, page = "Profile" })">Vriend accepteren</a>
+                                <a id="accept-friend" href="@Url.Action("AcceptFriend", "Person", new { PersonRequestedId = person.Person.PersonId, page = "Profile" })">Vriend accepteren</a>
                                 <a id="deny-delete-friend" href="@Url.Action("RefuseFriendReq", "Person", new { PersonId = person.Person.PersonId, page = "Profile" })">Vriend afwijzen</a>
                             </div>
                         </div>

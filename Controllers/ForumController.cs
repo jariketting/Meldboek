@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Security.Claims;
 
 namespace meldboek.Controllers
 {
@@ -22,7 +23,10 @@ namespace meldboek.Controllers
 
         public IActionResult ForumHome(string fid, string Title,string Content,string del)
         {
-            Person u = new PersonController().GetPerson(1);
+            var getClaims = User.Claims.First(x => x.Type == ClaimTypes.Name).Value;
+            Person u = (JsonConvert.DeserializeObject<Person>(getClaims));
+
+            //Person u = new PersonController().GetCurrentPerson();
 
 
             /* Forum f = new Forum(GetNewForumId(),u , "Test", "Hoe moet je dit testen?");

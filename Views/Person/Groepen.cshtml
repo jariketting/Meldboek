@@ -49,6 +49,11 @@
                 margin-left: 10%;
             }
 
+            .group-list p {
+                color: #000000;
+                font-size: 24px;
+            }
+
             /* Single group */
             .group {
                 width: 90%;
@@ -189,8 +194,11 @@
             <!-- The list of groups -->
             <div class="group-list">
 
-                <!-- Link to the groupmanagement page -->
-                <a id="manage-groups" href="@Url.Action("GroepenManagen")">Groepen beheren &#8594;</a>
+                <!-- Link to the groupmanagement page: only available if the current Person is a manager (HasRole {RoleName: 'Manager'}) -->
+               @if(ViewData["CurrentPersonRole"].ToString() == "Manager")
+                {
+                    <a id="manage-groups" href="@Url.Action("GroepenManagen")">Groepen beheren &#8594;</a>
+                }
 
                 <!-- Single group attribute; Here all the data from GetGroupsInfo() is put on the page. -->
                @foreach (var group in Model)
@@ -202,7 +210,7 @@
                         </div>
                         
                         <!-- If the Person is a regular member (not the owner) of a group, the have the option to leave the group. -->
-                       @if (group.Creator.PersonId != 1)
+                       @if (group.Creator.PersonId != (int)ViewData["CurrentPersonId"])
                         {
                             <div class="leave-button" onclick="window.location='@Url.Action("LeaveGroup", new { GroupId = group.GroupId })';">Verlaat groep</div>
                         }
@@ -219,6 +227,18 @@
                         </div>
                     </div>
                 }
+
+              @if (Model.Count() == 0)
+               {
+                   if (ViewData["CurrentPersonRole"].ToString() == "Manager")
+                   {
+                       <p style="margin-top: 20px;">Je zit nog niet in of beheert een groep.</p>
+                   }
+                   else
+                   {
+                       <p>Je zit nog niet in een groep.</p>
+                   }
+               }
             </div>
         </div>
     </body>

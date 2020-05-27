@@ -74,7 +74,6 @@ namespace meldboek.Controllers
                                     //new Claim(ClaimTypes.Name, "Person", ClaimValueTypes.String),
                                     new Claim(ClaimTypes.NameIdentifier, user.PersonId.ToString(), ClaimValueTypes.String),
                                     new Claim(ClaimTypes.Role, role, ClaimValueTypes.String),
-
                                     new Claim(ClaimTypes.Name, userprops, ClaimValueTypes.String)
 
                                 };

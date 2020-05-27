@@ -288,7 +288,7 @@
                         </div>
 
                         <!-- If the current Person is the creator of a newspost (relationship Posted) they can delete it. -->
-                       @if (post.Creator.PersonId == 1)
+                       @if (post.Creator.PersonId == (int)ViewData["CurrentPersonId"])
                         {
                             <div class="delete-button" onclick="window.location='@Url.Action("DeletePost", new { postid = post.PostId, page = TempData["Page"] })'">&#10005;</div>
                         }
