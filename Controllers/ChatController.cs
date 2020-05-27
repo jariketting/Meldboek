@@ -205,7 +205,7 @@ namespace meldboek.Controllers
                         Content = message.Content,
                         DatetimeSend = message.DatetimeSend,
                         DatetimeRead = message.DatetimeRead,
-                        Personname = Person.Email
+                        Personname = Person.FirstName + " " + Person.LastName
                     });
                 }
             }
@@ -274,7 +274,7 @@ namespace meldboek.Controllers
                         Content = message.Content,
                         DatetimeSend = message.DatetimeSend,
                         DatetimeRead = message.DatetimeRead,
-                        Personname = Person.Email
+                        Personname = Person.FirstName + " " + Person.LastName
                     });
                 }
             }
