@@ -171,8 +171,12 @@ namespace meldboek.Controllers
 
                 int persId = GetMaxPersonId();
                 //stuurt Person naar database
-                var r = ConnectDb("CREATE (p:Person { PersonId: " + persId + ", FirstName: '" + firstname + "', LastName: '" + lastname + "' ,Email: '" + email + "', Password: '" + password + "' }) RETURN p");
-                r.Wait();
+                var a = ConnectDb("CREATE (p:Person { PersonId: " + persId + ", FirstName: '" + firstname + "', LastName: '" + lastname + "' ,Email: '" + email + "', Password: '" + password + "' }) RETURN p");
+                a.Wait();
+
+                var b = ConnectDb("MATCH (p:Person), (r:Role) WHERE p.PersonId = " + persId + " AND r.RoleName = 'Medewerker' CREATE (p)-[:HasRole]->(r) RETURN p, r");
+                b.Wait();
+
                 return View();
             }
             else
