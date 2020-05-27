@@ -263,6 +263,7 @@
                     <form action="AddPost" method="post" class="add-article" enctype="multipart/form-data">
                         <label for="title">Titel</label>
                         <input type="text" id="title" name="title" placeholder="Titel nieuwsbericht" required>
+
                         <label for="category">Categorie</label>
                         <select id="group" name="group">
                             <option id="Algemeen" name="Algemeen">Algemeen</option>
@@ -276,8 +277,10 @@
 
                         <label for="description">Beschrijving</label>
                         <textarea id="description" name="description" value="description" placeholder="Beschrijving nieuwsbericht" style="height:200px" required></textarea>
+                        
                         <label for="file">Bijlage: </label>
                         <input type="file" name="file" id="file" /><br>
+                        
                         <input type="submit" value="Voeg toe">
                     </form>
                 </div>
