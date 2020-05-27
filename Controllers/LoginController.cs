@@ -8,8 +8,11 @@ using meldboek.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Authorization;
 using Neo4j.Driver;
 using Newtonsoft.Json;
+using meldboek.ViewModels;
 
 
 
@@ -43,7 +46,6 @@ namespace meldboek.Controllers
             var userprops = JsonConvert.SerializeObject(useritem.As<INode>().Properties);
             user = (JsonConvert.DeserializeObject<Person>(userprops));
 
-
             //Checks if inserted data is not correct
             if (user.Email == null || user.Password == null)
             {
@@ -57,9 +59,10 @@ namespace meldboek.Controllers
                 //if inserted data is found in the database, make claims for the logged in user
                 var claims = new List<Claim>
                                 {
-                                    new Claim(ClaimTypes.Name, "Person", ClaimValueTypes.String),
-                                    new Claim(ClaimTypes.NameIdentifier, user.FirstName.ToString(), ClaimValueTypes.String),
-                                    new Claim(ClaimTypes.Role, "Person", ClaimValueTypes.String)
+                                  //  new Claim(ClaimTypes.Name, "Person", ClaimValueTypes.String),
+                                    new Claim(ClaimTypes.NameIdentifier, user.PersonId.ToString(), ClaimValueTypes.String),
+                                    new Claim(ClaimTypes.Role, "Person", ClaimValueTypes.String),
+                                    new Claim(ClaimTypes.Name, userprops, ClaimValueTypes.String)
 
                                 };
                 var userIdentity = new ClaimsIdentity(claims, "SecureLogin");
@@ -67,13 +70,14 @@ namespace meldboek.Controllers
                 Thread.CurrentPrincipal = new ClaimsPrincipal(userIdentity);
                 //Login the user
                 HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,
-                userPrincipal,
+                 userPrincipal,
                 new AuthenticationProperties
                 {
                     ExpiresUtc = DateTime.UtcNow.AddMinutes(30),
                     IsPersistent = true,
                     AllowRefresh = false
                 });
+
 
                 return RedirectToAction("Profile", "Person");
             }
