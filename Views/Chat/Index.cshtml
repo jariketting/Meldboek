@@ -52,6 +52,20 @@
             </div>
 
             <div class="col-6">
+                <h2>Aanmaken nieuwe chatroom</h2>
+                <form method="post" action="CreateChatroom">
+                    <input type="hidden" name="type" value="join" />
+
+                    <div class="form-group">
+                        <label for="create"></label>
+                        <input class="form-control" id="create" type="text" name="name" placeholder="Naam chatroom" required>
+                    </div>
+
+                    <button class="btn btn-primary" type="submit">Aanmaken</button>
+                </form>
+
+                <hr />
+
                 <h2>Vrienden</h2>
                 <form method="post">
                     <input type="hidden" name="type" value="chat" />

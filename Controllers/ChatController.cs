@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Neo4j.Driver;
 using Newtonsoft.Json;
 using System.Security.Claims;
+using System.Threading.Tasks;
 
 namespace meldboek.Controllers
 {
@@ -46,6 +47,7 @@ namespace meldboek.Controllers
                     JoinChat(chat); // join chat
                     Chat room = GetChat(chat);
                     ViewBag.success = "Je bent toegevoegd aan " + room.Name; // TODO add chat name
+                    return RedirectToAction("Index");
                 }
                 else if (type == "open")
                 {
@@ -72,6 +74,16 @@ namespace meldboek.Controllers
             return View(ViewBag);
         }
 
+        public async Task<IActionResult> CreateChatroom(string name)
+        {
+            string date = DateTime.Now.ToString("MM-dd-yyyy HH:mm:ss");
+            string id = Db.GenerateUniqueId(date + name.Substring(Math.Max(0, name.Length)));
+
+            await Db.ConnectDb("CREATE (c:Chat {ChatId: '" + id + "', Name: '" + name + "'}) RETURN c");
+
+            return RedirectToAction("Index");
+        }
+        
         /// <summary>
         /// Chat room
         /// </summary>
