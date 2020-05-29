@@ -124,6 +124,22 @@
             #delete-deny-friend:hover {
                 color: #ffb3b3;
             }
+
+            /* Link to create account */
+            #create-account {
+                padding-bottom: 20px;
+            }
+
+            #create-account a {
+                text-decoration: none;
+                color: #0000ff;
+                font-size: 22px;
+                transition: 0.2s;
+            }
+
+            #create-account a:hover {
+                color: #b3b3ff;
+            }
         </style>
     </head>
     <body>
@@ -166,6 +182,11 @@
             </div>
 
             <div class="person-list">
+
+               @if (ViewData["CurrentPersonRole"].ToString() == "Manager")
+                {
+                    <div id="create-account"><a href="@Url.Action("CreateAccount")">Nieuw account aanmaken &#8594;</a></div>
+                }
 
                 <!-- Page title changes according to the possibly applied friends filter. -->
                 <h1 class="page-title">@TempData["Page"]</h1>

@@ -14,18 +14,18 @@
 
             .topbar {
                 background-color: #ea9999;
-                text-align: unset;
             }
 
-            #h1-meldboek {
+            .navbtn {
+                background-color: #ea9999;
+            }
+
+            .overlay {
+                background-color: #ea9999;
+            }
+
+            .overlay a:hover, .overlay a:focus, .logout a:hover, .logout a:focus {
                 color: #f2c0c0;
-                width: 10%;
-                padding-left: 30px;
-            }
-
-            #h1-createaccount {
-                float: right;
-                width: 59%;
             }
 
             .box {
@@ -33,7 +33,6 @@
                 height: 300px;
                 border-radius: 6px;
                 padding: 50px 0px 40px 50px;
-                margin-bottom: 25px;
             }
 
             .box h1 {
@@ -73,10 +72,10 @@
                 bottom: 0;
                 left: 0;
                 right: 0;
-                margin: auto;
                 width: 800px;
                 height: 375px;
                 text-align: left;
+                margin: 200px auto 0px auto;
             }
 
             .row {
@@ -89,28 +88,54 @@
                 margin: 0px 20px 0px 0px;
             }
 
-            #login {
+            #personlist {
+                padding: 100px 0 0 20px;
+            }
+
+            #personlist a {
                 text-decoration: none;
-                color: #ea9999;
-                font-size: 20px;
+                color: #0000ff;
+                font-size: 22px;
                 transition: 0.2s;
             }
 
-            #login:hover {
-                color: #f2c0c0;
+            #personlist a:hover {
+                color: #b3b3ff;
             }
         </style>
     </head>
     <body>
         <!-- Colored bar at the top of the page -->
         <div class="topbar">
+            <!-- The button that opens the sidemenu -->
+            <span class="navbtn" onclick="nav()">&#9776; </span>
 
             <!-- Page titles -->
-            <h1 id="h1-meldboek">Meldboek</h1>
-            <h1 id="h1-createaccount">Account aanmaken</h1>
+            <h1 style="width: 59%;">Account aanmaken</h1>
 
+            <!-- Account information button -->
+            <a href="@Url.Action("Profile")"><img id="acc-icon" src="@Url.Content("~/Content/account.png")" /></a>
         </div>
 
+        <!-- Sidemenu overlay -->
+        <div id="nav" class="overlay">
+            <div class="overlay-content">
+                <a href="@Url.Action("Newsfeed")">Nieuws</a>
+                <br>
+                <a href="@Url.Action("ForumHome","Forum")">Forums</a>
+                <br>
+                <a href="@Url.Action("Index", "Chat")">Chat</a>
+                <br>
+                <a href="@Url.Action("Groepen")">Groepen</a>
+                <br>
+                <a href="@Url.Action("Personlist")">Gebruikers</a>
+            </div>
+            <div class="logout"><a href="@Url.Action("Index1", "Login")">Log uit</a></div>
+        </div>
+        
+        <!-- Link back to personlist page -->
+        <div id="personlist"><a href="@Url.Action("Personlist")">&#8592; Terug naar gebruikers</a></div>
+       
         <!-- Actual content of the page -->
         <div id="absoluteCenteredDiv">
 
@@ -148,9 +173,6 @@
                     <input type="submit" class="button" value="Account aanmaken" id="submit">
                 </div>
             </form>
-
-            <!-- Link back to login page -->
-            <a id="login" href="@Url.Action("Index1", "Login")">&#8592; Terug naar login</a>
         </div>
     </body>
 </html>

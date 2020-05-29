@@ -171,7 +171,6 @@ namespace meldboek.Controllers
 
         public IActionResult CreateAccount(string firstname, string lastname, string email, string password, string password2, string ismanager)
         {
-            Console.WriteLine(ismanager);
             //maakt Person als alles ingevoerd is en wachtwoord klopt
             if (firstname != null & lastname != null & email != null & password != null & password == password2)
             {
@@ -192,7 +191,6 @@ namespace meldboek.Controllers
             }
             else
             {
-                //password incorrect
                 return View();
             }
 
@@ -272,6 +270,8 @@ namespace meldboek.Controllers
 
         public IActionResult Personlist()
         {
+            ViewData["CurrentPersonRole"] = GetCurrentPersonRole();
+
             // Default page is page with filter "Alle gebruikers", which displays all the Persons from the database.
             TempData["Page"] = "Alle gebruikers";
             return View(GetPersonlist());
@@ -280,6 +280,8 @@ namespace meldboek.Controllers
         public IActionResult FilteredPersonlist(string filter)
         {
             // FilteredPersonlist returns a personlist with a filter depending on what the Person chose.
+
+            ViewData["CurrentPersonRole"] = GetCurrentPersonRole();
 
             if (filter == "Alle gebruikers")
             {

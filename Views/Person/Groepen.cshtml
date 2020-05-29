@@ -195,7 +195,7 @@
             <div class="group-list">
 
                 <!-- Link to the groupmanagement page: only available if the current Person is a manager (HasRole {RoleName: 'Manager'}) -->
-               @if(ViewData["CurrentPersonRole"].ToString() == "Manager")
+               @if (ViewData["CurrentPersonRole"].ToString() == "Manager")
                 {
                     <a id="manage-groups" href="@Url.Action("GroepenManagen")">Groepen beheren &#8594;</a>
                 }
