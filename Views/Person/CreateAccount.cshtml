@@ -41,6 +41,11 @@
                 font-size: 22px;
             }
 
+            label {
+                font-size: 20px;
+                color: white;
+            }
+
             input {
                 font-family: 'Trebuchet MS', sans-serif;
                 font-size: 20px;
@@ -53,7 +58,6 @@
                 color: #000000;
                 border-radius: 25px;
                 border: none;
-                margin-top: 50px;
                 font-size: 22px;
                 cursor: pointer;
                 transition: 0.2s;
@@ -136,6 +140,10 @@
                             <h1>Wachtwoord herhalen</h1>
                             <input type="password" required name=password2 id="password2" size="30">
                         </div>
+                    </div>
+                    <div class="row" style="padding-top: 70px;">
+                        <input type="checkbox" id="ismanager" name="ismanager" value="true">
+                        <label for="manager">Manager</label>
                     </div>
                     <input type="submit" class="button" value="Account aanmaken" id="submit">
                 </div>

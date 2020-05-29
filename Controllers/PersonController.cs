@@ -169,8 +169,9 @@ namespace meldboek.Controllers
             return View(profile);
         }
 
-        public IActionResult CreateAccount(string firstname, string lastname, string email, string password, string password2)
+        public IActionResult CreateAccount(string firstname, string lastname, string email, string password, string password2, string ismanager)
         {
+            Console.WriteLine(ismanager);
             //maakt Person als alles ingevoerd is en wachtwoord klopt
             if (firstname != null & lastname != null & email != null & password != null & password == password2)
             {
@@ -179,10 +180,14 @@ namespace meldboek.Controllers
                 //stuurt Person naar database
                 var a = ConnectDb("CREATE (p:Person { PersonId: " + persId + ", FirstName: '" + firstname + "', LastName: '" + lastname + "' ,Email: '" + email + "', Password: '" + password + "' }) RETURN p");
                 a.Wait();
-
-                var b = ConnectDb("MATCH (p:Person), (r:Role) WHERE p.PersonId = " + persId + " AND r.RoleName = 'Medewerker' CREATE (p)-[:HasRole]->(r) RETURN p, r");
-                b.Wait();
-
+                if (ismanager == "true") { 
+                    var b = ConnectDb("MATCH (p:Person), (r:Role) WHERE p.PersonId = " + persId + " AND r.RoleName = 'Manager' CREATE (p)-[:HasRole]->(r) RETURN p, r");
+                    b.Wait();
+                } else
+                {
+                    var b = ConnectDb("MATCH (p:Person), (r:Role) WHERE p.PersonId = " + persId + " AND r.RoleName = 'Medewerker' CREATE (p)-[:HasRole]->(r) RETURN p, r");
+                    b.Wait();
+                }
                 return View();
             }
             else
