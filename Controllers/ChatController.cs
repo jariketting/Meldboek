@@ -24,10 +24,19 @@ namespace meldboek.Controllers
 
         public Person GetCurrentPerson()
         {
-            var getClaims = User.Claims.First(x => x.Type == ClaimTypes.Name).Value;
-            Person CurrentPerson = (JsonConvert.DeserializeObject<Person>(getClaims));
+            if (!User.Claims.Any(x => x.Type == ClaimTypes.Name))
+            {
+                return null;
+            }
+            else
+            {
+                var getClaims = User.Claims.First(x => x.Type == ClaimTypes.Name).Value;
+                Person CurrentPerson = (JsonConvert.DeserializeObject<Person>(getClaims));
 
-            return CurrentPerson;
+                Console.WriteLine(CurrentPerson.FirstName + " " + CurrentPerson.LastName);
+
+                return CurrentPerson;
+            }
         }
 
         /// <summary>
@@ -36,6 +45,11 @@ namespace meldboek.Controllers
         /// <returns>Index page</returns>
         public IActionResult Index(string type, string chat)
         {
+            if (GetCurrentPerson() == null)
+            {
+                return RedirectToAction("LoginError", "Login");
+            }
+
             ViewBag.success = null; // store success msg
 
             // check if post is made
@@ -91,6 +105,11 @@ namespace meldboek.Controllers
         /// <returns>Chatroom view</returns>
         public IActionResult Room(string chat, string type, string message)
         {
+            if (GetCurrentPerson() == null)
+            {
+                return RedirectToAction("LoginError", "Login");
+            }
+
             // check if chat id given
             if (chat == null || type == null)
             {

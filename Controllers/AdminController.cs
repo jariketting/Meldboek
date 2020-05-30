@@ -7,6 +7,7 @@ using meldboek.Models;
 using Microsoft.AspNetCore.Mvc;
 using Neo4j.Driver;
 using Newtonsoft.Json;
+using System.Security.Claims;
 
 namespace meldboek.Controllers
 {
@@ -18,8 +19,31 @@ namespace meldboek.Controllers
         {
             return View();
         }
+
+        public Person GetCurrentPerson()
+        {
+            if (!User.Claims.Any(x => x.Type == ClaimTypes.Name))
+            {
+                return null;
+            }
+            else
+            {
+                var getClaims = User.Claims.First(x => x.Type == ClaimTypes.Name).Value;
+                Person CurrentPerson = (JsonConvert.DeserializeObject<Person>(getClaims));
+
+                Console.WriteLine(CurrentPerson.FirstName + " " + CurrentPerson.LastName);
+
+                return CurrentPerson;
+            }
+        }
+
         public IActionResult CreateAccount()
         {
+            if (GetCurrentPerson() == null)
+            {
+                return RedirectToAction("LoginError", "Login");
+            }
+
             return View();
         }
 
@@ -40,6 +64,11 @@ namespace meldboek.Controllers
         }
         public IActionResult CreateGroups(string GroupName, string ManagerId)
         {
+            if (GetCurrentPerson() == null)
+            {
+                return RedirectToAction("LoginError", "Login");
+            }
+
             if (GroupName != null)
             {
                 int GroupId = GetMaxGroupId();

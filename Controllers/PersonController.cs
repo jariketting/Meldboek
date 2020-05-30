@@ -66,6 +66,11 @@ namespace meldboek.Controllers
         [Route("Person/GroepenManagen")]
         public IActionResult GroepenManagen()
         {
+            if (GetCurrentPerson() == null)
+            {
+                return RedirectToAction("LoginError", "Login");
+            }
+
             dynamic model = new ExpandoObject();
             model.OwnedGroups = GetOwnedGroups();
 
@@ -76,6 +81,11 @@ namespace meldboek.Controllers
 
         public IActionResult ManageGroup(int GroupId)
         {
+            if (GetCurrentPerson() == null)
+            {
+                return RedirectToAction("LoginError", "Login");
+            }
+
             dynamic model = new ExpandoObject();
             model.OwnedGroups = GetOwnedGroups();
 
@@ -141,7 +151,7 @@ namespace meldboek.Controllers
 
             if (GetCurrentPerson() == null)
             {
-                return RedirectToAction("Index1", "Login");
+                return RedirectToAction("LoginError", "Login");
             }
             
             Person CurrentPerson = GetCurrentPerson();
@@ -198,6 +208,11 @@ namespace meldboek.Controllers
 
         public IActionResult CreateAccount(string firstname, string lastname, string email, string password, string password2, string ismanager)
         {
+            if (GetCurrentPerson() == null)
+            {
+                return RedirectToAction("LoginError", "Login");
+            }
+
             //maakt Person als alles ingevoerd is en wachtwoord klopt
             if (firstname != null & lastname != null & email != null & password != null & password == password2)
             {
@@ -228,11 +243,21 @@ namespace meldboek.Controllers
 
         public IActionResult Home()
         {
+            if (GetCurrentPerson() == null)
+            {
+                return RedirectToAction("LoginError", "Login");
+            }
+
             return View();
         }
 
         public IActionResult Newsfeed()
         {
+            if (GetCurrentPerson() == null)
+            {
+                return RedirectToAction("LoginError", "Login");
+            }
+
             ViewData["CurrentPersonId"] = GetCurrentPerson().PersonId;
 
             // Default page is page with filter "Algemeen", which displays all the posts that are not posted in a group.
@@ -250,6 +275,11 @@ namespace meldboek.Controllers
 
         public IActionResult FilteredNewsfeed(string filter)
         {
+            if (GetCurrentPerson() == null)
+            {
+                return RedirectToAction("LoginError", "Login");
+            }
+
             // FilteredNewsfeed returns a newsfeed with a filter depending on what the Person chose.
 
             ViewData["CurrentPersonId"] = GetCurrentPerson().PersonId;
@@ -290,6 +320,11 @@ namespace meldboek.Controllers
 
         public IActionResult Groepen()
         {
+            if (GetCurrentPerson() == null)
+            {
+                return RedirectToAction("LoginError", "Login");
+            }
+
             ViewData["CurrentPersonId"] = GetCurrentPerson().PersonId;
             ViewData["CurrentPersonRole"] = GetCurrentPersonRole();
 
@@ -298,6 +333,11 @@ namespace meldboek.Controllers
 
         public IActionResult Personlist()
         {
+            if (GetCurrentPerson() == null)
+            {
+                return RedirectToAction("LoginError", "Login");
+            }
+
             ViewData["CurrentPersonRole"] = GetCurrentPersonRole();
 
             // Default page is page with filter "Alle gebruikers", which displays all the Persons from the database.
@@ -307,6 +347,11 @@ namespace meldboek.Controllers
 
         public IActionResult FilteredPersonlist(string filter)
         {
+            if (GetCurrentPerson() == null)
+            {
+                return RedirectToAction("LoginError", "Login");
+            }
+
             // FilteredPersonlist returns a personlist with a filter depending on what the Person chose.
 
             ViewData["CurrentPersonRole"] = GetCurrentPersonRole();

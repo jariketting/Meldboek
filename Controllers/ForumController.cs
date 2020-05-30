@@ -21,10 +21,31 @@ namespace meldboek.Controllers
             return View();
         }
 
+        public Person GetCurrentPerson()
+        {
+            if (!User.Claims.Any(x => x.Type == ClaimTypes.Name))
+            {
+                return null;
+            }
+            else
+            {
+                var getClaims = User.Claims.First(x => x.Type == ClaimTypes.Name).Value;
+                Person CurrentPerson = (JsonConvert.DeserializeObject<Person>(getClaims));
+
+                Console.WriteLine(CurrentPerson.FirstName + " " + CurrentPerson.LastName);
+
+                return CurrentPerson;
+            }
+        }
+
         public IActionResult ForumHome(string fid, string Title,string Content,string del)
         {
-            var getClaims = User.Claims.First(x => x.Type == ClaimTypes.Name).Value;
-            Person u = (JsonConvert.DeserializeObject<Person>(getClaims));
+            if (GetCurrentPerson() == null)
+            {
+                return RedirectToAction("LoginError", "Login");
+            }
+
+            Person u = GetCurrentPerson();
 
             //Person u = new PersonController().GetCurrentPerson();
 
@@ -79,6 +100,11 @@ namespace meldboek.Controllers
 
         public IActionResult Forum(string Content, string fid, string del)
         {
+            if (GetCurrentPerson() == null)
+            {
+                return RedirectToAction("LoginError", "Login");
+            }
+
             int ForumId = Convert.ToInt32(fid);
             try
             {
