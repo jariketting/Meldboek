@@ -120,7 +120,7 @@
             }
         </style>
     </head>
-    <body>
+    <body>    
         <div class="topbar">
 
             <!-- The button that opens the sidemenu -->
@@ -130,7 +130,7 @@
             <h1 style="width: 53%;">Profiel</h1>
 
             <!-- Account information button -->
-            <a><img id="acc-icon" src="@Url.Content("~/Content/account.png")"/></a>
+            <a><img id="acc-icon" src="@Url.Content("~/Content/account.png")" /></a>
         </div>
 
         <!-- Sidemenu overlay -->
@@ -146,7 +146,7 @@
                 <br>
                 <a href="@Url.Action("Personlist")">Gebruikers</a>
             </div>
-            <div class="logout"><a href="@Url.Action("Index1", "Login")">Log uit</a></div>
+            <div class="logout"><a onclick="nav()" href="Logout">Log uit</a></div>
         </div>
 
         <!-- Actual content of the page -->

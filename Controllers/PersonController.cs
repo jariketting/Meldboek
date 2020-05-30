@@ -168,6 +168,12 @@ namespace meldboek.Controllers
 
             return View(profile);
         }
+        public ActionResult Logout()
+        {
+            //logs the user out
+            HttpContext.SignOutAsync();
+            return RedirectToAction("Index1", "Login");
+        }
 
         public IActionResult CreateAccount(string firstname, string lastname, string email, string password, string password2, string ismanager)
         {
