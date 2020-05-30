@@ -119,48 +119,49 @@
         }
     </style>
     <body>
-        <div class="topbar">
+       
+            <div class="topbar">
 
-            <!-- The button that opens the sidemenu -->
-            <span class="navbtn" onclick="nav()">&#9776; </span>
+                <!-- The button that opens the sidemenu -->
+                <span class="navbtn" onclick="nav()">&#9776; </span>
 
-            <!-- Page title -->
-            <h1 style="width: 53%;">Profiel</h1>
+                <!-- Page title -->
+                <h1 style="width: 53%;">Profiel</h1>
 
-            <!-- Account information button -->
-            <a><img id="acc-icon" src="@Url.Content("~/Content/account.png")"/></a>
-        </div>
-
-        <!-- Sidemenu overlay -->
-        <div id="nav" class="overlay">
-            <div class="overlay-content">
-                <a href="@Url.Action("Newsfeed")">Nieuws</a>
-                <br>
-                <a href="@Url.Action("ForumHome","Forum")">Forums</a>
-                <br>
-                <a href="@Url.Action("Index", "Chat")">Chat</a>
-                <br>
-                <a href="@Url.Action("Groepen")">Groepen</a>
-                <br>
-                <a href="@Url.Action("Personlist")">Gebruikers</a>
-            </div>
-            <div class="logout"><a onclick="nav()" href="#logout">Log uit</a></div>
-        </div>
-
-        <div class="profile-content">
-            <div class="info">
-                <h1>Info</h1>
-                <h2>Naam: @Model.Name</h2>
-                <h2>Email: @Model.Email</h2>
+                <!-- Account information button -->
+                <a><img id="acc-icon" src="@Url.Content("~/Content/account.png")" /></a>
             </div>
 
-            <div class="person-list">
-                <h1>Vrienden</h1>
+            <!-- Sidemenu overlay -->
+            <div id="nav" class="overlay">
+                <div class="overlay-content">
+                    <a href="@Url.Action("Newsfeed")">Nieuws</a>
+                    <br>
+                    <a href="@Url.Action("ForumHome","Forum")">Forums</a>
+                    <br>
+                    <a href="@Url.Action("Index", "Chat")">Chat</a>
+                    <br>
+                    <a href="@Url.Action("Groepen")">Groepen</a>
+                    <br>
+                    <a href="@Url.Action("Personlist")">Gebruikers</a>
+                </div>
+                <div class="logout"><a onclick="nav()" href="Logout">Log uit</a></div>
+            </div>
 
-                @foreach (var person in Model.PersonInfos)
-                 {
+            <div class="profile-content">
+                <div class="info">
+                    <h1>Info</h1>
+                    <h2>Naam: @Model.Name</h2>
+                    <h2>Email: @Model.Email</h2>
+                </div>
+
+                <div class="person-list">
+                    <h1>Vrienden</h1>
+
+                    @foreach (var person in Model.PersonInfos)
+                    {
                         @if (person.Status == "IsFriendsWith")
-                         {
+                        {
                             <div class="person">
                                 <div class="person-content">
                                     <h1>@person.Person.FirstName @person.Person.LastName</h1>
@@ -169,16 +170,16 @@
                                     <a id="deny-delete-friend" href="@Url.Action("DeleteFriendProfile", "Person", new { FriendId = person.Person.PersonId, PersonId = @Model.PersonId })">Vriend verwijderen</a>
                                 </div>
                             </div>
-                         }
-                 }
-            </div>
+                        }
+                    }
+                </div>
 
-            <div class="person-list">
-                <h1>Ontvangen vriendschapsverzoeken</h1>
+                <div class="person-list">
+                    <h1>Ontvangen vriendschapsverzoeken</h1>
                     @foreach (var person in Model.PersonInfos)
-                     {
+                    {
                         @if (person.Status == "requested")
-                         {
+                        {
                             <div class="person">
                                 <div class="person-content">
                                     <h1>@person.Person.FirstName @person.Person.LastName</h1>
@@ -188,27 +189,27 @@
                                     <a id="deny-delete-friend" href="@Url.Action("RefuseFriendReq", "Person", new { PersonId = person.Person.PersonId, page = "Profile" })">Vriend afwijzen</a>
                                 </div>
                             </div>
-                         }
-                     }
-            </div>
+                        }
+                    }
+                </div>
 
-            <div class="person-list">
-                <h1>Verstuurde vriendschapsverzoeken</h1>
+                <div class="person-list">
+                    <h1>Verstuurde vriendschapsverzoeken</h1>
                     @foreach (var person in Model.PersonInfos)
-                     {
+                    {
                         @if (person.Status == "FriendPending")
-                         {
+                        {
                             <div class="person">
                                 <div class="person-content">
                                     <h1>@person.Person.FirstName @person.Person.LastName</h1>
                                 </div>
                                 <div class="person-options"><a style="color: #0000ff;">In behandeling</a></div>
                             </div>
-                         }
-                     }
-            </div>
+                        }
+                    }
+                </div>
 
-        </div>
+            </div>
 
     </body>
 </html>
