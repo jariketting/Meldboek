@@ -35,16 +35,32 @@ namespace meldboek.Controllers
 
         public Person GetCurrentPerson()
         {
-            var getClaims = User.Claims.First(x => x.Type == ClaimTypes.Name).Value;
-            Person CurrentPerson = (JsonConvert.DeserializeObject<Person>(getClaims));
+            if (!User.Claims.Any(x => x.Type == ClaimTypes.Name))
+            {
+                return null;
+            }
+            else
+            {
+                var getClaims = User.Claims.First(x => x.Type == ClaimTypes.Name).Value;
+                Person CurrentPerson = (JsonConvert.DeserializeObject<Person>(getClaims));
 
-            return CurrentPerson;
+                Console.WriteLine(CurrentPerson.FirstName + " " + CurrentPerson.LastName);
+
+                return CurrentPerson;
+            }
         }
 
         public string GetCurrentPersonRole()
         {
-            string CurrentPersonRole = User.Claims.First(x => x.Type == ClaimTypes.Role).Value;
-            return CurrentPersonRole;
+            if (!User.Claims.Any(x => x.Type == ClaimTypes.Role))
+            {
+                return null;
+            }
+            else
+            {
+                string CurrentPersonRole = User.Claims.First(x => x.Type == ClaimTypes.Role).Value;
+                return CurrentPersonRole;
+            }
         }
 
         [Route("Person/GroepenManagen")]
@@ -123,7 +139,12 @@ namespace meldboek.Controllers
             //Vervolgens wordt daar een cookie van gemaakt.
             // het komende regel hoort de ingelogd user te pakken van de claims maar die geeft een lege sequentie terug.
 
-            Person CurrentPerson = GetCurrentPerson(); 
+            if (GetCurrentPerson() == null)
+            {
+                return RedirectToAction("Index1", "Login");
+            }
+            
+            Person CurrentPerson = GetCurrentPerson();
 
             //grab a random person out of the DB until be have the claims
             int personid = CurrentPerson.PersonId;
@@ -168,7 +189,7 @@ namespace meldboek.Controllers
 
             return View(profile);
         }
-        public ActionResult Logout()
+        public IActionResult Logout()
         {
             //logs the user out
             HttpContext.SignOutAsync();
@@ -188,7 +209,8 @@ namespace meldboek.Controllers
                 if (ismanager == "true") { 
                     var b = ConnectDb("MATCH (p:Person), (r:Role) WHERE p.PersonId = " + persId + " AND r.RoleName = 'Manager' CREATE (p)-[:HasRole]->(r) RETURN p, r");
                     b.Wait();
-                } else
+                }
+                else
                 {
                     var b = ConnectDb("MATCH (p:Person), (r:Role) WHERE p.PersonId = " + persId + " AND r.RoleName = 'Medewerker' CREATE (p)-[:HasRole]->(r) RETURN p, r");
                     b.Wait();

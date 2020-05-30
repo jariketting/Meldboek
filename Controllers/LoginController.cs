@@ -98,6 +98,11 @@ namespace meldboek.Controllers
 
         }
 
+        public IActionResult LoginError()
+        {
+            return View();
+        }
+
         public async Task<List<INode>> ConnectDb(string query)
         {
             var Driver = CreateDriverWithBasicAuth("bolt://localhost:11005", "neo4j", "1234");
