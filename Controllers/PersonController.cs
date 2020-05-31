@@ -103,8 +103,10 @@ namespace meldboek.Controllers
             Person person = GetCurrentPerson();
             var path = "";
             var filename= "";
-            // var folder = "/Users/yasemin/Library/Application Support/Neo4j Desktop/Application/neo4jDatabases/database-a67a9b4b-e0cb-404c-99ce-fccc6509622f/installation-4.0.2/import/" + person.PersonId.ToString() + "/" + NewspostId.ToString();
-            var folder = "C:/Users/amyno/.Neo4jDesktop/neo4jDatabases/database-666b6fd9-d2e9-4b34-8955-32a2590baa14/installation-4.0.3/import" + person.PersonId.ToString() + "/" + NewspostId.ToString();
+            //YASEMIN
+            var folder = "/Users/yasemin/Library/Application Support/Neo4j Desktop/Application/neo4jDatabases/database-a67a9b4b-e0cb-404c-99ce-fccc6509622f/installation-4.0.2/import/" + person.PersonId.ToString() + "/" + NewspostId.ToString();
+            //AMY
+           // var folder = "C:/Users/amyno/.Neo4jDesktop/neo4jDatabases/database-666b6fd9-d2e9-4b34-8955-32a2590baa14/installation-4.0.3/import" + person.PersonId.ToString() + "/" + NewspostId.ToString();
             
             if (!System.IO.Directory.Exists(folder))
             {
@@ -115,9 +117,10 @@ namespace meldboek.Controllers
 
                 filename = file.FileName;
 
-
-                // path = "/Users/yasemin/Library/Application Support/Neo4j Desktop/Application/neo4jDatabases/database-a67a9b4b-e0cb-404c-99ce-fccc6509622f/installation-4.0.2/import/" + person.PersonId.ToString() + "/" + NewspostId.ToString() + "/" + filename;
-                path = "C:/Users/amyno/.Neo4jDesktop/neo4jDatabases/database-666b6fd9-d2e9-4b34-8955-32a2590baa14/installation-4.0.3/import" + person.PersonId.ToString() + "/" + NewspostId.ToString() + "/" + filename;
+                //YASEMIN
+                path = "/Users/yasemin/Library/Application Support/Neo4j Desktop/Application/neo4jDatabases/database-a67a9b4b-e0cb-404c-99ce-fccc6509622f/installation-4.0.2/import/" + person.PersonId.ToString() + "/" + NewspostId.ToString() + "/" + filename;
+                //AMY
+               // path = "C:/Users/amyno/.Neo4jDesktop/neo4jDatabases/database-666b6fd9-d2e9-4b34-8955-32a2590baa14/installation-4.0.3/import" + person.PersonId.ToString() + "/" + NewspostId.ToString() + "/" + filename;
 
                 using (var stream = System.IO.File.Create(path))
                 {
@@ -133,7 +136,6 @@ namespace meldboek.Controllers
         [HttpGet("download")]
         public IActionResult GetDownload(string path, string filename)
         {
-            //not done yet
             path = path + "/";
             byte[] fileBytes = System.IO.File.ReadAllBytes(path + filename);
           return File(fileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, filename);
@@ -1104,7 +1106,7 @@ namespace meldboek.Controllers
 
         public async Task<List<INode>> ConnectDb(string query)
         {
-            Driver = CreateDriverWithBasicAuth("bolt://localhost:11005", "neo4j", "1234");
+            Driver = CreateDriverWithBasicAuth("bolt://localhost:7687", "neo4j", "1234");
             List<INode> res = new List<INode>();
             IAsyncSession session = Driver.AsyncSession(o => o.WithDatabase("neo4j"));
 
@@ -1140,7 +1142,7 @@ namespace meldboek.Controllers
         {
             // ConnectDb2 returns a string instead of list of nodes.
 
-            Driver = CreateDriverWithBasicAuth("bolt://localhost:11005", "neo4j", "1234");
+            Driver = CreateDriverWithBasicAuth("bolt://localhost:7687", "neo4j", "1234");
             string res = "";
             IAsyncSession session = Driver.AsyncSession(o => o.WithDatabase("neo4j"));
 
