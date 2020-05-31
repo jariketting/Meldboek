@@ -32,8 +32,6 @@ namespace meldboek.Controllers
                 var getClaims = User.Claims.First(x => x.Type == ClaimTypes.Name).Value;
                 Person CurrentPerson = (JsonConvert.DeserializeObject<Person>(getClaims));
 
-                Console.WriteLine(CurrentPerson.FirstName + " " + CurrentPerson.LastName);
-
                 return CurrentPerson;
             }
         }

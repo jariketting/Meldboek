@@ -249,7 +249,7 @@
             <div class="categories">
                 <a href="@Url.Action("FilteredNewsfeed", new { filter = "Algemeen" })">Algemeen</a>
 
-                @foreach (var group in Model.Group)
+               @foreach (var group in Model.Group)
                 {
                     <a href="@Url.Action("FilteredNewsfeed", new { filter = group.GroupName })">@group.GroupName</a>
                 }
@@ -271,7 +271,7 @@
                         <select id="group" name="group">
                             <option id="Algemeen" name="Algemeen">Algemeen</option>
 
-                            @foreach (var group in Model.Group)
+                           @foreach (var group in Model.Group)
                             {
                                 <option id="@group.GroupName" name="@group.GroupName">@group.GroupName</option>
                             }
@@ -298,10 +298,10 @@
                             <p>@post.Description</p>
                         </div>
 
-                           @if (post.Path != "" && post.Filename != "")
-                            {
-                                <div class = "download"> @Html.ActionLink("Bestand downloaden", "GetDownload", new { path = post.Path, filename = post.Filename})</div>
-                            }
+                       @if (post.Path != " " && post.Filename != " ")
+                        {
+                            <div class = "download"> @Html.ActionLink("Bestand downloaden", "GetDownload", new { path = post.Path, filename = post.Filename})</div>
+                        }
 
                         <!-- If the current Person is the creator of a newspost (relationship Posted) they can delete it. -->
                        @if (post.Creator.PersonId == (int)ViewData["CurrentPersonId"])

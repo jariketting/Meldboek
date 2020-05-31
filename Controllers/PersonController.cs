@@ -44,8 +44,6 @@ namespace meldboek.Controllers
                 var getClaims = User.Claims.First(x => x.Type == ClaimTypes.Name).Value;
                 Person CurrentPerson = (JsonConvert.DeserializeObject<Person>(getClaims));
 
-                Console.WriteLine(CurrentPerson.FirstName + " " + CurrentPerson.LastName);
-
                 return CurrentPerson;
             }
         }
@@ -418,7 +416,7 @@ namespace meldboek.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddPost(string title, string description, string group,IFormFile file)
+        public async Task<IActionResult> AddPost(string title, string description, string group, IFormFile file)
         {
             // AddPost adds a newspost the Person creates to the database. It takes the given title + description and adds the current time itself.
 
@@ -429,6 +427,7 @@ namespace meldboek.Controllers
             Tuple<string,string> fileVal = new Tuple<string, string>(path,filename);
 
             string datetime = DateTime.Now.ToString("d-M-yyyy HH:mm:ss");
+            
             if (file != null)
             {
                 fileVal = await FileUpload(file,newid);

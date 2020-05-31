@@ -51,3 +51,4 @@ C:\Users\amyno\Documents\Repos\meldboek\obj\Debug\netcoreapp2.2\meldboek.pdb
 C:\Users\amyno\Documents\Repos\meldboek\obj\Debug\netcoreapp2.2\meldboek.genruntimeconfig.cache
 C:\Users\amyno\Documents\Repos\meldboek\obj\Debug\netcoreapp2.2\meldboek.csproj.CopyComplete
 C:\Users\amyno\Documents\Repos\meldboek\obj\Debug\netcoreapp2.2\Razor\Views\Login\LoginError.cshtml.g.cs
+C:\Users\amyno\Documents\Repos\meldboek\obj\Debug\netcoreapp2.2\Razor\Views\Person\DownloadFile.cshtml.g.cs
