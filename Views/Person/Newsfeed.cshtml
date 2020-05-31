@@ -287,6 +287,10 @@
                                 <h1>@post.Title</h1>
                                 <h3>@post.Creator.FirstName @post.Creator.LastName, @post.DateAdded</h3>
                                 <p>@post.Description</p>
+                                @if (post.Path != "" && post.Filename != "")
+                                {
+                            @Html.ActionLink("Click here to download", "GetDownload", new { path = post.Path, filename = post.Filename})
+                                }
                             </div>
 
                             <!-- If the current Person is the creator of a newspost (relationship Posted) they can delete it. -->

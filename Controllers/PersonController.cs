@@ -58,13 +58,14 @@ namespace meldboek.Controllers
             return View();
         }
         [HttpPost]
-        public async Task<String> FileUpload(IFormFile file, int NewspostId)
+        public async Task<Tuple<String,String>> FileUpload(IFormFile file, int NewspostId)
         {
             //would do Newspost post and then post.postid later
 
             //get person logged in but for now just person 1 or even post.creator
             Person person = GetPerson(1);
-var path = "";
+            var path = "";
+            var filename = "";
             var folder = "/Users/yasemin/Library/Application Support/Neo4j Desktop/Application/neo4jDatabases/database-a67a9b4b-e0cb-404c-99ce-fccc6509622f/installation-4.0.2/import/" + person.PersonId.ToString() + "/" + NewspostId.ToString();
             if (!System.IO.Directory.Exists(folder))
             {
@@ -73,31 +74,33 @@ var path = "";
             if (file.Length > 0)
             {
 
-                var filename = file.FileName;
+                 filename = file.FileName;
 
 
                  path = "/Users/yasemin/Library/Application Support/Neo4j Desktop/Application/neo4jDatabases/database-a67a9b4b-e0cb-404c-99ce-fccc6509622f/installation-4.0.2/import/" + person.PersonId.ToString() + "/" + NewspostId.ToString() + "/" + filename;
-
                 using (var stream = System.IO.File.Create(path))
                 {
                     await file.CopyToAsync(stream);
                 }
 
             }
+            Tuple<string,string> val = new Tuple<string, string>(folder,filename);
         
-            //just to test
 
-            return path;
+            return val;
         }
         [HttpGet("download")]
-        public IActionResult GetDownload(string link)
+        public IActionResult GetDownload(string path, string filename)
         {
             //not done yet
-            var net = new System.Net.WebClient();
-            var data = net.DownloadData(link);
-            var content = new System.IO.MemoryStream(data);
-            var contentType = "APPLICATION/octet-stream";
-            return File(content, contentType);
+            path = path + "/";
+            byte[] fileBytes = System.IO.File.ReadAllBytes(path + filename);
+          return File(fileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, filename);
+
+        }
+        public IActionResult DownloadFile()
+        {
+            return View();
         }
 
         //[Route("Person/Profile")]
@@ -318,15 +321,17 @@ var path = "";
 
             // Getting the id of most recent post node, so a new id can be automatically added to the newly created newspost.
             int newid = GetMaxPostId();
-            var path = "";
+            var path = " ";
+            var filename = " ";
+            Tuple<string,string> fileVal = new Tuple<string, string>(path,filename);
 
             string datetime = DateTime.Now.ToString("d-M-yyyy HH:mm:ss");
             if (file != null)
             {
-                path = await FileUpload(file,newid);
+                fileVal = await FileUpload(file,newid);
             }
 
-            await ConnectDb("CREATE(p:Post {Title: '" + title + "', Description: '" + description + "', PostId: " + newid + ", DateAdded: '" + datetime + "', Path: '" + path +"'})");
+            await ConnectDb("CREATE(p:Post {Title: '" + title + "', Description: '" + description + "', PostId: " + newid + ", DateAdded: '" + datetime + "', Filename: '" + fileVal.Item2 + "', Path: '" + fileVal.Item1 +"'})");
 
             // After adding the post to the database, a relationship is created between the post and the Person who made it. | (Person-[Posted]->Post)
             await ConnectDb("MATCH(u:Person), (p:Post) WHERE u.PersonId = 1 AND p.Title = '" + title + "' CREATE(u)-[r:Posted]->(p)");
@@ -407,7 +412,9 @@ var path = "";
                     Description = post.Description,
                     Creator = creator,
                     DateAdded = post.DateAdded,
-                    TimeStamp = datetime
+                    TimeStamp = datetime,
+                    Path = post.Path,
+                    Filename = post.Filename
                 }); ;
             }
 
@@ -453,7 +460,9 @@ var path = "";
                     Description = post.Description,
                     Creator = creator,
                     DateAdded = post.DateAdded,
-                    TimeStamp = datetime
+                    TimeStamp = datetime,
+                    Path = post.Path,
+                    Filename = post.Filename
                 });
 
             }
@@ -501,7 +510,9 @@ var path = "";
                     Description = post.Description,
                     Creator = creator,
                     DateAdded = post.DateAdded,
-                    TimeStamp = datetime
+                    TimeStamp = datetime,
+                    Path = post.Path,
+                    Filename = post.Filename
                 });
 
             }

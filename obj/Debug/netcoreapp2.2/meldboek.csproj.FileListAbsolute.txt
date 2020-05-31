@@ -444,3 +444,4 @@ C:/Users/ses-9/Desktop/meldboek/meldboek/obj/Debug/netcoreapp2.2/meldboek.genrun
 C:/Users/ses-9/Desktop/meldboek/meldboek/obj/Debug/netcoreapp2.2/meldboek.csproj.CopyComplete
 /Users/yasemin/Documents/Inf_jaar_2/Project D/meldboek/obj/Debug/netcoreapp2.2/Razor/Views/Login/Index1.cshtml.g.cs
 /Users/yasemin/Documents/Inf_jaar_2/Project D/meldboek/obj/Debug/netcoreapp2.2/Razor/Views/Person/Login.cshtml.g.cs
+/Users/yasemin/Documents/Inf_jaar_2/Project D/meldboek/obj/Debug/netcoreapp2.2/Razor/Views/Person/DownloadFile.cshtml.g.cs
