@@ -449,11 +449,17 @@ namespace meldboek.Controllers
             return RedirectToAction("FilteredNewsfeed", new { filter = "Algemeen" });
         }
 
-        public async Task<IActionResult> DeletePost(int postid, string page)
+        public async Task<IActionResult> DeletePost(int PostId, string Path, string Filename, string page)
         {
             // DeletePost() deletes a Newspost using its id and redirects to the correct page (a filter might've been used beforehand).
 
-            await ConnectDb("MATCH(p:Post) WHERE p.PostId= " + postid + " DETACH DELETE p");
+            if (Path != null && Filename != null)
+            {
+                System.IO.File.Delete(Path + "/" + Filename);
+                System.IO.Directory.Delete(Path);
+            }
+
+            await ConnectDb("MATCH(p:Post) WHERE p.PostId= " + PostId + " DETACH DELETE p");
 
             return RedirectToAction("FilteredNewsfeed", new { filter = page });
         }
