@@ -43,6 +43,7 @@
 
             <!-- Account information button -->
             <a href="@Url.Action("Profile", "Person")"><img style="width: 80px;" id="acc-icon" src="@Url.Content("~/Content/account.png")" /></a>
+            
         </div>
 
         <!-- Sidemenu overlay -->
@@ -58,10 +59,10 @@
                 <br>
                 <a href="@Url.Action("Personlist", "Person")">Gebruikers</a>
             </div>
-            <div class="logout"><a onclick="nav()" href="#logout">Log uit</a></div>
+            <div class="logout"><a href="@Url.Action("Logout", "Person")">Log uit</a></div>
         </div>
     </header>
-    dv
+
     <div class="container">
         <partial name="_CookieConsentPartial" />
         <main role="main" class="pb-3">

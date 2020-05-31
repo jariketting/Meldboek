@@ -13,10 +13,10 @@ namespace meldboek.Models
         public string FirstName { get; set; }
         public string LastName { get; set; }
         [DisplayName("Uw email")]
-        [Required(ErrorMessage = "Deze veld is verplicht")]
+        [Required(ErrorMessage = "Dit veld is verplicht")]
         public string Email { get; set; }
         [DataType(DataType.Password)]
-        [Required(ErrorMessage = "Deze veld is verplicht")]
+        [Required(ErrorMessage = "Dit veld is verplicht")]
         [DisplayName("Uw wachtwoord")]
         public string Password { get; set; }
         public string LoginErrorMessage { get; set; }

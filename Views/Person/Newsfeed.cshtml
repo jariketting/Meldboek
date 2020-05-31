@@ -63,6 +63,7 @@
                  color: #9ee0a4;
             }
 
+            /* Newsfeed title (tells the Person which feed they are viewing.) */
             .page-title {
                 font-size: 28px;
                 padding-bottom: 20px;
@@ -78,7 +79,6 @@
             .article {
                 width: 90%;
                 overflow: hidden;
-                padding-bottom: 5px;
                 border-bottom: 1px solid #3bb546;
             }
 
@@ -86,6 +86,7 @@
             .article-content {
                 float: left;
                 width: 90%;
+                margin-bottom: 20px;
             }
 
             .article-content h1 {
@@ -102,12 +103,25 @@
             .article-content p {
                 color: #000000;
                 font-size: 18px;
-                padding-bottom: 10px;
-            }
-            .download{
-                padding: 20px;
             }
 
+            .download {
+                width: 200px;
+                margin-bottom: 20px;
+            }
+
+            .download a {
+                font-size: 18px;
+                text-decoration: none;
+                color: #0000ff;
+                transition: 0.2s;
+            }
+
+            .download a:hover {
+                color: #b3b3ff;
+            }
+
+            /* Button to delete a newspost */
             .delete-button {
                 display: block;
                 background-color: #ff5252;
@@ -129,7 +143,7 @@
                 background-color: #ffa6a6;
             }
 
-            /* Form to add an article'. */
+            /* Form to add an article. */
             .collapsible {
                 font-family: 'Trebuchet MS', sans-serif;
                 background-color: #3bb546;
@@ -156,6 +170,7 @@
                 transition: max-height 0.2s ease-out;
             }
 
+            /* Form to add an article. */
             .add-article {
                 width: 90%;
                 font-size: 18px;
@@ -236,7 +251,7 @@
                 <br>
                 <a href="@Url.Action("Personlist")">Gebruikers</a>
             </div>
-            <div class="logout"><a onclick="nav()" href="#logout">Log uit</a></div>
+            <div class="logout"><a href="@Url.Action("Logout")">Log uit</a></div>
         </div>
 
         <!-- All the actual content of the page -->
@@ -246,7 +261,7 @@
             <div class="categories">
                 <a href="@Url.Action("FilteredNewsfeed", new { filter = "Algemeen" })">Algemeen</a>
 
-                @foreach (var group in Model.Group)
+               @foreach (var group in Model.Group)
                 {
                     <a href="@Url.Action("FilteredNewsfeed", new { filter = group.GroupName })">@group.GroupName</a>
                 }
@@ -263,11 +278,12 @@
                     <form action="AddPost" method="post" class="add-article" enctype="multipart/form-data">
                         <label for="title">Titel</label>
                         <input type="text" id="title" name="title" placeholder="Titel nieuwsbericht" required>
+
                         <label for="category">Categorie</label>
                         <select id="group" name="group">
                             <option id="Algemeen" name="Algemeen">Algemeen</option>
 
-                            @foreach (var group in Model.Group)
+                           @foreach (var group in Model.Group)
                             {
                                 <option id="@group.GroupName" name="@group.GroupName">@group.GroupName</option>
                             }
@@ -276,34 +292,36 @@
 
                         <label for="description">Beschrijving</label>
                         <textarea id="description" name="description" value="description" placeholder="Beschrijving nieuwsbericht" style="height:200px" required></textarea>
+                        
                         <label for="file">Bijlage: </label>
                         <input type="file" name="file" id="file" /><br>
+                        
                         <input type="submit" value="Voeg toe">
                     </form>
                 </div>
 
                 <!-- Single post attribute; Here all the posts from GetFeed() or FilteredNewsfeed() are put on the page. -->
-                    @foreach (var post in Model.Post)
-                    {
-                        <div class="article">
-                            <div class="article-content">
-                                <h1>@post.Title</h1>
-                                <h3>@post.Creator.FirstName @post.Creator.LastName, @post.DateAdded</h3>
-                                <p>@post.Description</p>
-                                @if (post.Path != "" && post.Filename != "")
-                                {
-                           <div class = "download"> @Html.ActionLink("Bestand downloaden", "GetDownload", new { path = post.Path, filename = post.Filename})</div>
-                                }
-                            </div>
-
-                            <!-- If the current Person is the creator of a newspost (relationship Posted) they can delete it. -->
-                            @if (post.Creator.PersonId == 1)
-                            {
-                                <div class="delete-button" onclick="window.location='@Url.Action("DeletePost", new { postid = post.PostId, page = TempData["Page"] })'">&#10005;</div>
-                            }
+               @foreach (var post in Model.Post)
+                {
+                    <div class="article">
+                        <div class="article-content">
+                            <h1>@post.Title</h1>
+                            <h3>@post.Creator.FirstName @post.Creator.LastName, @post.DateAdded</h3>
+                            <p>@post.Description</p>
                         </div>
-                    }
 
+                        <!-- If the current Person is the creator of a newspost (relationship Posted) they can delete it. -->
+                       @if (post.Creator.PersonId == (int)ViewData["CurrentPersonId"])
+                        {
+                            <div class="delete-button" onclick="window.location='@Url.Action("DeletePost", new { PostId = post.PostId, Path = post.Path, Filename = post.Filename, page = TempData["Page"] })'">&#10005;</div>
+                        }
+
+                       @if (post.Path != " " && post.Filename != " ")
+                        {
+                            <div class = "download"> @Html.ActionLink("Bestand downloaden", "GetDownload", new { path = post.Path, filename = post.Filename})</div>
+                        }
+                    </div>
+                }
             </div>
         </div>
     </body>
