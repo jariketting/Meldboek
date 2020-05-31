@@ -105,6 +105,9 @@
                 font-size: 18px;
                 padding-bottom: 10px;
             }
+            .download{
+                padding: 20px;
+            }
 
             /* Button to delete a newspost */
             .delete-button {
@@ -294,6 +297,11 @@
                             <h3>@post.Creator.FirstName @post.Creator.LastName, @post.DateAdded</h3>
                             <p>@post.Description</p>
                         </div>
+
+                           @if (post.Path != "" && post.Filename != "")
+                            {
+                                <div class = "download"> @Html.ActionLink("Bestand downloaden", "GetDownload", new { path = post.Path, filename = post.Filename})</div>
+                            }
 
                         <!-- If the current Person is the creator of a newspost (relationship Posted) they can delete it. -->
                        @if (post.Creator.PersonId == (int)ViewData["CurrentPersonId"])
