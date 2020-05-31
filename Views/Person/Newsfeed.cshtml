@@ -79,7 +79,6 @@
             .article {
                 width: 90%;
                 overflow: hidden;
-                padding-bottom: 5px;
                 border-bottom: 1px solid #3bb546;
             }
 
@@ -87,6 +86,7 @@
             .article-content {
                 float: left;
                 width: 90%;
+                margin-bottom: 20px;
             }
 
             .article-content h1 {
@@ -103,10 +103,22 @@
             .article-content p {
                 color: #000000;
                 font-size: 18px;
-                padding-bottom: 10px;
             }
-            .download{
-                padding: 20px;
+
+            .download {
+                width: 200px;
+                margin-bottom: 20px;
+            }
+
+            .download a {
+                font-size: 18px;
+                text-decoration: none;
+                color: #0000ff;
+                transition: 0.2s;
+            }
+
+            .download a:hover {
+                color: #b3b3ff;
             }
 
             /* Button to delete a newspost */
@@ -298,15 +310,15 @@
                             <p>@post.Description</p>
                         </div>
 
-                       @if (post.Path != " " && post.Filename != " ")
-                        {
-                            <div class = "download"> @Html.ActionLink("Bestand downloaden", "GetDownload", new { path = post.Path, filename = post.Filename})</div>
-                        }
-
                         <!-- If the current Person is the creator of a newspost (relationship Posted) they can delete it. -->
                        @if (post.Creator.PersonId == (int)ViewData["CurrentPersonId"])
                         {
                             <div class="delete-button" onclick="window.location='@Url.Action("DeletePost", new { postid = post.PostId, page = TempData["Page"] })'">&#10005;</div>
+                        }
+
+                       @if (post.Path != " " && post.Filename != " ")
+                        {
+                            <div class = "download"> @Html.ActionLink("Bestand downloaden", "GetDownload", new { path = post.Path, filename = post.Filename})</div>
                         }
                     </div>
                 }
