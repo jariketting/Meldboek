@@ -104,6 +104,9 @@
                 font-size: 18px;
                 padding-bottom: 10px;
             }
+            .download{
+                padding: 20px;
+            }
 
             .delete-button {
                 display: block;
@@ -289,7 +292,7 @@
                                 <p>@post.Description</p>
                                 @if (post.Path != "" && post.Filename != "")
                                 {
-                            @Html.ActionLink("Click here to download", "GetDownload", new { path = post.Path, filename = post.Filename})
+                           <div class = "download"> @Html.ActionLink("Bestand downloaden", "GetDownload", new { path = post.Path, filename = post.Filename})</div>
                                 }
                             </div>
 
