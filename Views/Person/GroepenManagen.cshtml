@@ -6,205 +6,252 @@
 
 <!DOCTYPE html>
 <html>
-<head>
-    <link rel="stylesheet" type="text/css" href="~/css/Topbar_Sidenav.css">
-    <style>
-        #create-groups {
-            padding: 10px;
-            text-decoration: none;
-            color: #0000ff;
-            font-size: 22px;
-            transition: 0.2s;
-        }
-
-        #create-groups:hover {
-            color: #b3b3ff;
-        }
-
-        #Add-Delete-PersonToGroup {
-            /* width: 320px; */
-            padding: 15px;
-            border: 2px solid #ffed00;
-            margin: 50px 0px 40px 0px;
-        }
-
-        body {
-            font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
-            "Lucida Sans", Arial, sans-serif;
-        }
-
-        .group-options a {
-            font-size: 18px;
-            font-family: "Trebuchet MS", sans-serif;
-        }
-
-        input[type="submit"] {
-            font-family: "Trebuchet MS", sans-serif;
-            background-color: #ffed00;
-            color: white;
-            font-size: 18px;
-            border-radius: 25px;
-            padding: 10px 15px;
-            border: none;
-            cursor: pointer;
-            transition: 0.2s;
-        }
-
-        input[type="submit"]:hover {
-            background-color: #fff9a6;
-        }
-
-        .topbar {
-            background-color: #ffed00;
-        }
-
-        .navbtn {
-            background-color: #ffed00;
-        }
-
-        .overlay {
-            background-color: #ffed00; 
-        }
-
-        .overlay a:hover, .overlay a:focus, .logout a:hover, .logout a:focus {
-            color: #fff9a6;
-        }
-
-        .content {
-            padding-top: 100px;
-            width: 90%;
-        }
-
-        .groups {
-            position: fixed;
-            float: left;
-            width: 180px;
-            height: 550px;
-            padding: 80px 30px 0px 40px;
-            border-right: 2px solid #ffed00;
-            overflow-y: auto;
-        }
-
-        .groups a {
-            color: #000000;
-            font-size: 24px;
-            text-decoration: none;
-            display: block;
-            padding-bottom: 15px;
-            transition: 0.2s;
-            word-wrap: break-word;
-        }
-
-        .groups a:hover {
-            color: #fff9a6;
-        }
-
-        .group-options {
-            padding-top: 40px;
-            margin-left: 350px;
-        }
-
-        select {
-            font-family: 'Trebuchet MS', sans-serif;
-            font-size: 18px;
-            margin: 15px 0px 20px 0px;
-            padding: 5px;
-        }
-
-        option {
-            font-family: 'Trebuchet MS', sans-serif;
-            font-size: 18px;
-            padding: 5px;
-        }
-
-        input {
-            font-family: 'Trebuchet MS', sans-serif;
-            font-size: 18px;
-            margin-bottom: 10px;
-        }
-    </style>
-</head>
-<body>
-    <div class="topbar">
-        <span class="navbtn" onclick="nav()">&#9776; </span>
-        <h1 style="width: 57%;">Beheer groepen</h1>
-        <a href="@Url.Action("Profile")"><img id="acc-icon" src="@Url.Content("~/Content/account.png")" /></a>
-    </div>
-
-    <div id="nav" class="overlay">
-        <div class="overlay-content">
-            <a href="@Url.Action("Newsfeed")">Nieuws</a> 
-            <br>
-            <a href="@Url.Action("ForumHome", "Forum")">Forums</a>
-            <br>
-            <a href="@Url.Action("Index", "Chat")">Chat</a>
-            <br>
-            <a  href="@Url.Action("Groepen")">Groepen</a>
-            <br>
-            <a href="@Url.Action("Personlist")">Gebruikers</a>
-        </div>
-        <div class="logout"><a onclick="nav()" href="#logout">Log uit</a></div>
-    </div>
-    <div class="content">
-        <div class="groups">
-           @if (Model.OwnedGroups.Count != 0)
-            {
-               @foreach (var group in Model.OwnedGroups)
-                {
-                    <a href="@Url.Action("ManageGroup", new { GroupId = group.GroupId })">@group.GroupName</a>
-                }
-            } else
-            {
-                <a>Je beheert nog geen groepen</a>
+    <head>
+        <link rel="stylesheet" type="text/css" href="~/css/Topbar_Sidenav.css">
+        <style>
+            #create-groups {
+                padding: 10px;
+                text-decoration: none;
+                color: #0000ff;
+                font-size: 22px;
+                transition: 0.2s;
             }
 
+            #create-groups:hover {
+                color: #b3b3ff;
+            }
+
+            #Add-Delete-PersonToGroup {
+                padding: 15px;
+                border: 2px solid #ffed00;
+                margin: 50px 0px 40px 0px;
+            }
+
+            body {
+                font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+                "Lucida Sans", Arial, sans-serif;
+            }
+
+            .group-options a {
+                font-size: 18px;
+                font-family: "Trebuchet MS", sans-serif;
+            }
+
+            input[type="submit"] {
+                font-family: "Trebuchet MS", sans-serif;
+                background-color: #ffed00;
+                color: white;
+                font-size: 18px;
+                border-radius: 25px;
+                padding: 10px 15px;
+                border: none;
+                cursor: pointer;
+                transition: 0.2s;
+            }
+
+            input[type="submit"]:hover {
+                background-color: #fff9a6;
+            }
+
+            .topbar {
+                background-color: #ffed00;
+            }
+
+            .navbtn {
+                background-color: #ffed00;
+            }
+
+            .overlay {
+                background-color: #ffed00; 
+            }
+
+            .overlay a:hover, .overlay a:focus, .logout a:hover, .logout a:focus {
+                color: #fff9a6;
+            }
+
+            .content {
+                padding-top: 100px;
+                width: 90%;
+            }
+
+            .groups {
+                position: fixed;
+                float: left;
+                width: 180px;
+                height: 550px;
+                padding: 80px 30px 0px 40px;
+                border-right: 2px solid #ffed00;
+                overflow-y: auto;
+            }
+
+            .groups a {
+                color: #000000;
+                font-size: 24px;
+                text-decoration: none;
+                display: block;
+                padding-bottom: 15px;
+                transition: 0.2s;
+                word-wrap: break-word;
+            }
+
+            .groups a:hover {
+                color: #fff9a6;
+            }
+
+            #no-groups:hover {
+                color: #000000;
+            }
+
+            .group-options {
+                padding-top: 40px;
+                margin-left: 350px;
+            }
+
+            select {
+                font-family: 'Trebuchet MS', sans-serif;
+                font-size: 18px;
+                margin: 15px 0px 20px 0px;
+                padding: 5px;
+            }
+
+            option {
+                font-family: 'Trebuchet MS', sans-serif;
+                font-size: 18px;
+                padding: 5px;
+            }
+
+            input {
+                font-family: 'Trebuchet MS', sans-serif;
+                font-size: 18px;
+                margin-bottom: 10px;
+            }
+
+            .delete-button {
+                display: block;
+                background-color: #ff5252;
+                padding: 10px;
+                border-radius: 20px;
+                width: 160px;
+                height: 20px;
+                text-align: center;
+                cursor: pointer;
+                font-size: 20px;
+                transition: 0.2s;
+            }
+
+            .delete-button a {
+                text-decoration: none;
+                color: #ffffff;
+            }
+
+            .delete-button:hover {
+                background-color: #ffa6a6;
+            }
+        </style>
+    </head>
+    <body>
+
+        <!-- Colored bar at the top of the page -->
+        <div class="topbar">
+
+            <!-- The button that opens the sidemenu -->
+            <span class="navbtn" onclick="nav()">&#9776; </span>
+
+            <!-- Page title -->
+            <h1 style="width: 57%;">Beheer groepen</h1>
+
+            <!-- Account information button -->
+            <a href="@Url.Action("Profile")"><img id="acc-icon" src="@Url.Content("~/Content/account.png")" /></a>
         </div>
 
-        <div class="group-options">
-            <a id="create-groups" href="@Url.Action("Groepen")">&#8592; Groepen</a><a id="create-groups" href="@Url.Action("CreateGroups", "Admin")">Groep maken &#8594;</a>
+        <!-- Sidemenu overlay -->
+        <div id="nav" class="overlay">
+            <div class="overlay-content">
+                <a href="@Url.Action("Newsfeed")">Nieuws</a>
+                <br>
+                <a href="@Url.Action("ForumHome", "Forum")">Forums</a>
+                <br>
+                <a href="@Url.Action("Index", "Chat")">Chat</a>
+                <br>
+                <a href="@Url.Action("Groepen")">Groepen</a>
+                <br>
+                <a href="@Url.Action("Personlist")">Gebruikers</a>
+            </div>
+            <div class="logout"><a href="@Url.Action("Logout")">Log uit</a></div>
+        </div>
 
-           @if (Model.GroupsManagement != null)
-            {
-               @foreach (var group in Model.GroupsManagement)
+        <!-- Actual content of the page -->
+        <div class="content">
+            <div class="groups">
+
+                <!-- Placing all the groups the Person owns in the sidemenu, if the Person doesn't own any groups a message is shown on the page. -->
+                @if (Model.OwnedGroups.Count != 0)
                 {
-                    <div id="Add-Delete-PersonToGroup">
-                        <a>Voeg een nieuw lid toe aan @group.Group.GroupName</a>
-                        <form asp-action="AddPersonToGroup" method="post">
-                            <input type="hidden" name="GroupId" value="@group.Group.GroupId">
+                    @foreach (var group in Model.OwnedGroups)
+                    {
+                        <a href="@Url.Action("ManageGroup", new { GroupId = group.GroupId })">@group.GroupName</a>
+                    }
+                }
+                else
+                {
+                    <a id="no-groups">Je beheert nog geen groepen</a>
+                }
 
-                            <select id="PersonId" name="PersonId">
+            </div>
 
-                                @foreach (var nonmember in group.NonMembers)
-                                 {
+            <div class="group-options">
+
+                <!-- Links back to the list of groups and to the create a group page. -->
+                <a id="create-groups" href="@Url.Action("Groepen")">&#8592; Groepen</a><a id="create-groups" href="@Url.Action("CreateGroups", "Admin")">Groep maken &#8594;</a>
+
+                <!-- If the Person selects a group from the sidemenu they have access groupmanaging options. -->
+               @if (Model.GroupsManagement != null)
+                {
+                   @foreach (var group in Model.GroupsManagement)
+                    {
+                        <!-- Option 1: Add a Person to the selected group. -->
+                        <div id="Add-Delete-PersonToGroup">
+                            <a>Voeg een nieuw lid toe aan @group.Group.GroupName</a>
+                            <form asp-action="AddPersonToGroup" method="post">
+                                <input type="hidden" name="GroupId" value="@group.Group.GroupId">
+
+                                <select id="PersonId" name="PersonId">
+
+                               @foreach (var nonmember in group.NonMembers)
+                                {
                                     <option value="@nonmember.PersonId">@nonmember.FirstName @nonmember.LastName</option>
-                                 }
+                                }
 
-                            </select><br>
+                                </select><br>
 
-                            <input type="submit" value="Toevoegen" id="submit">
-                        </form>
-                    </div>
+                                <input type="submit" value="Toevoegen" id="submit">
+                            </form>
+                        </div>
 
-                    <div id="Add-Delete-PersonToGroup">
-                        <a>Verwijder een groepslid uit @group.Group.GroupName</a>
-                        <form asp-action="DeletePersonFromGroup" method="post">
-                            <input type="hidden" name="GroupId" value="@group.Group.GroupId">
-      
-                            <select id="PersonId" name="PersonId">
+                        <!-- Option 2: Delete a Person from the selected group. -->
+                        <div id="Add-Delete-PersonToGroup">
+                            <a>Verwijder een groepslid uit @group.Group.GroupName</a>
+                            <form asp-action="DeletePersonFromGroup" method="post">
+                                <input type="hidden" name="GroupId" value="@group.Group.GroupId">
 
-                                @foreach (var member in group.Group.Members)
-                                 {
+                                <select id="PersonId" name="PersonId">
+
+                               @foreach (var member in group.Group.Members)
+                                {
                                     <option value="@member.PersonId">@member.FirstName @member.LastName</option>
-                                 }
+                                }
 
-                            </select><br>
+                                </select><br>
 
-                            <input type="submit" value="Verwijderen" id="submit">
-                        </form>
-                    </div>
+                                <input type="submit" value="Verwijderen" id="submit">
+                            </form>
+                        </div>
+
+                        <!-- Option 3: Delete the group. -->
+                        <div class="delete-button"><a href="@Url.Action("DeleteGroup", new { group.Group.GroupId })">Groep verwijderen</a></div>
+                    }
                 }
-            }
+            </div>
         </div>
-    </div>
-</body>
+    </body>
 </html>

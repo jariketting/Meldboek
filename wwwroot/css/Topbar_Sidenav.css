@@ -128,6 +128,7 @@ table {
     transition: 0.3s;
 }
 
+/* Logout link */
 .logout {
     position: absolute;
     bottom: 10%;

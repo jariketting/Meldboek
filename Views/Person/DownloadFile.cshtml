@@ -1,0 +1,15 @@
+
+@model meldboek.Models.Newspost
+<!DOCTYPE html>
+<html>
+@* <h>hello</h> *@
+<form action="GetDownload" method="get">
+    <input type = "string" name = link id = "link" value= "/Users/yasemin/Library/Application Support/Neo4j Desktop/Application/neo4jDatabases/database-a67a9b4b-e0cb-404c-99ce-fccc6509622f/installation-4.0.2/import/1/33007762">
+    <input type="submit" value="Download" />
+</form>
+<a href='file:///Filestest/IMG_7895.PNG' download> Download file
+</a>
+
+@Html.ActionLink("Click here to download", "GetDownload", new { path = "/Users/yasemin/Library/Application Support/Neo4j Desktop/Application/neo4jDatabases/database-a67a9b4b-e0cb-404c-99ce-fccc6509622f/installation-4.0.2/import/1/33007762/", filename = "begroting verhuizen.xlsx" })
+</html>
+

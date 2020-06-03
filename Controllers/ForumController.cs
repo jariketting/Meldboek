@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Security.Claims;
 
 namespace meldboek.Controllers
 {
@@ -20,9 +21,31 @@ namespace meldboek.Controllers
             return View();
         }
 
+        public Person GetCurrentPerson()
+        {
+            if (!User.Claims.Any(x => x.Type == ClaimTypes.Name))
+            {
+                return null;
+            }
+            else
+            {
+                var getClaims = User.Claims.First(x => x.Type == ClaimTypes.Name).Value;
+                Person CurrentPerson = (JsonConvert.DeserializeObject<Person>(getClaims));
+
+                return CurrentPerson;
+            }
+        }
+
         public IActionResult ForumHome(string fid, string Title,string Content,string del)
         {
-            Person u = new PersonController().GetPerson(1);
+            if (GetCurrentPerson() == null)
+            {
+                return RedirectToAction("LoginError", "Login");
+            }
+
+            Person u = GetCurrentPerson();
+
+            //Person u = new PersonController().GetCurrentPerson();
 
 
             /* Forum f = new Forum(GetNewForumId(),u , "Test", "Hoe moet je dit testen?");
@@ -75,6 +98,11 @@ namespace meldboek.Controllers
 
         public IActionResult Forum(string Content, string fid, string del)
         {
+            if (GetCurrentPerson() == null)
+            {
+                return RedirectToAction("LoginError", "Login");
+            }
+
             int ForumId = Convert.ToInt32(fid);
             try
             {
@@ -104,7 +132,7 @@ namespace meldboek.Controllers
             {
                 CurrentForum = (Forum)TempData["Forum"];
             }
-            Person u = new PersonController().GetPerson(1);
+            Person u = new PersonController().GetCurrentPerson();
 
             List<ForumItem> ItemList = GetAllReplies(CurrentForum);
             if (Content !=null)
@@ -262,7 +290,7 @@ namespace meldboek.Controllers
             var r = ConnectDb("MATCH (p:ForumItem)-[]-(n:Forum) WHERE n.ForumId="+replyOnForum.ForumId+" RETURN p");
             r.Wait();
             int forumItemId = Convert.ToInt32((Int64)r.Result[0].Properties["ForumItemId"]);
-            var r2 = ConnectDb("MATCH (p:Person)-[Made]-(n:ForumItem) WHERE n.forumItemId=" + forumItemId + " RETURN p");
+            var r2 = ConnectDb("MATCH (p:Person)-[Made]-(n:ForumItem) WHERE n.ForumItemId=" + forumItemId + " RETURN p");
             r2.Wait();
             Person owner = new Person();
             nodeList = r2.Result;
@@ -298,7 +326,7 @@ namespace meldboek.Controllers
             r.Wait();
             int forumItemId = Convert.ToInt32((Int64)r.Result[0].Properties["ForumItemId"]);
 
-            var r2 = ConnectDb("MATCH (p:Person)-[Made]-(n:ForumItem) WHERE n.forumItemId=" + forumItemId + " RETURN p");
+            var r2 = ConnectDb("MATCH (p:Person)-[Made]-(n:ForumItem) WHERE n.ForumItemId=" + forumItemId + " RETURN p");
             r2.Wait();
             Person owner = new Person();
             nodeList = r2.Result;
