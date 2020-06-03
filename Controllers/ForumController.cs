@@ -132,7 +132,7 @@ namespace meldboek.Controllers
             {
                 CurrentForum = (Forum)TempData["Forum"];
             }
-            Person u = new PersonController().GetCurrentPerson();
+            Person u = GetCurrentPerson();
 
             List<ForumItem> ItemList = GetAllReplies(CurrentForum);
             if (Content !=null)
