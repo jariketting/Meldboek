@@ -893,7 +893,7 @@ namespace meldboek.Controllers
             if (getStatus.Result == "FriendPending")
             {
                 // If the relationship is FriendPending, another check determines whether the current Person is the one who sent the request.
-                var requestCheck = ConnectDb2("MATCH(a:Person)-[r]->(b:Person) WHERE a.PersonId = " + id + " AND b.PersonId = 1 RETURN type(r)");
+                var requestCheck = ConnectDb2("MATCH(a:Person)-[r]->(b:Person) WHERE a.PersonId = " + PersonId + " AND b.PersonId = " + id + " RETURN type(r)");
                 if (requestCheck.Result == "FriendPending")
                 {
 
