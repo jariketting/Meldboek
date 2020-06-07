@@ -171,7 +171,9 @@ namespace meldboek.Controllers
             foreach (var result in r.Result) {
 
                 string title = (string)result.Properties["Title"];
+                title = title.Replace("&#39;", "'");
                 string content = (string)result.Properties["Content"];
+                content = content.Replace("&#39;", "'");
                 int forumId = Convert.ToInt32((Int64)result.Properties["ForumId"]);
                 DateTime LastEdit = Convert.ToDateTime(result.Properties["LastEdit"]);
 
@@ -181,13 +183,24 @@ namespace meldboek.Controllers
                 var r2 = ConnectDb("MATCH (p:Person)-[Made]-(n:Forum) WHERE n.ForumId=" + forumId + " RETURN p");
                 r2.Wait();
                 Person owner = new Person();
+                Person ownerNode = new Person();
                 nodeList = r2.Result;
                 foreach (var record in nodeList)
                 {
                     var nodeprops = JsonConvert.SerializeObject(record.As<INode>().Properties);
                     owner = (JsonConvert.DeserializeObject<Person>(nodeprops));
+                    
+                    owner.LastName = owner.LastName.Replace("&#39;", "'");
+
+                    ownerNode = new Person()
+                    {
+                        PersonId = owner.PersonId,
+                        FirstName = owner.FirstName,
+                        LastName = owner.LastName,
+                        Email = owner.Email
+                    };
                 }
-                Forum f = new Forum(forumId, owner, title, content, LastEdit);
+                Forum f = new Forum(forumId, ownerNode, title, content, LastEdit);
                 FL.Add(f);
 
             }
@@ -261,22 +274,35 @@ namespace meldboek.Controllers
             var r2 = ConnectDb("MATCH (p:Person)-[Made]-(n:Forum) WHERE n.ForumId="+forumId+" RETURN p");
             r2.Wait();
             Person owner = new Person();
+            Person ownerNode = new Person();
             nodeList = r2.Result;
             foreach (var record in nodeList)
             {
                 var nodeprops = JsonConvert.SerializeObject(record.As<INode>().Properties);
                 owner = (JsonConvert.DeserializeObject<Person>(nodeprops));
+
+                owner.LastName = owner.LastName.Replace("&#39;", "'");
+
+                ownerNode = new Person()
+                {
+                    PersonId = owner.PersonId,
+                    FirstName = owner.FirstName,
+                    LastName = owner.LastName,
+                    Email = owner.Email
+                };
             }
 
             string title = (string)r.Result[0].Properties["Title"];
+            title = title.Replace("&#39;", "'");
             string content = (string)r.Result[0].Properties["Content"];
+            content = content.Replace("&#39;", "'");
             DateTime LastEdit = Convert.ToDateTime(r.Result[0].Properties["LastEdit"]);
 
 
 
 
 
-            return new Forum(forumId, owner, title, content, LastEdit); 
+            return new Forum(forumId, ownerNode, title, content, LastEdit); 
         }
        
         //ForumItems laden van de database voor reply of forum
@@ -293,22 +319,34 @@ namespace meldboek.Controllers
             var r2 = ConnectDb("MATCH (p:Person)-[Made]-(n:ForumItem) WHERE n.ForumItemId=" + forumItemId + " RETURN p");
             r2.Wait();
             Person owner = new Person();
+            Person ownerNode = new Person();
             nodeList = r2.Result;
             foreach (var record in nodeList)
             {
                 var nodeprops = JsonConvert.SerializeObject(record.As<INode>().Properties);
                 owner = (JsonConvert.DeserializeObject<Person>(nodeprops));
-            }
+
+                owner.LastName = owner.LastName.Replace("&#39;", "'");
+
+                ownerNode = new Person()
+                    {
+                        PersonId = owner.PersonId,
+                        FirstName = owner.FirstName,
+                        LastName = owner.LastName,
+                        Email = owner.Email
+                    };
+                }
 
 
-            string content = (string)r.Result[0].Properties["Content"];
+                string content = (string)r.Result[0].Properties["Content"];
+                content = content.Replace("&#39;", "'");
 
 
 
 
 
 
-            return new ForumItem(forumItemId, owner, content, replyOnForum);
+                return new ForumItem(forumItemId, owner, content, replyOnForum);
             }
             catch (ArgumentOutOfRangeException)
             {
@@ -329,19 +367,31 @@ namespace meldboek.Controllers
             var r2 = ConnectDb("MATCH (p:Person)-[Made]-(n:ForumItem) WHERE n.ForumItemId=" + forumItemId + " RETURN p");
             r2.Wait();
             Person owner = new Person();
+            Person ownerNode = new Person();
             nodeList = r2.Result;
             foreach (var record in nodeList)
             {
                 var nodeprops = JsonConvert.SerializeObject(record.As<INode>().Properties);
                 owner = (JsonConvert.DeserializeObject<Person>(nodeprops));
+
+                owner.LastName = owner.LastName.Replace("&#39;", "'");
+
+                ownerNode = new Person()
+                {
+                    PersonId = owner.PersonId,
+                    FirstName = owner.FirstName,
+                    LastName = owner.LastName,
+                    Email = owner.Email
+                };
             }
 
 
             string content = (string)r.Result[0].Properties["Content"];
+            content = content.Replace("&#39;", "'");
 
 
 
-            return new ForumItem(forumItemId, owner, content, replyOnForumItem);
+                return new ForumItem(forumItemId, ownerNode, content, replyOnForumItem);
               }
             catch (ArgumentOutOfRangeException)
             {
@@ -352,6 +402,8 @@ namespace meldboek.Controllers
         //Forums saven naar de database
         public void SaveForum(Forum forum)
         {
+            forum.Title = forum.Title.Replace("'", "&#39;");
+            forum.Content = forum.Content.Replace("'", "&#39;");
             var r = ConnectDb("CREATE (F:Forum {ForumId: " + forum.ForumId + ",Title: '" + forum.Title + "', Content: '" + forum.Content + "',  LastEdit: '" + forum.lastEdit + "' }) RETURN F");
             r.Wait();
             var r2 = ConnectDb("MATCH (p:Person),(f:Forum) WHERE p.PersonId = " + forum.Owner.PersonId + " AND f.ForumId = " + forum.ForumId + " CREATE(p) -[r: Made]->(f) RETURN p, f");
@@ -369,7 +421,7 @@ namespace meldboek.Controllers
         public void SaveForumItem(ForumItem forumItem)
         {
 
-
+            forumItem.Content = forumItem.Content.Replace("'", "&#39;");
 
             var r = ConnectDb("CREATE (F:ForumItem {ForumItemId: " + forumItem.ForumItemId + ",Content: '" + forumItem.Content + "'}) RETURN F");
             r.Wait();
