@@ -13,6 +13,8 @@ namespace meldboek.Models
         public string Email { get; set; }
         public string Password { get; set; }
 
+        public string status { get; set; }
+
 
         //constructor
         public Person(int PersonId, string firstName, string lastName, string email, string password)
@@ -22,11 +24,13 @@ namespace meldboek.Models
             LastName = lastName;
             Email = email;
             Password = password;
+            status = "";
         }
 
         //lege constructor
         public Person()
         {
+            status = "";
         }
     }
 

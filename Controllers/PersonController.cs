@@ -19,11 +19,46 @@ namespace meldboek.Controllers
 {
     public class PersonController : Controller
     {
+        //voor het testen
+        public Boolean Testing = false;
+        public Person TestPerson { get; set; }
         public IDriver Driver { get; set; }
 
         public IActionResult Index()
         {
             return View();
+        }
+
+        public Person GetCurrentPerson()
+        {
+            if (Testing)
+            {
+                return TestPerson;
+            }
+            if (!User.Claims.Any(x => x.Type == ClaimTypes.Name))
+            {
+                return null;
+            }
+            else
+            {
+                var getClaims = User.Claims.First(x => x.Type == ClaimTypes.Name).Value;
+                Person CurrentPerson = (JsonConvert.DeserializeObject<Person>(getClaims));
+
+                return CurrentPerson;
+            }
+        }
+
+        public string GetCurrentPersonRole()
+        {
+            if (!User.Claims.Any(x => x.Type == ClaimTypes.Role))
+            {
+                return null;
+            }
+            else
+            {
+                string CurrentPersonRole = User.Claims.First(x => x.Type == ClaimTypes.Role).Value;
+                return CurrentPersonRole;
+            }
         }
 
         [Route("Person/GroepenManagen")]
@@ -695,7 +730,8 @@ namespace meldboek.Controllers
 
             if (Personid == PersonId & friendId == friendPersonid)
             {
-                var results = ConnectDb("MATCH (a:Person), (b:Person) WHERE a.PersonId = " + PersonId.ToString() + " AND b.PersonId = " + friendId.ToString() + " CREATE (a)-[r:FriendPending]->(b)" + " RETURN a");
+                var results = ConnectDb("MATCH (a:Person), (b:Person) WHERE a.PersonId = " + PersonId.ToString() + " AND b.PersonId = " + friendId.ToString() + " CREATE (a)-[r:FriendPending]->(b)  RETURN a");
+                results.Wait();
                 Success = true;
             }
             else

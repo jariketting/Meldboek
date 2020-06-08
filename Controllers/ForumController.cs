@@ -12,12 +12,35 @@ namespace meldboek.Controllers
 {
     public class ForumController : Controller
     {
+
+        public Boolean Testing = false;
+        public Person TestPerson { get; set; }
+
         Forum CurrentForum;
         public IDriver Driver { get; set; }
 
         public IActionResult Index()
         {
             return View();
+        }
+
+        public Person GetCurrentPerson()
+        {
+            if (Testing)
+            {
+                return TestPerson;
+            }
+            if (!User.Claims.Any(x => x.Type == ClaimTypes.Name))
+            {
+                return null;
+            }
+            else
+            {
+                var getClaims = User.Claims.First(x => x.Type == ClaimTypes.Name).Value;
+                Person CurrentPerson = (JsonConvert.DeserializeObject<Person>(getClaims));
+
+                return CurrentPerson;
+            }
         }
 
         public IActionResult ForumHome(string fid, string Title,string Content,string del)
