@@ -5,6 +5,8 @@ using meldboek.Models;
 using Microsoft.AspNetCore.Mvc;
 using Neo4j.Driver;
 using Newtonsoft.Json;
+using System.Security.Claims;
+using System.Threading.Tasks;
 
 namespace meldboek.Controllers
 {
@@ -20,12 +22,32 @@ namespace meldboek.Controllers
             Db = new Database(); // init database
         }
 
+        public Person GetCurrentPerson()
+        {
+            if (!User.Claims.Any(x => x.Type == ClaimTypes.Name))
+            {
+                return null;
+            }
+            else
+            {
+                var getClaims = User.Claims.First(x => x.Type == ClaimTypes.Name).Value;
+                Person CurrentPerson = (JsonConvert.DeserializeObject<Person>(getClaims));
+
+                return CurrentPerson;
+            }
+        }
+
         /// <summary>
         /// Overview page, join and get into chats.
         /// </summary>
         /// <returns>Index page</returns>
         public IActionResult Index(string type, string chat)
         {
+            if (GetCurrentPerson() == null)
+            {
+                return RedirectToAction("LoginError", "Login");
+            }
+
             ViewBag.success = null; // store success msg
 
             // check if post is made
@@ -36,7 +58,10 @@ namespace meldboek.Controllers
                 {
                     JoinChat(chat); // join chat
                     Chat room = GetChat(chat);
+                    room.Name = room.Name.Replace("&#39;", "'");
+                    room.Description = room.Description.Replace("&#39;", "'");
                     ViewBag.success = "Je bent toegevoegd aan " + room.Name; // TODO add chat name
+                    return RedirectToAction("Index");
                 }
                 else if (type == "open")
                 {
@@ -63,6 +88,17 @@ namespace meldboek.Controllers
             return View(ViewBag);
         }
 
+        public async Task<IActionResult> CreateChatroom(string name)
+        {
+            string date = DateTime.Now.ToString("MM-dd-yyyy HH:mm:ss");
+            string id = Db.GenerateUniqueId(date + name.Substring(Math.Max(0, name.Length)));
+            name = name.Replace("'", "&#39;");
+
+            await Db.ConnectDb("CREATE (c:Chat {ChatId: '" + id + "', Name: '" + name + "'}) RETURN c");
+
+            return RedirectToAction("Index");
+        }
+        
         /// <summary>
         /// Chat room
         /// </summary>
@@ -70,6 +106,11 @@ namespace meldboek.Controllers
         /// <returns>Chatroom view</returns>
         public IActionResult Room(string chat, string type, string message)
         {
+            if (GetCurrentPerson() == null)
+            {
+                return RedirectToAction("LoginError", "Login");
+            }
+
             // check if chat id given
             if (chat == null || type == null)
             {
@@ -80,21 +121,24 @@ namespace meldboek.Controllers
             { 
                 // get chatroom and add to viewbag
                 Chat room = GetChat(chat);
+                room.Name = room.Name.Replace("&#39;", "'");
                 ViewBag.name = room.Name;
             }
             else if(type == "chat")
             {
                 Person friend = GetFriend(chat);
+                friend.LastName = friend.LastName.Replace("&#39;", "'");
                 ViewBag.name = friend.FirstName + " " + friend.LastName;
             }
 
             // check if new message added
             if (message != null)
             {
-                SendMessage(message, chat);
+                SendMessage(message, chat, type);
+                System.Threading.Thread.Sleep(500);
             }
 
-            List<Message> messages = GetChatMessages(chat);
+            List<Message> messages = GetChatMessages(chat, type);
             ViewBag.messages = messages;
 
             return View();
@@ -107,7 +151,7 @@ namespace meldboek.Controllers
         public async void JoinChat(string chat)
         {
             // TODO replace by current logged in Person
-            _ = await Db.ConnectDb("MATCH (u:Person),(c:Chat) WHERE u.Email = 'jariketting@hotmail.com' AND c.ChatId = '" + chat + "' CREATE(u)-[r:InChat]->(c)");
+            _ = await Db.ConnectDb("MATCH (u:Person),(c:Chat) WHERE u.PersonId = " +GetCurrentPerson().PersonId + " AND c.ChatId = '" + chat + "' CREATE(u)-[r:InChat]->(c)");
         }
 
         /// <summary>
@@ -128,6 +172,8 @@ namespace meldboek.Controllers
             var nodeprops = JsonConvert.SerializeObject(item.As<INode>().Properties);
             chat = (JsonConvert.DeserializeObject<Chat>(nodeprops));
 
+            chat.Name = chat.Name.Replace("&#39;", "'");
+            
             // fill list with chats
             return new Chat()
             {
@@ -142,58 +188,148 @@ namespace meldboek.Controllers
         /// </summary>
         /// <param name="message">Message to send</param>
         /// <param name="chat">Id of chat</param>
-        public async void SendMessage(string message, string chat)
+        public async void SendMessage(string message, string chat, string type)
         {
-            Random rnd = new Random();
-            int id = rnd.Next(1, 9999999);
+            string Date = DateTime.Now.ToString("MM-dd-yyyy HH:mm:ss");
 
-            string Date = DateTime.Now.ToString("dd-MM-yyyy HH:mm:ss");
+            string id = Db.GenerateUniqueId(Date + message.Substring(Math.Max(0, message.Length - 5)));
+
+            message = message.Replace("'", "&#39;");
 
             _ = await Db.ConnectDb("CREATE (p:Message { MessageId: '" + id + "', Content: '" + message + "', DatetimeSend: '" + Date + "', DatetimeRead: ''}) RETURN p");
-            _ = await Db.ConnectDb("MATCH (u:Person),(p:Message) WHERE u.Email = 'jariketting@hotmail.com' AND p.MessageId = '" + id + "' CREATE(u)-[r:Sends]->(p)");
-            _ = await Db.ConnectDb("MATCH (u:Message),(p:Chat) WHERE u.MessageId = '" + id + "' AND p.ChatId = '" + chat + "' CREATE(p)-[r:Contains]->(u)");
+            _ = await Db.ConnectDb("MATCH (u:Person),(p:Message) WHERE u.PersonId = " + GetCurrentPerson().PersonId + " AND p.MessageId = '" + id + "' CREATE(u)-[r:Sends]->(p)");
+
+            if(type == "open")
+            {
+                _ = await Db.ConnectDb("MATCH (u:Message),(p:Chat) WHERE u.MessageId = '" + id + "' AND p.ChatId = '" + chat + "' CREATE(p)-[r:Contains]->(u)");
+            } 
+            else if(type == "chat")
+            {
+                _ = await Db.ConnectDb("MATCH (u:Message),(p:Person) WHERE u.MessageId = '" + id + "' AND p.Email = '" + chat + "' CREATE(p)-[r:Receives]->(u)");
+            }
+
+            System.Threading.Thread.Sleep(500);
         }
 
         /// <summary>
-        /// Get chat Person van join
+        /// Get chat user van join
         /// </summary>
         /// <returns></returns>
-        public List<Message> GetChatMessages(string chat)
+        public List<Message> GetChatMessages(string chat, string type)
         {
             List<INode> messageNodes = new List<INode>(); // will store Message nodes
-            var getMessages = Db.ConnectDb("MATCH (n:Chat{ChatId:'" + chat + "'})-[:Contains]->(m:Message) RETURN m"); // run query
             var message = new Message(); // store Message
             List<Message> messageList = new List<Message>(); // store list of all messages
 
-            messageNodes = getMessages.Result; // fill chat nodes with queries result
-            // go trough all items
-            foreach (var item in messageNodes)
+            if (type == "open")
             {
-                // pull data from item and convert json
-                var nodeprops = JsonConvert.SerializeObject(item.As<INode>().Properties);
-                message = (JsonConvert.DeserializeObject<Message>(nodeprops));
+                var getMessages = Db.ConnectDb("MATCH (n:Chat{ChatId:'" + chat + "'})-[:Contains]->(m:Message) RETURN m"); // run query
 
-                // Another query gets the related Persons to a post from the database thus finding its creator, the result is processed similarly.
-                List<INode> PersonList = new List<INode>();
-                var getPerson = Db.ConnectDb("MATCH(u:Person)-[:Sends]-(c:Message) WHERE c.MessageId = '" + message.MessageId + "' RETURN u LIMIT 1");
-                var Person = new Person();
-
-                PersonList = getPerson.Result;
-                var PersonItem = PersonList.First();
-
-                var Personprops = JsonConvert.SerializeObject(PersonItem.As<INode>().Properties);
-                Person = (JsonConvert.DeserializeObject<Person>(Personprops));
-
-                // TODO as all these params should match, this could be automated...
-                // fill list with chats
-                messageList.Add(new Message()
+                messageNodes = getMessages.Result; // fill chat nodes with queries result
+                // go trough all items
+                foreach (var item in messageNodes)
                 {
-                    MessageId = message.MessageId,
-                    Content = message.Content,
-                    DatetimeSend = message.DatetimeSend,
-                    DatetimeRead = message.DatetimeRead,
-                    Personname = Person.Email
-                });
+                    // pull data from item and convert json
+                    var nodeprops = JsonConvert.SerializeObject(item.As<INode>().Properties);
+                    message = (JsonConvert.DeserializeObject<Message>(nodeprops));
+
+                    // Another query gets the related Persons to a post from the database thus finding its creator, the result is processed similarly.
+                    List<INode> PersonList = new List<INode>();
+                    var getPerson = Db.ConnectDb("MATCH(u:Person)-[:Sends]-(c:Message) WHERE c.MessageId = '" + message.MessageId + "' RETURN u LIMIT 1");
+                    var Person = new Person();
+
+                    PersonList = getPerson.Result;
+                    var PersonItem = PersonList.First();
+
+                    var Personprops = JsonConvert.SerializeObject(PersonItem.As<INode>().Properties);
+                    Person = (JsonConvert.DeserializeObject<Person>(Personprops));
+
+                    message.Content = message.Content.Replace("&#39;", "'");
+                    Person.LastName = Person.LastName.Replace("&#39;", "'");
+                    // TODO as all these params should match, this could be automated...
+                    // fill list with chats
+                    messageList.Add(new Message()
+                    {
+                        MessageId = message.MessageId,
+                        Content = message.Content,
+                        DatetimeSend = message.DatetimeSend,
+                        DatetimeRead = message.DatetimeRead,
+                        Personname = Person.FirstName + " " + Person.LastName
+                    });
+                }
+            }
+            else if(type == "chat")
+            {
+                var getMessages = Db.ConnectDb("MATCH (n:Person{PersonId: " + GetCurrentPerson().PersonId + "})-[:Sends]->(m:Message)<-[:Receives]-(P:Person{Email:'"+ chat +"'}) RETURN m"); // run query
+
+                messageNodes = getMessages.Result; // fill chat nodes with queries result
+
+                // go trough all items
+                foreach (var item in messageNodes)
+                {
+                    // pull data from item and convert json
+                    var nodeprops = JsonConvert.SerializeObject(item.As<INode>().Properties);
+                    message = (JsonConvert.DeserializeObject<Message>(nodeprops));
+
+                    // Another query gets the related Persons to a post from the database thus finding its creator, the result is processed similarly.
+                    List<INode> PersonList = new List<INode>();
+                    var getPerson = Db.ConnectDb("MATCH(u:Person)-[:Sends]-(c:Message) WHERE c.MessageId = '" + message.MessageId + "' RETURN u LIMIT 1");
+                    var Person = new Person();
+
+                    PersonList = getPerson.Result;
+                    var PersonItem = PersonList.First();
+
+                    var Personprops = JsonConvert.SerializeObject(PersonItem.As<INode>().Properties);
+                    Person = (JsonConvert.DeserializeObject<Person>(Personprops));
+
+                    message.Content = message.Content.Replace("&#39;", "'");
+                    Person.LastName = Person.LastName.Replace("&#39;", "'");
+                    // TODO as all these params should match, this could be automated...
+                    // fill list with chats
+                    messageList.Add(new Message()
+                    {
+                        MessageId = message.MessageId,
+                        Content = message.Content,
+                        DatetimeSend = message.DatetimeSend,
+                        DatetimeRead = message.DatetimeRead,
+                        Personname = Person.FirstName + " " + Person.LastName
+                    });
+                }
+
+                getMessages = Db.ConnectDb("MATCH (n:Person{PersonId: " + GetCurrentPerson().PersonId + "})-[:Receives]->(m:Message)<-[:Sends]-(P:Person{Email:'" + chat + "'}) RETURN m"); // run query
+
+                messageNodes = getMessages.Result; // fill chat nodes with queries result
+                // go trough all items
+                foreach (var item in messageNodes)
+                {
+                    // pull data from item and convert json
+                    var nodeprops = JsonConvert.SerializeObject(item.As<INode>().Properties);
+                    message = (JsonConvert.DeserializeObject<Message>(nodeprops));
+
+                    // Another query gets the related Persons to a post from the database thus finding its creator, the result is processed similarly.
+                    List<INode> PersonList = new List<INode>();
+                    var getPerson = Db.ConnectDb("MATCH(u:Person)-[:Sends]-(c:Message) WHERE c.MessageId = '" + message.MessageId + "' RETURN u LIMIT 1");
+                    var Person = new Person();
+
+                    PersonList = getPerson.Result;
+                    var PersonItem = PersonList.First();
+
+                    var Personprops = JsonConvert.SerializeObject(PersonItem.As<INode>().Properties);
+                    Person = (JsonConvert.DeserializeObject<Person>(Personprops));
+
+                    message.Content = message.Content.Replace("&#39;", "'");
+                    Person.LastName = Person.LastName.Replace("&#39;", "'");
+                    // TODO as all these params should match, this could be automated...
+                    // fill list with chats
+                    messageList.Add(new Message()
+                    {
+                        MessageId = message.MessageId,
+                        Content = message.Content,
+                        DatetimeSend = message.DatetimeSend,
+                        DatetimeRead = message.DatetimeRead,
+                        Personname = Person.FirstName + " " + Person.LastName
+                    });
+                }
             }
 
             // order by time send
@@ -203,13 +339,13 @@ namespace meldboek.Controllers
         }
 
         /// <summary>
-        /// Get chat Person van join
+        /// Get chat user van join
         /// </summary>
         /// <returns></returns>
         public List<Chat> GetChatsJoinable()
         {
             List<INode> chatNodes = new List<INode>(); // will store chat nodes
-            var getChats = Db.ConnectDb("MATCH (p:Chat) WHERE NOT(p) -[:InChat]-(: Person{ Email: 'jariketting@hotmail.com'}) RETURN p"); // run query
+            var getChats = Db.ConnectDb("MATCH (p:Chat) WHERE NOT(p) -[:InChat]-(: Person{ PersonId: " + GetCurrentPerson().PersonId + "}) RETURN p"); // run query
             var chat = new Chat(); // store chat
             List<Chat> chatList = new List<Chat>(); // store list of al chats
 
@@ -221,6 +357,8 @@ namespace meldboek.Controllers
                 var nodeprops = JsonConvert.SerializeObject(item.As<INode>().Properties); 
                 chat = (JsonConvert.DeserializeObject<Chat>(nodeprops));
 
+                chat.Name = chat.Name.Replace("&#39;", "'");
+                
                 // TODO as all these params should match, this could be automated...
                 // fill list with chats
                 chatList.Add(new Chat(){
@@ -234,13 +372,13 @@ namespace meldboek.Controllers
         }
 
         /// <summary>
-        /// Get chat Person has joined
+        /// Get chat user has joined
         /// </summary>
         /// <returns></returns>
         public List<Chat> GetChatsJoined()
         {
             List<INode> chatNodes = new List<INode>(); // will store chat nodes
-            var getChats = Db.ConnectDb("MATCH (p:Chat) WHERE(p) -[:InChat]-(: Person{ Email: 'jariketting@hotmail.com'}) RETURN p"); // run query
+            var getChats = Db.ConnectDb("MATCH (p:Chat) WHERE(p) -[:InChat]-(: Person{ PersonId: " + GetCurrentPerson().PersonId + "}) RETURN p"); // run query
             var chat = new Chat(); // store chat
             List<Chat> chatList = new List<Chat>(); // store list of al chats
 
@@ -252,6 +390,7 @@ namespace meldboek.Controllers
                 var nodeprops = JsonConvert.SerializeObject(item.As<INode>().Properties);
                 chat = (JsonConvert.DeserializeObject<Chat>(nodeprops));
 
+                chat.Name = chat.Name.Replace("&#39;", "'");
                 // TODO as all these params should match, this could be automated...
                 // fill list with chats
                 chatList.Add(new Chat()
@@ -268,11 +407,11 @@ namespace meldboek.Controllers
         /// <summary>
         /// Get friends
         /// </summary>
-        /// <returns>List with Persons friends</returns>
+        /// <returns>List with users friends</returns>
         public List<Person> GetFriends()
         {
             List<INode> friendNodes = new List<INode>(); // will store friend nodes
-            var getFriends = Db.ConnectDb("MATCH (p:Person) WHERE(p) -[:IsFriendsWith]-(: Person{ Email: 'jariketting@hotmail.com'}) RETURN p"); // run query
+            var getFriends = Db.ConnectDb("MATCH (p:Person) WHERE(p) -[:IsFriendsWith]-(: Person{ PersonId: " + GetCurrentPerson().PersonId + "}) RETURN p"); // run query
             var friend = new Person(); // store friend
             List<Person> friendList = new List<Person>(); // store list of all friends
 
@@ -284,6 +423,7 @@ namespace meldboek.Controllers
                 var nodeprops = JsonConvert.SerializeObject(item.As<INode>().Properties);
                 friend = (JsonConvert.DeserializeObject<Person>(nodeprops));
 
+                friend.LastName = friend.LastName.Replace("&#39;", "'");
                 // fill list with chats
                 friendList.Add(new Person()
                 {
@@ -299,22 +439,33 @@ namespace meldboek.Controllers
         /// <summary>
         /// Get friend by email
         /// </summary>
-        /// <param name="PersonId"></param>
+        /// <param name="userId"></param>
         /// <returns></returns>
         public Person GetFriend(string email)
         {
             List<INode> nodeList = new List<INode>(); // store friend node
             var results = Db.ConnectDb("MATCH (a:Person) WHERE a.Email = '" + email + "' RETURN a"); // run query
-            var Person = new Person();
+            var user = new Person();
+            var person = new Person();
 
             nodeList = results.Result;
             foreach (var record in nodeList)
             {
                 var nodeprops = JsonConvert.SerializeObject(record.As<INode>().Properties);
-                Person = (JsonConvert.DeserializeObject<Person>(nodeprops));
+                user = (JsonConvert.DeserializeObject<Person>(nodeprops));
+                
+                user.LastName = user.LastName.Replace("&#39;", "'");
+
+                person = new Person()
+                {
+                    PersonId = user.PersonId,
+                    FirstName = user.FirstName,
+                    LastName = user.LastName,
+                    Email = user.Email
+                };
             }
 
-            return Person;
+            return person;
         }
     }
 }

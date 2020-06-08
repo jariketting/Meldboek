@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace meldboek
@@ -20,7 +21,7 @@ namespace meldboek
         public async Task<List<INode>> ConnectDb(string query)
         {
             // TODO get auth params from some config file
-            Driver = CreateDriverWithBasicAuth("bolt://localhost:7687", "neo4j", "1234"); // connect to database
+            Driver = CreateDriverWithBasicAuth("bolt://localhost:11005", "neo4j", "1234"); // connect to database
             List<INode> res = new List<INode>(); // create list to store results in
             IAsyncSession session = Driver.AsyncSession(o => o.WithDatabase("neo4j")); // start session
 
@@ -42,6 +43,41 @@ namespace meldboek
 
         }
 
+        /// <summary>
+        /// Generate unique id
+        /// </summary>
+        /// <param name="Seed"></param>
+        /// <returns></returns>
+        public string GenerateUniqueId(string Seed)
+        {
+            string id = Guid.NewGuid().ToString("N");
+            string uniqueId = CreateMD5(id + Seed);
+
+            return uniqueId;
+        }
+
+        /// <summary>
+        /// Create a MD5 hash from string input
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
+        private static string CreateMD5(string input)
+        {
+            // Use input string to calculate MD5 hash
+            using (System.Security.Cryptography.MD5 md5 = System.Security.Cryptography.MD5.Create())
+            {
+                byte[] inputBytes = System.Text.Encoding.ASCII.GetBytes(input);
+                byte[] hashBytes = md5.ComputeHash(inputBytes);
+
+                // Convert the byte array to hexadecimal string
+                StringBuilder sb = new StringBuilder();
+                for (int i = 0; i < hashBytes.Length; i++)
+                {
+                    sb.Append(hashBytes[i].ToString("X2"));
+                }
+                return sb.ToString();
+            }
+        }
 
         /// <summary>
         /// Create graph database driver

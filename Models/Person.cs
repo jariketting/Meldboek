@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -10,16 +12,22 @@ namespace meldboek.Models
         public int PersonId { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
+        [DisplayName("Uw email")]
+        [Required(ErrorMessage = "Dit veld is verplicht")]
         public string Email { get; set; }
+        [DataType(DataType.Password)]
+        [Required(ErrorMessage = "Dit veld is verplicht")]
+        [DisplayName("Uw wachtwoord")]
         public string Password { get; set; }
+        public string LoginErrorMessage { get; set; }
 
         public string status { get; set; }
 
 
         //constructor
-        public Person(int PersonId, string firstName, string lastName, string email, string password)
+        public Person(int personId, string firstName, string lastName, string email, string password)
         {
-            PersonId = PersonId;
+            PersonId = personId;
             FirstName = firstName;
             LastName = lastName;
             Email = email;

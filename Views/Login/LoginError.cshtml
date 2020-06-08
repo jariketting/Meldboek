@@ -1,0 +1,72 @@
+﻿@{
+    ViewData["Title"] = "Error";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <link rel="stylesheet" type="text/css" href="~/css/Topbar_Sidenav.css">
+    <title>Login</title>
+    <style>
+        body {
+            font-family: 'Trebuchet MS', sans-serif;
+            background-color: #ffffff;
+        }
+
+        .content {
+            position: absolute;
+            margin: 20% 22% 0 22%;
+            text-align: center;
+        }
+
+        .topbar {
+            background-color: #ff4d4d;
+            text-align: unset;
+        }
+
+        #h1-meldboek {
+            color: #ff9999;
+            width: 10%;
+            padding-left: 30px;
+        }
+
+        #h1-error {
+            float: right;
+            width: 52%;
+        }
+
+        p {
+            color: #000000;
+            font-size: 28px;
+            margin-bottom: 60px;
+        }
+
+        #login {
+            text-decoration: none;
+            font-size: 26px;
+            color: #0000ff;
+            transition: 0.2s;
+        }
+
+        #login:hover {
+            color: #b3b3ff;
+        }
+    </style>
+</head>
+    <body>
+        <!-- Colored bar at the top of the page -->
+        <div class="topbar">
+
+            <!-- Page titles -->
+            <h1 id="h1-meldboek">Meldboek</h1>
+            <h1 id="h1-error">Error</h1>
+
+        </div>
+
+        <div class="content">
+            <p>Je hebt geen toegang tot deze pagina omdat je niet bent ingelogd</p>
+            <a id="login" href="@Url.Action("Index1", "Login")">Ga naar login</a>
+        </div>
+    </body>
+</html>

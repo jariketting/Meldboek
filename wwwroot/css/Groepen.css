@@ -35,24 +35,3 @@ input[type="submit"] {
   border: none;
   cursor: pointer;
 }
-.topbar {
-  position: fixed;
-  top: 0;
-  left: 0;
-  background-color: orange;
-  color: #ffffff;
-  font-size: 34px;
-  width: 100%;
-  text-align: right;
-  height: 74px;
-  padding-bottom: 25px;
-}
-
-.topbar h1 {
-  color: #ffffff;
-  font-size: 34px;
-  padding-top: 20px;
-  padding-bottom: 20px;
-  text-align: center;
-  font-family: "Trebuchet MS", sans-serif;
-}

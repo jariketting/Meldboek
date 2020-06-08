@@ -1,18 +1,228 @@
+@{
+    ViewData["Title"] = "Profiel";
+}
+
 @model meldboek.ViewModels.Profile
 
 <!DOCTYPE html>
-            <h2>@Model.Name</h2>
-            <p>@Model.Email</p>
-@* <html>
-<head>
-    <link rel="stylesheet" type="text/css" href="~/css/Groepen.css">
-</head>
-<body>
-<div class="topbar">     *@
-            <h1>Profile</h1>
+<html>
+    <head>
+        <link rel="stylesheet" type="text/css" href="~/css/Topbar_Sidenav.css">
+        <script type="text/javascript" src="~/js/site.js"></script>
+        <style>
+            .topbar {
+                background-color: orange;
+            }
 
-@* </div> *@
+            .navbtn {
+                background-color: orange;
+            }
 
-       
-@* </body>
-</html> *@
+            .overlay {
+                background-color: orange;
+            }
+
+            .overlay a:hover, .overlay a:focus, .logout a:hover, .logout a:focus {
+                color: #ffe4b3;
+            }
+
+            body {
+                font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+
+            }
+
+            .profile-content {
+                margin-left: 10%;
+                padding-bottom: 10%;
+            }
+            
+            /* Information about the current Person. */
+            .info h1 {
+                font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+                color: orange;
+                font-size: 26px;
+                font-weight: bold;
+                padding-top: 150px;
+            }
+
+            .info h2 {
+                padding-top: 10px;
+                color: #000000;
+                font-size: 22px;
+            }
+
+            /* Persons list includes friends and incoming/outgoing friend requests. */
+            .person-list {
+                padding-top: 40px;
+            }
+
+            .personlist-content {
+                width: 100%;
+                overflow: hidden;
+                padding-top: 100px;
+                padding-bottom: 50px;
+            }
+
+            .person-list h1 {
+                color: orange;
+                font-size: 24px;
+            }
+
+            /* Single person */
+            .person {
+                width: 90%;
+                overflow: hidden;
+                border-bottom: 1px solid orange;
+            }
+
+            /* Person content consists of name (h1) and friend/unfriend options (a). */
+            .person-content {
+                float: left;
+                width: 80%;
+            }
+
+            .person-content h1 {
+                color: #000000;
+                font-size: 22px;
+                padding-bottom: 10px;
+                padding-top: 20px;
+            }
+
+            .person-options {
+                margin-top: 20px;
+                margin-left: 83%;
+            }
+
+            .person-options a {
+                text-decoration: none;
+                font-size: 20px;
+            }
+
+            /* Link to accept and incoming friend request. */
+            #accept-friend {
+                color: #00ff00;
+                transition: 0.2s;
+                display: block;
+            }
+
+            #accept-friend:hover {
+                color: #b3ffb3;
+            }
+
+            /* Link to delete a friend or deny an incoming friend request. */
+            #deny-delete-friend {
+                color: #ff0000;
+                transition: 0.2s;
+            }
+
+            #deny-delete-friend:hover {
+                color: #ffb3b3;
+            }
+        </style>
+    </head>
+    <body>    
+        <div class="topbar">
+
+            <!-- The button that opens the sidemenu -->
+            <span class="navbtn" onclick="nav()">&#9776; </span>
+
+            <!-- Page title -->
+            <h1 style="width: 53%;">Profiel</h1>
+
+            <!-- Account information button -->
+            <a><img id="acc-icon" src="@Url.Content("~/Content/account.png")" /></a>
+        </div>
+
+        <!-- Sidemenu overlay -->
+        <div id="nav" class="overlay">
+            <div class="overlay-content">
+                <a href="@Url.Action("Newsfeed")">Nieuws</a>
+                <br>
+                <a href="@Url.Action("ForumHome","Forum")">Forums</a>
+                <br>
+                <a href="@Url.Action("Index", "Chat")">Chat</a>
+                <br>
+                <a href="@Url.Action("Groepen")">Groepen</a>
+                <br>
+                <a href="@Url.Action("Personlist")">Gebruikers</a>
+            </div>
+            <div class="logout"><a href="@Url.Action("Logout")">Log uit</a></div>
+        </div>
+
+        <!-- Actual content of the page -->
+        <div class="profile-content">
+
+            <!-- Information of the current Person -->
+            <div class="info">
+                <h1>Info</h1>
+                <h2>Naam: @Model.Name</h2>
+                <h2>Email: @Model.Email</h2>
+            </div>
+
+            <!-- This personlist includes friends and incoming/outgoing friend requests. -->
+            <div class="person-list">
+                <h1>Vrienden</h1>
+
+               @foreach (var person in Model.PersonInfos)
+                {
+
+                   <!-- If the Person from the model is friends with the current Person, they are placed in the friendlist attribute. -->
+                   @if (person.Status == "IsFriendsWith")
+                    {
+                        <div class="person">
+                            <div class="person-content">
+                                <h1>@person.Person.FirstName @person.Person.LastName</h1>
+                            </div>
+                            <div class="person-options">
+                                <a id="deny-delete-friend" href="@Url.Action("DeleteFriendProfile", "Person", new { FriendId = person.Person.PersonId })">Vriend verwijderen</a>
+                            </div>
+                        </div>
+                    }
+                }
+
+            </div>
+
+            <div class="person-list">
+                <h1>Ontvangen vriendschapsverzoeken</h1>
+               
+               @foreach (var person in Model.PersonInfos)
+                {
+                   <!-- If the current from the model is a pending friend to the Person from the model, they are placed in the incoming friendrequests attribute. -->
+                   @if (person.Status == "requested")
+                    {
+                        <div class="person">
+                            <div class="person-content">
+                                <h1>@person.Person.FirstName @person.Person.LastName</h1>
+                            </div>
+                            <div class="person-options" style="margin-top: 10px;">
+                                <a id="accept-friend" href="@Url.Action("AcceptFriend", "Person", new { PersonRequestedId = person.Person.PersonId, page = "Profile" })">Verzoek accepteren</a>
+                                <a id="deny-delete-friend" href="@Url.Action("RefuseFriendReq", "Person", new { PersonId = person.Person.PersonId, page = "Profile" })">Verzoek afwijzen</a>
+                            </div>
+                        </div>
+                    }
+                }
+
+            </div>
+
+            <div class="person-list">
+                <h1>Verstuurde vriendschapsverzoeken</h1>
+
+               @foreach (var person in Model.PersonInfos)
+                {
+
+                   <!-- If the Person from the model is a pending friend to the current Person, they are placed in the outgoing friendrequests attribute. -->
+                   @if (person.Status == "FriendPending")
+                    {
+                        <div class="person">
+                            <div class="person-content">
+                                <h1>@person.Person.FirstName @person.Person.LastName</h1>
+                            </div>
+                            <div class="person-options"><a style="color: #0000ff;">In behandeling</a></div>
+                        </div>
+                    }
+                }
+
+            </div>
+        </div>
+    </body>
+</html>

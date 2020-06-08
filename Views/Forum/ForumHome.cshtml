@@ -2,7 +2,6 @@
 @model meldboek.Models.Forum
 @{
 
-
     meldboek.Controllers.ForumController FC = new meldboek.Controllers.ForumController();
 
 
@@ -33,18 +32,18 @@
             font-family: 'Trebuchet MS', sans-serif;
             background-color: #ffffff;
         }
-
         .topbar {
             background-color: #ff3398;
-            position: relative
         }
-
         .navbtn {
             background-color: #ff3398;
         }
-
         .overlay {
             background-color: #ff3398;
+        }
+
+        .overlay a:hover, .overlay a:focus, .logout a:hover, .logout a:focus {
+            color: #ffa1d0;
         }
 
         .info {
@@ -54,7 +53,6 @@
             border-bottom-width: 2px;
             border-color: #000000;
         }
-
         .infoi {
             color: #000000;
             vertical-align: middle;
@@ -62,21 +60,16 @@
             border-bottom-width: 2px;
             border-color: #000000;
         }
-
         .table {
             height: inherit;
         }
-
-
         #forums {
             background-color: #ffffff;
             width: 100%;
         }
-
             #forums:hover {
                 background-color: #8593bc;
             }
-
         .button {
             display: block;
             width: 400px;
@@ -87,7 +80,6 @@
             height: 100px;
             transition: 0.2s;
         }
-
         .sub {
             display: block;
             width: 100%;
@@ -98,30 +90,22 @@
             height: 100%;
             transition: 0.2s;
         }
-
             .sub:hover {
                 background-color: #ffa1d0;
             }
-
         #absoluteCenteredDiv {
-            position: relative;
+            padding-top: 74px;
         }
-
         #Content {
             width: 90%;
             height: 40px;
         }
-
         #Title {
             width: 90%;
             height: 40px;
         }
-        .topbar h1{
-            width:100%;
-             text-align: center;
-             position: absolute;
-        }
-                        .delete-button {
+        
+        .delete-button {
             display: block;
             background-color: #ff5252;
             padding: 10px;
@@ -153,24 +137,24 @@
     <!-- Sidemenu overlay -->
     <div id="nav" class="overlay">
         <div class="overlay-content">
-            <p style="color: #9ee0a4;">Newsfeed</p>
+            <a href="@Url.Action("Newsfeed", "Person")">Nieuws</a>
             <br>
-            <a onclick="nav()" href="#forums">Forums</a>
+            <a style="color: #ffa1d0;">Forums</a>
             <br>
-            <a onclick="nav()" href="#chat">Chat</a>
+            <a href="@Url.Action("Index", "Chat")">Chat</a>
             <br>
-            <a href="@Url.Action("Groepen")">Groepen</a>
+            <a href="@Url.Action("Groepen", "Person")">Groepen</a>
             <br>
-            <a href="@Url.Action("Personlist")">Gebruikers</a>
+            <a href="@Url.Action("Personlist", "Person")">Gebruikers</a>
         </div>
-        <div class="logout"><a onclick="nav()" href="#logout">Log uit</a></div>
+        <div class="logout"><a href="@Url.Action("Logout", "Person")">Log uit</a></div>
     </div>
 
     <div class="topbar">
-        <h1>Forums</h1>
+        <h1 style="width: 53%;">Forums</h1>
         <span class="navbtn" onclick="nav()">&#9776; </span>
 
-        <a href="#accountinfo"><img id="acc-icon" src="@Url.Content("~/Content/account.png")" /></a>
+        <a href="@Url.Action("Profile", "Person")"><img id="acc-icon" src="@Url.Content("~/Content/account.png")" /></a>
     </div>
     <div id="absoluteCenteredDiv">
         @foreach (Forum forum in forumlist)
@@ -197,7 +181,7 @@
                             <th align="right" width="3%" class="info">
                                 <form asp-action="ForumHome" method="post">
                                     <input hidden type="text" value="@forum.ForumId" name=del id="del">
-                                    @if (forum.Owner.PersonId == 1)
+                                    @if (forum.Owner.PersonId == (int)TempData["CurrentPersonId"])
                                     {
                                         <input href="@Url.Action("Forum", new { id = @forum.ForumId })" type="submit" value="&#10005" id="submit" class="delete-button">
                                     }
@@ -205,32 +189,11 @@
                             </th>
                         </tr>
                     </table>
-
-
-
-
-
-
-
-
                 </a>
-
-
-
-
-
-
-
-
-
-
             </form>
-
         }
         <div class="box">
             <form asp-action="ForumHome" method="post">
-
-
                 <table white-space="nowrap" width="100%" class="table">
                     <tr>
                         <th align="center" width="20%" class="infoi">
@@ -246,14 +209,8 @@
                         </th>
                     </tr>
                 </table>
-
-
-
-
-
             </form>
         </div>
-
     </div>
 </body>
 </html>

@@ -7,6 +7,7 @@ using meldboek.Models;
 using Microsoft.AspNetCore.Mvc;
 using Neo4j.Driver;
 using Newtonsoft.Json;
+using System.Security.Claims;
 
 namespace meldboek.Controllers
 {
@@ -18,8 +19,29 @@ namespace meldboek.Controllers
         {
             return View();
         }
+
+        public Person GetCurrentPerson()
+        {
+            if (!User.Claims.Any(x => x.Type == ClaimTypes.Name))
+            {
+                return null;
+            }
+            else
+            {
+                var getClaims = User.Claims.First(x => x.Type == ClaimTypes.Name).Value;
+                Person CurrentPerson = (JsonConvert.DeserializeObject<Person>(getClaims));
+
+                return CurrentPerson;
+            }
+        }
+
         public IActionResult CreateAccount()
         {
+            if (GetCurrentPerson() == null)
+            {
+                return RedirectToAction("LoginError", "Login");
+            }
+
             return View();
         }
 
@@ -38,12 +60,18 @@ namespace meldboek.Controllers
             return View();
 
         }
-        public IActionResult CreateGroups(string Groepnaam, string ManagerID)
+        public IActionResult CreateGroups(string GroupName, string ManagerId)
         {
-            if (Groepnaam != null)
+            if (GetCurrentPerson() == null)
             {
-                int groupId = GetMaxGroupId();
-                Group g = new Group(groupId, Groepnaam);
+                return RedirectToAction("LoginError", "Login");
+            }
+
+            if (GroupName != null)
+            {
+                int GroupId = GetMaxGroupId();
+                GroupName = GroupName.Replace("'", "&#39;");
+                Group g = new Group(GroupId, GroupName);
 
                 var r = ConnectDb("CREATE (g:Group {GroupId: " + g.GroupId + ", GroupName: '" + g.GroupName + "' }) RETURN g");
 
@@ -53,16 +81,12 @@ namespace meldboek.Controllers
                 // int GroupId = unchecked((int)GroupLong);
 
 
-                var r2 = ConnectDb("MATCH (p:Person),(g:Group) WHERE p.PersonId = " + ManagerID + " AND g.GroupId = " + groupId + " CREATE(p) -[r: IsOwner]->(g) RETURN p, g");
+                var r2 = ConnectDb("MATCH (p:Person),(g:Group) WHERE p.PersonId = " + ManagerId + " AND g.GroupId = " + GroupId + " CREATE(p) -[r: IsOwner]->(g) RETURN p, g");
                 r2.Wait();
 
             }
 
-
-            return View();
-
-
-
+            return View(GetManagers());
 
         }
 
@@ -85,9 +109,42 @@ namespace meldboek.Controllers
             }
         }
 
+        public List<Person> GetManagers()
+        {
+            // GetManagers() gets all the Persons that are Managers (relationship type "HasRole" with Role and RoleName "Manager") from the database and puts them in a list of Person objects.
+
+            List<INode> managerNodes = new List<INode>();
+            var getManagers = ConnectDb("MATCH(p) WHERE (p)-[:HasRole]->(:Role {RoleName:'Manager'}) RETURN p");
+            var manager = new Person();
+            List<Person> managerList = new List<Person>();
+
+            managerNodes = getManagers.Result;
+            foreach (var record in managerNodes)
+            {
+                var nodeprops = JsonConvert.SerializeObject(record.As<INode>().Properties);
+                manager = (JsonConvert.DeserializeObject<Person>(nodeprops));
+
+                manager.LastName = manager.LastName.Replace("&#39;", "'");
+
+                // After getting al the required data, it is put into a Person object and added to the list of managers.
+                managerList.Add(new Person()
+                {
+                    PersonId = manager.PersonId,
+                    FirstName = manager.FirstName,
+                    LastName = manager.LastName,
+                    Email = manager.Email
+                });
+
+            }
+
+            // The final list is ordered by FirstName (then by LastName) and put into a list called "final".
+            List<Person> final = managerList.OrderBy(m => m.FirstName).ThenBy(m => m.LastName).ToList();
+            return final;
+        }
+
         public async Task<List<INode>> ConnectDb(string query)
         {
-            Driver = CreateDriverWithBasicAuth("bolt://localhost:7687", "neo4j", "1234");
+            Driver = CreateDriverWithBasicAuth("bolt://localhost:11005", "neo4j", "1234");
             List<INode> res = new List<INode>();
             IAsyncSession session = Driver.AsyncSession(o => o.WithDatabase("neo4j"));
 

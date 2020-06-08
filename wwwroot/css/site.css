@@ -13,6 +13,54 @@ html {
     font-size: 14px;
 }
 
+body {
+    font-family: 'Trebuchet MS', sans-serif;
+    background-color: #ffffff;
+}
+
+.topbar {
+    background-color: #0085fe;
+}
+
+.navbtn {
+    background-color: #0085fe;
+}
+
+.overlay {
+    background-color: #0085fe;
+}
+
+.overlay a:hover, .overlay a:focus, .logout a:hover, .logout a:focus {
+    color: #9cd0ff;
+}
+
+.btn {
+    border-radius: 100px;
+}
+
+.btn-primary {
+    background-color: #0085fe;
+    border: none;
+    transition: 0.2s;
+}
+
+.btn-primaty:hover {
+    cursor: pointer;
+    background-color: #9cd0ff;
+}
+
+h1 {
+    font-size: 28px;
+    padding-bottom: 15px;
+    padding-top: 40px;
+}
+
+.container {
+    width: 100%;
+    overflow: hidden;
+    padding-top: 40px;
+}
+
 @media (min-width: 768px) {
     html {
         font-size: 16px;
