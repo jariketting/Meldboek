@@ -45,6 +45,8 @@ namespace meldboek.Controllers
 
             Person u = GetCurrentPerson();
 
+            TempData["CurrentPersonId"] = u.PersonId;
+
             //Person u = new PersonController().GetCurrentPerson();
 
 
@@ -102,6 +104,8 @@ namespace meldboek.Controllers
             {
                 return RedirectToAction("LoginError", "Login");
             }
+
+            TempData["CurrentPersonId"] = GetCurrentPerson().PersonId;
 
             int ForumId = Convert.ToInt32(fid);
             try
