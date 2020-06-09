@@ -59,7 +59,6 @@ namespace meldboek.Controllers
                     JoinChat(chat); // join chat
                     Chat room = GetChat(chat);
                     room.Name = room.Name.Replace("&#39;", "'");
-                    room.Description = room.Description.Replace("&#39;", "'");
                     ViewBag.success = "Je bent toegevoegd aan " + room.Name; // TODO add chat name
                     return RedirectToAction("Index");
                 }
