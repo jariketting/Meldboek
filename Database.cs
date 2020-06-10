@@ -21,7 +21,7 @@ namespace meldboek
         public async Task<List<INode>> ConnectDb(string query)
         {
             // TODO get auth params from some config file
-            Driver = CreateDriverWithBasicAuth("bolt://localhost:11005", "neo4j", "1234"); // connect to database
+            Driver = CreateDriverWithBasicAuth("bolt://localhost:7687", "neo4j", "1234"); // connect to database
             List<INode> res = new List<INode>(); // create list to store results in
             IAsyncSession session = Driver.AsyncSession(o => o.WithDatabase("neo4j")); // start session
 
