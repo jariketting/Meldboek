@@ -21,7 +21,7 @@ namespace meldboek
         public async Task<List<INode>> ConnectDb(string query)
         {
             // TODO get auth params from some config file
-            Driver = CreateDriverWithBasicAuth("bolt://localhost:11005", "neo4j", "1234"); // connect to database
+            Driver = CreateDriverWithBasicAuth("bolt://localhost:7687", "neo4j", "1234"); // connect to database
             List<INode> res = new List<INode>(); // create list to store results in
             IAsyncSession session = Driver.AsyncSession(o => o.WithDatabase("neo4j")); // start session
 
@@ -46,7 +46,7 @@ namespace meldboek
         public async Task<string> ConnectDb2(string query)
         {
             // ConnectDb2 returns a string instead of list of nodes.
-            Driver = CreateDriverWithBasicAuth("bolt://localhost:11005", "neo4j", "1234");
+            Driver = CreateDriverWithBasicAuth("bolt://localhost:7687", "neo4j", "1234");
             string res = "";
             IAsyncSession session = Driver.AsyncSession(o => o.WithDatabase("neo4j"));
             try

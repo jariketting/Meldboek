@@ -10,7 +10,13 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using meldboek.ViewModels;
+using System.Globalization;
+using Microsoft.AspNetCore.Authentication;
 using meldboek.Models;
+using Neo4j.Driver;
+using Newtonsoft.Json;
+
 
 namespace meldboek
 {
@@ -78,8 +84,10 @@ namespace meldboek
         }
 
         public async Task<string> RoleCheck()
-        {
-            string RoleCheck = await Db.ConnectDb2("MATCH(r:Role) WHERE r.RoleName = 'Manager' RETURN r.RoleName");
+        { 
+            Db = new Database();
+            var RoleCheckk =  Db.ConnectDb2("MATCH(r:Role) WHERE r.RoleName = 'Manager' RETURN r.RoleName");
+            string RoleCheck = RoleCheckk.Result;
             if(RoleCheck == "Manager")
             {
                 return "true";
