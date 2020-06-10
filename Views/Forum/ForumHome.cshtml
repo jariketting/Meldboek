@@ -181,7 +181,7 @@
                             <th align="right" width="3%" class="info">
                                 <form asp-action="ForumHome" method="post">
                                     <input hidden type="text" value="@forum.ForumId" name=del id="del">
-                                    @if (forum.Owner.PersonId == 1)
+                                    @if (forum.Owner.PersonId == (int)TempData["CurrentPersonId"])
                                     {
                                         <input href="@Url.Action("Forum", new { id = @forum.ForumId })" type="submit" value="&#10005" id="submit" class="delete-button">
                                     }

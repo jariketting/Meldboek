@@ -58,6 +58,7 @@ namespace meldboek.Controllers
                 {
                     JoinChat(chat); // join chat
                     Chat room = GetChat(chat);
+                    room.Name = room.Name.Replace("&#39;", "'");
                     ViewBag.success = "Je bent toegevoegd aan " + room.Name; // TODO add chat name
                     return RedirectToAction("Index");
                 }
@@ -90,6 +91,7 @@ namespace meldboek.Controllers
         {
             string date = DateTime.Now.ToString("MM-dd-yyyy HH:mm:ss");
             string id = Db.GenerateUniqueId(date + name.Substring(Math.Max(0, name.Length)));
+            name = name.Replace("'", "&#39;");
 
             await Db.ConnectDb("CREATE (c:Chat {ChatId: '" + id + "', Name: '" + name + "'}) RETURN c");
 
@@ -118,11 +120,13 @@ namespace meldboek.Controllers
             { 
                 // get chatroom and add to viewbag
                 Chat room = GetChat(chat);
+                room.Name = room.Name.Replace("&#39;", "'");
                 ViewBag.name = room.Name;
             }
             else if(type == "chat")
             {
                 Person friend = GetFriend(chat);
+                friend.LastName = friend.LastName.Replace("&#39;", "'");
                 ViewBag.name = friend.FirstName + " " + friend.LastName;
             }
 
@@ -167,6 +171,8 @@ namespace meldboek.Controllers
             var nodeprops = JsonConvert.SerializeObject(item.As<INode>().Properties);
             chat = (JsonConvert.DeserializeObject<Chat>(nodeprops));
 
+            chat.Name = chat.Name.Replace("&#39;", "'");
+            
             // fill list with chats
             return new Chat()
             {
@@ -186,6 +192,8 @@ namespace meldboek.Controllers
             string Date = DateTime.Now.ToString("MM-dd-yyyy HH:mm:ss");
 
             string id = Db.GenerateUniqueId(Date + message.Substring(Math.Max(0, message.Length - 5)));
+
+            message = message.Replace("'", "&#39;");
 
             _ = await Db.ConnectDb("CREATE (p:Message { MessageId: '" + id + "', Content: '" + message + "', DatetimeSend: '" + Date + "', DatetimeRead: ''}) RETURN p");
             _ = await Db.ConnectDb("MATCH (u:Person),(p:Message) WHERE u.PersonId = " + GetCurrentPerson().PersonId + " AND p.MessageId = '" + id + "' CREATE(u)-[r:Sends]->(p)");
@@ -235,6 +243,8 @@ namespace meldboek.Controllers
                     var Personprops = JsonConvert.SerializeObject(PersonItem.As<INode>().Properties);
                     Person = (JsonConvert.DeserializeObject<Person>(Personprops));
 
+                    message.Content = message.Content.Replace("&#39;", "'");
+                    Person.LastName = Person.LastName.Replace("&#39;", "'");
                     // TODO as all these params should match, this could be automated...
                     // fill list with chats
                     messageList.Add(new Message()
@@ -271,6 +281,8 @@ namespace meldboek.Controllers
                     var Personprops = JsonConvert.SerializeObject(PersonItem.As<INode>().Properties);
                     Person = (JsonConvert.DeserializeObject<Person>(Personprops));
 
+                    message.Content = message.Content.Replace("&#39;", "'");
+                    Person.LastName = Person.LastName.Replace("&#39;", "'");
                     // TODO as all these params should match, this could be automated...
                     // fill list with chats
                     messageList.Add(new Message()
@@ -304,6 +316,8 @@ namespace meldboek.Controllers
                     var Personprops = JsonConvert.SerializeObject(PersonItem.As<INode>().Properties);
                     Person = (JsonConvert.DeserializeObject<Person>(Personprops));
 
+                    message.Content = message.Content.Replace("&#39;", "'");
+                    Person.LastName = Person.LastName.Replace("&#39;", "'");
                     // TODO as all these params should match, this could be automated...
                     // fill list with chats
                     messageList.Add(new Message()
@@ -342,6 +356,8 @@ namespace meldboek.Controllers
                 var nodeprops = JsonConvert.SerializeObject(item.As<INode>().Properties); 
                 chat = (JsonConvert.DeserializeObject<Chat>(nodeprops));
 
+                chat.Name = chat.Name.Replace("&#39;", "'");
+                
                 // TODO as all these params should match, this could be automated...
                 // fill list with chats
                 chatList.Add(new Chat(){
@@ -373,6 +389,7 @@ namespace meldboek.Controllers
                 var nodeprops = JsonConvert.SerializeObject(item.As<INode>().Properties);
                 chat = (JsonConvert.DeserializeObject<Chat>(nodeprops));
 
+                chat.Name = chat.Name.Replace("&#39;", "'");
                 // TODO as all these params should match, this could be automated...
                 // fill list with chats
                 chatList.Add(new Chat()
@@ -405,6 +422,7 @@ namespace meldboek.Controllers
                 var nodeprops = JsonConvert.SerializeObject(item.As<INode>().Properties);
                 friend = (JsonConvert.DeserializeObject<Person>(nodeprops));
 
+                friend.LastName = friend.LastName.Replace("&#39;", "'");
                 // fill list with chats
                 friendList.Add(new Person()
                 {
@@ -427,15 +445,26 @@ namespace meldboek.Controllers
             List<INode> nodeList = new List<INode>(); // store friend node
             var results = Db.ConnectDb("MATCH (a:Person) WHERE a.Email = '" + email + "' RETURN a"); // run query
             var user = new Person();
+            var person = new Person();
 
             nodeList = results.Result;
             foreach (var record in nodeList)
             {
                 var nodeprops = JsonConvert.SerializeObject(record.As<INode>().Properties);
                 user = (JsonConvert.DeserializeObject<Person>(nodeprops));
+                
+                user.LastName = user.LastName.Replace("&#39;", "'");
+
+                person = new Person()
+                {
+                    PersonId = user.PersonId,
+                    FirstName = user.FirstName,
+                    LastName = user.LastName,
+                    Email = user.Email
+                };
             }
 
-            return user;
+            return person;
         }
     }
 }

@@ -219,7 +219,7 @@ namespace meldboek.Controllers
             //maakt Person als alles ingevoerd is en wachtwoord klopt
             if (firstname != null & lastname != null & email != null & password != null & password == password2)
             {
-
+                lastname = lastname.Replace("'", "&#39;");
                 int persId = GetMaxPersonId();
                 //stuurt Person naar database
                 var a = ConnectDb("CREATE (p:Person { PersonId: " + persId + ", FirstName: '" + firstname + "', LastName: '" + lastname + "' ,Email: '" + email + "', Password: '" + password + "' }) RETURN p");
@@ -435,6 +435,9 @@ namespace meldboek.Controllers
                 fileVal = await FileUpload(file,newid);
             }
 
+            title = title.Replace("'", "&#39;");
+            description = description.Replace("'", "&#39;");
+            
             await ConnectDb("CREATE(p:Post {Title: '" + title + "', Description: '" + description + "', PostId: " + newid + ", DateAdded: '" + datetime + "', Filename: '" + fileVal.Item2 + "', Path: '" + fileVal.Item1 +"'})");
 
             // After adding the post to the database, a relationship is created between the post and the Person who made it. | (Person-[Posted]->Post
@@ -443,8 +446,9 @@ namespace meldboek.Controllers
             // If the chosen category is not "general", the Person has chosen to post in a group they are part of.
             if (group != "Algemeen")
             {
+                string groupString = group.Replace("'", "&#39;");
                 // Because the post is meant to be for a specific group, a relationship type "HasPost" is created between the group and the newspost.
-                await ConnectDb("MATCH(g:Group), (p:Post) WHERE g.GroupName = '" + group + "' AND p.Title = '" + title + "' CREATE(g) -[r:HasPost]->(p)");
+                await ConnectDb("MATCH(g:Group), (p:Post) WHERE g.GroupName = '" + groupString + "' AND p.Title = '" + title + "' CREATE(g) -[r:HasPost]->(p)");
                 return RedirectToAction("FilteredNewsfeed", new { filter = group });
             }
 
@@ -508,13 +512,25 @@ namespace meldboek.Controllers
                 List<INode> creatorNode = new List<INode>();
                 var getCreator = ConnectDb("MATCH(u:Person)-[:Posted]->(p:Post) WHERE p.PostId = " + post.PostId + " RETURN u");
                 var creator = new Person();
+                var personNode = new Person();
 
                 creatorNode = getCreator.Result;
                 foreach (var person in creatorNode)
                 {
                     var Personprops = JsonConvert.SerializeObject(person.As<INode>().Properties);
                     creator = (JsonConvert.DeserializeObject<Person>(Personprops));
+
+                    personNode = new Person()
+                    {
+                        PersonId = creator.PersonId,
+                        FirstName = creator.FirstName,
+                        LastName = creator.LastName,
+                        Email = creator.Email
+                    };
                 }
+
+                post.Title = post.Title.Replace("&#39;", "'");
+                post.Description = post.Description.Replace("&#39;", "'");
 
                 // After getting al the required data, it is put into a Newspost object and added to the list of newsposts.
                 postList.Add(new Newspost()
@@ -522,7 +538,7 @@ namespace meldboek.Controllers
                     PostId = post.PostId,
                     Title = post.Title,
                     Description = post.Description,
-                    Creator = creator,
+                    Creator = personNode,
                     DateAdded = post.DateAdded,
                     TimeStamp = datetime,
                     Path = post.Path,
@@ -556,21 +572,33 @@ namespace meldboek.Controllers
                 List<INode> creatorNode = new List<INode>();
                 var getCreator = ConnectDb("MATCH(u:Person)-[:Posted]->(p:Post) WHERE p.PostId = " + post.PostId + " RETURN u");
                 var creator = new Person();
+                var personNode = new Person();
 
                 creatorNode = getCreator.Result;
                 foreach (var person in creatorNode)
                 {
                     var Personprops = JsonConvert.SerializeObject(person.As<INode>().Properties);
                     creator = (JsonConvert.DeserializeObject<Person>(Personprops));
+
+                    personNode = new Person()
+                    {
+                        PersonId = creator.PersonId,
+                        FirstName = creator.FirstName,
+                        LastName = creator.LastName,
+                        Email = creator.Email
+                    };
                 }
 
+                post.Title = post.Title.Replace("&#39;", "'");
+                post.Description = post.Description.Replace("&#39;", "'");
+                
                 // After getting al the required data, it is put into a Newspost object and added to the list of newsposts.
                 postList.Add(new Newspost()
                 {
                     PostId = post.PostId,
                     Title = post.Title,
                     Description = post.Description,
-                    Creator = creator,
+                    Creator = personNode,
                     DateAdded = post.DateAdded,
                     TimeStamp = datetime,
                     Path = post.Path,
@@ -590,7 +618,7 @@ namespace meldboek.Controllers
             // NOTE: Posts that a friends of the Person have posted in a group will NOT be fetched.
 
             List<INode> postNodes = new List<INode>();
-            var getPosts = ConnectDb("MATCH(a:Person {PersonId:" + GetCurrentPerson().PersonId + "})-[:IsFriendsWith]->(b:Person)-[:Posted]->(p:Post) WHERE NOT (:Group)-[:HasPost]->(p) RETURN p");
+            var getPosts = ConnectDb("MATCH(a:Person {PersonId:" + GetCurrentPerson().PersonId + "})-[:IsFriendsWith]-(b:Person)-[:Posted]->(p:Post) WHERE NOT (:Group)-[:HasPost]->(p) RETURN p");
             var post = new Newspost();
             List<Newspost> postList = new List<Newspost>();
 
@@ -606,13 +634,25 @@ namespace meldboek.Controllers
                 List<INode> creatorNode = new List<INode>();
                 var getCreator = ConnectDb("MATCH(u:Person)-[:Posted]->(p:Post) WHERE p.PostId = " + post.PostId + " RETURN u");
                 var creator = new Person();
+                var personNode = new Person();
 
                 creatorNode = getCreator.Result;
                 foreach (var person in creatorNode)
                 {
                     var Personprops = JsonConvert.SerializeObject(person.As<INode>().Properties);
                     creator = (JsonConvert.DeserializeObject<Person>(Personprops));
+
+                    personNode = new Person()
+                    {
+                        PersonId = creator.PersonId,
+                        FirstName = creator.FirstName,
+                        LastName = creator.LastName,
+                        Email = creator.Email
+                    };
                 }
+
+                post.Title = post.Title.Replace("&#39;", "'");
+                post.Description = post.Description.Replace("&#39;", "'");
 
                 // After getting al the required data, it is put into a Newspost object and added to the list of newsposts.
                 postList.Add(new Newspost()
@@ -620,7 +660,7 @@ namespace meldboek.Controllers
                     PostId = post.PostId,
                     Title = post.Title,
                     Description = post.Description,
-                    Creator = creator,
+                    Creator = personNode,
                     DateAdded = post.DateAdded,
                     TimeStamp = datetime,
                     Path = post.Path,
@@ -661,9 +701,19 @@ namespace meldboek.Controllers
                     var nodeprops2 = JsonConvert.SerializeObject(record2.As<INode>().Properties);
                     person = (JsonConvert.DeserializeObject<Person>(nodeprops2));
 
-                    personList.Add(person);
+                    person.LastName = person.LastName.Replace("&#39;", "'");
+
+                    personList.Add(new Person()
+                    {
+                        PersonId = person.PersonId,
+                        FirstName = person.FirstName,
+                        LastName = person.LastName,
+                        Email = person.Email
+                    });
                 }
                 List<Person> members = personList.OrderBy(p => p.FirstName).ThenBy(p => p.LastName).ToList();
+
+                group.GroupName = group.GroupName.Replace("&#39;", "'");
 
                 // After getting al the required data, it is put into a Group object and added to the list of groups.
                 groupList.Add(new GroupData()
@@ -694,6 +744,8 @@ namespace meldboek.Controllers
             {
                 var nodeprops = JsonConvert.SerializeObject(record.As<INode>().Properties);
                 group = (JsonConvert.DeserializeObject<Group>(nodeprops));
+
+                group.GroupName = group.GroupName.Replace("&#39;", "'");
 
                 // After getting al the required data, it is put into a Group object and added to the list of groups.
                 groupList.Add(new Group()
@@ -736,13 +788,23 @@ namespace meldboek.Controllers
                 List<INode> creatorNode = new List<INode>();
                 var getCreator = ConnectDb("MATCH (p:Person) -[r:IsOwner]->(g:Group {GroupId: " + group.GroupId + "}) RETURN p");
                 var creator = new Person();
-                List<Person> creatorList = new List<Person>();
+                var personNode = new Person();
 
                 creatorNode = getCreator.Result;
                 foreach (var record2 in creatorNode)
                 {
                     var nodeprops2 = JsonConvert.SerializeObject(record2.As<INode>().Properties);
                     creator = (JsonConvert.DeserializeObject<Person>(nodeprops2));
+
+                    creator.LastName = creator.LastName.Replace("&#39;", "'");
+
+                    personNode = new Person()
+                    {
+                        PersonId = creator.PersonId,
+                        FirstName = creator.FirstName,
+                        LastName = creator.LastName,
+                        Email = creator.Email
+                    };
                 }
 
                 // Third, all the members of the group are fetched and put into a list of Person objects.
@@ -757,16 +819,26 @@ namespace meldboek.Controllers
                     var nodeprops3 = JsonConvert.SerializeObject(record3.As<INode>().Properties);
                     person = (JsonConvert.DeserializeObject<Person>(nodeprops3));
 
-                    personList.Add(person);
+                    person.LastName = person.LastName.Replace("&#39;", "'");
+
+                    personList.Add(new Person()
+                    {
+                        PersonId = person.PersonId,
+                        FirstName = person.FirstName,
+                        LastName = person.LastName,
+                        Email = person.Email
+                    });
                 }
                 List<Person> members = personList.OrderBy(p => p.FirstName).ThenBy(p => p.LastName).ToList();
+
+                group.GroupName = group.GroupName.Replace("&#39;", "'");
 
                 // Last, all the fetched information is put into a GroupData object and added to the list of GroupData objects.
                 groupsInfo.Add(new GroupData()
                 {
                     GroupId = group.GroupId,
                     GroupName = group.GroupName,
-                    Creator = creator,
+                    Creator = personNode,
                     Members = members
                 });
             }
@@ -799,8 +871,16 @@ namespace meldboek.Controllers
                 var nodeprops = JsonConvert.SerializeObject(record.As<INode>().Properties);
                 friend = (JsonConvert.DeserializeObject<Person>(nodeprops));
 
+                friend.LastName = friend.LastName.Replace("&#39;", "'");
+
                 // After getting al the required data, it is put into a Person object and added to the list of friends.
-                friendList.Add(friend);
+                friendList.Add(new Person()
+                {
+                    PersonId = friend.PersonId,
+                    FirstName = friend.FirstName,
+                    LastName = friend.LastName,
+                    Email = friend.Email
+                });
 
             }
 
@@ -823,7 +903,13 @@ namespace meldboek.Controllers
                 var nodeprops = JsonConvert.SerializeObject(record.As<INode>().Properties);
                 friend = (JsonConvert.DeserializeObject<Person>(nodeprops));
 
-                friendList.Add(friend);
+                friendList.Add(new Person()
+                {
+                    PersonId = friend.PersonId,
+                    FirstName = friend.FirstName,
+                    LastName = friend.LastName,
+                    Email = friend.Email
+                });
             }
 
             List<Person> final = friendList.OrderBy(f => f.FirstName).ToList();
@@ -837,6 +923,7 @@ namespace meldboek.Controllers
             List<INode> personNodes = new List<INode>();
             var getPersons = ConnectDb("MATCH(p:Person) WHERE NOT p.PersonId = " + GetCurrentPerson().PersonId + " RETURN p");
             var person = new Person();
+            var personNode = new Person();
             List<PersonInfo> personList = new List<PersonInfo>();
 
             personNodes = getPersons.Result;
@@ -844,6 +931,16 @@ namespace meldboek.Controllers
             {
                 var nodeprops = JsonConvert.SerializeObject(record.As<INode>().Properties);
                 person = (JsonConvert.DeserializeObject<Person>(nodeprops));
+
+                person.LastName = person.LastName.Replace("&#39;", "'");
+
+                personNode = new Person()
+                {
+                    PersonId = person.PersonId,
+                    FirstName = person.FirstName,
+                    LastName = person.LastName,
+                    Email = person.Email
+                };
 
                 // After getting al the required data, it is put into a PersonInfo object and added to the list of persons.
                 personList.Add(new PersonInfo()
@@ -865,6 +962,7 @@ namespace meldboek.Controllers
             List<INode> friendNodes = new List<INode>();
             var getFriends = ConnectDb("MATCH(a:Person)-[:IsFriendsWith]-(b:Person) WHERE a.PersonId = " + GetCurrentPerson().PersonId + " RETURN b");
             var friend = new Person();
+            var personNode = new Person();
             List<PersonInfo> friendList = new List<PersonInfo>();
 
             friendNodes = getFriends.Result;
@@ -872,6 +970,16 @@ namespace meldboek.Controllers
             {
                 var nodeprops = JsonConvert.SerializeObject(record.As<INode>().Properties);
                 friend = (JsonConvert.DeserializeObject<Person>(nodeprops));
+
+                friend.LastName = friend.LastName.Replace("&#39;", "'");
+
+                personNode = new Person()
+                {
+                    PersonId = friend.PersonId,
+                    FirstName = friend.FirstName,
+                    LastName = friend.LastName,
+                    Email = friend.Email
+                };
 
                 // After getting al the required data, it is put into a PersonInfo object and added to the list of friends.
                 friendList.Add(new PersonInfo()
@@ -895,7 +1003,7 @@ namespace meldboek.Controllers
             if (getStatus.Result == "FriendPending")
             {
                 // If the relationship is FriendPending, another check determines whether the current Person is the one who sent the request.
-                var requestCheck = ConnectDb2("MATCH(a:Person)-[r]->(b:Person) WHERE a.PersonId = " + id + " AND b.PersonId = 1 RETURN type(r)");
+                var requestCheck = ConnectDb2("MATCH(a:Person)-[r]->(b:Person) WHERE a.PersonId = " + PersonId + " AND b.PersonId = " + id + " RETURN type(r)");
                 if (requestCheck.Result == "FriendPending")
                 {
 
@@ -998,18 +1106,27 @@ namespace meldboek.Controllers
         {
             List<INode> nodeList = new List<INode>();
             var results = ConnectDb("MATCH (a:Person) WHERE a.PersonId = " + PersonId.ToString() + " RETURN a");
-            var Person = new Person();
+            var person = new Person();
+            var personNode = new Person();
 
             nodeList = results.Result;
             foreach (var record in nodeList)
             {
                 var nodeprops = JsonConvert.SerializeObject(record.As<INode>().Properties);
-                Person = (JsonConvert.DeserializeObject<Person>(nodeprops));
+                person = (JsonConvert.DeserializeObject<Person>(nodeprops));
+
+                person.LastName = person.LastName.Replace("&#39;", "'");
+
+                personNode = new Person()
+                {
+                    PersonId = person.PersonId,
+                    FirstName = person.FirstName,
+                    LastName = person.LastName,
+                    Email = person.Email
+                };
             }
 
-
-
-            return Person;
+            return personNode;
         }
 
         public List<Group> GetOwnedGroups()
@@ -1026,6 +1143,8 @@ namespace meldboek.Controllers
             {
                 var nodeprops = JsonConvert.SerializeObject(record.As<INode>().Properties);
                 group = (JsonConvert.DeserializeObject<Group>(nodeprops));
+
+                group.GroupName = group.GroupName.Replace("&#39;", "'");
 
                 // After getting al the required data, it is put into a Group object and added to the list of owned groups.
                 ownedGroupsList.Add(new Group()
@@ -1054,6 +1173,7 @@ namespace meldboek.Controllers
                 List<INode> nonmemberNodes = new List<INode>();
                 var getNonMembers = ConnectDb("MATCH (p:Person) WHERE NOT (p)-[:IsInGroup]->(:Group {GroupId: " + record1.GroupId + "}) RETURN p");
                 var nonMember = new Person();
+                var group = new Group();
                 List<Person> personList = new List<Person>();
 
                 nonmemberNodes = getNonMembers.Result;
@@ -1062,7 +1182,15 @@ namespace meldboek.Controllers
                     var nodeprops = JsonConvert.SerializeObject(record2.As<INode>().Properties);
                     nonMember = (JsonConvert.DeserializeObject<Person>(nodeprops));
 
-                    personList.Add(nonMember);
+                    nonMember.LastName = nonMember.LastName.Replace("&#39;", "'");
+
+                    personList.Add(new Person()
+                    {
+                        PersonId = nonMember.PersonId,
+                        FirstName = nonMember.FirstName,
+                        LastName = nonMember.LastName,
+                        Email = nonMember.Email
+                    });
                 }
 
                 // The list of non-members is sorted before being put into the final nonMemberList.
@@ -1169,14 +1297,10 @@ namespace meldboek.Controllers
             return res;
         }
 
-
-
-
         public IDriver CreateDriverWithBasicAuth(string uri, string Person, string password)
         {
             return GraphDatabase.Driver(new Uri(uri), AuthTokens.Basic(Person, password));
         }
-
 
     }
 }
