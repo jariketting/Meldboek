@@ -70,6 +70,7 @@ namespace meldboek.Controllers
             if (GroupName != null)
             {
                 int GroupId = GetMaxGroupId();
+                GroupName = GroupName.Replace("'", "&#39;");
                 Group g = new Group(GroupId, GroupName);
 
                 var r = ConnectDb("CREATE (g:Group {GroupId: " + g.GroupId + ", GroupName: '" + g.GroupName + "' }) RETURN g");
@@ -123,8 +124,16 @@ namespace meldboek.Controllers
                 var nodeprops = JsonConvert.SerializeObject(record.As<INode>().Properties);
                 manager = (JsonConvert.DeserializeObject<Person>(nodeprops));
 
+                manager.LastName = manager.LastName.Replace("&#39;", "'");
+
                 // After getting al the required data, it is put into a Person object and added to the list of managers.
-                managerList.Add(manager);
+                managerList.Add(new Person()
+                {
+                    PersonId = manager.PersonId,
+                    FirstName = manager.FirstName,
+                    LastName = manager.LastName,
+                    Email = manager.Email
+                });
 
             }
 

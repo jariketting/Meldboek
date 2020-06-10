@@ -216,7 +216,7 @@
                                 <input hidden type="text" value="@forumItem.ForumItemId" name=del id="del">
                                 <input hidden type="text" value="@forum.ForumId" name=fid id="fid" size="50">
 
-                                @if (forumItem.Owner.PersonId == 1 || forum.Owner.PersonId == 1)
+                                @if (forumItem.Owner.PersonId == (int)TempData["CurrentPersonId"] || forum.Owner.PersonId == (int)TempData["CurrentPersonId"])
                                 {
                                     <input href="@Url.Action("Forum", new { id = @forum.ForumId })" type="submit" value="&#10005" id="submit" class="delete-button">
                                 }
