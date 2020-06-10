@@ -79,8 +79,10 @@ namespace meldboek
 
         public async Task<string> RoleCheck()
         {
-            string RoleCheck = await Db.ConnectDb2("MATCH(r:Role) WHERE r.RoleName = 'Manager' RETURN r.RoleName");
-            if(RoleCheck == "Manager")
+            Db = new Database();
+            var RoleCheck = Db.ConnectDb2("MATCH(r:Role) WHERE r.RoleName = 'Manager' RETURN r.RoleName");
+            string result = RoleCheck.Result;
+            if(result == "Manager")
             {
                 return "true";
             }
