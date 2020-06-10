@@ -43,6 +43,34 @@ namespace meldboek
 
         }
 
+        public async Task<string> ConnectDb2(string query)
+        {
+            // ConnectDb2 returns a string instead of list of nodes.
+            Driver = CreateDriverWithBasicAuth("bolt://localhost:11005", "neo4j", "1234");
+            string res = "";
+            IAsyncSession session = Driver.AsyncSession(o => o.WithDatabase("neo4j"));
+            try
+            {
+                res = await session.ReadTransactionAsync(async tx =>
+                {
+                    string results = "";
+                    var reader = await tx.RunAsync(query);
+
+                    while (await reader.FetchAsync())
+                    {
+                        results = reader.Current[0].As<string>();
+                    }
+
+                    return results;
+                });
+            }
+            finally
+            {
+                await session.CloseAsync();
+            }
+            return res;
+        }
+
         /// <summary>
         /// Generate unique id
         /// </summary>

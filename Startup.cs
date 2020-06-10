@@ -10,11 +10,14 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using meldboek.Models;
 
 namespace meldboek
 {
     public class Startup
     {
+        Database Db { get; set; }
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -61,7 +64,9 @@ namespace meldboek
             app.UseStaticFiles();
             app.UseCookiePolicy();
             app.UseDefaultFiles();
-            
+
+            RoleCheck();
+
             app.UseAuthentication();
 
             app.UseMvc(routes =>
@@ -70,6 +75,25 @@ namespace meldboek
                     name: "default",
                     template: "{controller=Login}/{action=Index1}");
             });
+        }
+
+        public async Task<string> RoleCheck()
+        {
+            string RoleCheck = await Db.ConnectDb2("MATCH(r:Role) WHERE r.RoleName = 'Manager' RETURN r.RoleName");
+            if(RoleCheck == "Manager")
+            {
+                return "true";
+            }
+            else
+            {
+                await Db.ConnectDb("CREATE(r:Role {RoleName: 'Manager'})");
+                await Db.ConnectDb("CREATE(r:Role {RoleName: 'Medewerker'})");
+                await Db.ConnectDb("CREATE (p:Person { PersonId: 1, FirstName: 'Henk', LastName: 'Jansen' ,Email: 'henk@jansen.nl', Password: 'meldboek' }) RETURN p");
+                await Db.ConnectDb("MATCH (p:Person), (r:Role) WHERE p.PersonId = 1 AND r.RoleName = 'Manager' CREATE (p)-[:HasRole]->(r) RETURN p, r");
+                
+                return "done";
+            }
+
         }
     }
 }

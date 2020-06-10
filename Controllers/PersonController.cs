@@ -248,7 +248,10 @@ namespace meldboek.Controllers
             {
                 return RedirectToAction("LoginError", "Login");
             }
-
+            var oof = ConnectDb2("MATCH(r:Role) WHERE r.RoleName = 'Manager' RETURN r.RoleName").Result;
+            Console.WriteLine("---------------------------------------------");
+            Console.WriteLine(oof);
+            Console.WriteLine("---------------------------------------------");
             return View();
         }
 
@@ -1246,22 +1249,19 @@ namespace meldboek.Controllers
                     while (await reader.FetchAsync())
                     {
                         results.Add(reader.Current[0].As<INode>());
-
                     }
 
                     return results;
                 });
-
 
             }
 
             finally
             {
                 await session.CloseAsync();
-
             }
-            return res;
 
+            return res;
         }
 
         public async Task<string> ConnectDb2(string query)

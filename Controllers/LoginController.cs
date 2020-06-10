@@ -23,7 +23,6 @@ namespace meldboek.Controllers
         //This method returns the view of Login page
         public IActionResult Index1()
         {
-
             return View();
         }
         // To submit user data
